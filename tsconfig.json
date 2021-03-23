@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es2018", // changed es5 for es2018 for TypeGraphQL
+    "outDir": "./build/",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "experimentalDecorators": true, // Required for TypeGraphQL
+    "emitDecoratorMetadata": true // Required for TypeGraphQL
+  },
+  "include": [
+    "src"
+  ]
+}
