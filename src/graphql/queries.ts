@@ -1,13 +1,5 @@
 import { gql } from "@apollo/client"
-
-const GAME_DETAILS = gql`
-  fragment GameDetails on Game {
-    id
-    name
-    summary
-    firstReleaseDate
-  }
-`
+import { GAME_DETAILS } from './fragments';
 
 export const FIND_GAMES = gql`
   query findGamesByName(

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useLazyQuery } from '@apollo/client';
-import { FIND_GAMES } from './queries';
+import { FIND_GAMES } from './graphql/queries';
 
 import '@reach/dialog/styles.css';
 import { Dialog } from '@reach/dialog';
@@ -11,27 +11,19 @@ import SearchBar from './components/SearchBar';
 import LoginForm from './components/LoginForm';
 
 function App() {
-  const [findGames, result] = useLazyQuery(FIND_GAMES);
   const [games, setGames] = useState([]);
   const [query, setQuery] = useState('');
+  const [findGames] = useLazyQuery(FIND_GAMES, {
+    onCompleted(result) {
+      console.log(result);
+      setGames(result.findGames);
+    },
+  });
 
   // MODALS
   const [openModal, setOpenModal] = useState('none');
 
   // GAME SEARCH
-  const searchGames = (name: string) => {
-    findGames({ variables: { name } });
-  };
-
-  useEffect(() => {
-    if (result.data) {
-      setGames(result.data.findGames);
-    }
-  }, [result]);
-
-  console.log('useState games:', games);
-
-  // TEMP SEARCH LOGIC
   const handleGameQueryChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
@@ -39,9 +31,11 @@ function App() {
   };
 
   useEffect(() => {
-    if (query !== '') {
-      searchGames(query);
+    if (query === '') {
+      setGames([]); // Prevents the results from the last query to appear in a new one.
+      return;
     }
+    findGames({ variables: { name: query } });
   }, [query]);
 
   // REGISTER AND LOGIN
