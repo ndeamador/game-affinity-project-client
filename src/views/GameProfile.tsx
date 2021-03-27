@@ -18,7 +18,6 @@ const GameProfile = () => {
 
   return (
     <div>
-      <div>Image</div>
       <div>
         <h3>{game.name}</h3>
         <p>{game.summary}</p>

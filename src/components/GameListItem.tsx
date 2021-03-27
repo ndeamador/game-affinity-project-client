@@ -16,7 +16,6 @@ const GameListItem = ({ game }: { game: Game }) => {
           </div>
           <div>
             <h3 style={{ margin: 0 }}>{game.name}</h3>
-            {/* <p>{game.summary}</p> */}
           </div>
         </div>
       </Link>
