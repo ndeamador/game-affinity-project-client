@@ -4,26 +4,30 @@ import { useLazyQuery } from '@apollo/client';
 import { FIND_GAMES } from './graphql/queries';
 
 import '@reach/dialog/styles.css';
-import { Dialog } from '@reach/dialog';
 
 import GameList from './components/GameList';
 import SearchBar from './components/SearchBar';
-import LoginForm from './components/LoginForm';
+import GameProfile from './views/GameProfile';
+import NavBar from './components/NavBar';
+
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
+import { useDebounce } from 'use-debounce';
 
 function App() {
   const [games, setGames] = useState([]);
   const [query, setQuery] = useState('');
+  const [debouncedQuery] = useDebounce(query, 250); //https://www.npmjs.com/package/use-debounce
   const [findGames] = useLazyQuery(FIND_GAMES, {
     onCompleted(result) {
       console.log(result);
       setGames(result.findGames);
     },
+    onError: (err) => {
+      console.log(err.message);
+    },
   });
 
-  // MODALS
-  const [openModal, setOpenModal] = useState('none');
-
-  // GAME SEARCH
   const handleGameQueryChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
@@ -35,52 +39,43 @@ function App() {
       setGames([]); // Prevents the results from the last query to appear in a new one.
       return;
     }
-    findGames({ variables: { name: query } });
-  }, [query]);
+    findGames({ variables: { name: debouncedQuery } });
+  }, [debouncedQuery]);
 
-  // REGISTER AND LOGIN
-  const login = () => {
-    console.log('login');
-  };
-
-  const register = () => {
-    console.log('register');
+  const padding = {
+    padding: 5,
   };
 
   return (
     <div className='App'>
-      <div style={{ display: 'flex' }}>
-        <h3>TEMP NAV</h3>
-        <div>
-          <button onClick={() => setOpenModal('login')}>Login</button>
-        </div>
-        <div>
-          <button onClick={() => setOpenModal('register')}>Register</button>
-        </div>
-        <Dialog aria-label='Login form' isOpen={openModal === 'login'}>
-          <div>
-            <button onClick={() => setOpenModal('none')}>Close</button>
-          </div>
-          <h3>Login</h3>
-          <LoginForm onSubmit={login} buttonLabel='Login' />
-        </Dialog>
-        <Dialog
-          aria-label='Registration form'
-          isOpen={openModal === 'register'}
-        >
-          <div>
-            <button onClick={() => setOpenModal('none')}>Close</button>
-          </div>
-          <h3>Register</h3>
-          <LoginForm onSubmit={register} buttonLabel='Register' />
-        </Dialog>
-      </div>
+      <Router>
+        <div style={{ display: 'flex' }}>
+          <Link style={padding} to='/'>
+            home
+          </Link>
+          <Link style={padding} to='/placeholder'>
+            notes
+          </Link>
 
-      <SearchBar
-        handleQueryChange={handleGameQueryChange}
-        placeholderText='Find a game...'
-      />
-      {query ? <GameList games={games} /> : null}
+          <NavBar />
+        </div>
+
+        <Switch>
+          <Route path='/placeholder'>{/* <placeholder /> */}</Route>
+
+          <Route path={'/game/:gameId'}>
+            <GameProfile />
+          </Route>
+
+          <Route path='/'>
+            <SearchBar
+              handleQueryChange={handleGameQueryChange}
+              placeholderText='Find a game...'
+            />
+            {query ? <GameList games={games} /> : null}
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

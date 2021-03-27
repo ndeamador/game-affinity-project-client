@@ -8,3 +8,10 @@ import { gql } from "@apollo/client"
     firstReleaseDate
   }
 `
+
+export const USER_DETAILS = gql`
+fragment UserDetails on User {
+  id
+  email
+}
+`

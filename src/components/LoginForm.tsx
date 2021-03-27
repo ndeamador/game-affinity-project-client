@@ -1,8 +1,9 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { LoginDetails } from '../types';
 
 interface LoginFormProps {
-  onSubmit: any;
+  onSubmit: (data: LoginDetails) => void;
   buttonLabel: string;
 }
 
@@ -13,6 +14,7 @@ type FormData = {
 
 const LoginForm = ({ onSubmit, buttonLabel }: LoginFormProps) => {
   const { register, handleSubmit, errors } = useForm<FormData>(); // React-hook-form
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

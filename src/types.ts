@@ -8,3 +8,8 @@ export interface Game {
 export interface GameQuery {
   findGames: Game[]
 }
+
+export interface LoginDetails {
+  email: string;
+  password: string;
+}
