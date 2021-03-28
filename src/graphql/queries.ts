@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client"
-import { GAME_DETAILS } from './fragments';
+import { GAME_DETAILS, USER_DETAILS } from './fragments';
 
 export const FIND_GAMES = gql`
   query findGames(
@@ -14,4 +14,13 @@ export const FIND_GAMES = gql`
     }
   }
   ${GAME_DETAILS}
+`
+
+export const CURRENT_USER = gql`
+  query isLoggedIn{
+    me {
+      ...UserDetails
+    }
+  }
+  ${USER_DETAILS}
 `

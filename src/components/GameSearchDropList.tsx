@@ -11,7 +11,7 @@ const GameSearchDropList = () => {
   const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounce(query, 250); //https://www.npmjs.com/package/use-debounce
   const [findGames] = useLazyQuery(FIND_GAMES, {
-    onCompleted(result) {
+    onCompleted: (result) => {
       console.log(result);
       setGames(result.findGames);
     },

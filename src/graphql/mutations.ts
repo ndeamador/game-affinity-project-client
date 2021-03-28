@@ -34,3 +34,9 @@ loginDetails: {
 }
   ${USER_DETAILS}
 `
+
+export const LOGOUT = gql`
+  mutation logout{
+    logout
+  }
+`

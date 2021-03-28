@@ -2,13 +2,14 @@ import React from 'react';
 
 import '@reach/dialog/styles.css';
 
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
 import GameProfile from './views/GameProfile';
 import NavBar from './components/NavBar';
 import GameSearchDropList from './components/GameSearchDropList';
 
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-
 function App() {
+
   const padding = {
     padding: 5,
   };
@@ -21,7 +22,7 @@ function App() {
             home
           </Link>
 
-          <NavBar />
+          <NavBar/>
         </div>
 
         <Switch>
