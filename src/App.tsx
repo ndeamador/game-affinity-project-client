@@ -1,10 +1,8 @@
-import React from 'react';
-
 import '@reach/dialog/styles.css';
 
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-import GameProfile from './views/GameProfile';
+import GameProfile from './pages/GameProfile';
 import NavBar from './components/NavBar';
 import GameSearchDropList from './components/GameSearchDropList';
 

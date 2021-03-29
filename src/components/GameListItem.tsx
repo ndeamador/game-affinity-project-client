@@ -1,4 +1,3 @@
-import React from 'react';
 import { Game } from '../types';
 import placeholderIcon from '../zzz_temp/placeholder.png';
 import { Link } from 'react-router-dom';

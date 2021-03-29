@@ -18,10 +18,10 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    // "noEmit": true,
     "jsx": "react-jsx",
     "experimentalDecorators": true, // Required for TypeGraphQL
-    "emitDecoratorMetadata": true // Required for TypeGraphQL
+    "emitDecoratorMetadata": true, // Required for TypeGraphQL
   },
   "include": [
     "src"

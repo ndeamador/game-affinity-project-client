@@ -1,4 +1,3 @@
-import React from 'react';
 import { LoginDetails, LoginOrRegisterButtonProps } from '../types';
 import { useMutation, useApolloClient } from '@apollo/client';
 import LoginForm from '../components/LoginForm';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Game } from '../types';
 import GameListItem from './GameListItem';
 

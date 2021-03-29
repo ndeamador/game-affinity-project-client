@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { OpenLoginRegisterModalOptions } from '../types';
 
 import LoginRegisterButton from '../components/LoginRegisterButton';
