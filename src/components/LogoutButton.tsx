@@ -1,5 +1,6 @@
 import { useApolloClient, useMutation } from '@apollo/client';
 import { LOGOUT } from '../graphql/mutations';
+import { Button } from './styledComponentsLibrary';
 
 const LogoutButton = () => {
   const [logout] = useMutation(LOGOUT);
@@ -10,7 +11,7 @@ const LogoutButton = () => {
     await apolloClient.resetStore();
   };
 
-  return <button onClick={handleClick}>Logout</button>;
+  return <Button onClick={handleClick}>Logout</Button>;
 };
 
 export default LogoutButton;

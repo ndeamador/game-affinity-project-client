@@ -1,5 +1,8 @@
+/** @jsxImportSource @emotion/react */
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { LoginDetails } from '../types';
+import { Button, Input, Spinner } from './styledComponentsLibrary';
 
 interface LoginFormProps {
   onSubmit: (data: LoginDetails) => void;
@@ -12,13 +15,33 @@ type FormData = {
 };
 
 const LoginForm = ({ onSubmit, buttonLabel }: LoginFormProps) => {
-  const { register, handleSubmit, errors } = useForm<FormData>(); // React-hook-form
+  const {
+    register,
+    handleSubmit,
+    errors,
+    formState: { isSubmitting, isSubmitted, isSubmitSuccessful },
+  } = useForm<FormData>(); // React-hook-form
 
+  // useEffect(() => {
+  //   console.log('Submitting...');
+  // }, [isSubmitting]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      css={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        '> div': {
+          margin: '10px auto',
+          width: '100%',
+          maxWidth: '300px',
+        },
+      }}
+    >
       <div>
-        <input
+        <Input
           id='email'
           name='email'
           type='email'
@@ -29,7 +52,7 @@ const LoginForm = ({ onSubmit, buttonLabel }: LoginFormProps) => {
         {errors.email && <p>Handle this email error</p>}
       </div>
       <div>
-        <input
+        <Input
           id='password'
           name='password'
           type='password'
@@ -40,7 +63,10 @@ const LoginForm = ({ onSubmit, buttonLabel }: LoginFormProps) => {
         {errors.password && <p>Handle this password error</p>}
       </div>
       <div>
-        <button type='submit'>{buttonLabel}</button>
+        <Button type='submit' variant='primary'>
+          {/* {isSubmitting ? <Spinner /> : buttonLabel} */}
+          {buttonLabel}
+        </Button>
       </div>
     </form>
   );

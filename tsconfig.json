@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2018", // changed es5 for es2018 for TypeGraphQL
+    "target": "es2018",
     "outDir": "./build/",
     "lib": [
       "dom",
@@ -18,10 +18,10 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    // "noEmit": true,
     "jsx": "react-jsx",
-    "experimentalDecorators": true, // Required for TypeGraphQL
-    "emitDecoratorMetadata": true, // Required for TypeGraphQL
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noEmit": true
   },
   "include": [
     "src"

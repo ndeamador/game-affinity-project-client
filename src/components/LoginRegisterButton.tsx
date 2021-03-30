@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+
 import { LoginDetails, LoginOrRegisterButtonProps } from '../types';
 import { useMutation, useApolloClient } from '@apollo/client';
 import LoginForm from '../components/LoginForm';
@@ -5,6 +7,7 @@ import { Dialog } from '@reach/dialog';
 import { capitalizeFirstLetter } from '../utils/misc';
 
 import { LOGIN, REGISTER_NEW_USER } from '../graphql/mutations';
+import { Button, CircleButton } from './styledComponentsLibrary';
 
 const LoginRegisterButton = ({
   loginOrRegister,
@@ -51,13 +54,23 @@ const LoginRegisterButton = ({
 
   return (
     <div>
-      <button onClick={() => setOpenModal(loginOrRegister)}>
+      <Button onClick={() => setOpenModal(loginOrRegister)} >
         {capitalizeFirstLetter(loginOrRegister)}
-      </button>
+      </Button>
 
-      <Dialog aria-label={ariaLabel} isOpen={openModal === loginOrRegister}>
-        <div>
-          <button onClick={() => setOpenModal('none')}>Close</button>
+      <Dialog aria-label={ariaLabel} isOpen={openModal === loginOrRegister} css={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        ':click': {
+          transition: 'transform 0.8s',
+          transitionDuration: '0.8s',
+          transitionTimingFunction: 'ease',
+          transitionProperty: 'all',
+        },
+      }}>
+        <div css={{alignSelf: 'flex-end'}}>
+          <CircleButton onClick={() => setOpenModal('none')}>x</CircleButton>
         </div>
         <h3>{capitalizeFirstLetter(loginOrRegister)}</h3>
         <LoginForm
