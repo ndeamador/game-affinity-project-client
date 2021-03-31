@@ -16,17 +16,20 @@ const LoginRegisterButton = ({
 }: LoginOrRegisterButtonProps) => {
   const apolloClient = useApolloClient();
 
-  const [registerNewUser] = useMutation(REGISTER_NEW_USER, {
-    onCompleted: (result) => {
-      console.log(result);
-      setOpenModal('none');
-    },
-    onError: (err) => {
-      console.log(err.message);
-    },
-  });
+  const [registerNewUser, { loading: registerLoading }] = useMutation(
+    REGISTER_NEW_USER,
+    {
+      onCompleted: (result) => {
+        console.log(result);
+        setOpenModal('none');
+      },
+      onError: (err) => {
+        console.log(err.message);
+      },
+    }
+  );
 
-  const [login] = useMutation(LOGIN, {
+  const [login, { loading: loginLoading }] = useMutation(LOGIN, {
     onCompleted: (result) => {
       console.log('login result: ', result);
       apolloClient.resetStore();
@@ -51,31 +54,37 @@ const LoginRegisterButton = ({
     loginOrRegister === 'login' ? 'Login form' : 'Registration form';
   const handleSubmit =
     loginOrRegister === 'login' ? submitLogin : submitRegistration;
+  const loading = loginOrRegister === 'login' ? loginLoading : registerLoading;
 
   return (
     <div>
-      <Button onClick={() => setOpenModal(loginOrRegister)} >
+      <Button onClick={() => setOpenModal(loginOrRegister)}>
         {capitalizeFirstLetter(loginOrRegister)}
       </Button>
 
-      <Dialog aria-label={ariaLabel} isOpen={openModal === loginOrRegister} css={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        ':click': {
-          transition: 'transform 0.8s',
-          transitionDuration: '0.8s',
-          transitionTimingFunction: 'ease',
-          transitionProperty: 'all',
-        },
-      }}>
-        <div css={{alignSelf: 'flex-end'}}>
+      <Dialog
+        aria-label={ariaLabel}
+        isOpen={openModal === loginOrRegister}
+        css={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          ':click': {
+            transition: 'transform 0.3s',
+            transitionDuration: '0.3s',
+            transitionTimingFunction: 'ease',
+            transitionProperty: 'all',
+          },
+        }}
+      >
+        <div css={{ alignSelf: 'flex-end' }}>
           <CircleButton onClick={() => setOpenModal('none')}>x</CircleButton>
         </div>
         <h3>{capitalizeFirstLetter(loginOrRegister)}</h3>
         <LoginForm
           onSubmit={handleSubmit}
           buttonLabel={capitalizeFirstLetter(loginOrRegister)}
+          loading={loading}
         />
       </Dialog>
     </div>

@@ -7,6 +7,7 @@ import { Button, Input, Spinner } from './styledComponentsLibrary';
 interface LoginFormProps {
   onSubmit: (data: LoginDetails) => void;
   buttonLabel: string;
+  loading: boolean;
 }
 
 type FormData = {
@@ -14,17 +15,15 @@ type FormData = {
   password: string;
 };
 
-const LoginForm = ({ onSubmit, buttonLabel }: LoginFormProps) => {
+
+const LoginForm = ({ onSubmit, buttonLabel, loading }: LoginFormProps) => {
   const {
     register,
     handleSubmit,
     errors,
-    formState: { isSubmitting, isSubmitted, isSubmitSuccessful },
+    // formState: { isSubmitting  }, // There seem to be some complications rendering the loading spinner using this property, so I pass instead Apollo's query loading states.
   } = useForm<FormData>(); // React-hook-form
 
-  // useEffect(() => {
-  //   console.log('Submitting...');
-  // }, [isSubmitting]);
 
   return (
     <form
@@ -65,7 +64,7 @@ const LoginForm = ({ onSubmit, buttonLabel }: LoginFormProps) => {
       <div>
         <Button type='submit' variant='primary'>
           {/* {isSubmitting ? <Spinner /> : buttonLabel} */}
-          {buttonLabel}
+          {loading ? <Spinner /> : buttonLabel}
         </Button>
       </div>
     </form>

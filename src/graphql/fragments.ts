@@ -6,6 +6,13 @@ import { gql } from "@apollo/client"
     name
     summary
     firstReleaseDate
+    cover {
+      id
+      url
+      height
+      width
+      image_id
+    }
   }
 `
 

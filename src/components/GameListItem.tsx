@@ -1,25 +1,34 @@
 /** @jsxImportSource @emotion/react */
 import { Game } from '../types';
-import placeholderIcon from '../zzz_temp/placeholder.png';
 import { Link } from 'react-router-dom';
+import { CgGames } from 'react-icons/cg';
 
 const GameListItem = ({ game }: { game: Game }) => {
   const handleClick = () => {
     console.log('clicked', game.id);
   };
 
+  // Setting image resolution from url: https://api-docs.igdb.com/#images
+  const imageSize = 'thumb';
+  // const imageLink = game.cover?.id ? (
+  //   `//images.igdb.com/igdb/image/upload/t_${imageSize}/${game.cover?.image_id}.jpg`
+  // ) : (
+  //   <GrGamepad />
+  // );
+  const imageLink = `//images.igdb.com/igdb/image/upload/t_${imageSize}/${game.cover?.image_id}.jpg`;
+
   return (
     <Link
       to={`/game/${game.id}`}
       key={game.id}
       onClick={handleClick}
-      css={{ textDecoration: 'none' }}
+      css={{ textDecoration: 'none', }}
     >
       <div
         css={{
           display: 'flex',
-          alignItems: 'center',
-          margin: '10px 0px',
+          alignItems: 'stretch',
+          margin: '0',
           color: 'black',
           padding: '10px',
           borderRadius: '8px',
@@ -36,10 +45,38 @@ const GameListItem = ({ game }: { game: Game }) => {
           },
         }}
       >
-        <div>
-          <img src={placeholderIcon} width='25' />
+        <div
+          className='ImageDiv'
+          css={{ width: '90px', height: 'auto', maxwidth: '90px' }}
+        >
+          {/* <img src={imageLink} width='25' /> */}
+          {game.cover ? (
+            <img src={imageLink} css={{ width: '100%', borderRadius: '8px' }} />
+          ) : (
+            <CgGames
+              css={{
+                width: '100%',
+                height: 'auto',
+                border: 'solid 2px lightgrey',
+                borderRadius: '8px',
+                padding: '8px',
+                boxSizing: 'border-box',
+              }}
+            />
+          )}
         </div>
-        <h3 css={{ margin: 0 }}>{game.name}</h3>
+        <div
+          css={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            paddingLeft: '20px',
+            width: '100%',
+          }}
+        >
+          <h3 css={{ margin: 0 }}>{game.name}</h3>
+          {game.firstReleaseDate && <p>{game.firstReleaseDate}</p>}
+        </div>
       </div>
     </Link>
   );

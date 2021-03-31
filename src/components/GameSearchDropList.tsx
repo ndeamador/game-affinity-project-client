@@ -84,7 +84,7 @@ const GameSearchDropList = () => {
           </Tooltip>
         </form>
 
-        {query ? <GameList games={games} /> : null}
+        {query && !loading ? <GameList games={games} /> : null}
       </div>
     </div>
   );

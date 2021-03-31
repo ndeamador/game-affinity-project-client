@@ -3,6 +3,15 @@ export interface Game {
   name: string;
   summary?: string;
   firstReleaseDate?: number;
+  cover: Cover;
+}
+
+export interface Cover {
+  id: number;
+  image_id: string;
+  url: string;
+  height: number;
+  width: number;
 }
 
 export interface GameQuery {

@@ -29,6 +29,7 @@ function App() {
           </Route>
 
           <Route path='/'>
+
             <GameSearchDropList />
           </Route>
         </Switch>
