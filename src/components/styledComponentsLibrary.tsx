@@ -1,8 +1,8 @@
 import styled from '@emotion/styled/macro'; // /macro so that elements appear named in the dom
 import { keyframes } from '@emotion/react';
 import * as colors from '../styles/colors';
-import * as mediaQueries from '../styles/media-queries';
-import { Dialog } from '@reach/dialog';
+// import * as mediaQueries from '../styles/media-queries';
+// import { Dialog } from '@reach/dialog';
 import { ImSpinner2 } from 'react-icons/im'; // svg library
 
 // BUTTON

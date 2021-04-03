@@ -4,11 +4,13 @@ import { GAME_DETAILS, USER_DETAILS } from './fragments';
 export const FIND_GAMES = gql`
   query findGames(
     $name: String
-    $id: Float
+    $id: Int
+    # $maxResults: Int
   ) {
     findGames(
       name: $name
       id: $id
+      # maxResults: $maxResults
     ) {
       ...GameDetails
     }
@@ -23,4 +25,12 @@ export const CURRENT_USER = gql`
     }
   }
   ${USER_DETAILS}
+`
+
+export const GET_LIBRARY = gql`
+  query getLibrary{
+    getLibrary {
+      igdb_game_id
+    }
+  }
 `

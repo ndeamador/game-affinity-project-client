@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import '@reach/dialog/styles.css';
+import '@reach/tooltip/styles.css';
 
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import GameProfile from './pages/GameProfile';
 import NavBar from './components/NavBar';
 import GameSearchDropList from './components/GameSearchDropList';
+import Library from './pages/Library';
 
 function App() {
   return (
@@ -28,8 +30,11 @@ function App() {
             <GameProfile />
           </Route>
 
-          <Route path='/'>
+          <Route path={'/library'}>
+            <Library />
+          </Route>
 
+          <Route path='/'>
             <GameSearchDropList />
           </Route>
         </Switch>

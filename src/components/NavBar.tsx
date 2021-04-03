@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+
 import { useState } from 'react';
 import { OpenLoginRegisterModalOptions } from '../types';
 
@@ -21,17 +23,27 @@ const NavBar = () => {
         paddingBottom: '10px',
       }}
     >
-      <NavLink style={{ padding: 5 }} to='/'>
-        home
-      </NavLink>
+      <div css={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <NavLink css={{ padding: 5 }} to='/'>
+          Home
+        </NavLink>
+
+        <NavLink css={{ padding: 5 }} to='/library'>
+          My library
+        </NavLink>
+      </div>
 
       {userLoggedIn ? (
-        <div style={{ display: 'flex' }}>
-          <div style={{ display: 'flex', alignItems: 'center', padding: '0 10px'}}>{userLoggedIn.email}</div>
+        <div css={{ display: 'flex' }}>
+          <div
+            css={{ display: 'flex', alignItems: 'center', padding: '0 10px' }}
+          >
+            {userLoggedIn.email}
+          </div>
           <LogoutButton />
         </div>
       ) : (
-        <div style={{ display: 'flex' }}>
+        <div css={{ display: 'flex' }}>
           <LoginRegisterButton
             loginOrRegister='login'
             setOpenModal={setOpenModal}

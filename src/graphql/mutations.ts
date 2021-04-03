@@ -40,3 +40,19 @@ export const LOGOUT = gql`
     logout
   }
 `
+
+export const ADD_TO_LIBRARY = gql`
+mutation addGameToLibrary($gameId: Int!) {
+  addGameToLibrary(gameId: $gameId) {
+    igdb_game_id
+  }
+}
+`
+
+export const REMOVE_FROM_LIBRARY = gql`
+mutation removeGameFromLibrary($gameId: Int!) {
+  removeGameFromLibrary(gameId: $gameId) {
+    igdb_game_id
+  }
+}
+`

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Game } from '../types';
 import GameListItem from './GameListItem';
 
@@ -7,7 +6,7 @@ const GameList = ({ games }: { games: Game[] }) => {
   // https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318
 
   return (
-    <div css={{ marginTop: '2vh' }}>
+    <div>
       {games.length > 0 ? (
         games.map((game) => <GameListItem key={game.id} game={game} />)
       ) : (

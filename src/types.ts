@@ -29,6 +29,10 @@ export interface LoginDetails {
   password: string;
 }
 
+export interface GameInUserLibrary {
+  id: number;
+  igdb_game_id: number;
+}
 
 export type LoginOrRegisterOptions = 'login' | 'register';
 export type OpenLoginRegisterModalOptions = LoginOrRegisterOptions | 'none';

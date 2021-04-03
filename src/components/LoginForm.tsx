@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { LoginDetails } from '../types';
 import { Button, Input, Spinner } from './styledComponentsLibrary';

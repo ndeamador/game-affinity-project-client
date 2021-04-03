@@ -22,3 +22,10 @@ fragment UserDetails on User {
   email
 }
 `
+
+// export const GAME_IN_LIBRARY = gql`
+// fragment GameInLibrary on GameInUserLibrary{
+//   id
+//   igdb_game_id
+// }
+// `
