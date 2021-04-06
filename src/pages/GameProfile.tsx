@@ -1,63 +1,25 @@
 /** @jsxImportSource @emotion/react */
-import { useParams, useHistory } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
-import { FIND_GAMES, GET_LIBRARY } from '../graphql/queries';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { FIND_GAMES } from '../graphql/queries';
 import loadingTravolta from '../assets/notFound-264x374.gif';
-import TooltipButton from '../components/TooltipButton';
-import { FaPlusCircle, FaBook } from 'react-icons/fa';
-import { Spinner } from '../components/styledComponentsLibrary';
-import { ADD_TO_LIBRARY } from '../graphql/mutations';
-import { Game, GameInUserLibrary } from '../types';
+import { User } from '../types';
 import FullPageSpinner from '../components/FullPageSpinner';
+import AddToLibraryButton from '../components/AddToLibraryButton';
 
-const GameProfile = () => {
-  const history = useHistory();
+const GameProfile = ({ userLoggedIn }: { userLoggedIn?: User }) => {
   const { gameId } = useParams<{ gameId: string }>();
 
   const { loading, data, error } = useQuery(FIND_GAMES, {
     variables: { id: parseInt(gameId) },
     fetchPolicy: 'cache-first',
+    onError: (err) => console.log('Failed to find games: ', err),
   });
-
-  const [
-    addGameToLibrary,
-    { loading: addingToLibrary, error: libraryError },
-  ] = useMutation(ADD_TO_LIBRARY, {
-    variables: { gameId: parseInt(gameId) },
-    refetchQueries: [{ query: GET_LIBRARY }],
-  });
-
-  const { data: library } = useQuery(GET_LIBRARY);
-  const isGameInLibrary: boolean = library?.getLibrary.find(
-    (game: GameInUserLibrary) => game.igdb_game_id === parseInt(gameId)
-  )
-    ? true
-    : false;
-  console.log('inlib: ', isGameInLibrary);
-  console.log(
-    'findresult: ',
-    library?.getLibrary.find(
-      (game: GameInUserLibrary): boolean =>
-        game.igdb_game_id === parseInt(gameId)
-    )
-  );
 
   if (loading) return <FullPageSpinner />;
-
-  if (error) return <h3>Game not found</h3>;
+  if (error) return <h3>{error.message}</h3>;
 
   const game = data?.findGames[0];
-
-  // console.log(game);
-  console.log('liberror: ', typeof libraryError, libraryError?.message);
-  console.log(
-    'gameid params: ',
-    gameId,
-    typeof gameId,
-    ' - gameId response: ',
-    game.id,
-    typeof game.id
-  );
 
   // Setting image resolution from url: https://api-docs.igdb.com/#images
   const imageSize = 'cover_big';
@@ -91,27 +53,7 @@ const GameProfile = () => {
         <p>{game.summary}</p>
       </div>
 
-      <div>
-        {isGameInLibrary ? (
-          <TooltipButton
-            label='In library'
-            onClick={() => history.push('/library')}
-            icon={<FaBook />}
-            isLoading={false}
-            // isError={libraryError ? true : false}
-            // errorMessage={libraryError?.message}
-          />
-        ) : (
-          <TooltipButton
-            label='Add to library'
-            onClick={addGameToLibrary}
-            icon={<FaPlusCircle />}
-            isLoading={addingToLibrary}
-            isError={libraryError ? true : false}
-            errorMessage={libraryError?.message}
-          />
-        )}
-      </div>
+      {userLoggedIn && <AddToLibraryButton gameId={gameId} />}
     </div>
   );
 };

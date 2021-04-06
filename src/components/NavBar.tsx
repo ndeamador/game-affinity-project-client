@@ -1,15 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
 import { useState } from 'react';
-import { OpenLoginRegisterModalOptions } from '../types';
+import { OpenLoginRegisterModalOptions, User } from '../types';
 
 import LoginRegisterButton from '../components/LoginRegisterButton';
-import useCurrentUser from '../hooks/useCurrentUser';
 import LogoutButton from '../components/LogoutButton';
 import { NavLink } from 'react-router-dom';
 
-const NavBar = () => {
-  const { authenticatedUser: userLoggedIn } = useCurrentUser();
+const NavBar = ({ userLoggedIn }: { userLoggedIn: User }) => {
   const [openModal, setOpenModal] = useState<OpenLoginRegisterModalOptions>(
     'none'
   );
@@ -28,9 +26,11 @@ const NavBar = () => {
           Home
         </NavLink>
 
-        <NavLink css={{ padding: 5 }} to='/library'>
-          My library
-        </NavLink>
+        {userLoggedIn && (
+          <NavLink css={{ padding: 5 }} to='/library'>
+            My library
+          </NavLink>
+        )}
       </div>
 
       {userLoggedIn ? (
@@ -48,11 +48,13 @@ const NavBar = () => {
             loginOrRegister='login'
             setOpenModal={setOpenModal}
             openModal={openModal}
+            buttonType='regular'
           />
           <LoginRegisterButton
             loginOrRegister='register'
             setOpenModal={setOpenModal}
             openModal={openModal}
+            buttonType='regular'
           />
         </div>
       )}

@@ -4,25 +4,15 @@ import { Link } from 'react-router-dom';
 import { CgGames } from 'react-icons/cg';
 
 const GameListItem = ({ game }: { game: Game }) => {
-  const handleClick = () => {
-    console.log('clicked', game.id);
-  };
-
   // Setting image resolution from url: https://api-docs.igdb.com/#images
   const imageSize = 'thumb';
-  // const imageLink = game.cover?.id ? (
-  //   `//images.igdb.com/igdb/image/upload/t_${imageSize}/${game.cover?.image_id}.jpg`
-  // ) : (
-  //   <GrGamepad />
-  // );
   const imageLink = `//images.igdb.com/igdb/image/upload/t_${imageSize}/${game.cover?.image_id}.jpg`;
 
   return (
     <Link
       to={`/game/${game.id}`}
       key={game.id}
-      onClick={handleClick}
-      css={{ textDecoration: 'none', }}
+      css={{ textDecoration: 'none' }}
     >
       <div
         css={{
@@ -49,7 +39,6 @@ const GameListItem = ({ game }: { game: Game }) => {
           className='ImageDiv'
           css={{ width: '90px', height: 'auto', maxwidth: '90px' }}
         >
-          {/* <img src={imageLink} width='25' /> */}
           {game.cover ? (
             <img src={imageLink} css={{ width: '100%', borderRadius: '8px' }} />
           ) : (

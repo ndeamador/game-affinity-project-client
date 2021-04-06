@@ -30,15 +30,24 @@ export interface LoginDetails {
 }
 
 export interface GameInUserLibrary {
-  id: number;
+  id?: number;
   igdb_game_id: number;
+}
+
+export interface libraryIdsResponse { // review (AddToLibraryButton.tsx)
+  getLibraryIds: GameInUserLibrary[];
 }
 
 export type LoginOrRegisterOptions = 'login' | 'register';
 export type OpenLoginRegisterModalOptions = LoginOrRegisterOptions | 'none';
 
-export interface LoginOrRegisterButtonProps {
+export interface LoginOrRegisterModalProps {
   loginOrRegister: LoginOrRegisterOptions;
   setOpenModal: React.Dispatch<React.SetStateAction<OpenLoginRegisterModalOptions>>;
   openModal: OpenLoginRegisterModalOptions;
+}
+
+export type ButtonTypes = 'regular' | 'hoverDot';
+export interface LoginOrRegisterButtonProps extends LoginOrRegisterModalProps {
+  buttonType: ButtonTypes;
 }

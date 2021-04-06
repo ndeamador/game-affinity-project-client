@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 
 import { useLazyQuery } from '@apollo/client';
 import { FIND_GAMES } from '../graphql/queries';
-import GameList from './GameList';
+import GameList from '../components/GameList';
 import { useDebounce } from 'use-debounce';
 import { Tooltip } from '@reach/tooltip';
-import { Spinner, Input } from './styledComponentsLibrary';
+import { Spinner, Input } from '../components/styledComponentsLibrary';
 import { FaSearch } from 'react-icons/fa';
 
 const GameSearchDropList = () => {
@@ -34,6 +34,7 @@ const GameSearchDropList = () => {
       setGames([]); // Prevents the results from the last query to appear in a new one.
       return;
     }
+
     findGames({ variables: { name: debouncedQuery } });
   }, [debouncedQuery]);
 

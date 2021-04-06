@@ -2,14 +2,24 @@
 import '@reach/dialog/styles.css';
 import '@reach/tooltip/styles.css';
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
 import GameProfile from './pages/GameProfile';
 import NavBar from './components/NavBar';
-import GameSearchDropList from './components/GameSearchDropList';
+import GameSearchDropList from './pages/Home';
 import Library from './pages/Library';
+import useCurrentUser from './hooks/useCurrentUser';
+import FullPageSpinner from './components/FullPageSpinner';
 
 function App() {
+  const { authenticatedUser: userLoggedIn, loading } = useCurrentUser();
+  console.log('app user: ', userLoggedIn, ' - loading: ', loading);
+
   return (
     <div
       className='App'
@@ -23,15 +33,21 @@ function App() {
       }}
     >
       <Router>
-        <NavBar />
+        <NavBar userLoggedIn={userLoggedIn} />
 
         <Switch>
           <Route path={'/game/:gameId'}>
-            <GameProfile />
+            <GameProfile userLoggedIn={userLoggedIn} />
           </Route>
 
           <Route path={'/library'}>
-            <Library />
+            {userLoggedIn ? (
+              <Library />
+            ) : loading ? (
+              <FullPageSpinner />
+            ) : (
+              <Redirect to='/' />
+            )}
           </Route>
 
           <Route path='/'>

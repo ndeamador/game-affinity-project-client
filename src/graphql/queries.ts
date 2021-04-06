@@ -4,7 +4,7 @@ import { GAME_DETAILS, USER_DETAILS } from './fragments';
 export const FIND_GAMES = gql`
   query findGames(
     $name: String
-    $id: Int
+    $id: [Int!]
     # $maxResults: Int
   ) {
     findGames(
@@ -27,10 +27,19 @@ export const CURRENT_USER = gql`
   ${USER_DETAILS}
 `
 
-export const GET_LIBRARY = gql`
-  query getLibrary{
-    getLibrary {
+export const GET_LIBRARY_IDS = gql`
+  query getLibraryIds{
+    getLibraryIds {
       igdb_game_id
     }
   }
+`
+
+export const GET_LIBRARY = gql`
+  query getLibrary{
+    getLibrary {
+      ...GameDetails
+    }
+  }
+  ${GAME_DETAILS}
 `
