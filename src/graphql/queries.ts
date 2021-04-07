@@ -20,7 +20,7 @@ export const FIND_GAMES = gql`
 
 
 export const CURRENT_USER = gql`
-  query isLoggedIn{
+  query getCurrentUser{
     me {
       ...UserDetails
       gamesInLibrary {

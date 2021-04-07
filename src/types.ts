@@ -39,6 +39,10 @@ export interface libraryIdsResponse { // review
   getLibraryIds: GameInUserLibrary[];
 }
 
+export interface MeResponse {
+  me: User;
+}
+
 export type LoginOrRegisterOptions = 'login' | 'register';
 export type OpenLoginRegisterModalOptions = LoginOrRegisterOptions | 'none';
 

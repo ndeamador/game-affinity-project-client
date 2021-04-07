@@ -1,30 +1,48 @@
 /** @jsxImportSource @emotion/react */
 import { useHistory } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
-import { GET_LIBRARY_IDS } from '../graphql/queries';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { CURRENT_USER, GET_LIBRARY_IDS } from '../graphql/queries';
 import TooltipButton from '../components/TooltipButton';
-import { FaPlusCircle, FaBook } from 'react-icons/fa';
-import { ADD_TO_LIBRARY } from '../graphql/mutations';
-import { GameInUserLibrary, libraryIdsResponse } from '../types';
+import { FaPlusCircle, FaTimes } from 'react-icons/fa';
+import { ADD_TO_LIBRARY, REMOVE_FROM_LIBRARY } from '../graphql/mutations';
+import {
+  GameInUserLibrary,
+  libraryIdsResponse,
+  MeResponse,
+  User,
+} from '../types';
+import { useEffect } from 'react';
 
 const AddToLibraryButton = ({ gameId }: { gameId: string }) => {
-  const history = useHistory();
+  const parsedGameId = parseInt(gameId);
 
-  const { data: library } = useQuery(GET_LIBRARY_IDS, {
+  const [
+    getCurrentUser,
+    { data: currentUser, loading: loadingLibrary },
+  ] = useLazyQuery(CURRENT_USER, {
     onError: (err) => console.log(err),
   });
 
-  const isGameInLibrary: boolean = library?.getLibraryIds.find(
-    (game: GameInUserLibrary) => game.igdb_game_id === parseInt(gameId)
+  // execute query on component mount
+  useEffect(() => {
+    getCurrentUser();
+  }, [getCurrentUser]);
+
+  const library = currentUser?.me.gamesInLibrary;
+
+  const isGameInLibrary: boolean = library?.find(
+    (game: GameInUserLibrary) => game.igdb_game_id === parsedGameId
   )
     ? true
     : false;
+
+  console.log('library: ', isGameInLibrary, library);
 
   const [
     addGameToLibrary,
     { loading: addingToLibrary, error: libraryError },
   ] = useMutation(ADD_TO_LIBRARY, {
-    variables: { gameId: parseInt(gameId) },
+    variables: { gameId: parsedGameId },
     // refetchQueries: [{ query: GET_LIBRARY_IDS }],
     // awaitRefetchQueries: true,
 
@@ -32,34 +50,97 @@ const AddToLibraryButton = ({ gameId }: { gameId: string }) => {
     // This way we can manually update the cache instead of refetching the query.
     update: (store, response) => {
       try {
-        const dataInStore: libraryIdsResponse | null = store.readQuery({
-          query: GET_LIBRARY_IDS,
+        const dataInStore: MeResponse | null = store.readQuery({
+          query: CURRENT_USER,
         });
 
         store.writeQuery({
-          query: GET_LIBRARY_IDS,
+          query: CURRENT_USER,
           data: {
             ...dataInStore,
-            getLibraryIds: dataInStore
-              ? [...dataInStore.getLibraryIds, response.data.addGameToLibrary]
-              : [response.data.addGameToLibrary],
+            me: {
+              ...dataInStore?.me,
+              gamesInLibrary: dataInStore
+                ? [
+                    ...dataInStore.me.gamesInLibrary,
+                    response.data.addGameToLibrary,
+                  ]
+                : [response.data.addGameToLibrary],
+            },
           },
         });
       } catch (err) {
-        console.log(`Error updating the cache after addGameToLibrary query: ${err}`);
+        console.log(
+          `Error updating the cache after addGameToLibrary query: ${err}`
+        );
       }
     },
-    onError: (err) => console.log(`Error adding game to library: ${err}`)
+    onError: (err) => console.log(`Error adding game to library: ${err}`),
   });
+
+  const [removeGameFromLibrary, { loading: deletingGame }] = useMutation(
+    REMOVE_FROM_LIBRARY,
+    {
+      variables: { igdb_game_id: parsedGameId },
+      update: (store, response) => {
+        if (response.data.removeGameFromLibrary) {
+          try {
+            const dataInStore: MeResponse | null = store.readQuery({
+              query: CURRENT_USER,
+            });
+
+            console.log('store', dataInStore);
+            console.log('response', response.data.removeGameFromLibrary);
+            console.log(
+              'rem gamesinlib store:',
+              dataInStore?.me.gamesInLibrary
+            );
+            console.log(
+              'map:',
+              dataInStore?.me.gamesInLibrary.filter(
+                (game) => game.igdb_game_id !== parsedGameId
+              )
+            );
+
+            store.writeQuery({
+              query: CURRENT_USER,
+              data: {
+                ...dataInStore,
+                me: {
+                  ...dataInStore?.me,
+                  gamesInLibrary: dataInStore?.me.gamesInLibrary.filter(
+                    (game) => game.igdb_game_id !== parsedGameId
+                  ),
+                },
+              },
+            });
+          } catch (err) {
+            console.log(
+              `Error updating the cache after removeGameFromLibrary query: ${err}`
+            );
+          }
+        } else {
+          console.log(`Game to remove from library not found in database.`);
+        }
+      },
+      onError: (err) => console.log(`Error removing game from library: ${err}`),
+    }
+  );
 
   return (
     <div>
       {isGameInLibrary ? (
+        // <TooltipButton
+        //   label='In library'
+        //   onClick={() => history.push('/library')}
+        //   icon={<FaBook />}
+        //   isLoading={false}
+        // />
         <TooltipButton
-          label='In library'
-          onClick={() => history.push('/library')}
-          icon={<FaBook />}
-          isLoading={false}
+          label='Remove from library'
+          onClick={() => removeGameFromLibrary()}
+          icon={<FaTimes />}
+          isLoading={loadingLibrary || deletingGame}
         />
       ) : (
         <TooltipButton

@@ -44,15 +44,15 @@ export const LOGOUT = gql`
 export const ADD_TO_LIBRARY = gql`
 mutation addGameToLibrary($gameId: Int!) {
   addGameToLibrary(gameId: $gameId) {
+    id
     igdb_game_id
   }
 }
 `
 
+// returns a boolean.
 export const REMOVE_FROM_LIBRARY = gql`
-mutation removeGameFromLibrary($gameId: Int!) {
-  removeGameFromLibrary(gameId: $gameId) {
-    igdb_game_id
-  }
+mutation removeGameFromLibrary($igdb_game_id: Int!) {
+  removeGameFromLibrary(igdb_game_id: $igdb_game_id)
 }
 `
