@@ -22,6 +22,7 @@ export interface User {
   id: string;
   // username: String!
   email: string;
+  gamesInLibrary: [GameInUserLibrary];
 }
 
 export interface LoginDetails {
@@ -30,11 +31,11 @@ export interface LoginDetails {
 }
 
 export interface GameInUserLibrary {
-  id?: number;
+  id: number;
   igdb_game_id: number;
 }
 
-export interface libraryIdsResponse { // review (AddToLibraryButton.tsx)
+export interface libraryIdsResponse { // review
   getLibraryIds: GameInUserLibrary[];
 }
 

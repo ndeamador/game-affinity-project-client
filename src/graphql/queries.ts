@@ -18,14 +18,20 @@ export const FIND_GAMES = gql`
   ${GAME_DETAILS}
 `
 
+
 export const CURRENT_USER = gql`
   query isLoggedIn{
     me {
       ...UserDetails
+      gamesInLibrary {
+        id
+        igdb_game_id
+    }
     }
   }
   ${USER_DETAILS}
 `
+
 
 export const GET_LIBRARY_IDS = gql`
   query getLibraryIds{

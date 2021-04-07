@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client"
 
- export const GAME_DETAILS = gql`
+export const GAME_DETAILS = gql`
   fragment GameDetails on Game {
     id
     name
@@ -22,10 +22,3 @@ fragment UserDetails on User {
   email
 }
 `
-
-// export const GAME_IN_LIBRARY = gql`
-// fragment GameInLibrary on GameInUserLibrary{
-//   id
-//   igdb_game_id
-// }
-// `

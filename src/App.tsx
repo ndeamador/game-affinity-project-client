@@ -11,14 +11,23 @@ import {
 
 import GameProfile from './pages/GameProfile';
 import NavBar from './components/NavBar';
-import GameSearchDropList from './pages/Home';
+import Home from './pages/Home';
 import Library from './pages/Library';
 import useCurrentUser from './hooks/useCurrentUser';
 import FullPageSpinner from './components/FullPageSpinner';
+import { useLazyQuery } from '@apollo/client';
+import { FIND_GAMES } from './graphql/queries';
 
 function App() {
-  const { authenticatedUser: userLoggedIn, loading } = useCurrentUser();
-  console.log('app user: ', userLoggedIn, ' - loading: ', loading);
+  const {
+    authenticatedUser: userLoggedIn,
+    loading: loadingUser,
+  } = useCurrentUser();
+  console.log('app user: ', userLoggedIn, ' - loadingUser: ', loadingUser);
+
+  const [findGames, { data: games, loading: loadingGames }] = useLazyQuery(
+    FIND_GAMES
+  );
 
   return (
     <div
@@ -40,18 +49,34 @@ function App() {
             <GameProfile userLoggedIn={userLoggedIn} />
           </Route>
 
-          <Route path={'/library'}>
+          {/* <Route path={'/library'}>
             {userLoggedIn ? (
               <Library />
-            ) : loading ? (
+            ) : loadingUser ? (
               <FullPageSpinner />
             ) : (
               <Redirect to='/' />
             )}
+          </Route> */}
+
+          {/* <Route path={'/library'}>
+            <Library />
+            {!userLoggedIn && <Redirect to='/' />}
+          </Route> */}
+
+
+          <Route path={'/library'}>
+            {!userLoggedIn ? (
+              <Redirect to='/' />
+            ) : loadingUser ? (
+              <FullPageSpinner />
+            ) : (
+              <Library />
+            )}
           </Route>
 
           <Route path='/'>
-            <GameSearchDropList />
+            <Home />
           </Route>
         </Switch>
       </Router>

@@ -9,7 +9,7 @@ import { Tooltip } from '@reach/tooltip';
 import { Spinner, Input } from '../components/styledComponentsLibrary';
 import { FaSearch } from 'react-icons/fa';
 
-const GameSearchDropList = () => {
+const Home = () => {
   const [games, setGames] = useState([]);
   const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounce(query, 250); //https://www.npmjs.com/package/use-debounce
@@ -91,4 +91,4 @@ const GameSearchDropList = () => {
   );
 };
 
-export default GameSearchDropList;
+export default Home;

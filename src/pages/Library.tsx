@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FullPageSpinner from '../components/FullPageSpinner';
 import GameList from '../components/GameList';
@@ -8,9 +9,21 @@ import { GET_LIBRARY } from '../graphql/queries';
 
 const Library = () => {
   console.log('inlib');
-  const { data: libraryResponse, loading: libraryLoading } = useQuery(
-    GET_LIBRARY
-  );
+  // I use useLazyQuery+useEffect to prevent a React Strict Mode warning related to async callbacks on unmountd components.
+  // https://github.com/apollographql/apollo-client/issues/6209
+  const [
+    getLibrary,
+    { data: libraryResponse, loading: libraryLoading },
+  ] = useLazyQuery(GET_LIBRARY);
+
+  // execute query on component mount
+  useEffect(() => {
+    getLibrary();
+  }, [getLibrary]);
+
+  // const { data: libraryResponse, loading: libraryLoading } = useQuery(
+  //   GET_LIBRARY
+  // );
 
   if (libraryLoading) return <FullPageSpinner />;
 
