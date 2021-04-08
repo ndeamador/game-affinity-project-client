@@ -2,16 +2,13 @@ export interface Game {
   id: string;
   name: string;
   summary?: string;
-  firstReleaseDate?: number;
+  first_release_date?: number;
   cover: Cover;
 }
 
 export interface Cover {
   id: number;
   image_id: string;
-  url: string;
-  height: number;
-  width: number;
 }
 
 export interface GameQuery {

@@ -5,12 +5,9 @@ export const GAME_DETAILS = gql`
     id
     name
     summary
-    firstReleaseDate
+    first_release_date
     cover {
       id
-      url
-      height
-      width
       image_id
     }
   }

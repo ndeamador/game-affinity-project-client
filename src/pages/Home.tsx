@@ -15,7 +15,7 @@ const Home = () => {
   const [debouncedQuery] = useDebounce(query, 250); //https://www.npmjs.com/package/use-debounce
   const [findGames, { loading }] = useLazyQuery(FIND_GAMES, {
     onCompleted: (result) => {
-      console.log(result);
+      console.log('Home found games: ', result);
       setGames(result.findGames);
     },
     onError: (err) => {
