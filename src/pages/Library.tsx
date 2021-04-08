@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FullPageSpinner from '../components/FullPageSpinner';
 import GameList from '../components/GameList';
-import { FIND_GAMES, GET_LIBRARY } from '../graphql/queries';
+import { FIND_GAMES } from '../graphql/queries';
 import { User } from '../types';
 
 const Library = ({ userLoggedIn }: { userLoggedIn?: User }) => {
@@ -22,10 +22,6 @@ const Library = ({ userLoggedIn }: { userLoggedIn?: User }) => {
   //   getLibrary();
   // }, [getLibrary]);
 
-  console.log(
-    'user: ',
-    userLoggedIn?.gamesInLibrary.map((game) => game.igdb_game_id)
-  );
   const gameIdsInLibrary = userLoggedIn?.gamesInLibrary.map(
     (game) => game.igdb_game_id
   );
@@ -50,7 +46,6 @@ const Library = ({ userLoggedIn }: { userLoggedIn?: User }) => {
 
   if (loadingGames) return <FullPageSpinner />;
 
-  console.log('response:', gamesResponse);
   const games = gamesResponse?.findGames;
 
   if (!games) {

@@ -10,17 +10,17 @@ const GameListItem = ({ game }: { game: Game }) => {
   const [getCurrentUser, { data }] = useLazyCurrentUser();
   const userLoggedIn = data?.me;
 
+  console.log('game:', game);
+
   useEffect(() => {
     getCurrentUser();
   }, [getCurrentUser]);
-  console.log('gamelist user: ', userLoggedIn);
 
   // Setting image resolution from url: https://api-docs.igdb.com/#images
   const imageSize = 'thumb';
   const imageLink = `//images.igdb.com/igdb/image/upload/t_${imageSize}/${game.cover?.image_id}.jpg`;
 
   return (
-    // <div css={{ display: 'flex', flexDirection: 'row' }}>
     <Link
       to={`/game/${game.id}`}
       key={game.id}
@@ -81,7 +81,6 @@ const GameListItem = ({ game }: { game: Game }) => {
         {userLoggedIn && <AddGameToLibraryButton gameId={game.id} />}
       </div>
     </Link>
-    // </div>
   );
 };
 

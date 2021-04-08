@@ -15,8 +15,6 @@ import Home from './pages/Home';
 import Library from './pages/Library';
 import useCurrentUser from './hooks/useCurrentUser';
 import FullPageSpinner from './components/FullPageSpinner';
-import { useLazyQuery } from '@apollo/client';
-import { FIND_GAMES } from './graphql/queries';
 
 function App() {
   const {
@@ -24,10 +22,6 @@ function App() {
     loading: loadingUser,
   } = useCurrentUser();
   console.log('app user: ', userLoggedIn, ' - loadingUser: ', loadingUser);
-
-  const [findGames, { data: games, loading: loadingGames }] = useLazyQuery(
-    FIND_GAMES
-  );
 
   return (
     <div
