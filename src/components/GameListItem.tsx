@@ -6,6 +6,7 @@ import AddGameToLibraryButton from './AddToLibraryButton';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 import { useEffect } from 'react';
 import { convertMilisecondsToDate } from '../utils/misc';
+import PlatformIconSelector from './PlatformIconSelector';
 
 const GameListItem = ({ game }: { game: Game }) => {
   const [getCurrentUser, { data }] = useLazyCurrentUser();
@@ -77,7 +78,16 @@ const GameListItem = ({ game }: { game: Game }) => {
           }}
         >
           <h3 css={{ margin: 0 }}>{game.name}</h3>
-          {game.first_release_date && <p>{convertMilisecondsToDate(game.first_release_date).year}</p>}
+          {game.first_release_date && (
+            <p css={{ margin: 0 }}>
+              {convertMilisecondsToDate(game.first_release_date).year}
+            </p>
+          )}
+          <div>
+            {userLoggedIn && (
+              <PlatformIconSelector platforms={game.platforms} />
+            )}
+          </div>
         </div>
         {userLoggedIn && <AddGameToLibraryButton gameId={game.id} />}
       </div>

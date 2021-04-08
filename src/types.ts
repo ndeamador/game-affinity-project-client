@@ -4,6 +4,21 @@ export interface Game {
   summary?: string;
   first_release_date?: number;
   cover: Cover;
+  platforms: Platform[];
+  genres: Genre[];
+  total_rating_count: number;
+}
+
+export interface Platform {
+  id: number;
+  name: string;
+  platform_family?: number;
+  category?: number;
+}
+
+export interface Genre {
+  id: number;
+  name: string;
 }
 
 export interface Cover {

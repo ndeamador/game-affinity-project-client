@@ -10,6 +10,16 @@ export const GAME_DETAILS = gql`
       id
       image_id
     }
+    platforms {
+      id
+      name
+      platform_family
+      category
+    }
+    genres {
+      id
+      name
+    }
   }
 `
 
