@@ -10,6 +10,7 @@ interface useCurrentUserReturn {
 const useCurrentUser = (): useCurrentUserReturn => {
 
   const { data, loading } = useQuery(CURRENT_USER, {
+    fetchPolicy: 'cache-first',
     // onCompleted: (data) => {
     //   if (data.me === null) {
     //     console.log('User not logged in');

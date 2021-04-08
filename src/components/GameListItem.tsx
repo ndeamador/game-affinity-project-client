@@ -2,13 +2,25 @@
 import { Game } from '../types';
 import { Link } from 'react-router-dom';
 import { CgGames } from 'react-icons/cg';
+import AddGameToLibraryButton from './AddToLibraryButton';
+import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
+import { useEffect } from 'react';
 
 const GameListItem = ({ game }: { game: Game }) => {
+  const [getCurrentUser, { data }] = useLazyCurrentUser();
+  const userLoggedIn = data?.me;
+
+  useEffect(() => {
+    getCurrentUser();
+  }, [getCurrentUser]);
+  console.log('gamelist user: ', userLoggedIn);
+
   // Setting image resolution from url: https://api-docs.igdb.com/#images
   const imageSize = 'thumb';
   const imageLink = `//images.igdb.com/igdb/image/upload/t_${imageSize}/${game.cover?.image_id}.jpg`;
 
   return (
+    // <div css={{ display: 'flex', flexDirection: 'row' }}>
     <Link
       to={`/game/${game.id}`}
       key={game.id}
@@ -66,8 +78,10 @@ const GameListItem = ({ game }: { game: Game }) => {
           <h3 css={{ margin: 0 }}>{game.name}</h3>
           {game.firstReleaseDate && <p>{game.firstReleaseDate}</p>}
         </div>
+        {userLoggedIn && <AddGameToLibraryButton gameId={game.id} />}
       </div>
     </Link>
+    // </div>
   );
 };
 

@@ -20,7 +20,7 @@ function TooltipButton({
   label,
   onClick,
   icon,
-  highlight=colors.indigo,
+  highlight = colors.indigo,
   isLoading,
   isError,
   errorMessage,
@@ -28,8 +28,13 @@ function TooltipButton({
 }: TooltipButtonProps) {
   // const { isLoading, isError, error, run } = useAsync();
 
-  function handleClick() {
+  function handleClick(event: React.SyntheticEvent) {
     // run(onClick());
+
+    // These two prevent that clicking the button also triggers other clickables underneath (like a react-router's Link)
+    event.stopPropagation();
+    event.preventDefault();
+
     onClick();
   }
 

@@ -5,30 +5,53 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FullPageSpinner from '../components/FullPageSpinner';
 import GameList from '../components/GameList';
-import { GET_LIBRARY } from '../graphql/queries';
+import { FIND_GAMES, GET_LIBRARY } from '../graphql/queries';
+import { User } from '../types';
 
-const Library = () => {
-  console.log('inlib');
+const Library = ({ userLoggedIn }: { userLoggedIn?: User }) => {
   // I use useLazyQuery+useEffect to prevent a React Strict Mode warning related to async callbacks on unmountd components.
   // https://github.com/apollographql/apollo-client/issues/6209
+
+  // const [
+  //   getLibrary,
+  //   { data: libraryResponse, loading: libraryLoading },
+  // ] = useLazyQuery(GET_LIBRARY);
+
+  // // execute query on component mount
+  // useEffect(() => {
+  //   getLibrary();
+  // }, [getLibrary]);
+
+  console.log(
+    'user: ',
+    userLoggedIn?.gamesInLibrary.map((game) => game.igdb_game_id)
+  );
+  const gameIdsInLibrary = userLoggedIn?.gamesInLibrary.map(
+    (game) => game.igdb_game_id
+  );
+
   const [
-    getLibrary,
-    { data: libraryResponse, loading: libraryLoading },
-  ] = useLazyQuery(GET_LIBRARY);
+    findGames,
+    { data: gamesResponse, loading: loadingGames },
+  ] = useLazyQuery(FIND_GAMES, {
+    variables: {
+      id: gameIdsInLibrary,
+    },
+  });
 
   // execute query on component mount
   useEffect(() => {
-    getLibrary();
-  }, [getLibrary]);
+    findGames();
+  }, [findGames]);
 
-  // const { data: libraryResponse, loading: libraryLoading } = useQuery(
+  // const { data: gamesResponse, loading: libraryLoading } = useQuery(
   //   GET_LIBRARY
   // );
 
-  if (libraryLoading) return <FullPageSpinner />;
+  if (loadingGames) return <FullPageSpinner />;
 
-  console.log('response:', libraryResponse);
-  const games = libraryResponse?.getLibrary;
+  console.log('response:', gamesResponse);
+  const games = gamesResponse?.findGames;
 
   if (!games) {
     return (

@@ -8,6 +8,7 @@ import { GameInUserLibrary, MeResponse } from '../types';
 import { useEffect } from 'react';
 import useAddToLibrary from '../hooks/useAddToLibrary';
 import useRemoveFromLibrary from '../hooks/useRemoveFromLibrary';
+import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 
 const AddToLibraryButton = ({ gameId }: { gameId: string }) => {
   const parsedGameId = parseInt(gameId);
@@ -15,9 +16,7 @@ const AddToLibraryButton = ({ gameId }: { gameId: string }) => {
   const [
     getCurrentUser,
     { data: currentUser, loading: loadingLibrary },
-  ] = useLazyQuery(CURRENT_USER, {
-    onError: (err) => console.log(err),
-  });
+  ] = useLazyCurrentUser();
 
   // execute query on component mount
   useEffect(() => {
@@ -119,6 +118,12 @@ const AddToLibraryButton = ({ gameId }: { gameId: string }) => {
   //   }
   // );
 
+  const handleAddClick = () => {
+    // event.stopPropagation();
+    // event.preventDefault();
+    addGameToLibrary({ variables: { gameId: parsedGameId } });
+  };
+
   return (
     <div>
       {isGameInLibrary ? (
@@ -131,9 +136,7 @@ const AddToLibraryButton = ({ gameId }: { gameId: string }) => {
       ) : (
         <TooltipButton
           label='Add to library'
-          onClick={() =>
-            addGameToLibrary({ variables: { gameId: parsedGameId } })
-          }
+          onClick={handleAddClick}
           icon={<FaPlusCircle />}
           isLoading={addingToLibrary}
           isError={libraryError ? true : false}

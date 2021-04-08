@@ -71,7 +71,7 @@ function App() {
             ) : loadingUser ? (
               <FullPageSpinner />
             ) : (
-              <Library />
+              <Library userLoggedIn={userLoggedIn}/>
             )}
           </Route>
 
