@@ -20,6 +20,14 @@ export const GAME_DETAILS = gql`
       id
       name
     }
+    involved_companies {
+      id
+      developer
+      company {
+        id
+        name
+      }
+    }
   }
 `
 

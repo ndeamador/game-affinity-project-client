@@ -6,7 +6,8 @@ import AddGameToLibraryButton from './AddToLibraryButton';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 import { useEffect } from 'react';
 import { convertMilisecondsToDate } from '../utils/misc';
-import PlatformIconSelector from './PlatformIconSelector';
+import PlatformIcons from './PlatformIcons';
+import ReleaseDeveloperRow from '../components/ReleaseDeveloperRow';
 
 const GameListItem = ({ game }: { game: Game }) => {
   const [getCurrentUser, { data }] = useLazyCurrentUser();
@@ -78,16 +79,33 @@ const GameListItem = ({ game }: { game: Game }) => {
           }}
         >
           <h3 css={{ margin: 0 }}>{game.name}</h3>
-          {game.first_release_date && (
-            <p css={{ margin: 0 }}>
-              {convertMilisecondsToDate(game.first_release_date).year}
-            </p>
-          )}
-          <div>
-            {userLoggedIn && (
-              <PlatformIconSelector platforms={game.platforms} />
+
+          {/* <div className='dateDevRow' css={{
+            display: 'flex',
+            flexDirection: 'row',
+            '> *': {
+              margin: '0',
+            },
+          }}>
+            {game.first_release_date && (
+              <p css={{ margin: 0 }}>
+                {convertMilisecondsToDate(game.first_release_date).year}
+              </p>
             )}
-          </div>
+
+            {game.first_release_date && game.involved_companies && <p css={{padding: '0 5px'}}>-</p>}
+
+            {game.involved_companies &&
+              game.involved_companies.map((involvedCompany) => {
+                if (involvedCompany.developer)
+                  return <p key={involvedCompany.id}>{involvedCompany.company.name}</p>;
+              })}
+          </div> */}
+
+          {/* The game && shouldn't be necessary, but I'm getting a `state update on unmounted component` warning. */}
+          <ReleaseDeveloperRow game={game} />
+
+          <PlatformIcons platforms={game.platforms} />
         </div>
         {userLoggedIn && <AddGameToLibraryButton gameId={game.id} />}
       </div>

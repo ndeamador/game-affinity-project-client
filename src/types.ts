@@ -7,7 +7,20 @@ export interface Game {
   platforms: Platform[];
   genres: Genre[];
   total_rating_count: number;
+  involved_companies: InvolvedCompany[];
 }
+
+export interface InvolvedCompany {
+  id: number;
+  developer: boolean;
+  company: Company;
+}
+
+export interface Company {
+  id: number;
+  name: string;
+}
+
 
 export interface Platform {
   id: number;

@@ -6,6 +6,8 @@ import loadingTravolta from '../assets/notFound-264x374.gif';
 import { User } from '../types';
 import FullPageSpinner from '../components/FullPageSpinner';
 import AddToLibraryButton from '../components/AddToLibraryButton';
+import PlatformIcons from '../components/PlatformIcons';
+import ReleaseDeveoperRow from '../components/ReleaseDeveloperRow';
 
 const GameProfile = ({ userLoggedIn }: { userLoggedIn?: User }) => {
   const { gameId } = useParams<{ gameId: string }>();
@@ -34,6 +36,7 @@ const GameProfile = ({ userLoggedIn }: { userLoggedIn?: User }) => {
       }}
     >
       <div
+        className='coverDiv'
         css={{
           width: '264px',
           maxWidth: '264px',
@@ -48,9 +51,22 @@ const GameProfile = ({ userLoggedIn }: { userLoggedIn?: User }) => {
         ></img>
       </div>
 
-      <div>
-        <h3>{game.name}</h3>
-        <p>{game.summary}</p>
+      <div
+        className='gameInfoDiv'
+        css={{
+          display: 'flex',
+          flexDirection: 'column',
+          paddingLeft: '20px',
+          '> *': {
+            margin: '0',
+            paddingBottom: '15px',
+          },
+        }}
+      >
+        <h2>{game.name}</h2>
+        <ReleaseDeveoperRow game={game} />
+        <PlatformIcons platforms={game.platforms} />
+        <p css={{ paddingTop: '10px', paddingBottom: 0 }}>{game.summary}</p>
       </div>
 
       {userLoggedIn && <AddToLibraryButton gameId={gameId} />}
