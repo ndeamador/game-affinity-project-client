@@ -26,6 +26,7 @@ export const CURRENT_USER = gql`
       gamesInLibrary {
         id
         igdb_game_id
+        rating
     }
     }
   }

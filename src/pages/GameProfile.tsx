@@ -8,12 +8,14 @@ import FullPageSpinner from '../components/FullPageSpinner';
 import AddToLibraryButton from '../components/AddToLibraryButton';
 import PlatformIcons from '../components/PlatformIcons';
 import ReleaseDeveoperRow from '../components/ReleaseDeveloperRow';
+import Rater from '../components/Rater';
 
 const GameProfile = ({ userLoggedIn }: { userLoggedIn?: User }) => {
   const { gameId } = useParams<{ gameId: string }>();
+  const parsedGameId = parseInt(gameId);
 
   const { loading, data, error } = useQuery(FIND_GAMES, {
-    variables: { id: parseInt(gameId) },
+    variables: { id: parsedGameId },
     fetchPolicy: 'cache-first',
     onError: (err) => console.log('Failed to find games: ', err),
   });
@@ -67,9 +69,11 @@ const GameProfile = ({ userLoggedIn }: { userLoggedIn?: User }) => {
         <ReleaseDeveoperRow game={game} />
         <PlatformIcons platforms={game.platforms} />
         <p css={{ paddingTop: '10px', paddingBottom: 0 }}>{game.summary}</p>
+
+        {userLoggedIn && <Rater gameId={parsedGameId} user={userLoggedIn} />}
       </div>
 
-      {userLoggedIn && <AddToLibraryButton gameId={gameId} />}
+      {userLoggedIn && <AddToLibraryButton gameId={parsedGameId} />}
     </div>
   );
 };

@@ -43,6 +43,11 @@ export interface GameQuery {
   findGames: Game[]
 }
 
+export interface LoginDetails {
+  email: string;
+  password: string;
+}
+
 export interface User {
   id: string;
   // username: String!
@@ -50,15 +55,13 @@ export interface User {
   gamesInLibrary: [GameInUserLibrary];
 }
 
-export interface LoginDetails {
-  email: string;
-  password: string;
-}
-
 export interface GameInUserLibrary {
   id: number;
   igdb_game_id: number;
+  rating?: Rating;
 }
+
+export type Rating = 0 | 1 | 2 | 3;
 
 export interface libraryIdsResponse { // review
   getLibraryIds: GameInUserLibrary[];

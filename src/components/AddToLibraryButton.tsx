@@ -8,8 +8,8 @@ import useAddToLibrary from '../hooks/useAddToLibrary';
 import useRemoveFromLibrary from '../hooks/useRemoveFromLibrary';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 
-const AddToLibraryButton = ({ gameId }: { gameId: string }) => {
-  const parsedGameId = parseInt(gameId);
+const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
+  const parsedGameId = typeof gameId === 'string' ? parseInt(gameId) : gameId;
 
   const [
     getCurrentUser,
@@ -47,6 +47,7 @@ const AddToLibraryButton = ({ gameId }: { gameId: string }) => {
           onClick={() => removeGameFromLibrary()}
           icon={<FaTimes />}
           isLoading={loadingLibrary || deletingGame}
+          highlight='red'
         />
       ) : (
         <TooltipButton
@@ -58,6 +59,7 @@ const AddToLibraryButton = ({ gameId }: { gameId: string }) => {
           isLoading={addingToLibrary}
           isError={libraryError ? true : false}
           errorMessage={libraryError?.message}
+          highlight='blue'
         />
       )}
     </div>

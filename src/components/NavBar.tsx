@@ -5,7 +5,30 @@ import { OpenLoginRegisterModalOptions, User } from '../types';
 
 import LoginRegisterButton from '../components/LoginRegisterButton';
 import LogoutButton from '../components/LogoutButton';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
+import { css } from '@emotion/react';
+import * as colors from '../styles/colors';
+
+const navLinkStyle = css({
+  // display: 'block',
+  padding: '5px 10px',
+  margin: '5px 0',
+  // width: '100%',
+  height: '100%',
+  color: colors.text,
+  borderRadius: '2px',
+  textDecoration: 'none',
+  // borderLeft: '5px solid transparent',
+  ':hover': {
+    color: colors.indigo,
+    background: colors.gray10,
+  },
+});
+
+const navLinkActiveStyle = {
+  fontWeight: 'bold',
+  color: 'red',
+};
 
 const NavBar = ({ userLoggedIn }: { userLoggedIn: User }) => {
   const [openModal, setOpenModal] = useState<OpenLoginRegisterModalOptions>(
@@ -22,12 +45,30 @@ const NavBar = ({ userLoggedIn }: { userLoggedIn: User }) => {
       }}
     >
       <div css={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <NavLink css={{ padding: 5 }} to='/'>
+        <NavLink
+          to='/'
+          // activeClassName='selected'
+          activeStyle={{
+            fontWeight: 'bold',
+            color: 'red',
+          }}
+          css={navLinkStyle}
+          exact={true} // to avoid that the home navlink is set as active by any route starting with /
+        >
           Home
         </NavLink>
 
         {userLoggedIn && (
-          <NavLink css={{ padding: 5 }} to='/library'>
+          <NavLink
+            to='/library'
+            // activeClassName='selected'
+            activeStyle={{
+              fontWeight: 'bold',
+              color: 'green',
+            }}
+            css={navLinkStyle}
+            exact={true}
+          >
             My library
           </NavLink>
         )}

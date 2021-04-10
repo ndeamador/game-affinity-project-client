@@ -56,3 +56,11 @@ mutation removeGameFromLibrary($igdb_game_id: Int!) {
   removeGameFromLibrary(igdb_game_id: $igdb_game_id)
 }
 `
+
+
+// returns a boolean.
+export const UPDATE_RATING = gql`
+mutation updateRating($gameId: Int!, $rating: Int!) {
+  updateRating(gameId: $gameId, rating:$rating)
+}
+`
