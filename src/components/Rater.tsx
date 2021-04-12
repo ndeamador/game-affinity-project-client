@@ -43,7 +43,7 @@ const Rater = ({ gameId, user }: { gameId: number; user: User }) => {
   const ratingValue = findGameInLibrary({ gameId, user })?.rating;
   console.log('rating: ', ratingValue);
 
-  const elementClassName = `rating-${gameId}`; // this is the name of the input element, not the icon itself.
+  const elementClassName = `rating-${gameId}`;
   const icons = Array.from({ length: 4 }).map((_x, i) => {
 
     const inputId = `rating-input-${String(iconLevels[i].key)}`;

@@ -9,6 +9,7 @@ import AddToLibraryButton from '../components/AddToLibraryButton';
 import PlatformIcons from '../components/PlatformIcons';
 import ReleaseDeveoperRow from '../components/ReleaseDeveloperRow';
 import Rater from '../components/Rater';
+import { Redirect } from 'react-router-dom';
 
 const GameProfile = ({ userLoggedIn }: { userLoggedIn?: User }) => {
   const { gameId } = useParams<{ gameId: string }>();
@@ -17,11 +18,18 @@ const GameProfile = ({ userLoggedIn }: { userLoggedIn?: User }) => {
   const { loading, data, error } = useQuery(FIND_GAMES, {
     variables: { id: parsedGameId },
     fetchPolicy: 'cache-first',
-    onError: (err) => console.log('Failed to find games: ', err),
+    onError: (err) => {
+      console.log('Failed to find games: ', err);
+      <Redirect to='/' />;
+    },
   });
 
+  console.log('DENTRO: ', loading, error, error ? 'hay error' : 'nada');
   if (loading) return <FullPageSpinner />;
-  if (error) return <h3>{error.message}</h3>;
+  console.log('middle');
+  if (error || data.findGames.length === 0) {
+    return <Redirect to='/' />;
+  }
 
   const game = data?.findGames[0];
 

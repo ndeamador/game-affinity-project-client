@@ -13,7 +13,7 @@ const Home = () => {
   const [games, setGames] = useState([]);
   const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounce(query, 250); //https://www.npmjs.com/package/use-debounce
-  const [findGames, { loading }] = useLazyQuery(FIND_GAMES, {
+  const [findGames, { loading, error }] = useLazyQuery(FIND_GAMES, {
     onCompleted: (result) => {
       console.log('Home found games: ', result);
       setGames(result.findGames);
@@ -40,6 +40,7 @@ const Home = () => {
 
   return (
     <div
+      id='Home page div'
       css={{
         display: 'flex',
         alignItems: 'stretch',
@@ -85,7 +86,12 @@ const Home = () => {
           </Tooltip>
         </form>
 
-        {query && !loading ? <GameList games={games} /> : null}
+        {error ? (
+          <div>Failed to connect to server.</div>
+        ) : query && !loading ? (
+          <GameList games={games} />
+        ) : null}
+        {/* {query && !loading ? <GameList games={games} /> : null} */}
       </div>
     </div>
   );

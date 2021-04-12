@@ -28,7 +28,7 @@ const Library = ({ userLoggedIn }: { userLoggedIn?: User }) => {
 
   const [
     findGames,
-    { data: gamesResponse, loading: loadingGames },
+    { data: gamesResponse, loading: loadingGames, error },
   ] = useLazyQuery(FIND_GAMES, {
     variables: {
       id: gameIdsInLibrary,
@@ -45,6 +45,7 @@ const Library = ({ userLoggedIn }: { userLoggedIn?: User }) => {
   // );
 
   if (loadingGames) return <FullPageSpinner />;
+  if (error) return <div>Failed to connect to the server.</div>;
 
   const games = gamesResponse?.findGames;
 
