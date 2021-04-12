@@ -2,13 +2,15 @@
 
 import { FaStar, FaHeart } from 'react-icons/fa';
 import { IoIosThumbsDown, IoIosThumbsUp } from 'react-icons/io';
-import { User } from '../types';
 import findGameInLibrary from '../utils/findGameInLibrary';
 import { useMutation } from '@apollo/client';
 import { UPDATE_RATING } from '../graphql/mutations';
 import { CURRENT_USER } from '../graphql/queries';
+import useAuthContext from '../hooks/useAuthContext';
 
-const Rater = ({ gameId, user }: { gameId: number; user: User }) => {
+const Rater = ({ gameId }: { gameId: number }) => {
+  const authContext = useAuthContext();
+  const currentUser = authContext?.currentUser;
   const [updateRating] = useMutation(UPDATE_RATING, {
     refetchQueries: [{ query: CURRENT_USER }],
   });
@@ -38,14 +40,13 @@ const Rater = ({ gameId, user }: { gameId: number; user: User }) => {
     />,
   ];
 
-  console.log(iconLevels);
-
-  const ratingValue = findGameInLibrary({ gameId, user })?.rating;
+  const ratingValue = currentUser
+    ? findGameInLibrary({ gameId, user: currentUser })?.rating
+    : undefined;
   console.log('rating: ', ratingValue);
 
   const elementClassName = `rating-${gameId}`;
   const icons = Array.from({ length: 4 }).map((_x, i) => {
-
     const inputId = `rating-input-${String(iconLevels[i].key)}`;
     return (
       <div key={iconLevels[i].key}>

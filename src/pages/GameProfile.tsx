@@ -10,8 +10,11 @@ import PlatformIcons from '../components/PlatformIcons';
 import ReleaseDeveoperRow from '../components/ReleaseDeveloperRow';
 import Rater from '../components/Rater';
 import { Redirect } from 'react-router-dom';
+import useAuthContext from '../hooks/useAuthContext';
 
-const GameProfile = ({ userLoggedIn }: { userLoggedIn?: User }) => {
+const GameProfile = () => {
+  const authContext = useAuthContext();
+  const currentUser = authContext?.currentUser;
   const { gameId } = useParams<{ gameId: string }>();
   const parsedGameId = parseInt(gameId);
 
@@ -78,10 +81,10 @@ const GameProfile = ({ userLoggedIn }: { userLoggedIn?: User }) => {
         <PlatformIcons platforms={game.platforms} />
         <p css={{ paddingTop: '10px', paddingBottom: 0 }}>{game.summary}</p>
 
-        {userLoggedIn && <Rater gameId={parsedGameId} user={userLoggedIn} />}
+        {currentUser && <Rater gameId={parsedGameId} />}
       </div>
 
-      {userLoggedIn && <AddToLibraryButton gameId={parsedGameId} />}
+      {currentUser && <AddToLibraryButton gameId={parsedGameId} />}
     </div>
   );
 };

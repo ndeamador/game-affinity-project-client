@@ -6,9 +6,12 @@ import { Link } from 'react-router-dom';
 import FullPageSpinner from '../components/FullPageSpinner';
 import GameList from '../components/GameList';
 import { FIND_GAMES } from '../graphql/queries';
+import useAuthContext from '../hooks/useAuthContext';
 import { User } from '../types';
 
-const Library = ({ userLoggedIn }: { userLoggedIn?: User }) => {
+const Library = () => {
+  const authContext = useAuthContext();
+  const currentUser = authContext?.currentUser;
   // I use useLazyQuery+useEffect to prevent a React Strict Mode warning related to async callbacks on unmountd components.
   // https://github.com/apollographql/apollo-client/issues/6209
 
@@ -22,7 +25,7 @@ const Library = ({ userLoggedIn }: { userLoggedIn?: User }) => {
   //   getLibrary();
   // }, [getLibrary]);
 
-  const gameIdsInLibrary = userLoggedIn?.gamesInLibrary.map(
+  const gameIdsInLibrary = currentUser?.gamesInLibrary.map(
     (game) => game.igdb_game_id
   );
 

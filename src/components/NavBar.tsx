@@ -8,6 +8,7 @@ import LogoutButton from '../components/LogoutButton';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { css } from '@emotion/react';
 import * as colors from '../styles/colors';
+import useAuthContext from '../hooks/useAuthContext';
 
 const navLinkStyle = css({
   // display: 'block',
@@ -30,7 +31,9 @@ const navLinkActiveStyle = {
   color: 'red',
 };
 
-const NavBar = ({ userLoggedIn }: { userLoggedIn: User }) => {
+const NavBar = () => {
+  const authContext = useAuthContext();
+  const currentUser = authContext?.currentUser;
   const [openModal, setOpenModal] = useState<OpenLoginRegisterModalOptions>(
     'none'
   );
@@ -58,7 +61,7 @@ const NavBar = ({ userLoggedIn }: { userLoggedIn: User }) => {
           Home
         </NavLink>
 
-        {userLoggedIn && (
+        {currentUser && (
           <NavLink
             to='/library'
             // activeClassName='selected'
@@ -74,12 +77,12 @@ const NavBar = ({ userLoggedIn }: { userLoggedIn: User }) => {
         )}
       </div>
 
-      {userLoggedIn ? (
+      {currentUser ? (
         <div css={{ display: 'flex' }}>
           <div
             css={{ display: 'flex', alignItems: 'center', padding: '0 10px' }}
           >
-            {userLoggedIn.email}
+            {currentUser.email}
           </div>
           <LogoutButton />
         </div>

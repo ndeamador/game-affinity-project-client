@@ -16,35 +16,40 @@ import Library from './pages/Library';
 import useCurrentUser from './hooks/useCurrentUser';
 import FullPageSpinner from './components/FullPageSpinner';
 
+import AuthContext from './context/AuthContext';
+
 function App() {
   const {
-    authenticatedUser: userLoggedIn,
+    authenticatedUser: currentUser,
     loading: loadingUser,
   } = useCurrentUser();
-  console.log('app user: ', userLoggedIn, ' - loadingUser: ', loadingUser);
+  console.log('app user: ', currentUser, ' - loadingUser: ', loadingUser);
+
+  const contextProps = { currentUser };
 
   return (
-    <div
-      className='App'
-      css={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        // justifyContent: 'flex-start',
-        width: '100%',
-        height: '100vh',
-      }}
-    >
-      <Router>
-        <NavBar userLoggedIn={userLoggedIn} />
+    <AuthContext.Provider value={contextProps}>
+      <div
+        className='App'
+        css={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          // justifyContent: 'flex-start',
+          width: '100%',
+          height: '100vh',
+        }}
+      >
+        <Router>
+          <NavBar />
 
-        <Switch>
-          <Route path={'/game/:gameId'}>
-            <GameProfile userLoggedIn={userLoggedIn} />
-          </Route>
+          <Switch>
+            <Route path={'/game/:gameId'}>
+              <GameProfile />
+            </Route>
 
-          {/* <Route path={'/library'}>
-            {userLoggedIn ? (
+            {/* <Route path={'/library'}>
+            {currentUser ? (
               <Library />
             ) : loadingUser ? (
               <FullPageSpinner />
@@ -53,28 +58,28 @@ function App() {
             )}
           </Route> */}
 
-          {/* <Route path={'/library'}>
+            {/* <Route path={'/library'}>
             <Library />
-            {!userLoggedIn && <Redirect to='/' />}
+            {!currentUser && <Redirect to='/' />}
           </Route> */}
 
+            <Route path={'/library'}>
+              {!currentUser ? (
+                <Redirect to='/' />
+              ) : loadingUser ? (
+                <FullPageSpinner />
+              ) : (
+                <Library />
+              )}
+            </Route>
 
-          <Route path={'/library'}>
-            {!userLoggedIn ? (
-              <Redirect to='/' />
-            ) : loadingUser ? (
-              <FullPageSpinner />
-            ) : (
-              <Library userLoggedIn={userLoggedIn}/>
-            )}
-          </Route>
-
-          <Route path='/'>
-            <Home />
-          </Route>
-        </Switch>
-      </Router>
-    </div>
+            <Route path='/'>
+              <Home />
+            </Route>
+          </Switch>
+        </Router>
+      </div>
+    </AuthContext.Provider>
   );
 }
 
