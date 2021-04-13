@@ -9,6 +9,8 @@ import {
   InMemoryCache,
 } from '@apollo/client';
 
+import { AuthProvider } from './context/AuthContext';
+
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
@@ -20,7 +22,9 @@ const client = new ApolloClient({
 ReactDOM.render(
   <ApolloProvider client={client}>
     <React.StrictMode>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </React.StrictMode>
   </ApolloProvider>,
   document.getElementById('root')

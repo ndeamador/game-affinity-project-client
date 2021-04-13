@@ -1,9 +1,11 @@
+/** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled/macro'; // /macro so that elements appear named in the dom
 import { keyframes } from '@emotion/react';
 import * as colors from '../styles/colors';
 // import * as mediaQueries from '../styles/media-queries';
 // import { Dialog } from '@reach/dialog';
 import { ImSpinner2 } from 'react-icons/im'; // svg library
+import { ApolloError } from '@apollo/client';
 
 // BUTTON
 
@@ -97,12 +99,32 @@ export const Input = styled.input({
 
 // SPINNER
 const spin = keyframes({
-  '0%': {transform: 'rotate(0deg)'},
-  '100%': {transform: 'rotate(360deg)'}
-})
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' },
+});
 export const Spinner = styled(ImSpinner2)({
   animation: `${spin} 1s linear infinite`,
 });
 Spinner.defaultProps = {
-  "aria-label": 'loading'
-}
+  'aria-label': 'loading',
+};
+
+// FULL PAGE ERROR
+export const FullPageError = ({ error }: { error: ApolloError | undefined}) => {
+  return (
+    <div
+      role='alert'
+      css={{
+        color: colors.danger,
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <p>Something went wrong. Try refreshing the app.</p>
+      <pre>{error?.message}</pre>
+    </div>
+  );
+};

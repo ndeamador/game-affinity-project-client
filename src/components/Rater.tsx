@@ -6,11 +6,11 @@ import findGameInLibrary from '../utils/findGameInLibrary';
 import { useMutation } from '@apollo/client';
 import { UPDATE_RATING } from '../graphql/mutations';
 import { CURRENT_USER } from '../graphql/queries';
-import useAuthContext from '../hooks/useAuthContext';
+import { useAuthContext } from '../context/AuthContext';
 
 const Rater = ({ gameId }: { gameId: number }) => {
-  const authContext = useAuthContext();
-  const currentUser = authContext?.currentUser;
+  const { currentUser } = useAuthContext();
+  // const currentUser = authContext?.currentUser;
   const [updateRating] = useMutation(UPDATE_RATING, {
     refetchQueries: [{ query: CURRENT_USER }],
   });

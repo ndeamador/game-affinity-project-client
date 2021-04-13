@@ -1,0 +1,10 @@
+/* using html or the pseudo class :root gives the same results. Html has more specificity */
+/* html {
+} */
+
+body {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}

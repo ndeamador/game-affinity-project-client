@@ -1,15 +1,16 @@
-import { useQuery } from '@apollo/client';
+import { ApolloError, useQuery } from '@apollo/client';
 import { CURRENT_USER } from '../graphql/queries';
 import { User } from '../types';
 
 interface useCurrentUserReturn {
-  authenticatedUser: User;
+  currentUser: User;
   loading: boolean;
+  error: ApolloError | undefined;
 }
 
 const useCurrentUser = (): useCurrentUserReturn => {
 
-  const { data, loading } = useQuery(CURRENT_USER, {
+  const { data, loading, error } = useQuery(CURRENT_USER, {
     fetchPolicy: 'cache-first',
     // onCompleted: (data) => {
     //   if (data.me === null) {
@@ -24,8 +25,9 @@ const useCurrentUser = (): useCurrentUserReturn => {
   });
 
   return {
-    authenticatedUser: data ? data.me : null,
+    currentUser: data ? data.me : null,
     loading,
+    error
   }
 }
 

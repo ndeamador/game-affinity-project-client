@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
 import { useState } from 'react';
-import { OpenLoginRegisterModalOptions, User } from '../types';
+import { OpenLoginRegisterModalOptions } from '../types';
 
 import LoginRegisterButton from '../components/LoginRegisterButton';
 import LogoutButton from '../components/LogoutButton';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/react';
 import * as colors from '../styles/colors';
-import useAuthContext from '../hooks/useAuthContext';
+import { useAuthContext } from '../context/AuthContext';
 
 const navLinkStyle = css({
   // display: 'block',
@@ -26,14 +26,14 @@ const navLinkStyle = css({
   },
 });
 
-const navLinkActiveStyle = {
-  fontWeight: 'bold',
-  color: 'red',
-};
+// const navLinkActiveStyle = {
+//   fontWeight: 'bold',
+//   color: 'red',
+// };
 
 const NavBar = () => {
-  const authContext = useAuthContext();
-  const currentUser = authContext?.currentUser;
+  const { currentUser } = useAuthContext();
+  // const currentUser = authContext?.currentUser;
   const [openModal, setOpenModal] = useState<OpenLoginRegisterModalOptions>(
     'none'
   );

@@ -3,18 +3,17 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { FIND_GAMES } from '../graphql/queries';
 import loadingTravolta from '../assets/notFound-264x374.gif';
-import { User } from '../types';
 import FullPageSpinner from '../components/FullPageSpinner';
 import AddToLibraryButton from '../components/AddToLibraryButton';
 import PlatformIcons from '../components/PlatformIcons';
 import ReleaseDeveoperRow from '../components/ReleaseDeveloperRow';
 import Rater from '../components/Rater';
 import { Redirect } from 'react-router-dom';
-import useAuthContext from '../hooks/useAuthContext';
+import { useAuthContext } from '../context/AuthContext';
 
 const GameProfile = () => {
-  const authContext = useAuthContext();
-  const currentUser = authContext?.currentUser;
+  const { currentUser } = useAuthContext();
+  // const currentUser = authContext?.currentUser;
   const { gameId } = useParams<{ gameId: string }>();
   const parsedGameId = parseInt(gameId);
 

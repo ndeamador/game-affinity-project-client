@@ -13,7 +13,6 @@ import {
   FaQuestion,
 } from 'react-icons/fa';
 import { SiNintendo } from 'react-icons/si';
-import { useState } from 'react';
 
 // https://api-docs.igdb.com/#platform-family
 enum Family {
@@ -25,14 +24,14 @@ enum Family {
 }
 
 // https://api-docs.igdb.com/#platform
-enum Category {
-  console = 1, // FaGamepad
-  arcade, // 2 -
-  platform, // 3
-  operating_system, // 4
-  portable_console, // 5
-  computer, // 6
-}
+// enum Category {
+//   console = 1, // FaGamepad
+//   arcade, // 2 -
+//   platform, // 3
+//   operating_system, // 4
+//   portable_console, // 5
+//   computer, // 6
+// }
 
 enum PlatformIds {
   Windows = 6,

@@ -5,12 +5,12 @@ export const FIND_GAMES = gql`
   query findGames(
     $name: String
     $id: [Int!]
-    # $maxResults: Int
+    $maxResults: Int
   ) {
     findGames(
       name: $name
       id: $id
-      # maxResults: $maxResults
+      maxResults: $maxResults
     ) {
       ...GameDetails
     }

@@ -5,7 +5,6 @@ import { CgGames } from 'react-icons/cg';
 import AddGameToLibraryButton from './AddToLibraryButton';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 import { useEffect } from 'react';
-import { convertMilisecondsToDate } from '../utils/misc';
 import PlatformIcons from './PlatformIcons';
 import ReleaseDeveloperRow from '../components/ReleaseDeveloperRow';
 
