@@ -6,22 +6,13 @@ import { GameInUserLibrary } from '../types';
 import { useEffect } from 'react';
 import useAddToLibrary from '../hooks/useAddToLibrary';
 import useRemoveFromLibrary from '../hooks/useRemoveFromLibrary';
-import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
+import { useAuthContext } from '../context/AuthContext';
 
 const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
   const parsedGameId = typeof gameId === 'string' ? parseInt(gameId) : gameId;
+  const { currentUser } = useAuthContext();
 
-  const [
-    getCurrentUser,
-    { data: currentUser, loading: loadingLibrary },
-  ] = useLazyCurrentUser();
-
-  // execute query on component mount
-  useEffect(() => {
-    getCurrentUser();
-  }, [getCurrentUser]);
-
-  const library = currentUser?.me.gamesInLibrary;
+  const library = currentUser.gamesInLibrary;
 
   const isGameInLibrary: boolean = library?.find(
     (game: GameInUserLibrary) => game.igdb_game_id === parsedGameId
@@ -46,7 +37,7 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
           label='Remove from library'
           onClick={() => removeGameFromLibrary()}
           icon={<FaTimes />}
-          isLoading={loadingLibrary || deletingGame}
+          isLoading={deletingGame}
           highlight='red'
         />
       ) : (

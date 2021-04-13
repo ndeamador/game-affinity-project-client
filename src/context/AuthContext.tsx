@@ -1,8 +1,9 @@
-import React, { ProviderProps } from 'react';
+import React, { ProviderProps, useEffect } from 'react';
 import useCurrentUser from '../hooks/useCurrentUser';
 import { User } from '../types';
 import FullPageSpinner from '../components/FullPageSpinner';
 import { FullPageError } from '../components/styledComponentsLibrary';
+import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 
 interface AuthContextProps {
   currentUser: User;
@@ -11,6 +12,8 @@ interface AuthContextProps {
 const AuthContext = React.createContext<AuthContextProps | undefined>(
   undefined
 );
+// Provide a more specific name to be shown in React Dev Tools > Components
+AuthContext.displayName = 'AuthContext';
 
 const useAuthContext = () => {
   const context = React.useContext(AuthContext);
@@ -24,7 +27,12 @@ const useAuthContext = () => {
 
 // const AuthProvider = (props: any) => {
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { currentUser, loading, error } = useCurrentUser();
+  const { getCurrentUser, currentUser, loading, error } = useLazyCurrentUser();
+
+  useEffect(() => {
+    getCurrentUser();
+  }, [getCurrentUser]);
+
   console.log('user: ', currentUser, ' - loadingUser: ', loading);
 
   if (loading) return <FullPageSpinner />;

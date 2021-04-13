@@ -3,20 +3,12 @@ import { Game } from '../types';
 import { Link } from 'react-router-dom';
 import { CgGames } from 'react-icons/cg';
 import AddGameToLibraryButton from './AddToLibraryButton';
-import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
-import { useEffect } from 'react';
 import PlatformIcons from './PlatformIcons';
 import ReleaseDeveloperRow from '../components/ReleaseDeveloperRow';
+import { useAuthContext } from '../context/AuthContext';
 
 const GameListItem = ({ game }: { game: Game }) => {
-  const [getCurrentUser, { data }] = useLazyCurrentUser();
-  const userLoggedIn = data?.me;
-
-  console.log('game:', game);
-
-  useEffect(() => {
-    getCurrentUser();
-  }, [getCurrentUser]);
+  const { currentUser } = useAuthContext();
 
   // Setting image resolution from url: https://api-docs.igdb.com/#images
   const imageSize = 'thumb';
@@ -106,7 +98,7 @@ const GameListItem = ({ game }: { game: Game }) => {
 
           <PlatformIcons platforms={game.platforms} />
         </div>
-        {userLoggedIn && <AddGameToLibraryButton gameId={game.id} />}
+        {currentUser && <AddGameToLibraryButton gameId={game.id} />}
       </div>
     </Link>
   );
