@@ -5,11 +5,13 @@ import FullPageSpinner from '../components/FullPageSpinner';
 import { FullPageError } from '../components/styledComponentsLibrary';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 
-interface AuthContextProps {
+interface AuthContextValue {
   currentUser: User;
 }
 
-const AuthContext = React.createContext<AuthContextProps | undefined>(
+type AuthCtxtProviderPropsOmitValue = Omit<ProviderProps<AuthContextValue>, 'value'>
+
+const AuthContext = React.createContext<AuthContextValue | undefined>(
   undefined
 );
 // Provide a more specific name to be shown in React Dev Tools > Components
@@ -25,8 +27,9 @@ const useAuthContext = () => {
   return { currentUser: context.currentUser };
 };
 
-// const AuthProvider = (props: any) => {
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+
+const AuthProvider: React.FunctionComponent<AuthCtxtProviderPropsOmitValue> = (props) => {
+  // const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { getCurrentUser, currentUser, loading, error } = useLazyCurrentUser();
 
   useEffect(() => {
@@ -38,12 +41,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   if (loading) return <FullPageSpinner />;
   if (error) return <FullPageError error={error} />;
 
-  // return <AuthContext.Provider value={{ currentUser }} {...props} />;
-  return (
-    <AuthContext.Provider value={{ currentUser }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ currentUser }} {...props} />;
+  // return (
+  //   <AuthContext.Provider value={{ currentUser }}>
+  //     {children}
+  //   </AuthContext.Provider>
+  // );
 };
 
 export { AuthProvider, useAuthContext };

@@ -18,7 +18,7 @@ const useLazyCurrentUser = () => {
       console.log('useLazyCurrentUser error: ', err.message);
     },
   });
-  const currentUser = data.me;
+  const currentUser = data?.me;
   return { getCurrentUser, currentUser, ...result };
 };
 
