@@ -26,14 +26,14 @@ const GameProfile = () => {
     },
   });
 
-  console.log('DENTRO: ', loading, error, error ? 'hay error' : 'nada');
+
   if (loading) return <FullPageSpinner />;
-  console.log('middle');
   if (error || data.findGames.length === 0) {
     return <Redirect to='/' />;
   }
 
   const game = data?.findGames[0];
+  console.log('GAME: ', game);
 
   // Setting image resolution from url: https://api-docs.igdb.com/#images
   const imageSize = 'cover_big';

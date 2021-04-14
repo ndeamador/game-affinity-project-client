@@ -16,7 +16,7 @@ const GameListItem = ({ game }: { game: Game }) => {
 
   return (
     <Link
-      to={`/game/${game.id}`}
+      to={`/games/${game.id}`}
       key={game.id}
       css={{ textDecoration: 'none' }}
     >

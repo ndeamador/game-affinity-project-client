@@ -4,11 +4,12 @@ export const capitalizeFirstLetter = (string: string): string => {
 
 
 export const convertMilisecondsToDate = (miliseconds: number) => {
-  const date = new Date(miliseconds*1000);
-  // console.log('This should be 28/09/2018: \n', new Date(1538129354*1000).toString());
+  const date = new Date(miliseconds * 1000);
+
   return {
     day: date.getDate(),
-    month: date.getMonth(),
+    // getMonth() is starts counting from 0, so we need to add 1: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getMonth
+    month: date.getMonth() + 1,
     year: date.getFullYear(),
   };
 }

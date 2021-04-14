@@ -36,7 +36,7 @@ function App() {
         <NavBar />
 
         <Switch>
-          <Route path={'/game/:gameId'}>
+          <Route path={'/games/:gameId'}>
             <GameProfile />
           </Route>
 
