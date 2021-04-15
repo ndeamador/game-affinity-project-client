@@ -4,19 +4,22 @@ import { FaStar, FaHeart } from 'react-icons/fa';
 import { IoIosThumbsDown, IoIosThumbsUp } from 'react-icons/io';
 import findGameInLibrary from '../utils/findGameInLibrary';
 import { useMutation } from '@apollo/client';
-import { UPDATE_RATING } from '../graphql/mutations';
+import { ADD_TO_LIBRARY, UPDATE_RATING } from '../graphql/mutations';
 import { CURRENT_USER } from '../graphql/queries';
 import { useAuthContext } from '../context/AuthContext';
+import { ChangeEvent } from 'react';
 
 const Rater = ({ gameId }: { gameId: number }) => {
   const { currentUser } = useAuthContext();
-  // const currentUser = authContext?.currentUser;
   const [updateRating] = useMutation(UPDATE_RATING, {
     refetchQueries: [{ query: CURRENT_USER }],
   });
+  const [addGameToLibrary] = useMutation(ADD_TO_LIBRARY, {
+    variables: { gameId: gameId },
+    // refetchQueries: [{ query: CURRENT_USER }],
+  });
 
   const iconColors = ['DarkSlateBlue', 'green', 'gold', 'red'];
-
   const iconLevels = [
     <IoIosThumbsDown
       key='thumbs-down'
@@ -40,29 +43,37 @@ const Rater = ({ gameId }: { gameId: number }) => {
     />,
   ];
 
+  // Extract game rating from me query.
   const ratingValue = currentUser
     ? findGameInLibrary({ gameId, user: currentUser })?.rating
     : undefined;
   console.log('rating: ', ratingValue);
 
   const elementClassName = `rating-${gameId}`;
+
+  const handleRatingChange = (event: ChangeEvent<HTMLInputElement>) => {
+    findGameInLibrary({ gameId: gameId, user: currentUser }) ??
+      addGameToLibrary();
+
+    updateRating({
+      variables: {
+        gameId: gameId,
+        rating: parseInt(event.target.value),
+      },
+    });
+  };
+
   const icons = Array.from({ length: 4 }).map((_x, i) => {
     const inputId = `rating-input-${String(iconLevels[i].key)}`;
     return (
       <div key={iconLevels[i].key}>
         <input
+          aria-label={inputId}
           name={elementClassName}
           type='radio'
           value={i}
           checked={i === ratingValue}
-          onChange={(event) =>
-            updateRating({
-              variables: {
-                gameId: gameId,
-                rating: parseInt(event.target.value),
-              },
-            })
-          }
+          onChange={handleRatingChange}
           id={inputId}
           css={[
             {
