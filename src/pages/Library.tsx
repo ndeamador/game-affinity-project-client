@@ -29,6 +29,8 @@ const Library = () => {
     (game) => game.igdb_game_id
   );
 
+  if (gameIdsInLibrary.length === 0) return <div>Your library is empty!</div>;
+
   const [
     findGames,
     { data: gamesResponse, loading: loadingGames, error },
@@ -50,7 +52,7 @@ const Library = () => {
   // );
 
   if (loadingGames) return <FullPageSpinner />;
-  if (error) return <div>Failed to connect to the server.</div>;
+  if (error) return <div>{error.message}</div>;
 
   const games = gamesResponse?.findGames;
 

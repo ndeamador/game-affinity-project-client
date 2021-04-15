@@ -65,7 +65,7 @@ const PlatformIcons = ({ platforms }: { platforms: Platform[] }) => {
   // let mac = false; // FaApple
   // let android = false; // FaAndroid
   // let iOS = false; // FaAppStoreIos
-  // let otherDevices = false; // MdDevicesOther
+  // let otherPlatforms = false; // MdDevicesOther
 
   const availablePlatforms: AvailablePlatform = {
     windows: {
@@ -108,8 +108,8 @@ const PlatformIcons = ({ platforms }: { platforms: Platform[] }) => {
       found: false,
       icon: <FaAppStoreIos />,
     },
-    otherDevices: {
-      displayName: 'Other Devices',
+    otherPlatforms: {
+      displayName: 'Other Platforms',
       found: false,
       icon: <FaGamepad />,
     },
@@ -174,8 +174,8 @@ const PlatformIcons = ({ platforms }: { platforms: Platform[] }) => {
       }
     }
 
-    if (availablePlatforms.otherDevices.found) return;
-    availablePlatforms.otherDevices.found = true;
+    if (availablePlatforms.otherPlatforms.found) return;
+    availablePlatforms.otherPlatforms.found = true;
     return;
   });
 
@@ -195,8 +195,11 @@ const PlatformIcons = ({ platforms }: { platforms: Platform[] }) => {
               label={availablePlatforms[platform].displayName}
               key={availablePlatforms[platform].displayName}
             >
-              <div aria-label={availablePlatforms[platform].displayName}>
-                {availablePlatforms[platform].icon}
+              <div>
+                {/* I use clone element in order to be able to pass extra props to the icon programatically */}
+                {cloneElement(availablePlatforms[platform].icon, {
+                  'aria-label': availablePlatforms[platform].displayName,
+                })}
               </div>
             </Tooltip>
           )
@@ -216,4 +219,4 @@ export default PlatformIcons;
 // {mac && <FaApple aria-label='mac' />}
 // {android && <FaAndroid aria-label='android' />}
 // {iOS && <FaAppStoreIos aria-label='iOS' />}
-// {otherDevices && <FaGamepad aria-label='otherDevices' />}
+// {otherPlatforms && <FaGamepad aria-label='otherPlatforms' />}
