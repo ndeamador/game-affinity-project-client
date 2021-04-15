@@ -80,6 +80,7 @@ const NavBar = () => {
       {currentUser ? (
         <div css={{ display: 'flex' }}>
           <div
+            aria-label='Current User'
             css={{ display: 'flex', alignItems: 'center', padding: '0 10px' }}
           >
             {currentUser.email}

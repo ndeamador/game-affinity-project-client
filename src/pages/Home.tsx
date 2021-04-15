@@ -62,6 +62,7 @@ const Home = () => {
           }}
         >
           <Input
+            id='search'
             name='search'
             placeholder='Find a game...'
             type='text'

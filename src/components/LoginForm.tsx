@@ -43,6 +43,7 @@ const LoginForm = ({ onSubmit, buttonLabel, loading }: LoginFormProps) => {
           id='email'
           name='email'
           type='email'
+          aria-label='email'
           placeholder='Sign up with your email'
           ref={register({ required: true })}
           aria-invalid={errors.email ? 'true' : 'false'}

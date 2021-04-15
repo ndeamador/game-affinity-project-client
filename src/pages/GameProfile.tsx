@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { FIND_GAMES } from '../graphql/queries';
 import loadingTravolta from '../assets/notFound-264x374.gif';
 import FullPageSpinner from '../components/FullPageSpinner';
@@ -10,6 +10,7 @@ import ReleaseDeveoperRow from '../components/ReleaseDeveloperRow';
 import Rater from '../components/Rater';
 import { Redirect } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
+import { useEffect } from 'react';
 
 const GameProfile = () => {
   const { currentUser } = useAuthContext();
@@ -17,19 +18,30 @@ const GameProfile = () => {
   const { gameId } = useParams<{ gameId: string }>();
   const parsedGameId = parseInt(gameId);
 
-  const { loading, data, error } = useQuery(FIND_GAMES, {
+  // const { loading, data, error } = useQuery(FIND_GAMES, {
+  //   variables: { id: parsedGameId },
+  //   fetchPolicy: 'cache-first',
+  //   onError: (err) => {
+  //     console.log('Failed to find games: ', err);
+  //     <Redirect to='/' />;
+  //   },
+  // });
+
+  const [findGames, { data, loading, error }] = useLazyQuery(FIND_GAMES, {
     variables: { id: parsedGameId },
-    fetchPolicy: 'cache-first',
-    onError: (err) => {
-      console.log('Failed to find games: ', err);
-      <Redirect to='/' />;
-    },
   });
 
+  // execute query on component mount
+  useEffect(() => {
+    console.log('in useEffect:', parsedGameId);
+    findGames();
+  }, [findGames]);
 
   if (loading) return <FullPageSpinner />;
-  if (error || data.findGames.length === 0) {
-    return <Redirect to='/' />;
+  if (!data || data.findGames.length === 0) return <div>Game not found.</div>;
+  if (error) {
+    throw new Error(error.message);
+    // return <Redirect to='/' />;
   }
 
   const game = data?.findGames[0];

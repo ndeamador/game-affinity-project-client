@@ -13,6 +13,10 @@ import {
   FaQuestion,
 } from 'react-icons/fa';
 import { SiNintendo } from 'react-icons/si';
+import Tooltip from '@reach/tooltip';
+import { IconType } from 'react-icons';
+
+import { cloneElement } from 'react';
 
 // https://api-docs.igdb.com/#platform-family
 enum Family {
@@ -41,74 +45,137 @@ enum PlatformIds {
   iOS = 39,
 }
 
+// We make the key dynamic to describe an object of objects.
+interface AvailablePlatform {
+  [key: string]: {
+    displayName: string;
+    found: boolean;
+    // icon: IconType,
+    icon: JSX.Element;
+  };
+}
+
 const PlatformIcons = ({ platforms }: { platforms: Platform[] }) => {
   // I don't use useState because I want to avoid rerenders during the icon calculations and because the component is static
-  let playStation = false; // FaPlaystation
-  let xbox = false; // FaXbox
-  let linux = false; // FaLinux
-  let nintendo = false; // SiNintendo
-  let windows = false; // FaWindows
-  let mac = false; // FaApple
-  let android = false; // FaAndroid
-  let iOS = false; // FaAppStoreIos
-  let otherDevices = false; // MdDevicesOther
+  // let playStation = false; // FaPlaystation
+  // let xbox = false; // FaXbox
+  // let linux = false; // FaLinux
+  // let nintendo = false; // SiNintendo
+  // let windows = false; // FaWindows
+  // let mac = false; // FaApple
+  // let android = false; // FaAndroid
+  // let iOS = false; // FaAppStoreIos
+  // let otherDevices = false; // MdDevicesOther
 
-  if (!platforms) return <FaQuestion />;
+  const availablePlatforms: AvailablePlatform = {
+    windows: {
+      displayName: 'Windows',
+      found: false,
+      icon: <FaWindows />,
+    },
+    playStation: {
+      displayName: 'PlayStation',
+      found: false,
+      icon: <FaPlaystation />,
+    },
+    xbox: {
+      displayName: 'Xbox',
+      found: false,
+      icon: <FaXbox />,
+    },
+    nintendo: {
+      displayName: 'Nintendo',
+      found: false,
+      icon: <SiNintendo />,
+    },
+    linux: {
+      displayName: 'Linux',
+      found: false,
+      icon: <FaLinux />,
+    },
+    mac: {
+      displayName: 'Mac',
+      found: false,
+      icon: <FaApple />,
+    },
+    android: {
+      displayName: 'Android',
+      found: false,
+      icon: <FaAndroid />,
+    },
+    iOS: {
+      displayName: 'iOS',
+      found: false,
+      icon: <FaAppStoreIos />,
+    },
+    otherDevices: {
+      displayName: 'Other Devices',
+      found: false,
+      icon: <FaGamepad />,
+    },
+  };
+
+  if (!platforms)
+    return (
+      <Tooltip label='Platform Unknown'>
+        <FaQuestion />
+      </Tooltip>
+    );
 
   platforms.map((platform: Platform) => {
     switch (platform.id) {
       case PlatformIds.Windows:
-        if (windows) return;
-        windows = true;
+        if (availablePlatforms.windows.found) return;
+        availablePlatforms.windows.found = true;
         return;
 
       case PlatformIds.Mac:
-        if (mac) return;
-        mac = true;
+        if (availablePlatforms.mac.found) return;
+        availablePlatforms.mac.found = true;
         return;
 
       case PlatformIds.Linux:
-        if (linux) return;
-        linux = true;
+        if (availablePlatforms.linux.found) return;
+        availablePlatforms.linux.found = true;
         return;
 
       case PlatformIds.Android:
-        if (android) return;
-        android = true;
+        if (availablePlatforms.android.found) return;
+        availablePlatforms.android.found = true;
         return;
 
       case PlatformIds.iOS:
-        if (iOS) return;
-        iOS = true;
+        if (availablePlatforms.iOS.found) return;
+        availablePlatforms.iOS.found = true;
         return;
     }
 
     if (platform.platform_family) {
       switch (platform.platform_family) {
         case Family.PlayStation:
-          if (playStation) return;
-          playStation = true;
+          if (availablePlatforms.playStation.found) return;
+          availablePlatforms.playStation.found = true;
           return;
 
         case Family.Xbox:
-          if (xbox) return;
-          xbox = true;
+          if (availablePlatforms.xbox.found) return;
+          availablePlatforms.xbox.found = true;
           return;
 
         case Family.Linux:
-          if (linux) return;
-          linux = true;
+          if (availablePlatforms.linux.found) return;
+          availablePlatforms.linux.found = true;
           return;
 
         case Family.Nintendo:
-          if (nintendo) return;
-          nintendo = true;
+          if (availablePlatforms.nintendo.found) return;
+          availablePlatforms.nintendo.found = true;
           return;
       }
     }
 
-    if (otherDevices) return;
-    otherDevices = true;
+    if (availablePlatforms.otherDevices.found) return;
+    availablePlatforms.otherDevices.found = true;
     return;
   });
 
@@ -121,17 +188,32 @@ const PlatformIcons = ({ platforms }: { platforms: Platform[] }) => {
         },
       }}
     >
-      {windows && <FaWindows />}
-      {playStation && <FaPlaystation />}
-      {xbox && <FaXbox />}
-      {nintendo && <SiNintendo />}
-      {linux && <FaLinux />}
-      {mac && <FaApple />}
-      {android && <FaAndroid />}
-      {iOS && <FaAppStoreIos />}
-      {otherDevices && <FaGamepad />}
+      {Object.keys(availablePlatforms).map((platform) => {
+        return (
+          availablePlatforms[platform].found && (
+            <Tooltip
+              label={availablePlatforms[platform].displayName}
+              key={availablePlatforms[platform].displayName}
+            >
+              <div aria-label={availablePlatforms[platform].displayName}>
+                {availablePlatforms[platform].icon}
+              </div>
+            </Tooltip>
+          )
+        );
+      })}
     </div>
   );
 };
 
 export default PlatformIcons;
+
+// {windows && <FaWindows aria-label='windows' />}
+// {playStation && <FaPlaystation aria-label='playStation' />}
+// {xbox && <FaXbox aria-label='xbox' />}
+// {nintendo && <SiNintendo aria-label='nintendo' />}
+// {linux && <FaLinux aria-label='linux' />}
+// {mac && <FaApple aria-label='mac' />}
+// {android && <FaAndroid aria-label='android' />}
+// {iOS && <FaAppStoreIos aria-label='iOS' />}
+// {otherDevices && <FaGamepad aria-label='otherDevices' />}
