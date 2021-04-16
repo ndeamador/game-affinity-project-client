@@ -88,7 +88,7 @@ const Home = () => {
         </form>
 
         {error ? (
-          <div>Failed to connect to server.</div>
+          <div>Something went wrong.</div>
         ) : query && !loading ? (
           <GameList games={games} />
         ) : null}
