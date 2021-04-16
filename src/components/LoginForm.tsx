@@ -6,11 +6,15 @@ import { CURRENT_USER } from '../graphql/queries';
 import { LoginDetails, OpenLoginRegisterModalOptions } from '../types';
 import { capitalizeFirstLetter } from '../utils/misc';
 import { Button, Input, Spinner } from './styledComponentsLibrary';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { ErrorNotification } from './styledComponentsLibrary';
 
+// TypeScript definitions
+// ===========================================================
 interface LoginFormProps {
-  // onSubmit: (data: LoginDetails) => void;
-  // buttonLabel: string;
-  // loading: boolean;
   setOpenModal: React.Dispatch<
     React.SetStateAction<OpenLoginRegisterModalOptions>
   >;
@@ -22,6 +26,24 @@ type FormInputs = {
   password: string;
 };
 
+// Yup validation schema
+// ===========================================================
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .required('Enter your email.')
+    .email('Enter a valid email.'),
+  password: yup
+    .string()
+    .required('Enter your password')
+    .min(8, 'Password must have minimum 8 characters.')
+    .max(64, `Password cannot exceed 64 characters`),
+});
+
+// ===========================================================
+// FORM COMPONENT
+// ===========================================================
+
 const LoginForm = ({
   // onSubmit,
   // buttonLabel,
@@ -29,23 +51,18 @@ const LoginForm = ({
   setOpenModal,
   loginOrRegister,
 }: LoginFormProps) => {
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors, isSubmitting }, // There seem to be some complications rendering the loading spinner using this property, so I pass instead Apollo's query loading states.
-  } = useForm<FormInputs>(); // React-hook-form
-
+  // ===========================================================
+  // GraphQL Mutations
+  // ===========================================================
   const [
     registerNewUser,
     { loading: registerLoading, error: registerError },
   ] = useMutation(REGISTER_NEW_USER, {
-    onCompleted: (result) => {
-      console.log(result);
+    onCompleted: () => {
       setOpenModal('none');
     },
     onError: (err) => {
-      console.log(err.message);
+      console.log('register error:', err.message);
     },
     refetchQueries: [{ query: CURRENT_USER }],
   });
@@ -53,8 +70,7 @@ const LoginForm = ({
   const [login, { loading: loginLoading, error: loginError }] = useMutation(
     LOGIN,
     {
-      onCompleted: (result) => {
-        console.log('login result: ', result);
+      onCompleted: () => {
         setOpenModal('none');
       },
       onError: (err) => {
@@ -64,6 +80,50 @@ const LoginForm = ({
     }
   );
 
+  // ===========================================================
+  // Form Hook
+  // ===========================================================
+  const {
+    register,
+    handleSubmit,
+    // setError,
+    formState: { errors /* isSubmitting */ }, // There seem to be some complications rendering the loading spinner using the isSubmitting property, so I pass instead Apollo's query loading states.
+  } = useForm<FormInputs>({ resolver: yupResolver(schema) }); // React-hook-form with Yup validation schema
+
+  // ===========================================================
+  // Server error state
+  // ===========================================================
+  const [serverError, setServerError] = useState<string | undefined>(undefined);
+  const [serverErrorTimer, setServerErrorTimer] = useState<
+    NodeJS.Timeout | undefined
+  >(undefined);
+
+  useEffect(() => {
+    const notificationTimeout = 4000;
+
+    if (serverErrorTimer) clearTimeout(serverErrorTimer);
+
+    if (loginError) {
+      setServerError(loginError.message);
+      setServerErrorTimer(
+        setTimeout(() => setServerError(undefined), notificationTimeout)
+      );
+    } else if (registerError) {
+      setServerError(registerError.message);
+      setServerErrorTimer(
+        setTimeout(() => setServerError(undefined), notificationTimeout)
+      );
+    }
+  }, [loginError, registerError]);
+
+  useEffect(() => {
+    // Clear timeouts to prevent state updates if the modal is unmounted
+    if (serverErrorTimer) clearTimeout(serverErrorTimer);
+  }, [setOpenModal]);
+
+  // ===========================================================
+  // Submit handlers
+  // ===========================================================
   const submitLogin = async (data: LoginDetails) => {
     login({ variables: { email: data.email, password: data.password } });
   };
@@ -78,31 +138,28 @@ const LoginForm = ({
     loginOrRegister === 'login' ? submitLogin : submitRegistration;
   const loading = loginOrRegister === 'login' ? loginLoading : registerLoading;
 
-  const serverError = loginError
-    ? loginError.message
-    : registerError
-    ? registerError.message
-    : undefined;
-
-  console.log('backend reg error: ', registerError);
-  console.log('backend log error: ', loginError);
-  console.log('rhforms errors: ', errors);
-
+  // ===========================================================
+  // RETURN
+  // ===========================================================
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
+      noValidate
       css={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'stretch',
-        '> div': {
-          margin: '10px auto',
+        // alignItems: 'stretch',
+        alignItems: 'center',
+        justifyContent: 'center',
+        '> .inputErrorDiv': {
+          margin: '0 0 25px 0',
           width: '100%',
-          maxWidth: '300px',
+          // maxWidth: '400px',
+          minWidth: '250px',
         },
       }}
     >
-      <div>
+      <div className='inputErrorDiv'>
         <Input
           id='email'
           // name='email'
@@ -113,9 +170,11 @@ const LoginForm = ({
           aria-invalid={errors.email ? 'true' : 'false'}
           {...register('email', { required: true })}
         />
-        {errors.email && <p>{errors.email.message}</p>}
+        <ErrorNotification variant='stacked'>
+          {errors?.email?.message}
+        </ErrorNotification>
       </div>
-      <div>
+      <div className='inputErrorDiv'>
         <Input
           id='password'
           // name='password'
@@ -129,14 +188,26 @@ const LoginForm = ({
             minLength: 8,
           })}
         />
-        {errors.password && <p>{errors.password.message}</p>}
+        <ErrorNotification variant='stacked'>
+          {errors?.password?.message}
+        </ErrorNotification>
       </div>
-      <div>
-        <Button type='submit' variant='primary'>
-          {/* {isSubmitting ? <Spinner /> : buttonLabel} */}
+      <div css={{ alignSelf: 'flex-start' }}>
+        <Button
+          type='submit'
+          variant='primary'
+          css={{ height: '40px', minWidth: '75px' }}
+        >
           {loading ? <Spinner /> : capitalizeFirstLetter(loginOrRegister)}
         </Button>
-        {serverError && <span>{serverError}</span>}
+        {serverError && (
+          <ErrorNotification
+            variant='inline'
+            css={{ marginLeft: '20px' }}
+          >
+            {serverError}
+          </ErrorNotification>
+        )}
       </div>
     </form>
   );

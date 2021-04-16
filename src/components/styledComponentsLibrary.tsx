@@ -26,11 +26,12 @@ const buttonVariants = {
 
 export const Button = styled.button(
   {
-    padding: '10px 15px',
+    padding: '13px 18px',
     border: '0',
     lineHeight: '1',
     borderRadius: '3px',
-    margin: '0px 5px',
+    margin: '0',
+    boxSizing: 'border-box',
   },
   // we can add as many other properties, and they will append to the ones before. Functions can be used
   ({ variant = 'regular' }: ButtonProps) => buttonVariants[variant] // variant comes from props.variant, the props passed to the button, defaulted to regular.
@@ -68,6 +69,8 @@ export const Input = styled.input({
   // background: colors.gray,
   background: 'ghostwhite',
   padding: '15px 20px',
+  width: '100%',
+  boxSizing: 'border-box',
 });
 
 // FORM CONTAINER
@@ -104,13 +107,18 @@ const spin = keyframes({
 });
 export const Spinner = styled(ImSpinner2)({
   animation: `${spin} 1s linear infinite`,
+  boxSizing: 'content-box'
 });
 Spinner.defaultProps = {
   'aria-label': 'loading',
 };
 
 // FULL PAGE ERROR
-export const FullPageError = ({ error }: { error: ApolloError | undefined}) => {
+export const FullPageError = ({
+  error,
+}: {
+  error: ApolloError | undefined;
+}) => {
   return (
     <div
       role='alert'
@@ -128,3 +136,17 @@ export const FullPageError = ({ error }: { error: ApolloError | undefined}) => {
     </div>
   );
 };
+
+// ERROR MESSAGE
+export const ErrorNotification = styled.div(
+  {
+    color: colors.danger,
+    margin: 0,
+    paddingTop: '2px',
+    position: 'absolute',
+    fontSize: '85%',
+  },
+  ({ variant }: { variant: 'inline' | 'stacked' }) => ({
+    display: variant === 'inline' ? 'inline' : 'block',
+  })
+);
