@@ -16,46 +16,46 @@ const LoginRegisterModal = ({
   setOpenModal,
   openModal,
 }: LoginOrRegisterModalProps) => {
-  const [registerNewUser, { loading: registerLoading }] = useMutation(
-    REGISTER_NEW_USER,
-    {
-      onCompleted: (result) => {
-        console.log(result);
-        setOpenModal('none');
-      },
-      onError: (err) => {
-        console.log(err.message);
-      },
-      refetchQueries: [{ query: CURRENT_USER }],
-    }
-  );
+  // const [registerNewUser, { loading: registerLoading }] = useMutation(
+  //   REGISTER_NEW_USER,
+  //   {
+  //     onCompleted: (result) => {
+  //       console.log(result);
+  //       setOpenModal('none');
+  //     },
+  //     onError: (err) => {
+  //       console.log(err.message);
+  //     },
+  //     refetchQueries: [{ query: CURRENT_USER }],
+  //   }
+  // );
 
-  const [login, { loading: loginLoading }] = useMutation(LOGIN, {
-    onCompleted: (result) => {
-      console.log('login result: ', result);
-      setOpenModal('none');
-    },
-    onError: (err) => {
-      console.log('login error:', err.message);
-    },
-    refetchQueries: [{ query: CURRENT_USER }],
-  });
+  // const [login, { loading: loginLoading }] = useMutation(LOGIN, {
+  //   onCompleted: (result) => {
+  //     console.log('login result: ', result);
+  //     setOpenModal('none');
+  //   },
+  //   onError: (err) => {
+  //     console.log('login error:', err.message);
+  //   },
+  //   refetchQueries: [{ query: CURRENT_USER }],
+  // });
 
-  const submitLogin = async (data: LoginDetails) => {
-    login({ variables: { email: data.email, password: data.password } });
-  };
+  // const submitLogin = async (data: LoginDetails) => {
+  //   login({ variables: { email: data.email, password: data.password } });
+  // };
 
-  const submitRegistration = (data: LoginDetails) => {
-    registerNewUser({
-      variables: { email: data.email, password: data.password },
-    });
-  };
+  // const submitRegistration = (data: LoginDetails) => {
+  //   registerNewUser({
+  //     variables: { email: data.email, password: data.password },
+  //   });
+  // };
 
   const ariaLabel =
     loginOrRegister === 'login' ? 'Login form' : 'Registration form';
-  const handleSubmit =
-    loginOrRegister === 'login' ? submitLogin : submitRegistration;
-  const loading = loginOrRegister === 'login' ? loginLoading : registerLoading;
+  // const handleSubmit =
+  //   loginOrRegister === 'login' ? submitLogin : submitRegistration;
+  // const loading = loginOrRegister === 'login' ? loginLoading : registerLoading;
 
   return (
     <Dialog
@@ -78,9 +78,11 @@ const LoginRegisterModal = ({
       </div>
       <h3>{capitalizeFirstLetter(loginOrRegister)}</h3>
       <LoginForm
-        onSubmit={handleSubmit}
-        buttonLabel={capitalizeFirstLetter(loginOrRegister)}
-        loading={loading}
+        // onSubmit={handleSubmit}
+        // buttonLabel={capitalizeFirstLetter(loginOrRegister)}
+        // loading={loading}
+        setOpenModal={setOpenModal}
+        loginOrRegister={loginOrRegister}
       />
     </Dialog>
   );
