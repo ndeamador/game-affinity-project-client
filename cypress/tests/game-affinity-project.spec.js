@@ -5,11 +5,11 @@ import { loginRegisterUsers } from '../support/mockdata';
 
 
 // Helper functions
-function login() {
+function login(username, password) {
   cy.findByRole('button', { name: /login/i }).click()
   cy.findByRole('dialog').within(() => {
-    cy.findByRole('textbox', { name: /email/i }).type(loginRegisterUsers.valid.email)
-    cy.findByPlaceholderText(/password/i).type(loginRegisterUsers.valid.password)
+    username && cy.findByRole('textbox', { name: /email/i }).type(username)
+    password && cy.findByPlaceholderText(/password/i).type(password)
     cy.findByRole('button', { name: /login/i }).click();
   })
 }
@@ -17,7 +17,7 @@ function login() {
 function logoutAndLogin() {
   // Logout and login
   cy.findByRole('button', { name: /logout/i }).click()
-  login()
+  login(loginRegisterUsers.valid.email, loginRegisterUsers.valid.password)
 }
 
 
@@ -122,7 +122,7 @@ describe('Regular user flow', function () {
     cy.findByText(/Warcraft 3: Reign of Chaos is an RTS made by Blizzard Entertainment./i).should('exist')
 
     // Log back in
-    login()
+    login(loginRegisterUsers.valid.email, loginRegisterUsers.valid.password)
 
     // Check that previous rating is still marked
     cy.findByRole('radio', { name: /rating-input-legendary/i, hidden: true }).should('be.checked')
@@ -139,6 +139,62 @@ describe('Regular user flow', function () {
   })
 })
 
+describe('Isolated functionality tests', function () {
+  beforeEach(function () {
+    cy.request('POST', 'http://localhost:4000/api/testing/reset')
+    cy.visit('/')
+  })
+
+  describe('Login form', function () {
+    // it.only('fails with wrong password', function () {
+    //   login(loginRegisterUsers.valid.email, 'wrongpassword')
+
+    // })
+    it('fails with unregistered user', function () {
+      login(loginRegisterUsers.unregistered.email, loginRegisterUsers.unregistered.password)
+      cy.findByRole('dialog').within(() => {
+        cy.findByText(/user not found/i).should('exist')
+      })
+    })
+
+    it('fails with invalid email', function () {
+      login(loginRegisterUsers.noAtEmail.email, loginRegisterUsers.noAtEmail.password)
+      cy.findByRole('dialog').should('exist')
+      cy.findByText(/Enter a valid email/i).should('exist')
+
+      // // Check the HTML5 built in validation pop up: https://docs.cypress.io/faq/questions/using-cypress-faq#Can-I-check-that-a-form-s-HTML-form-validation-is-shown-when-an-input-is-invalid
+      // cy.get('input:invalid').should('have.length', 1)
+      // cy.get('#email').then(($input) => {
+      //   expect($input[0].validationMessage).to.contain(`Please include an '@'`)
+      // })
+    })
+
+    it('fails with no email', function () {
+      login(undefined, loginRegisterUsers.valid.password)
+      cy.findByRole('dialog').should('exist')
+      cy.findByText(/Enter your email/i).should('exist')
+    })
+
+    it('fails with too short password', function () {
+      login(loginRegisterUsers.valid.email, '1234567')
+      cy.findByRole('dialog').should('exist')
+      cy.findByText(/Password must have minimum 8 characters/i).should('exist')
+    })
+
+    it('fails with too long password', function () {
+      login(loginRegisterUsers.valid.email, '12345678901234567890123456789012345678901234567890123456789012345')
+      cy.findByRole('dialog').should('exist')
+      cy.findByText(/Password cannot exceed 64 characters/i).should('exist')
+    })
+
+    it('fails with no password', function () {
+      login(loginRegisterUsers.valid.email, undefined)
+      cy.findByRole('dialog').should('exist')
+      cy.findByText(/Enter your password/i).should('exist')
+    })
+  })
+
+})
 
 
 // describe.skip('Checking for unmounted component state update errors', function () {

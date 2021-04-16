@@ -28,5 +28,13 @@ export const loginRegisterUsers = {
   valid: {
     email: 'test@test.com',
     password: 'testtest',
+  },
+  unregistered: {
+    email: 'unregistered@user.com',
+    password: 'unregistered',
+  },
+  noAtEmail: {
+    email: 'noatemail.com',
+    password: 'noatemail',
   }
 }
