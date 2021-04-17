@@ -3,7 +3,6 @@
 import TooltipButton from '../components/TooltipButton';
 import { FaPlusCircle, FaTimes } from 'react-icons/fa';
 import { GameInUserLibrary } from '../types';
-import { useEffect } from 'react';
 import useAddToLibrary from '../hooks/useAddToLibrary';
 import useRemoveFromLibrary from '../hooks/useRemoveFromLibrary';
 import { useAuthContext } from '../context/AuthContext';

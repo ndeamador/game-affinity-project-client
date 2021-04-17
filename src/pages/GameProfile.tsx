@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useParams } from 'react-router-dom';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { FIND_GAMES } from '../graphql/queries';
 import loadingTravolta from '../assets/notFound-264x374.gif';
 import FullPageSpinner from '../components/FullPageSpinner';
@@ -8,7 +8,6 @@ import AddToLibraryButton from '../components/AddToLibraryButton';
 import PlatformIcons from '../components/PlatformIcons';
 import ReleaseDeveoperRow from '../components/ReleaseDeveloperRow';
 import Rater from '../components/Rater';
-import { Redirect } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 import { useEffect } from 'react';
 
@@ -33,7 +32,6 @@ const GameProfile = () => {
 
   // execute query on component mount
   useEffect(() => {
-    console.log('in useEffect:', parsedGameId);
     findGames();
   }, [findGames]);
 

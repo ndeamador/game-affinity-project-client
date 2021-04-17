@@ -107,7 +107,6 @@ const spin = keyframes({
 });
 export const Spinner = styled(ImSpinner2)({
   animation: `${spin} 1s linear infinite`,
-  boxSizing: 'content-box'
 });
 Spinner.defaultProps = {
   'aria-label': 'loading',

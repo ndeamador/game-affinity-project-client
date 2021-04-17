@@ -1,35 +1,14 @@
 import { loginRegisterUsers } from '../support/mockdata';
+// import { graphqlRegister, graphqlLogin, graphqlLogout } from '../support/commands';
 
 // Mocha (from which Cypress borrows) recommends no arrow functions: https://mochajs.org/#arrow-functions
 // Queries can accept a regex to make selectors more resilient to content tweaks and changes (for example, chaging Login to LOGIN in a button label)
 
-
-// Helper functions
-function login(username, password) {
-  cy.findByRole('button', { name: /login/i }).click()
-  cy.findByRole('dialog').within(() => {
-    username && cy.findByRole('textbox', { name: /email/i }).type(username)
-    password && cy.findByPlaceholderText(/password/i).type(password)
-    cy.findByRole('button', { name: /login/i }).click();
-  })
-}
-
-function logoutAndLogin() {
-  // Logout and login
-  cy.findByRole('button', { name: /logout/i }).click()
-  login(loginRegisterUsers.valid.email, loginRegisterUsers.valid.password)
-}
-
-
-
-// TESTS
-// =======================================================================
 describe('Regular user flow', function () {
   before(function () {
     // wipe testing databse before tests
     // this endpoint is enabled only when the backend is running in a test environment
     cy.request('POST', 'http://localhost:4000/api/testing/reset')
-    cy.visit('/')
   })
 
 
@@ -113,7 +92,6 @@ describe('Regular user flow', function () {
     cy.findAllByRole('radio', { hidden: true }).not(':checked').should('have.length', 3) // There should be 3 unchecked rating buttons
     cy.findByRole('radio', { name: /rating-input-legendary/i, hidden: true }).should('be.checked')
 
-
     // logout and check that ratings and the library button disappear
     cy.findByRole('button', { name: /logout/i }).click()
     cy.findByRole('radio', { name: /rating/i }).should('not.exist')
@@ -122,7 +100,7 @@ describe('Regular user flow', function () {
     cy.findByText(/Warcraft 3: Reign of Chaos is an RTS made by Blizzard Entertainment./i).should('exist')
 
     // Log back in
-    login(loginRegisterUsers.valid.email, loginRegisterUsers.valid.password)
+    cy.UILogin(loginRegisterUsers.valid.email, loginRegisterUsers.valid.password)
 
     // Check that previous rating is still marked
     cy.findByRole('radio', { name: /rating-input-legendary/i, hidden: true }).should('be.checked')
@@ -140,60 +118,132 @@ describe('Regular user flow', function () {
 })
 
 describe('Isolated functionality tests', function () {
-  beforeEach(function () {
+  before(function () {
     cy.request('POST', 'http://localhost:4000/api/testing/reset')
-    cy.visit('/')
   })
 
-  describe('Login form', function () {
-    // it.only('fails with wrong password', function () {
-    //   login(loginRegisterUsers.valid.email, 'wrongpassword')
+  describe('Login form ', function () {
+    describe('client validation', function () {
+      beforeEach(function () {
+        cy.visit('/')
+      })
 
-    // })
-    it('fails with unregistered user', function () {
-      login(loginRegisterUsers.unregistered.email, loginRegisterUsers.unregistered.password)
-      cy.findByRole('dialog').within(() => {
-        cy.findByText(/user not found/i).should('exist')
+      it('fails with invalid email', function () {
+        cy.UILogin(loginRegisterUsers.noAtEmail.email, loginRegisterUsers.noAtEmail.password)
+        cy.findByRole('dialog').should('exist')
+        cy.findByText(/Enter a valid email/i).should('exist')
+
+        // // Check the HTML5 built in validation pop up: https://docs.cypress.io/faq/questions/using-cypress-faq#Can-I-check-that-a-form-s-HTML-form-validation-is-shown-when-an-input-is-invalid
+        // cy.get('input:invalid').should('have.length', 1)
+        // cy.get('#email').then(($input) => {
+        //   expect($input[0].validationMessage).to.contain(`Please include an '@'`)
+        // })
+      })
+
+      it('fails with no email', function () {
+        cy.UILogin(undefined, loginRegisterUsers.valid.password)
+        cy.findByRole('dialog').should('exist')
+        cy.findByText(/Enter your email/i).should('exist')
+      })
+
+      it('fails with too short password', function () {
+        cy.UILogin(loginRegisterUsers.valid.email, '1234567')
+        cy.findByRole('dialog').should('exist')
+        cy.findByText(/Password must have minimum 8 characters/i).should('exist')
+      })
+
+      it('fails with too long password', function () {
+        cy.UILogin(loginRegisterUsers.valid.email, '12345678901234567890123456789012345678901234567890123456789012345')
+        cy.findByRole('dialog').should('exist')
+        cy.findByText(/Password cannot exceed 64 characters/i).should('exist')
+      })
+
+      it('fails with no password', function () {
+        cy.UILogin(loginRegisterUsers.valid.email, undefined)
+        cy.findByRole('dialog').should('exist')
+        cy.findByText(/Enter your password/i).should('exist')
       })
     })
 
-    it('fails with invalid email', function () {
-      login(loginRegisterUsers.noAtEmail.email, loginRegisterUsers.noAtEmail.password)
-      cy.findByRole('dialog').should('exist')
-      cy.findByText(/Enter a valid email/i).should('exist')
 
-      // // Check the HTML5 built in validation pop up: https://docs.cypress.io/faq/questions/using-cypress-faq#Can-I-check-that-a-form-s-HTML-form-validation-is-shown-when-an-input-is-invalid
-      // cy.get('input:invalid').should('have.length', 1)
-      // cy.get('#email').then(($input) => {
-      //   expect($input[0].validationMessage).to.contain(`Please include an '@'`)
-      // })
-    })
+    describe('server validation', function () {
+      beforeEach(function () {
+        console.log('heya');
+        cy.request('POST', 'http://localhost:4000/api/testing/reset')
+        cy.visit('/')
+        cy.graphqlRegister(loginRegisterUsers.valid.email, loginRegisterUsers.valid.password)
+        cy.graphqlLogout();
+      })
 
-    it('fails with no email', function () {
-      login(undefined, loginRegisterUsers.valid.password)
-      cy.findByRole('dialog').should('exist')
-      cy.findByText(/Enter your email/i).should('exist')
-    })
+      it('fails with unregistered user', function () {
+        cy.UILogin(loginRegisterUsers.unregistered.email, loginRegisterUsers.unregistered.password)
+        cy.findByRole('dialog').within(() => {
+          cy.findByText(/user not found/i).should('exist')
+        })
+      })
 
-    it('fails with too short password', function () {
-      login(loginRegisterUsers.valid.email, '1234567')
-      cy.findByRole('dialog').should('exist')
-      cy.findByText(/Password must have minimum 8 characters/i).should('exist')
-    })
+      it('fails with wrong password', function () {
+        cy.UILogin(loginRegisterUsers.valid.email, 'wrongpassword')
+        cy.findByText(/Incorrect password/i).should('exist')
+      })
 
-    it('fails with too long password', function () {
-      login(loginRegisterUsers.valid.email, '12345678901234567890123456789012345678901234567890123456789012345')
-      cy.findByRole('dialog').should('exist')
-      cy.findByText(/Password cannot exceed 64 characters/i).should('exist')
-    })
 
-    it('fails with no password', function () {
-      login(loginRegisterUsers.valid.email, undefined)
-      cy.findByRole('dialog').should('exist')
-      cy.findByText(/Enter your password/i).should('exist')
     })
   })
 
+  describe('Ratings', function () {
+    beforeEach(function () {
+      cy.request('POST', 'http://localhost:4000/api/testing/reset')
+      cy.graphqlRegister(loginRegisterUsers.valid.email, loginRegisterUsers.valid.password)
+    })
+
+    describe('In Game Profile', function () {
+      beforeEach(function () {
+        cy.visit('/games/132')
+      })
+
+      it('are initially unchecked (authenticated user)', function () {
+        cy.findAllByRole('radio', { hidden: true }).should('not.be.checked')
+      })
+
+      it('selected radio is correctly checked', function () {
+        cy.findByRole('radio', { name: /rating-input-legendary/i }).click({ force: true })
+        cy.findAllByRole('radio', { hidden: true }).not(':checked').should('have.length', 3)
+        cy.findByRole('radio', { name: /rating-input-legendary/i, hidden: true }).should('be.checked')
+      })
+
+      it('rating a game not in library automatically adds it to library', function () {
+        cy.findByRole('radio', { name: /rating-input-legendary/i }).click({ force: true })
+        cy.findByRole('button', { name: /Remove from Library/i }).should('exist')
+      })
+
+      it('removing a rated game from library removes rating', function () {
+        cy.findByRole('radio', { name: /rating-input-legendary/i }).click({ force: true })
+        cy.findByRole('button', { name: /Remove from Library/i }).click()
+        cy.findAllByRole('radio', { hidden: true }).not(':checked').should('have.length', 4)
+      })
+
+      it('rate, then remove, then rate works correctly', function () {
+        cy.findByRole('radio', { name: /rating-input-legendary/i }).click({ force: true })
+        cy.findByRole('button', { name: /Remove from Library/i }).click()
+        cy.findByRole('radio', { name: /rating-input-legendary/i }).click({ force: true })
+        cy.findAllByRole('radio', { hidden: true }).not(':checked').should('have.length', 3)
+        cy.findByRole('button', { name: /Remove from Library/i }).should('exist')
+      })
+
+      it('changing ratings works correctly', function () {
+        cy.findByRole('radio', { name: /rating-input-thumbs-down/i }).click({ force: true })
+        cy.findAllByRole('radio', { hidden: true }).not(':checked').should('have.length', 3)
+        cy.findByRole('radio', { name: /rating-input-thumbs-up/i }).click({ force: true })
+        cy.findAllByRole('radio', { hidden: true }).not(':checked').should('have.length', 3)
+        cy.findByRole('radio', { name: /rating-input-great/i }).click({ force: true })
+        cy.findAllByRole('radio', { hidden: true }).not(':checked').should('have.length', 3)
+        cy.findByRole('radio', { name: /rating-input-legendary/i }).click({ force: true })
+        cy.findAllByRole('radio', { hidden: true }).not(':checked').should('have.length', 3)
+        cy.findByRole('button', { name: /Remove from Library/i }).should('exist')
+      })
+    })
+  })
 })
 
 
@@ -224,7 +274,7 @@ describe('Isolated functionality tests', function () {
 //     cy.findByText(loginRegisterUsers.valid.email).should('exist')
 
 
-//     logoutAndLogin();
+//     cy.UILogoutAndLogin();
 
 
 //     // Search a game
@@ -248,7 +298,7 @@ describe('Isolated functionality tests', function () {
 //     })
 
 
-//     logoutAndLogin();
+//     cy.UILogoutAndLogin();
 
 
 //     // LIBRARY
@@ -271,7 +321,7 @@ describe('Isolated functionality tests', function () {
 //     cy.findByRole('link', { name: /World of Warcraft 2004/i }).should('not.exist')
 
 
-//     logoutAndLogin();
+//     cy.UILogoutAndLogin();
 
 //     // logout on library should have redirected to home
 //     cy.url().should('eq', 'http://localhost:3000/')
@@ -293,7 +343,7 @@ describe('Isolated functionality tests', function () {
 //     cy.findByRole('button', { name: /Remove from Library/i }).click()
 //     cy.findByRole('button', { name: /Add to Library/i }).click()
 
-//     logoutAndLogin();
+//     cy.UILogoutAndLogin();
 
 //     // Remove game from library and check that it's gone in library:
 

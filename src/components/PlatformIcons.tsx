@@ -14,7 +14,6 @@ import {
 } from 'react-icons/fa';
 import { SiNintendo } from 'react-icons/si';
 import Tooltip from '@reach/tooltip';
-import { IconType } from 'react-icons';
 
 import { cloneElement } from 'react';
 

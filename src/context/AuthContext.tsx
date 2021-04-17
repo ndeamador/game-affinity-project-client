@@ -1,5 +1,4 @@
 import React, { ProviderProps, useEffect } from 'react';
-import useCurrentUser from '../hooks/useCurrentUser';
 import { User } from '../types';
 import FullPageSpinner from '../components/FullPageSpinner';
 import { FullPageError } from '../components/styledComponentsLibrary';
@@ -36,17 +35,10 @@ const AuthProvider: React.FunctionComponent<AuthCtxtProviderPropsOmitValue> = (p
     getCurrentUser();
   }, [getCurrentUser]);
 
-  console.log('user: ', currentUser, ' - loadingUser: ', loading);
-
   if (loading) return <FullPageSpinner />;
   if (error) return <FullPageError error={error} />;
 
   return <AuthContext.Provider value={{ currentUser }} {...props} />;
-  // return (
-  //   <AuthContext.Provider value={{ currentUser }}>
-  //     {children}
-  //   </AuthContext.Provider>
-  // );
 };
 
 export { AuthProvider, useAuthContext };
