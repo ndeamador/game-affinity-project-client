@@ -7,10 +7,9 @@ export const REGISTER_NEW_USER = gql`
   $password: String!
 ) {
 registerNewUser(
-loginDetails: {
   email: $email
   password: $password
-}
+
 ) {
   ...UserDetails
 }
@@ -24,10 +23,9 @@ export const LOGIN = gql`
   $password: String!
 ) {
 login(
-loginDetails: {
   email: $email
   password: $password
-}
+
 ) {
   ...UserDetails
 }

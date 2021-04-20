@@ -66,7 +66,7 @@ function baseCyRequest(query) {
 Cypress.Commands.add('graphqlRegister', function (email, password) {
   const query = `
     mutation {
-      registerNewUser(loginDetails:{email:"${email}", password:"${password}"}) {
+      registerNewUser(email:"${email}", password:"${password}") {
         id
         email
       }
@@ -78,7 +78,7 @@ Cypress.Commands.add('graphqlRegister', function (email, password) {
 Cypress.Commands.add('graphqlLogin', function (email, password) {
   const query = `
     mutation {
-      login(loginDetails:{email:"${email}", password:"${password}"}) {
+      login(email:"${email}", password:"${password}") {
         id
         email
       }
