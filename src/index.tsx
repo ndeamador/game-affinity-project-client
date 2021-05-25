@@ -17,7 +17,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
     // uri: process.env.API_URL,
-    uri: 'https://gap-server.nicodeamador.com/graphql/',
+    uri: 'gap-server.nicodeamador.com/graphql/',
     credentials: 'include', // Required for sessions. Sends our cookie back to the server with every request. // https://www.apollographql.com/docs/react/networking/authentication/
   }),
 });
