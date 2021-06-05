@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import 'normalize.css';
 import '@reach/dialog/styles.css';
 import '@reach/tooltip/styles.css';
 import './styles/global.css';
