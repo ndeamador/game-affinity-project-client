@@ -7,6 +7,7 @@ import FullPageSpinner from '../components/FullPageSpinner';
 import GameList from '../components/GameList';
 import { FIND_GAMES } from '../graphql/queries';
 import { useAuthContext } from '../context/AuthContext';
+import DragoDropBoard from '../components/DragDropBoard';
 
 const Library = () => {
   const { currentUser } = useAuthContext();
@@ -31,16 +32,14 @@ const Library = () => {
 
   if (gameIdsInLibrary.length === 0) return <div>Your library is empty!</div>;
 
-  const [
-    findGames,
-    { data: gamesResponse, loading: loadingGames, error },
-  ] = useLazyQuery(FIND_GAMES, {
-    variables: {
-      id: gameIdsInLibrary,
-      maxResults: 30,
-    },
-    fetchPolicy: 'cache-and-network',
-  });
+  const [findGames, { data: gamesResponse, loading: loadingGames, error }] =
+    useLazyQuery(FIND_GAMES, {
+      variables: {
+        id: gameIdsInLibrary,
+        maxResults: 30,
+      },
+      fetchPolicy: 'cache-and-network',
+    });
 
   // execute query on component mount
   useEffect(() => {
@@ -65,7 +64,20 @@ const Library = () => {
     );
   }
 
-  return <GameList games={games} />;
+  return (
+    <div css={{
+      display: 'flex',
+      flexDirection: 'row',
+      // alignItems: 'center',
+      // justifyContent: 'flex-start',
+      width: '80vw',
+      // height: '100vh',
+    }}>
+      {/* <GameList games={games} /> */}
+      <DragoDropBoard games={games} />
+
+    </div>
+  );
 };
 
 export default Library;
