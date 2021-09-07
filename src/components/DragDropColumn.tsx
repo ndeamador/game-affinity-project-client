@@ -34,7 +34,15 @@ const DragDropGame = ({ game, index }: { game: Game; index: number }) => {
 
 const DragDropColumn = ({ games, title }: { games: Game[]; title: string }) => {
   return (
-    <div css={{display: 'flex', flexDirection: 'column', margin: '0 15px'}}>
+    <div
+      css={{
+        display: 'flex',
+        flexDirection: 'column',
+        margin: '0 15px',
+        flexGrow: 1,
+        minHeight: '100px',
+      }}
+    >
       <h3>{title}</h3>
       <Droppable droppableId={title}>
         {(provided) => (

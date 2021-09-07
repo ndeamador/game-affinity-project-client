@@ -27,6 +27,7 @@ export const CURRENT_USER = gql`
         id
         igdb_game_id
         rating
+        subrating
     }
     }
   }

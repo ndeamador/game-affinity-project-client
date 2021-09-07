@@ -61,7 +61,7 @@ export interface GameInUserLibrary {
   rating?: Rating;
 }
 
-export type Rating = 0 | 1 | 2 | 3;
+export type Rating = 0 | 1 | 2 | 3 | null;
 
 export interface libraryIdsResponse { // review
   getLibraryIds: GameInUserLibrary[];

@@ -4,27 +4,13 @@ import { useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FullPageSpinner from '../components/FullPageSpinner';
-import GameList from '../components/GameList';
 import { FIND_GAMES } from '../graphql/queries';
 import { useAuthContext } from '../context/AuthContext';
 import DragoDropBoard from '../components/DragDropBoard';
 
 const Library = () => {
   const { currentUser } = useAuthContext();
-  // const currentUser = authContext?.currentUser;
-
-  // I use useLazyQuery+useEffect to prevent a React Strict Mode warning related to async callbacks on unmountd components.
-  // https://github.com/apollographql/apollo-client/issues/6209
-
-  // const [
-  //   getLibrary,
-  //   { data: libraryResponse, loading: libraryLoading },
-  // ] = useLazyQuery(GET_LIBRARY);
-
-  // // execute query on component mount
-  // useEffect(() => {
-  //   getLibrary();
-  // }, [getLibrary]);
+  console.log('USER: ', currentUser);
 
   const gameIdsInLibrary = currentUser?.gamesInLibrary.map(
     (game) => game.igdb_game_id
@@ -45,6 +31,8 @@ const Library = () => {
   useEffect(() => {
     findGames();
   }, [findGames]);
+  // }, []);
+
 
   // const { data: gamesResponse, loading: libraryLoading } = useQuery(
   //   GET_LIBRARY
@@ -54,6 +42,7 @@ const Library = () => {
   if (error) return <div>{error.message}</div>;
 
   const games = gamesResponse?.findGames;
+  console.log('GAMES: ', games);
 
   if (!loadingGames && !games) {
     return (
@@ -74,7 +63,7 @@ const Library = () => {
       // height: '100vh',
     }}>
       {/* <GameList games={games} /> */}
-      <DragoDropBoard games={games} />
+      <DragoDropBoard games={games} user={currentUser} />
 
     </div>
   );

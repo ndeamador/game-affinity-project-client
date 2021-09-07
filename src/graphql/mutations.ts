@@ -57,8 +57,9 @@ mutation removeGameFromLibrary($igdb_game_id: Int!) {
 
 
 // returns a boolean.
+// removed non-null from $rating: Int! to accomodate unranked games.
 export const UPDATE_RATING = gql`
-mutation updateRating($gameId: Int!, $rating: Int!) {
+mutation updateRating($gameId: Int!, $rating: Int) {
   updateRating(gameId: $gameId, rating:$rating)
 }
 `

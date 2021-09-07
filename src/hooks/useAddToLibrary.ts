@@ -22,6 +22,7 @@ const useAddToLibrary = () => {
     // This way we can manually update the cache instead of refetching the query.
     update: (store, response) => {
       try {
+        // without specifiying the data type we cannot use the spread operator later (Spread types may only be created from object types.ts(2698))
         const dataInStore: MeResponse | null = store.readQuery({
           query: CURRENT_USER,
         });
