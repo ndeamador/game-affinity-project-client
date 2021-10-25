@@ -3,40 +3,15 @@
 import { Game, MeResponse, Rating, User } from '../types';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import DragDropColumn from './DragDropColumn';
-import { useState } from 'react';
 import { UPDATE_RATING } from '../graphql/mutations';
-import { CURRENT_USER, FIND_GAMES } from '../graphql/queries';
+import { CURRENT_USER } from '../graphql/queries';
 import { useMutation } from '@apollo/client';
 
 const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   // Remember that using the mapped object's indexes for the key property is an anti-pattern, use unique id instead
   // https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318
 
-  console.log('GAMES:', games);
-  console.log('USER:', user);
-  // console.log('find:', user.gamesInLibrary.find(game => game.rating === 3));
-
-  // const [gamesInColumn, setGamesInColumn] = useState(games);
-
-  // console.log('gamesInColumn', gamesInColumn);
-  // // Example 'result" object:
-  // const result = {
-  //   draggableId: 'task-1',
-  //   type: 'TYPE',
-  //   reason: 'DROP',
-  //   source: {
-  //     droppableId: 'column-1',
-  //     index: 0,
-  //   },
-  //   destination: {
-  //     droppableId: 'column-1',
-  //     index: 1,
-  //   }
-  // }
-
-  const [updateRating] = useMutation(UPDATE_RATING, {
-    refetchQueries: [{ query: CURRENT_USER }],
-  });
+  const [updateRating] = useMutation(UPDATE_RATING);
 
 
   const onDragEnd = (result: DropResult) => {
@@ -61,20 +36,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
       return;
     }
 
-    // // If the location has changed, reorder the source data:
-    // const updatedColumn = Array.from(gamesInColumn);
-    // // the splice method returns the removed item in a new array, we destructure it for convenience:
-    // const [removed] = updatedColumn.splice(result.source.index, 1);
-    // updatedColumn.splice(result.destination.index, 0, removed);
-
-    // // Update React's state:
-    // setGamesInColumn(updatedColumn);
-
-
-
     // If the location has changed, reorder the source data:
-    console.log('aqui - destination: ', destination, ' - source: ', source);
-
     const determineNewRank = (destinationId: string): Rating => {
       switch (destinationId) {
         case 'thumbs-down':
@@ -92,17 +54,52 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
       }
     }
 
-    console.log('draggableid:', draggableId);
-    // console.log('find game', user.gamesInLibrary.find(game => game.rating === determineNewRank(destination.droppableId)));
-    console.log('newrating:', determineNewRank(destination.droppableId));
-    console.log(determineNewRank(destination.droppableId), typeof(determineNewRank(destination.droppableId)));
+    try {
+      const gameToUpdate = user.gamesInLibrary.find(game => game.igdb_game_id === parseInt(draggableId));
+      const newRating = determineNewRank(destination.droppableId);
+      console.log('gameId:', parseInt(draggableId), '- rating: ', newRating, '- game: ', gameToUpdate);
 
-    updateRating({
-      variables: {
-        gameId: parseInt(draggableId),
-        rating: determineNewRank(destination.droppableId),
-      },
-    });
+      updateRating({
+        variables: {
+          gameId: gameToUpdate?.igdb_game_id,
+          rating: newRating,
+        },
+        optimisticResponse:  {
+          updateRating: {
+            ...gameToUpdate,
+            rating: newRating,
+            isOptimistic: true
+          }
+        },
+        update: (store, response) => {
+          console.log('Updating rating...');
+          const dataInStore: MeResponse | null = store.readQuery({ query: CURRENT_USER })
+
+          if (response.data?.updateRating) {
+            store.writeQuery({
+              query: CURRENT_USER,
+              data: {
+                ...dataInStore,
+                me: {
+                  ...dataInStore?.me,
+
+                  // // If using the server response that does not return the updated object, the client's cache must be updated manually:
+                  // gamesInLibrary: dataInStore?.me.gamesInLibrary.map(game => game.igdb_game_id !== parseInt(draggableId) ? game : { ...game, rating: determineNewRank(destination.droppableId)})
+
+                  // If the server returns the updated object:
+                  gamesInLibrary: dataInStore?.me.gamesInLibrary.map(game => game.igdb_game_id !== parseInt(draggableId) ? game : response.data.updateRating)
+                }
+              }
+            })
+          }
+        }
+      });
+
+    } catch (err) {
+      console.log(
+        `Error updating the cache after updateRating query: ${err}`
+      );
+    }
   };
 
 

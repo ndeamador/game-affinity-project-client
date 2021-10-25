@@ -5,10 +5,18 @@ import { CgGames } from 'react-icons/cg';
 import AddGameToLibraryButton from './AddToLibraryButton';
 import PlatformIcons from './PlatformIcons';
 import ReleaseDeveloperRow from '../components/ReleaseDeveloperRow';
-import { useAuthContext } from '../context/AuthContext';
+
+import { useEffect } from 'react';
+import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 
 const GameListItem = ({ game }: { game: Game }) => {
-  const { currentUser } = useAuthContext();
+  // const { currentUser } = useAuthContext();
+  const { getCurrentUser, currentUser, loading, error:getUserError } = useLazyCurrentUser();
+  useEffect(() => {
+    getCurrentUser();
+
+  // }, [findGames]);
+  }, [getCurrentUser]);
 
   // Setting image resolution from url: https://api-docs.igdb.com/#images
   const imageSize = 'thumb';

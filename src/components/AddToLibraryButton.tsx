@@ -5,13 +5,23 @@ import { FaPlusCircle, FaTimes } from 'react-icons/fa';
 import { GameInUserLibrary } from '../types';
 import useAddToLibrary from '../hooks/useAddToLibrary';
 import useRemoveFromLibrary from '../hooks/useRemoveFromLibrary';
-import { useAuthContext } from '../context/AuthContext';
+import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
+import { useEffect } from 'react';
 
 const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
   const parsedGameId = typeof gameId === 'string' ? parseInt(gameId) : gameId;
-  const { currentUser } = useAuthContext();
+  // const { currentUser } = useAuthContext();
+  // const {currentUser} = useCurrentUser();
+  const { getCurrentUser, currentUser, loading, error:getUserError } = useLazyCurrentUser();
+  useEffect(() => {
+    getCurrentUser();
 
-  const library = currentUser.gamesInLibrary;
+  // }, [findGames]);
+  }, [getCurrentUser]);
+
+  if (loading) return <TooltipButton isLoading={true} label='Loading...' onClick={()=> {return false;}}/>
+
+  const library = currentUser?.gamesInLibrary;
 
   const isGameInLibrary: boolean = library?.find(
     (game: GameInUserLibrary) => game.igdb_game_id === parsedGameId
@@ -28,6 +38,7 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
     removeGameFromLibrary,
     { loading: deletingGame },
   ] = useRemoveFromLibrary({ gameId: parsedGameId });
+
 
   return (
     <div>

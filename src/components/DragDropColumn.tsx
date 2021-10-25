@@ -2,6 +2,7 @@
 
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { Game } from '../types';
+import GameListItem from './GameListItem';
 
 // <Draggable/> Requires at least draggableId and index
 // 'provided.draggableProps' need to be applied to the comopnent that we want to move around.
@@ -49,6 +50,7 @@ const DragDropColumn = ({ games, title }: { games: Game[]; title: string }) => {
           <div ref={provided.innerRef} {...provided.droppableProps}>
             {games.map((game, index) => (
               <DragDropGame key={game.id} game={game} index={index} />
+              // <GameListItem key={game.id} game={game}/>
             ))}
             {provided.placeholder}
           </div>

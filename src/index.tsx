@@ -9,7 +9,7 @@ import {
   InMemoryCache,
 } from '@apollo/client';
 
-import { AuthProvider } from './context/AuthContext';
+// import { AuthProvider } from './context/AuthContext'; // Refactored authentication to use Apollo's caching instead of a React context provider.
 
 console.log('ENVIROMENT: ', process.env.REACT_APP_VERCEL_API_URL);
 
@@ -24,9 +24,9 @@ const client = new ApolloClient({
 ReactDOM.render(
   <ApolloProvider client={client}>
     <React.StrictMode>
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <App />
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </React.StrictMode>
   </ApolloProvider>,
   document.getElementById('root')

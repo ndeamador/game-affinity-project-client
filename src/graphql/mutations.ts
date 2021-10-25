@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client"
-import { USER_DETAILS } from './fragments';
+import { GAME_IN_LIBRARY_DETAILS, USER_DETAILS } from './fragments';
 
 export const REGISTER_NEW_USER = gql`
   mutation registerNewUser(
@@ -56,10 +56,13 @@ mutation removeGameFromLibrary($igdb_game_id: Int!) {
 `
 
 
-// returns a boolean.
+// Two versions in server, one returns a boolean, another (current, with added fragment) the updated object.
 // removed non-null from $rating: Int! to accomodate unranked games.
 export const UPDATE_RATING = gql`
 mutation updateRating($gameId: Int!, $rating: Int) {
-  updateRating(gameId: $gameId, rating:$rating)
+  updateRating(gameId: $gameId, rating:$rating) {
+    ...GameInLibraryDetails
+  }
 }
+${GAME_IN_LIBRARY_DETAILS}
 `

@@ -6,18 +6,36 @@ import findGameInLibrary from '../utils/findGameInLibrary';
 import { useMutation } from '@apollo/client';
 import { ADD_TO_LIBRARY, UPDATE_RATING } from '../graphql/mutations';
 import { CURRENT_USER } from '../graphql/queries';
-import { useAuthContext } from '../context/AuthContext';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
+import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
+import { Spinner } from './styledComponentsLibrary';
 
 const Rater = ({ gameId }: { gameId: number }) => {
-  const { currentUser } = useAuthContext();
-  const [updateRating] = useMutation(UPDATE_RATING, {
-    refetchQueries: [{ query: CURRENT_USER }],
-  });
-  const [addGameToLibrary] = useMutation(ADD_TO_LIBRARY, {
-    variables: { gameId: gameId },
-    // refetchQueries: [{ query: CURRENT_USER }],
-  });
+  // const { currentUser } = useAuthContext();
+  // const {currentUser} = useCurrentUser();
+  const {
+    getCurrentUser,
+    currentUser,
+    loading,
+    error: getUserError,
+  } = useLazyCurrentUser();
+  useEffect(() => {
+    getCurrentUser();
+  }, [getCurrentUser]);
+
+  const [updateRating, { error: updateRatingError }] = useMutation(
+    UPDATE_RATING,
+    {
+      refetchQueries: [{ query: CURRENT_USER }],
+    }
+  );
+  const [addGameToLibrary, { error: addGameError }] = useMutation(
+    ADD_TO_LIBRARY,
+    {
+      variables: { gameId: gameId },
+      // refetchQueries: [{ query: CURRENT_USER }],
+    }
+  );
 
   const iconColors = ['DarkSlateBlue', 'green', 'gold', 'red'];
   const iconLevels = [
@@ -51,9 +69,9 @@ const Rater = ({ gameId }: { gameId: number }) => {
 
   const elementClassName = `rating-${gameId}`;
 
-  const handleRatingChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleRatingChange = async (event: ChangeEvent<HTMLInputElement>) => {
     findGameInLibrary({ gameId: gameId, user: currentUser }) ??
-      addGameToLibrary();
+      (await addGameToLibrary()); // added await to prevent that backend does an update before the game is added.
 
     updateRating({
       variables: {
@@ -65,6 +83,7 @@ const Rater = ({ gameId }: { gameId: number }) => {
 
   const icons = Array.from({ length: 4 }).map((_x, i) => {
     const inputId = `rating-input-${String(iconLevels[i].key)}`;
+
     return (
       <div key={iconLevels[i].key}>
         <input
@@ -158,11 +177,13 @@ const Rater = ({ gameId }: { gameId: number }) => {
     <div
       className={elementClassName}
       css={{
-        display: 'inline-flex',
-        alignItems: 'center',
+        display: 'flex',
+        // alignItems: 'center',
+        // alignItems: 'flex-start',
         marginTop: '20px',
         paddingBottom: '0px',
         justifySelf: 'flex-end',
+        flexDirection: 'column',
       }}
     >
       <span
@@ -171,9 +192,11 @@ const Rater = ({ gameId }: { gameId: number }) => {
           background: 'whitesmoke',
           padding: '10px 10px 10px 8px',
           borderRadius: '8px',
-          flexGrow: 0.25,
+          width: '25%',
+          // flexGrow: 0.25,
+          // flex: '0 0 100%',
+          alignSelf: 'flex-start',
           justifyContent: 'space-around',
-
           '.rating-icon': {
             padding: '0',
             height: '20px',
@@ -190,8 +213,16 @@ const Rater = ({ gameId }: { gameId: number }) => {
           },
         }}
       >
-        {icons}
+        {loading ? <Spinner /> : icons}
       </span>
+      {(getUserError || updateRatingError || addGameError) && (
+        <div css={{ padding: '10px', color: 'red' }}>
+          {getUserError?.message ||
+            updateRatingError?.message ||
+            addGameError?.message ||
+            'Something went wrong.'}
+        </div>
+      )}
     </div>
   );
 };

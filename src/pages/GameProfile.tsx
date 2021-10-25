@@ -8,11 +8,18 @@ import AddToLibraryButton from '../components/AddToLibraryButton';
 import PlatformIcons from '../components/PlatformIcons';
 import ReleaseDeveoperRow from '../components/ReleaseDeveloperRow';
 import Rater from '../components/Rater';
-import { useAuthContext } from '../context/AuthContext';
 import { useEffect } from 'react';
+import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 
 const GameProfile = () => {
-  const { currentUser } = useAuthContext();
+  // const { currentUser } = useAuthContext();
+  // const {currentUser} = useCurrentUser();
+  const { getCurrentUser, currentUser, loading:userLoading, error:getUserError } = useLazyCurrentUser();
+  useEffect(() => {
+    getCurrentUser();
+  }, [getCurrentUser]);
+  if(getUserError) {return <div>test</div>}
+
   // const currentUser = authContext?.currentUser;
   const { gameId } = useParams<{ gameId: string }>();
   const parsedGameId = parseInt(gameId);

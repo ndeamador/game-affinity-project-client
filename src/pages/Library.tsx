@@ -5,46 +5,89 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FullPageSpinner from '../components/FullPageSpinner';
 import { FIND_GAMES } from '../graphql/queries';
-import { useAuthContext } from '../context/AuthContext';
 import DragoDropBoard from '../components/DragDropBoard';
+import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
+import { GameInUserLibrary } from '../types';
 
 const Library = () => {
-  const { currentUser } = useAuthContext();
-  console.log('USER: ', currentUser);
+  const {
+    getCurrentUser,
+    currentUser,
+    loading: loadingUser,
+    error: getUserError,
+  } = useLazyCurrentUser();
 
-  const gameIdsInLibrary = currentUser?.gamesInLibrary.map(
-    (game) => game.igdb_game_id
-  );
-
-  if (gameIdsInLibrary.length === 0) return <div>Your library is empty!</div>;
-
-  const [findGames, { data: gamesResponse, loading: loadingGames, error }] =
-    useLazyQuery(FIND_GAMES, {
-      variables: {
-        id: gameIdsInLibrary,
-        maxResults: 30,
-      },
-      fetchPolicy: 'cache-and-network',
-    });
-
-  // execute query on component mount
   useEffect(() => {
-    findGames();
-  }, [findGames]);
+    // console.log('useeffect1');
+    (async () => await getCurrentUser())();
+    // findGames();
+  }, []);
+
+  useEffect(() => {
+    // console.log('useeffect2, currentUser?', currentUser ? true : false);
+    if (currentUser) findGames();
+  }, [currentUser?.email]);
+
+  // useEffect(() => {
+  //   console.log('useeffect1');
+  //   (async () => {
+  //     await getCurrentUser();
+  //     if (currentUser) findGames();
+  //   })();
+  //   // findGames();
   // }, []);
 
+  const gameIdsInLibrary = currentUser?.gamesInLibrary.map(
+    (game: GameInUserLibrary) => game.igdb_game_id
+  );
 
-  // const { data: gamesResponse, loading: libraryLoading } = useQuery(
-  //   GET_LIBRARY
+  const [
+    findGames,
+    { data: gamesResponse, loading: loadingGames, error: findGamesError },
+  ] = useLazyQuery(FIND_GAMES, {
+    variables: {
+      id: gameIdsInLibrary,
+      maxResults: 30,
+    },
+    fetchPolicy: 'cache-first', // with cache-and-network we get a loading spinner every time an item is rearranged.
+  });
+
+  // console.log(
+  //   'Library || loadinguser:',
+  //   loadingUser,
+  //   '- loadingGames:',
+  //   loadingGames,
+  //   '- Library.CurrentUser:',
+  //   currentUser ? currentUser.email : currentUser,
+  //   '- gameresponse:',
+  //   gamesResponse?.findGames[0]
   // );
 
-  if (loadingGames) return <FullPageSpinner />;
-  if (error) return <div>{error.message}</div>;
+  if (getUserError) return <div>{getUserError.message}</div>;
+  else if (findGamesError) return <div>{findGamesError.message}</div>;
+  // if (loadingUser || !currentUser || loadingGames) return <FullPageSpinner />;
+  else if (
+    loadingUser ||
+    loadingGames ||
+    !currentUser ||
+    (currentUser && !gamesResponse)
+  ) {
+    return <FullPageSpinner />;
+  }
+
+  // if (!gamesResponse) {
+  //   console.log(
+  //     '!gameresponse, loadingGames?',
+  //     loadingGames,
+  //     'gameResponse:',
+  //     gamesResponse?.findGames[0]
+  //   );
+  //   return <FullPageSpinner />;
+  // }
 
   const games = gamesResponse?.findGames;
-  console.log('GAMES: ', games);
 
-  if (!loadingGames && !games) {
+  if (gameIdsInLibrary.length === 0) {
     return (
       <div>
         <div>Your library is empty.</div>
@@ -54,17 +97,18 @@ const Library = () => {
   }
 
   return (
-    <div css={{
-      display: 'flex',
-      flexDirection: 'row',
-      // alignItems: 'center',
-      // justifyContent: 'flex-start',
-      width: '80vw',
-      // height: '100vh',
-    }}>
+    <div
+      css={{
+        display: 'flex',
+        flexDirection: 'row',
+        // alignItems: 'center',
+        // justifyContent: 'flex-start',
+        width: '80vw',
+        // height: '100vh',
+      }}
+    >
       {/* <GameList games={games} /> */}
       <DragoDropBoard games={games} user={currentUser} />
-
     </div>
   );
 };

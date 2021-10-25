@@ -8,7 +8,8 @@ import LogoutButton from '../components/LogoutButton';
 import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/react';
 import * as colors from '../styles/colors';
-import { useAuthContext } from '../context/AuthContext';
+// import { useAuthContext } from '../context/AuthContext';
+import useCurrentUser from '../hooks/useCurrentUser';
 
 const navLinkStyle = css({
   // display: 'block',
@@ -32,7 +33,9 @@ const navLinkStyle = css({
 // };
 
 const NavBar = () => {
-  const { currentUser } = useAuthContext();
+  // const { currentUser } = useAuthContext();
+  const {currentUser} = useCurrentUser();
+
   // const currentUser = authContext?.currentUser;
   const [openModal, setOpenModal] = useState<OpenLoginRegisterModalOptions>(
     'none'

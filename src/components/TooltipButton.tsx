@@ -10,7 +10,7 @@ interface TooltipButtonProps {
   highlight?: string;
   onClick: () => void;
   // icon: IconType;
-  icon: IconBaseProps; //https://stackoverflow.com/questions/60819522/typescript-compilation-error-with-react-type-element-is-not-assignable-to-ty
+  icon?: IconBaseProps; //https://stackoverflow.com/questions/60819522/typescript-compilation-error-with-react-type-element-is-not-assignable-to-ty
   isLoading?: boolean;
   isError?: boolean;
   errorMessage?: string;

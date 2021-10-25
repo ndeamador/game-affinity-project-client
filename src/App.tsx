@@ -16,10 +16,15 @@ import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import Library from './pages/Library';
 
-import { useAuthContext } from './context/AuthContext';
+// import { useAuthContext } from './context/AuthContext';
+import useCurrentUser from './hooks/useCurrentUser';
+import FullPageSpinner from './components/FullPageSpinner';
 
 function App() {
-  const { currentUser } = useAuthContext();
+
+  const {currentUser, loading:loadingUser} = useCurrentUser();
+  console.log('App || loading:', loadingUser, '- App.CurrentUser:', currentUser);
+  if(!loadingUser && !currentUser) console.log( 'APP.BOOM!');
 
   return (
     <div
@@ -42,7 +47,7 @@ function App() {
           </Route>
 
           <Route path={'/library'}>
-            {!currentUser ? <Redirect to='/' /> : <Library />}
+            {!loadingUser && !currentUser ? <Redirect to='/' /> : <Library />}
           </Route>
 
           <Route path='/'>
