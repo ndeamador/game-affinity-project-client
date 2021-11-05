@@ -22,7 +22,6 @@ const Home = () => {
       console.log(err.message);
     },
   });
-
   const handleGameQueryChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {

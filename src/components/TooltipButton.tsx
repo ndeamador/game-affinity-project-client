@@ -49,6 +49,7 @@ function TooltipButton({
       <CircleButton
         css={{
           backgroundColor: 'white',
+          color: isError ? colors.danger : colors.gray80,
           ':hover,:focus': {
             color: isLoading
               ? colors.gray80

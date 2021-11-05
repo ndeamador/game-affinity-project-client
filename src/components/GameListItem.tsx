@@ -1,26 +1,32 @@
 /** @jsxImportSource @emotion/react */
 import { Game } from '../types';
 import { Link } from 'react-router-dom';
-import { CgGames } from 'react-icons/cg';
+// import { CgGames } from 'react-icons/cg';
 import AddGameToLibraryButton from './AddToLibraryButton';
 import PlatformIcons from './PlatformIcons';
 import ReleaseDeveloperRow from '../components/ReleaseDeveloperRow';
+import CoverDiv from './CoverDiv';
 
 import { useEffect } from 'react';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 
 const GameListItem = ({ game }: { game: Game }) => {
   // const { currentUser } = useAuthContext();
-  const { getCurrentUser, currentUser, loading, error:getUserError } = useLazyCurrentUser();
+  const {
+    getCurrentUser,
+    currentUser,
+    loading,
+    error: getUserError,
+  } = useLazyCurrentUser();
   useEffect(() => {
     getCurrentUser();
 
-  // }, [findGames]);
+    // }, [findGames]);
   }, [getCurrentUser]);
 
-  // Setting image resolution from url: https://api-docs.igdb.com/#images
-  const imageSize = 'thumb';
-  const imageLink = `//images.igdb.com/igdb/image/upload/t_${imageSize}/${game.cover?.image_id}.jpg`;
+  // // Setting image resolution from url: https://api-docs.igdb.com/#images
+  // const imageSize = 'thumb';
+  // const imageLink = `//images.igdb.com/igdb/image/upload/t_${imageSize}/${game.cover?.image_id}.jpg`;
 
   return (
     <Link
@@ -49,7 +55,7 @@ const GameListItem = ({ game }: { game: Game }) => {
           },
         }}
       >
-        <div
+        {/* <div
           className='ImageDiv'
           css={{ width: '90px', height: 'auto', maxwidth: '90px' }}
         >
@@ -67,7 +73,9 @@ const GameListItem = ({ game }: { game: Game }) => {
               }}
             />
           )}
-        </div>
+        </div> */}
+        <CoverDiv game={game} />
+
         <div
           css={{
             display: 'flex',

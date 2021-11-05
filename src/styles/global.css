@@ -8,3 +8,13 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+/* https://css-tricks.com/box-sizing/ */
+/* https://css-tricks.com/equal-columns-with-flexbox-its-more-complicated-than-you-might-think/ */
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+/* .test > * {
+  flex-basis: 100%,
+} */

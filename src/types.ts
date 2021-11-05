@@ -56,7 +56,7 @@ export interface User {
 }
 
 export interface GameInUserLibrary {
-  id: number;
+  id: string;
   igdb_game_id: number;
   rating?: Rating;
 }

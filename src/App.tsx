@@ -18,13 +18,14 @@ import Library from './pages/Library';
 
 // import { useAuthContext } from './context/AuthContext';
 import useCurrentUser from './hooks/useCurrentUser';
-import FullPageSpinner from './components/FullPageSpinner';
+// import FullPageSpinner from './components/FullPageSpinner';
 
 function App() {
 
   const {currentUser, loading:loadingUser} = useCurrentUser();
-  console.log('App || loading:', loadingUser, '- App.CurrentUser:', currentUser);
-  if(!loadingUser && !currentUser) console.log( 'APP.BOOM!');
+  // console.log('App || loading:', loadingUser, '- App.CurrentUser:', currentUser);
+  console.log('----App: ', currentUser?.email, currentUser?.gamesInLibrary);
+
 
   return (
     <div

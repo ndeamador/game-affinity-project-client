@@ -12,8 +12,8 @@ const useLazyCurrentUser = () => {
   });
 
   const currentUser = data?.me;
-
-  console.log('useLazyCurrentUser data:', currentUser?.email);
+  console.log('uselazycurrentuser response: ', data);
+  // console.log('useLazyCurrentUser data:', currentUser?.email);
   return { getCurrentUser, currentUser, ...result };
 };
 

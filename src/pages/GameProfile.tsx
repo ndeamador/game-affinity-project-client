@@ -11,27 +11,27 @@ import Rater from '../components/Rater';
 import { useEffect } from 'react';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 
-const GameProfile = () => {
-  // const { currentUser } = useAuthContext();
-  // const {currentUser} = useCurrentUser();
-  const { getCurrentUser, currentUser, loading:userLoading, error:getUserError } = useLazyCurrentUser();
+const GameProfile = ({ modalGame }: { modalGame?: string }) => {
+  const {
+    getCurrentUser,
+    currentUser,
+    loading: userLoading,
+    error: getUserError,
+  } = useLazyCurrentUser();
   useEffect(() => {
-    getCurrentUser();
+    // getCurrentUser();
+    (async () => await getCurrentUser())(); // Worked fine without async but gave an unmounted update error when used as modal in Library.
   }, [getCurrentUser]);
-  if(getUserError) {return <div>test</div>}
+  if (getUserError) {
+    return <div>Test error: {getUserError.message}</div>;
+  }
+  console.log('----GameProfile: ', currentUser?.email, currentUser?.gamesInLibrary);
 
-  // const currentUser = authContext?.currentUser;
   const { gameId } = useParams<{ gameId: string }>();
-  const parsedGameId = parseInt(gameId);
+  // const parsedGameId = parseInt(gameId);
+  let parsedGameId = parseInt(gameId);
 
-  // const { loading, data, error } = useQuery(FIND_GAMES, {
-  //   variables: { id: parsedGameId },
-  //   fetchPolicy: 'cache-first',
-  //   onError: (err) => {
-  //     console.log('Failed to find games: ', err);
-  //     <Redirect to='/' />;
-  //   },
-  // });
+  if (modalGame) parsedGameId = parseInt(modalGame);
 
   const [findGames, { data, loading, error }] = useLazyQuery(FIND_GAMES, {
     variables: { id: parsedGameId },
@@ -50,7 +50,7 @@ const GameProfile = () => {
   }
 
   const game = data?.findGames[0];
-  console.log('GAME: ', game);
+  // console.log('GAME: ', game);
 
   // Setting image resolution from url: https://api-docs.igdb.com/#images
   const imageSize = 'cover_big';
@@ -97,7 +97,10 @@ const GameProfile = () => {
         <PlatformIcons platforms={game.platforms} />
         <p css={{ paddingTop: '10px', paddingBottom: 0 }}>{game.summary}</p>
 
-        {currentUser && <Rater gameId={parsedGameId} />}
+        {/* {currentUser && <Rater gameId={parsedGameId} />} */}
+        {(currentUser) && (
+          <Rater gameId={parsedGameId} currentUser={currentUser} />
+        )}
       </div>
 
       {currentUser && <AddToLibraryButton gameId={parsedGameId} />}

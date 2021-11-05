@@ -16,6 +16,7 @@ const Library = () => {
     loading: loadingUser,
     error: getUserError,
   } = useLazyCurrentUser();
+  // console.log('----Library: ', currentUser.email, currentUser.gamesInLibrary);
 
   useEffect(() => {
     // console.log('useeffect1');
@@ -100,14 +101,12 @@ const Library = () => {
     <div
       css={{
         display: 'flex',
-        flexDirection: 'row',
-        // alignItems: 'center',
-        // justifyContent: 'flex-start',
+        flexDirection: 'column',
+        justifyContent: 'center',
         width: '80vw',
-        // height: '100vh',
+        maxWidth: '1200px',
       }}
     >
-      {/* <GameList games={games} /> */}
       <DragoDropBoard games={games} user={currentUser} />
     </div>
   );
