@@ -9,8 +9,9 @@ import CoverDiv from './CoverDiv';
 
 import { useEffect } from 'react';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
+import AverageRatingDiv from './AverageRatingDiv';
 
-const GameListItem = ({ game }: { game: Game }) => {
+const GameListItem = ({ game, ranked }: { game: Game; ranked?: boolean }) => {
   // const { currentUser } = useAuthContext();
   const {
     getCurrentUser,
@@ -74,6 +75,9 @@ const GameListItem = ({ game }: { game: Game }) => {
             />
           )}
         </div> */}
+        {ranked && game.average_rating && (
+          <AverageRatingDiv rating={game.average_rating} />
+        )}
         <CoverDiv game={game} />
 
         <div

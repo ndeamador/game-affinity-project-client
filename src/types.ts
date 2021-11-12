@@ -8,6 +8,7 @@ export interface Game {
   genres: Genre[];
   total_rating_count: number;
   involved_companies: InvolvedCompany[];
+  average_rating?: number;
 }
 
 export interface InvolvedCompany {

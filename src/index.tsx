@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+// import resolvers from './resolvers';
 
 import {
   ApolloClient,
@@ -18,7 +19,7 @@ const client = new ApolloClient({
   link: new HttpLink({
     uri: process.env.REACT_APP_VERCEL_API_URL,
     credentials: 'include', // Required for sessions. Sends our cookie back to the server with every request. // https://www.apollographql.com/docs/react/networking/authentication/
-  }),
+  })
 });
 
 ReactDOM.render(

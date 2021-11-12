@@ -77,3 +77,15 @@ mutation updateRating($igdb_game_id: Int!, $rating: Int) {
 }
 ${GAME_IN_LIBRARY_DETAILS}
 `
+
+
+
+// CLIENT SIDE MUTATIONS
+// ----------------------------------------
+
+// // @client tells Apollo Client to fetch the field data locally (cache or local resolver), instead of sending it to our GraphQL server.
+// export const OPEN_MODAL = gql`
+// mutation openModal {
+//   openModal @client
+// }
+// `

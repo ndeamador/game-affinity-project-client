@@ -35,6 +35,7 @@ const navLinkStyle = css({
 const NavBar = () => {
   // const { currentUser } = useAuthContext();
   const {currentUser} = useCurrentUser();
+  // console.log('NAVBAR***** currentuser: ', currentUser);
 
   // const currentUser = authContext?.currentUser;
   const [openModal, setOpenModal] = useState<OpenLoginRegisterModalOptions>(
@@ -62,6 +63,19 @@ const NavBar = () => {
           exact={true} // to avoid that the home navlink is set as active by any route starting with /
         >
           Home
+        </NavLink>
+
+        <NavLink
+          to='/ranking'
+          // activeClassName='selected'
+          activeStyle={{
+            fontWeight: 'bold',
+            color: 'red',
+          }}
+          css={navLinkStyle}
+          exact={true}
+        >
+          Ranking
         </NavLink>
 
         {currentUser && (

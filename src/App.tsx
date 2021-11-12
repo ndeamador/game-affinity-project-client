@@ -18,6 +18,7 @@ import Library from './pages/Library';
 
 // import { useAuthContext } from './context/AuthContext';
 import useCurrentUser from './hooks/useCurrentUser';
+import Ranking from './pages/Ranking';
 // import FullPageSpinner from './components/FullPageSpinner';
 
 function App() {
@@ -45,6 +46,10 @@ function App() {
         <Switch>
           <Route path={'/games/:gameId'}>
             <GameProfile />
+          </Route>
+
+          <Route path={'/ranking'}>
+            <Ranking />
           </Route>
 
           <Route path={'/library'}>

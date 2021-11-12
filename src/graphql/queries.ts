@@ -49,3 +49,22 @@ export const GET_LIBRARY = gql`
   }
   ${GAME_DETAILS}
 `
+
+// export const GET_AVERAGE_RATINGS = gql`
+//   query getAverageRatings {
+//     getAverageRatings {
+//       igdb_game_id
+//       average_rating
+//     }
+//   }
+// `
+
+export const GET_RANKING = gql`
+  query getRankedGames {
+    getRankedGames {
+      average_rating,
+      ...GameDetails
+    }
+  }
+  ${GAME_DETAILS}
+`
