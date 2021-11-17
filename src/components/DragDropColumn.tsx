@@ -3,6 +3,7 @@
 import { Droppable } from 'react-beautiful-dnd';
 import { Game } from '../types';
 import DragDropGame from './DragDropGame';
+import DragDropInnerGameList from './DragDropInnerGameList';
 // import GameListItem from './GameListItem';
 
 // 'provided.innerRef' is used to supply the DOM node of the component to beautiful-dnd
@@ -52,9 +53,10 @@ const DragDropColumn = ({
                   : 'space-evenly',
             }}
           >
-            {games.map((game, index) => (
+            <DragDropInnerGameList games={games} />
+            {/* {games.map((game, index) => (
               <DragDropGame key={game.id} game={game} index={index} />
-            ))}
+            ))} */}
             {provided.placeholder}
           </div>
         )}
