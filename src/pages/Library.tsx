@@ -48,7 +48,7 @@ const Library = () => {
   ] = useLazyQuery(FIND_GAMES, {
     variables: {
       id: gameIdsInLibrary,
-      maxResults: 30,
+      maxResults: 20,
     },
     fetchPolicy: 'cache-first', // with cache-and-network we get a loading spinner every time an item is rearranged.
   });
