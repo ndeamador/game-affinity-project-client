@@ -1,7 +1,5 @@
 /** @jsxImportSource @emotion/react */
 
-import { capitalizeFirstLetter } from '../utils/misc';
-import { Game, LoginOrRegisterModalProps } from '../types';
 import { FaTimes } from 'react-icons/fa';
 
 import { CircleButton } from './styledComponentsLibrary';

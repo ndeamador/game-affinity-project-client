@@ -4,44 +4,16 @@ import { CURRENT_USER } from '../graphql/queries';
 import { MeResponse } from '../types';
 
 
-
-// const useAddToLibrary = ({ gameId }: { gameId: number | string }) => {
 const useUpdateRating = () => {
 
-  // let parsedGameId: number;
-  // typeof gameId === 'string' ? parsedGameId = parseInt(gameId) : parsedGameId = gameId;
-
-
   return useMutation(UPDATE_RATING, {
-    //   refetchQueries: [{ query: CURRENT_USER }],
 
-    // I use update instead of refetchQueries for optimization.
-    // This way we can manually update the cache instead of refetching the query.
     update: (store, response) => {
       console.log('useupdate response: ', response.data);
       try {
-        // without specifiying the data type we cannot use the spread operator later (Spread types may only be created from object types.ts(2698))
-
-        // store.writeQuery({
-        //   query: CURRENT_USER,
-        //   data: {
-        //     ...dataInStore,
-        //     me: {
-        //       ...dataInStore?.me,
-        //       gamesInLibrary: dataInStore
-        //         ? [
-        //           ...dataInStore.me.gamesInLibrary,
-        //           response.data?.addGameToLibrary,
-        //         ]
-        //         : [response.data?.addGameToLibrary],
-        //     },
-        //   },
-        // });
-
-
         if (response.data?.updateRating) {
-          console.log('in');
 
+          // without specifiying the data type we cannot use the spread operator later (Spread types may only be created from object types.ts(2698))
           const dataInStore: MeResponse | null = store.readQuery({
             query: CURRENT_USER,
           });

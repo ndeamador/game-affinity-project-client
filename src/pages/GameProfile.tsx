@@ -18,17 +18,20 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
     loading: userLoading,
     error: getUserError,
   } = useLazyCurrentUser();
+
   useEffect(() => {
-    // getCurrentUser();
     (async () => await getCurrentUser())(); // Worked fine without async but gave an unmounted update error when used as modal in Library.
   }, [getCurrentUser]);
   if (getUserError) {
     return <div>Test error: {getUserError.message}</div>;
   }
-  console.log('----GameProfile: ', currentUser?.email, currentUser?.gamesInLibrary);
+  console.log(
+    '----GameProfile: ',
+    currentUser?.email,
+    currentUser?.gamesInLibrary
+  );
 
   const { gameId } = useParams<{ gameId: string }>();
-  // const parsedGameId = parseInt(gameId);
   let parsedGameId = parseInt(gameId);
 
   if (modalGame) parsedGameId = parseInt(modalGame);
@@ -37,7 +40,6 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
     variables: { id: parsedGameId },
   });
 
-  // execute query on component mount
   useEffect(() => {
     findGames();
   }, [findGames]);
@@ -50,7 +52,6 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
   }
 
   const game = data?.findGames[0];
-  // console.log('GAME: ', game);
 
   // Setting image resolution from url: https://api-docs.igdb.com/#images
   const imageSize = 'cover_big';
@@ -98,7 +99,7 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
         <p css={{ paddingTop: '10px', paddingBottom: 0 }}>{game.summary}</p>
 
         {/* {currentUser && <Rater gameId={parsedGameId} />} */}
-        {(currentUser) && (
+        {currentUser && (
           <Rater gameId={parsedGameId} currentUser={currentUser} />
         )}
       </div>

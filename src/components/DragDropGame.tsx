@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Game } from '../types';
 import CoverDiv from './CoverDiv';
@@ -76,4 +76,6 @@ const DragDropGame = ({ game, index }: { game: Game; index: number }) => {
   );
 };
 
+
+// export default React.memo(DragDropGame);
 export default DragDropGame;
