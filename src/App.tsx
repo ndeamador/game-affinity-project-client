@@ -11,14 +11,14 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-import GameProfile from './pages/GameProfile';
+import GameProfile from './views/GameProfile';
 import NavBar from './components/NavBar';
-import Home from './pages/Home';
-import Library from './pages/Library';
+import Home from './views/Home';
+import Library from './views/Library';
 
 // import { useAuthContext } from './context/AuthContext';
 import useCurrentUser from './hooks/useCurrentUser';
-import Ranking from './pages/Ranking';
+import Ranking from './views/Ranking';
 // import FullPageSpinner from './components/FullPageSpinner';
 
 function App() {

@@ -4,7 +4,7 @@ import { FaTimes } from 'react-icons/fa';
 
 import { CircleButton } from './styledComponentsLibrary';
 import { Dialog } from '@reach/dialog';
-import GameProfile from '../pages/GameProfile';
+import GameProfile from '../views/GameProfile';
 
 const GameProfileModal = ({
   setOpenModal,
