@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled/macro'; // /macro so that elements appear named in the dom
 import { keyframes } from '@emotion/react';
-import * as colors from '../styles/colors';
+// import * as colors from '../styles/colors';
 // import * as mediaQueries from '../styles/media-queries';
 // import { Dialog } from '@reach/dialog';
 import { ImSpinner2 } from 'react-icons/im'; // svg library
@@ -15,12 +15,12 @@ interface ButtonProps {
 
 const buttonVariants = {
   primary: {
-    background: colors.indigo,
-    color: colors.base,
+    background: 'var(--colors-indigo)',
+    color: 'var(--colors-base)',
   },
   regular: {
-    background: colors.gray,
-    color: colors.text,
+    background: 'var(--colors-gray)',
+    color: 'var(--colors-text)',
   },
 };
 
@@ -49,12 +49,12 @@ export const CircleButton = styled.button({
   boxSizing: 'border-box', // padding and border are included in the element's total width and height
   borderRadius: '9999px',
   borderStyle: 'none',
-  color: colors.text,
-  backgroundColor: colors.base,
+  color: 'var(--colors-text)',
+  backgroundColor: 'var(--colors-base)',
   transitionDuration: '0.2s',
   transitionProperty: 'background-color',
   ':hover': {
-    backgroundColor: colors.gray,
+    backgroundColor: 'var(--colors-gray)',
     transitionDuration: '0.2s',
     transitionProperty: 'background-color',
   },
@@ -122,7 +122,7 @@ export const FullPageError = ({
     <div
       role='alert'
       css={{
-        color: colors.danger,
+        color: 'var(--colors-danger)',
         height: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -139,7 +139,7 @@ export const FullPageError = ({
 // ERROR MESSAGE
 export const ErrorNotification = styled.div(
   {
-    color: colors.danger,
+    color: 'var(--colors-danger)',
     margin: 0,
     paddingTop: '2px',
     position: 'absolute',

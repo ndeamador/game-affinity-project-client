@@ -3,7 +3,7 @@ import { CircleButton, Spinner } from './styledComponentsLibrary';
 import Tooltip from '@reach/tooltip';
 import { FaTimesCircle } from 'react-icons/fa';
 import { IconBaseProps } from 'react-icons';
-import * as colors from '../styles/colors';
+// import * as colors from '../styles/colors';
 
 interface TooltipButtonProps {
   label: string;
@@ -20,7 +20,7 @@ function TooltipButton({
   label,
   onClick,
   icon,
-  highlight = colors.indigo,
+  highlight = 'var(--colors-indigo)',
   isLoading,
   isError,
   errorMessage,
@@ -49,12 +49,12 @@ function TooltipButton({
       <CircleButton
         css={{
           backgroundColor: 'white',
-          color: isError ? colors.danger : colors.gray80,
+          color: isError ? 'var(--colors-danger)' : 'var(--colors-gray80)',
           ':hover,:focus': {
             color: isLoading
-              ? colors.gray80
+              ? 'var(--colors-gray80)'
               : isError
-              ? colors.danger
+              ? 'var(--colors-danger)'
               : highlight,
           },
         }}

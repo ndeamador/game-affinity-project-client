@@ -7,23 +7,22 @@ import LoginRegisterButton from '../components/LoginRegisterButton';
 import LogoutButton from '../components/LogoutButton';
 import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/react';
-import * as colors from '../styles/colors';
-// import { useAuthContext } from '../context/AuthContext';
+// import * as colors from '../styles/colors';
 import useCurrentUser from '../hooks/useCurrentUser';
 
 const navLinkStyle = css({
-  // display: 'block',
   padding: '5px 10px',
   margin: '5px 0',
-  // width: '100%',
   height: '100%',
-  color: colors.text,
+  // color: colors.text,
+  color: 'var(--color-text)',
   borderRadius: '2px',
   textDecoration: 'none',
-  // borderLeft: '5px solid transparent',
   ':hover': {
-    color: colors.indigo,
-    background: colors.gray10,
+    // color: colors.indigo,
+    // background: colors.gray10,
+    color: 'var(--color-indigo)',
+    background: 'var(--color-danger)',
   },
 });
 
@@ -33,14 +32,9 @@ const navLinkStyle = css({
 // };
 
 const NavBar = () => {
-  // const { currentUser } = useAuthContext();
-  const {currentUser} = useCurrentUser();
-  // console.log('NAVBAR***** currentuser: ', currentUser);
-
-  // const currentUser = authContext?.currentUser;
-  const [openModal, setOpenModal] = useState<OpenLoginRegisterModalOptions>(
-    'none'
-  );
+  const { currentUser } = useCurrentUser();
+  const [openModal, setOpenModal] =
+    useState<OpenLoginRegisterModalOptions>('none');
 
   return (
     <div
@@ -54,7 +48,6 @@ const NavBar = () => {
       <div css={{ display: 'flex', justifyContent: 'flex-start' }}>
         <NavLink
           to='/'
-          // activeClassName='selected'
           activeStyle={{
             fontWeight: 'bold',
             color: 'red',
@@ -67,7 +60,6 @@ const NavBar = () => {
 
         <NavLink
           to='/ranking'
-          // activeClassName='selected'
           activeStyle={{
             fontWeight: 'bold',
             color: 'red',
@@ -81,7 +73,6 @@ const NavBar = () => {
         {currentUser && (
           <NavLink
             to='/library'
-            // activeClassName='selected'
             activeStyle={{
               fontWeight: 'bold',
               color: 'green',
