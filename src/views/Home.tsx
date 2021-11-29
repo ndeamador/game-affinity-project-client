@@ -6,27 +6,27 @@ import { FIND_GAMES } from '../graphql/queries';
 import GameList from '../components/GameList';
 import { useDebounce } from 'use-debounce';
 import { Tooltip } from '@reach/tooltip';
-import { Spinner, Input } from '../components/styledComponentsLibrary';
+import { Spinner } from '../components/styledComponentsLibrary';
 import { FaSearch } from 'react-icons/fa';
 import { css } from '@emotion/react';
 import SearchBar from '../components/SearchBar';
 
 const style = css({
   display: 'flex',
-  // alignItems: 'stretch',
-  // alignItems: 'center',
-  justifyContent: 'center',
-  // margin: '0',
+  flexDirection: 'column',
+  // justifyContent: 'center',
+  alignItems: 'stretch',
   marginTop: '15vh',
-  width: '90vw',
-  // padding: '40px 0',
+  maxWidth: 'var(--searchbar-max-width)',
 });
 
-const formStyle = css({
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-});
+// const formStyle = css({
+//   display: 'flex',
+//   flexDirection: 'row',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+//   width: '100%',
+// });
 
 const Home = () => {
   const [games, setGames] = useState([]);
@@ -52,21 +52,12 @@ const Home = () => {
       setGames([]); // Prevents the results from the last query to appear in a new one.
       return;
     }
-
     findGames({ variables: { name: debouncedQuery } });
   }, [debouncedQuery]);
 
   return (
     <div id='Home page div' css={style}>
-      <form onSubmit={(event) => event.preventDefault()} css={formStyle}>
-        {/* <Input
-            id='search'
-            name='search'
-            placeholder='Find a game...'
-            type='text'
-            onChange={handleGameQueryChange}
-            css={searchBarStyle}
-          /> */}
+      {/* <form onSubmit={(event) => event.preventDefault()} css={formStyle}>
         <SearchBar handleChange={handleGameQueryChange} />
 
         <Tooltip label='Search Games'>
@@ -84,7 +75,8 @@ const Home = () => {
             </button>
           </label>
         </Tooltip>
-      </form>
+      </form> */}
+      <SearchBar handleChange={handleGameQueryChange} loading={loading} />
 
       {error ? (
         <div>Something went wrong.</div>

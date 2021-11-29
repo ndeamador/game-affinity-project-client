@@ -36,6 +36,7 @@ const bodyStyle = css({
 const contentStyle = css({
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'center',
   width: '80vw',
   maxWidth: '1200px',
   // maxWidth: '800px',
@@ -52,7 +53,7 @@ function App() {
     <div className='App' css={bodyStyle}>
       <Router>
         <NavBar />
-        <div css={contentStyle}>
+        <div className='AppContentContainer' css={contentStyle}>
           <Switch>
             <Route path={'/games/:gameId'}>
               <GameProfile />
