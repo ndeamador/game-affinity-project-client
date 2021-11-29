@@ -3,7 +3,6 @@
 import { Game, MeResponse, Rating, User } from '../types';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import DragDropColumn from './DragDropColumn';
-import DragDropDeleteBox from './DragDropDeleteBox';
 import { UPDATE_RATING } from '../graphql/mutations';
 import { CURRENT_USER } from '../graphql/queries';
 import { useMutation } from '@apollo/client';

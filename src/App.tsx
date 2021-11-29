@@ -20,13 +20,28 @@ import useCurrentUser from './hooks/useCurrentUser';
 import Ranking from './views/Ranking';
 import { css } from '@emotion/react';
 
-const style = css({
-  // display: 'flex',
-  // flexDirection: 'column',
-  // alignItems: 'center',
-  // justifyContent: 'flex-start',
+const bodyStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
   width: '100vw',
   height: '100vh',
+  // '& > *': {
+  //   width: '80vw',
+  //   maxWidth: '1200px',
+  // }
+});
+
+const contentStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '80vw',
+  maxWidth: '1200px',
+  // maxWidth: '800px',
+  '& > *': {
+    width: '100%',
+  },
 });
 
 function App() {
@@ -34,11 +49,29 @@ function App() {
   console.log('----App: ', currentUser?.email, currentUser?.gamesInLibrary);
 
   return (
-    <div className='App' css={style}>
+    <div className='App' css={bodyStyle}>
       <Router>
         <NavBar />
+        <div css={contentStyle}>
+          <Switch>
+            <Route path={'/games/:gameId'}>
+              <GameProfile />
+            </Route>
 
-        <Switch>
+            <Route path={'/ranking'}>
+              <Ranking />
+            </Route>
+
+            <Route path={'/library'}>
+              {!loadingUser && !currentUser ? <Redirect to='/' /> : <Library />}
+            </Route>
+
+            <Route path='/'>
+              <Home />
+            </Route>
+          </Switch>
+        </div>
+        {/* <Switch>
           <Route path={'/games/:gameId'}>
             <GameProfile />
           </Route>
@@ -54,7 +87,7 @@ function App() {
           <Route path='/'>
             <Home />
           </Route>
-        </Switch>
+        </Switch> */}
       </Router>
     </div>
   );

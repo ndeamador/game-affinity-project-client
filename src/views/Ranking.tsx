@@ -11,6 +11,7 @@ import { Game } from '../types';
 const style = css({
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'center',
 });
 
 const Ranking = () => {
@@ -20,7 +21,6 @@ const Ranking = () => {
 
   if (loadingGames) return <FullPageSpinner />;
   if (!data) return <div>No games are rated yet.</div>;
-
 
   const genres: string[] = [
     ...new Set<string>( // Set is just to isolate unique values.

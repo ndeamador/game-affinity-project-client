@@ -8,6 +8,14 @@ import { FIND_GAMES } from '../graphql/queries';
 import DragoDropBoard from '../components/DragDropBoard';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 import { GameInUserLibrary } from '../types';
+import { css } from '@emotion/react';
+
+const style = css({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+
+});
 
 const Library = () => {
   const {
@@ -53,17 +61,6 @@ const Library = () => {
     fetchPolicy: 'cache-first', // with cache-and-network we get a loading spinner every time an item is rearranged.
   });
 
-  // console.log(
-  //   'Library || loadinguser:',
-  //   loadingUser,
-  //   '- loadingGames:',
-  //   loadingGames,
-  //   '- Library.CurrentUser:',
-  //   currentUser ? currentUser.email : currentUser,
-  //   '- gameresponse:',
-  //   gamesResponse?.findGames[0]
-  // );
-
   if (getUserError) return <div>{getUserError.message}</div>;
   else if (findGamesError) return <div>{findGamesError.message}</div>;
   // if (loadingUser || !currentUser || loadingGames) return <FullPageSpinner />;
@@ -76,38 +73,27 @@ const Library = () => {
     return <FullPageSpinner />;
   }
 
-  // if (!gamesResponse) {
-  //   console.log(
-  //     '!gameresponse, loadingGames?',
-  //     loadingGames,
-  //     'gameResponse:',
-  //     gamesResponse?.findGames[0]
-  //   );
-  //   return <FullPageSpinner />;
-  // }
-
   const games = gamesResponse?.findGames;
 
-  if (gameIdsInLibrary.length === 0) {
-    return (
-      <div>
-        <div>Your library is empty.</div>
-        <Link to={'/home'}>Click here to find games!</Link>
-      </div>
-    );
-  }
+  // if (gameIdsInLibrary.length === 0) {
+  //   return (
+  //     <div>
+  //       <div>Your library is empty.</div>
+  //       <Link to={'/home'}>Click here to find games!</Link>
+  //     </div>
+  //   );
+  // }
 
   return (
-    <div
-      css={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        width: '80vw',
-        maxWidth: '1200px',
-      }}
-    >
-      <DragoDropBoard games={games} user={currentUser} />
+    <div css={style}>
+      {gameIdsInLibrary.length === 0 ? (
+        <div>
+          <div>Your library is empty.</div>
+          <Link to={'/home'}>Click here to find games!</Link>
+        </div>
+      ) : (
+        <DragoDropBoard games={games} user={currentUser} />
+      )}
     </div>
   );
 };

@@ -8,6 +8,25 @@ import { useDebounce } from 'use-debounce';
 import { Tooltip } from '@reach/tooltip';
 import { Spinner, Input } from '../components/styledComponentsLibrary';
 import { FaSearch } from 'react-icons/fa';
+import { css } from '@emotion/react';
+import SearchBar from '../components/SearchBar';
+
+const style = css({
+  display: 'flex',
+  // alignItems: 'stretch',
+  // alignItems: 'center',
+  justifyContent: 'center',
+  // margin: '0',
+  marginTop: '15vh',
+  width: '90vw',
+  // padding: '40px 0',
+});
+
+const formStyle = css({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+});
 
 const Home = () => {
   const [games, setGames] = useState([]);
@@ -38,61 +57,41 @@ const Home = () => {
   }, [debouncedQuery]);
 
   return (
-    <div
-      id='Home page div'
-      css={{
-        display: 'flex',
-        alignItems: 'stretch',
-        justifyContent: 'center',
-        maxWidth: 800,
-        // margin: '0',
-        marginTop: '15vh',
-        width: '90vw',
-        // padding: '40px 0',
-      }}
-    >
-      <div css={{ width: '70%' }}>
-        <form
-          onSubmit={(event) => event.preventDefault()}
-          css={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <Input
+    <div id='Home page div' css={style}>
+      <form onSubmit={(event) => event.preventDefault()} css={formStyle}>
+        {/* <Input
             id='search'
             name='search'
             placeholder='Find a game...'
             type='text'
             onChange={handleGameQueryChange}
-            css={{ width: '100%' }}
-          />
+            css={searchBarStyle}
+          /> */}
+        <SearchBar handleChange={handleGameQueryChange} />
 
-          <Tooltip label='Search Games'>
-            <label htmlFor='search'>
-              <button
-                type='submit'
-                css={{
-                  border: '0',
-                  position: 'relative',
-                  marginLeft: '-35px',
-                  background: 'transparent',
-                }}
-              >
-                {loading ? <Spinner /> : <FaSearch aria-label='search' />}
-              </button>
-            </label>
-          </Tooltip>
-        </form>
+        <Tooltip label='Search Games'>
+          <label htmlFor='search'>
+            <button
+              type='submit'
+              css={{
+                border: '0',
+                position: 'relative',
+                marginLeft: '-35px',
+                background: 'transparent',
+              }}
+            >
+              {loading ? <Spinner /> : <FaSearch aria-label='search' />}
+            </button>
+          </label>
+        </Tooltip>
+      </form>
 
-        {error ? (
-          <div>Something went wrong.</div>
-        ) : query && !loading ? (
-          <GameList games={games} />
-        ) : null}
-        {/* {query && !loading ? <GameList games={games} /> : null} */}
-      </div>
+      {error ? (
+        <div>Something went wrong.</div>
+      ) : query && !loading ? (
+        <GameList games={games} />
+      ) : null}
+      {/* {query && !loading ? <GameList games={games} /> : null} */}
     </div>
   );
 };

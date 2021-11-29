@@ -16,21 +16,25 @@ const navBarStyle = css({
   width: '100%',
   height: 'var(--navbar-height)',
   backgroundColor: 'lightGrey',
+  // padding: '10px 30px',
 });
 
 const navInnerContainerStyle = css({
   display: 'flex',
   alignItems: 'center',
+  height: '100%',
 });
 
 const navLinkStyle = css({
+  display: 'flex',
+  alignItems: 'center',
   padding: '5px 10px',
   margin: '5px 0',
   height: '100%',
   color: 'var(--color-text)',
   borderRadius: 'var(--border-radius)',
   textDecoration: 'none',
-  ':hover': {
+  '&:hover': {
     color: 'var(--color-indigo)',
     background: 'var(--color-gray10)',
   },
