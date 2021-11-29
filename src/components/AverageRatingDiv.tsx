@@ -25,7 +25,7 @@ const AverageRatingDiv = ({ rating }: { rating: number }) => {
         height: '90px',
         // height: '100%',
         maxwidth: '90px',
-        borderRadius: '8px',
+        borderRadius: 'var(--border-radius)',
         marginRight: '10px',
       }}
     >

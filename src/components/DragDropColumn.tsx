@@ -27,7 +27,7 @@ const DragDropColumn = ({
         height: '100%',
         backgroundColor: 'ghostwhite',
         padding: '5px',
-        borderRadius: '5px',
+        borderRadius: 'var(--border-radius)',
         flex: '1 0 0',
         // border: 'solid 1px black',
       }}

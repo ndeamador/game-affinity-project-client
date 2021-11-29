@@ -6,6 +6,7 @@ import { keyframes } from '@emotion/react';
 // import { Dialog } from '@reach/dialog';
 import { ImSpinner2 } from 'react-icons/im'; // svg library
 import { ApolloError } from '@apollo/client';
+// import '../styles/global.css';
 
 // BUTTON
 
@@ -17,10 +18,14 @@ const buttonVariants = {
   primary: {
     background: 'var(--colors-indigo)',
     color: 'var(--colors-base)',
+    // background: colors.indigo,
+    // color: colors.base,
   },
   regular: {
     background: 'var(--colors-gray)',
     color: 'var(--colors-text)',
+    // background: colors.gray,
+    // color: colors.text,
   },
 };
 
@@ -29,7 +34,7 @@ export const Button = styled.button(
     padding: '13px 18px',
     border: '0',
     lineHeight: '1',
-    borderRadius: '3px',
+    borderRadius: 'var(--border-radius)',
     margin: '0',
     boxSizing: 'border-box',
   },
@@ -63,7 +68,7 @@ export const CircleButton = styled.button({
 // INPUT
 
 export const Input = styled.input({
-  borderRadius: '8px',
+  borderRadius: 'var(--border-radius)',
   // border: `1px solid ${colors.gray10}`,
   border: '0px',
   // background: colors.gray,

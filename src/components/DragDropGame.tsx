@@ -40,7 +40,7 @@ const DragDropGame = ({ game, index }: { game: Game; index: number }) => {
             height: '50px',
             padding: '5px',
             border: 'solid 1px lightgrey',
-            borderRadius: '8px',
+            borderRadius: 'var(--border-radius)',
             marginBottom: '5px',
             backgroundColor: 'white',
             // transition: `transform .15s, background-color .5s, transform 0.2s`,

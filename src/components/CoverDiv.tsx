@@ -22,7 +22,7 @@ const CoverDiv = ({ game }: { game: Game }) => {
             width: 'auto',
             height: '100%',
             border: 'solid 2px lightgrey',
-            borderRadius: '8px',
+            borderRadius: 'var(--border-radius)',
             padding: '8px',
             boxSizing: 'border-box',
             margin: '0px',

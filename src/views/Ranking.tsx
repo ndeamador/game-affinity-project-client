@@ -1,11 +1,17 @@
 /** @jsxImportSource @emotion/react */
 
 import { useQuery } from '@apollo/client';
+import { css } from '@emotion/react';
 import { useState } from 'react';
 import FullPageSpinner from '../components/FullPageSpinner';
 import GameList from '../components/GameList';
 import { GET_RANKING } from '../graphql/queries';
 import { Game } from '../types';
+
+const style = css({
+  display: 'flex',
+  flexDirection: 'column',
+});
 
 const Ranking = () => {
   const { data, loading: loadingGames, error } = useQuery(GET_RANKING);
@@ -15,9 +21,6 @@ const Ranking = () => {
   if (loadingGames) return <FullPageSpinner />;
   if (!data) return <div>No games are rated yet.</div>;
 
-  // const onGenreClick = (genre: string) => {
-  //   setGenreFilter(genre);
-  // };
 
   const genres: string[] = [
     ...new Set<string>( // Set is just to isolate unique values.
@@ -39,9 +42,8 @@ const Ranking = () => {
         );
 
   return (
-    <div>
+    <div css={style}>
       <div>
-        <div>{genreFilter}</div>
         <button onClick={() => setGenreFilter('All')}>All genres</button>
         {genres.map((genre) => (
           <button key={genre} onClick={() => setGenreFilter(genre)}>

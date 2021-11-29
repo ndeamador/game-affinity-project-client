@@ -42,7 +42,7 @@ const GameListItem = ({ game, ranked }: { game: Game; ranked?: boolean }) => {
           margin: '0',
           color: 'black',
           padding: '10px',
-          borderRadius: '8px',
+          borderRadius: 'var(--border-radius)',
           boxSizing: 'border-box',
           transitionDuration: '0.2s',
           transitionProperty: 'background-color, box-shadow',
@@ -61,7 +61,8 @@ const GameListItem = ({ game, ranked }: { game: Game; ranked?: boolean }) => {
           css={{ width: '90px', height: 'auto', maxwidth: '90px' }}
         >
           {game.cover ? (
-            <img src={imageLink} css={{ width: '100%', borderRadius: '8px' }} />
+            <img src={imageLink} css={{ width: '100%', borderRadius: borderRadius: 'var(--border-radius)',
+ }} />
           ) : (
             <CgGames
               css={{

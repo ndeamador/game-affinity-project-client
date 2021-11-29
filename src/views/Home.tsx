@@ -45,10 +45,10 @@ const Home = () => {
         alignItems: 'stretch',
         justifyContent: 'center',
         maxWidth: 800,
-        margin: 'auto',
+        // margin: '0',
         marginTop: '15vh',
         width: '90vw',
-        padding: '40px 0',
+        // padding: '40px 0',
       }}
     >
       <div css={{ width: '70%' }}>

@@ -16,30 +16,25 @@ import NavBar from './components/NavBar';
 import Home from './views/Home';
 import Library from './views/Library';
 
-// import { useAuthContext } from './context/AuthContext';
 import useCurrentUser from './hooks/useCurrentUser';
 import Ranking from './views/Ranking';
-// import FullPageSpinner from './components/FullPageSpinner';
+import { css } from '@emotion/react';
+
+const style = css({
+  // display: 'flex',
+  // flexDirection: 'column',
+  // alignItems: 'center',
+  // justifyContent: 'flex-start',
+  width: '100vw',
+  height: '100vh',
+});
 
 function App() {
-
-  const {currentUser, loading:loadingUser} = useCurrentUser();
-  // console.log('App || loading:', loadingUser, '- App.CurrentUser:', currentUser);
+  const { currentUser, loading: loadingUser } = useCurrentUser();
   console.log('----App: ', currentUser?.email, currentUser?.gamesInLibrary);
 
-
   return (
-    <div
-      className='App'
-      css={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        // justifyContent: 'flex-start',
-        width: '100vw',
-        height: '100vh',
-      }}
-    >
+    <div className='App' css={style}>
       <Router>
         <NavBar />
 

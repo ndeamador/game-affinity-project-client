@@ -270,7 +270,7 @@ const Rater = ({
           display: 'inline-flex',
           background: 'whitesmoke',
           padding: '10px 10px 10px 8px',
-          borderRadius: '8px',
+          borderRadius: 'var(--border-radius)',
           width: '25%',
           minWidth: '150px',
           // flexGrow: 0.25,

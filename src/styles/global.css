@@ -20,7 +20,8 @@ html {
 
   --font-family: ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;
 
-  --nav-height: 100px;
+  --navbar-height: 85px;
+  --border-radius: 8px;
 }
 
 /* CSS Resets */
