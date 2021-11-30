@@ -13,9 +13,11 @@ html {
   --color-indigoDarken10: #364495;
   --color-indigoLighten80: #b7c1f8;
   --color-yellow: #ffc107;
+  --color-yellowgreen: yellowgreen;
   --color-green: #4caf50;
   --color-danger: #ef5350;
   --color-orange: orange;
+  --color-gold: gold;
 
   --font-family: ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;
 
@@ -50,16 +52,29 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
@@ -70,8 +85,6 @@ ul {
 a {
   text-decoration: none;
 }
-
-
 
 /* Other global CSS */
 /* ================================================================================ */
