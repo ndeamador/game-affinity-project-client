@@ -25,6 +25,7 @@ html {
   --border-radius: 8px;
   --searchbar-max-width: 800px;
   --min-nav-item-width: 7rem;
+  --cover-width: 90px
 }
 
 /* CSS Resets */
