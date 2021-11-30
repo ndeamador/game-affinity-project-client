@@ -11,7 +11,7 @@ import { Game } from '../types';
 const style = css({
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
+  // justifyContent: 'center',
 });
 
 const Ranking = () => {

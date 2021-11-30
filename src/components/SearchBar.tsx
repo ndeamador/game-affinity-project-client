@@ -19,23 +19,6 @@ const inputStyle = css({
   minwidth: '600px',
 });
 
-// const SearchBar = ({
-//   handleChange,
-// }: {
-//   handleChange: React.ChangeEventHandler<HTMLInputElement>;
-// }) => {
-//   return (
-//     <Input
-//       id='search'
-//       name='search'
-//       placeholder='Find a game...'
-//       type='text'
-//       onChange={handleChange}
-//       css={inputStyle}
-//     />
-//   );
-// };
-
 const SearchBar = ({
   handleChange,
   loading,
@@ -45,8 +28,6 @@ const SearchBar = ({
 }) => {
   return (
     <form onSubmit={(event) => event.preventDefault()} css={formStyle}>
-      {/* <SearchBar handleChange={handleGameQueryChange} /> */}
-
       <Input
         id='search'
         name='search'
@@ -55,7 +36,6 @@ const SearchBar = ({
         onChange={handleChange}
         css={inputStyle}
       />
-
       <Tooltip label='Search Games'>
         <label htmlFor='search'>
           <button

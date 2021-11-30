@@ -9,27 +9,37 @@ import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/react';
 import useCurrentUser from '../hooks/useCurrentUser';
 
-const navBarStyle = css({
+const outerNavBarStyle = css({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
   height: 'var(--navbar-height)',
-  backgroundColor: 'lightGrey',
-  // padding: '10px 30px',
+  padding: '0px 50px',
+  position: 'fixed',
+  top: '0px',
 });
 
-const navInnerContainerStyle = css({
+const innerNavBarStyle = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '100%',
+});
+
+const navLinkGroupStyle = css({
   display: 'flex',
   alignItems: 'center',
   height: '100%',
+  justifyContent: 'space-between',
 });
 
 const navLinkStyle = css({
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'center',
   padding: '5px 10px',
-  margin: '5px 0',
+  minWidth: 'var(--min-nav-item-width)',
   height: '100%',
   color: 'var(--color-text)',
   borderRadius: 'var(--border-radius)',
@@ -41,9 +51,12 @@ const navLinkStyle = css({
 });
 
 const navLinkActiveStyle: React.CSSProperties = {
-  fontWeight: 'bold',
-  color: 'red',
+  color: 'var(--color-green)',
 };
+
+const userStripStyle = css({
+  padding: '5px 25px',
+});
 
 const NavBar = () => {
   const { currentUser } = useCurrentUser();
@@ -51,59 +64,63 @@ const NavBar = () => {
     useState<OpenLoginRegisterModalOptions>('none');
 
   return (
-    <div css={navBarStyle}>
-      <div css={navInnerContainerStyle}>
-        <NavLink
-          to='/'
-          activeStyle={navLinkActiveStyle}
-          css={navLinkStyle}
-          exact={true} // to avoid that the home navlink is set as active by any route starting with /
-        >
-          Home
-        </NavLink>
-
-        <NavLink
-          to='/ranking'
-          activeStyle={navLinkActiveStyle}
-          css={navLinkStyle}
-          exact={true}
-        >
-          Ranking
-        </NavLink>
-
-        {currentUser && (
+    <div className='OuterNavbar' css={outerNavBarStyle}>
+      <div className='InnerNavbar' css={innerNavBarStyle}>
+        <div css={navLinkGroupStyle}>
           <NavLink
-            to='/library'
+            to='/'
+            activeStyle={navLinkActiveStyle}
+            css={navLinkStyle}
+            exact={true} // to avoid that the home navlink is set as active by any route starting with /
+          >
+            Home
+          </NavLink>
+
+          <NavLink
+            to='/ranking'
             activeStyle={navLinkActiveStyle}
             css={navLinkStyle}
             exact={true}
           >
-            My library
+            Ranking
           </NavLink>
+
+          {currentUser && (
+            <NavLink
+              to='/library'
+              activeStyle={navLinkActiveStyle}
+              css={navLinkStyle}
+              exact={true}
+            >
+              My library
+            </NavLink>
+          )}
+        </div>
+
+        {currentUser ? (
+          <div css={navLinkGroupStyle}>
+            <div aria-label='Current User' css={userStripStyle}>
+              {currentUser.email}
+            </div>
+            <LogoutButton />
+          </div>
+        ) : (
+          <div css={navLinkGroupStyle}>
+            <LoginRegisterButton
+              loginOrRegister='login'
+              setOpenModal={setOpenModal}
+              openModal={openModal}
+              buttonType='regular'
+            />
+            <LoginRegisterButton
+              loginOrRegister='register'
+              setOpenModal={setOpenModal}
+              openModal={openModal}
+              buttonType='regular'
+            />
+          </div>
         )}
       </div>
-
-      {currentUser ? (
-        <div css={navInnerContainerStyle}>
-          <div aria-label='Current User'>{currentUser.email}</div>
-          <LogoutButton />
-        </div>
-      ) : (
-        <div css={navInnerContainerStyle}>
-          <LoginRegisterButton
-            loginOrRegister='login'
-            setOpenModal={setOpenModal}
-            openModal={openModal}
-            buttonType='regular'
-          />
-          <LoginRegisterButton
-            loginOrRegister='register'
-            setOpenModal={setOpenModal}
-            openModal={openModal}
-            buttonType='regular'
-          />
-        </div>
-      )}
     </div>
   );
 };
