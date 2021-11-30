@@ -63,7 +63,7 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
           }
           icon={<FaRegTrashAlt />}
           isLoading={deletingGame}
-          highlight='red'
+          altColor
         />
       ) : (
         <TooltipButton
@@ -90,7 +90,6 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
           errorMessage={
             getUserError ? getUserError.message : libraryError?.message
           }
-          highlight='blue'
         />
       )}
     </div>
