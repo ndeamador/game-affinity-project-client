@@ -50,7 +50,7 @@ const SearchBar = ({
       <Input
         id='search'
         name='search'
-        placeholder='Find a game...'
+        placeholder='Find a video game...'
         type='text'
         onChange={handleChange}
         css={inputStyle}
