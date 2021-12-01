@@ -4,8 +4,9 @@ import { CgGames } from 'react-icons/cg';
 import { css } from '@emotion/react';
 
 const containerStyle = css({
-  height: '100%',
+  display: 'flex',
   maxwidth: 'var(--cover-width)',
+  flexShrink: 0,
 });
 
 const imageStyle = css({
@@ -28,7 +29,7 @@ const CoverDiv = ({ game }: { game: Game }) => {
   const imageLink = `//images.igdb.com/igdb/image/upload/t_${imageSize}/${game.cover?.image_id}.jpg`;
 
   return (
-    <div className='ImageDiv' css={containerStyle}>
+    <div css={containerStyle}>
       {game.cover ? (
         <img src={imageLink} css={imageStyle} />
       ) : (
