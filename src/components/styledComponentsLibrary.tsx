@@ -145,6 +145,7 @@ export const ErrorNotification = styled.div(
     paddingTop: '2px',
     position: 'absolute',
     fontSize: '85%',
+    textAlign: 'center',
   },
   ({ variant }: { variant: 'inline' | 'stacked' }) => ({
     display: variant === 'inline' ? 'inline' : 'block',
