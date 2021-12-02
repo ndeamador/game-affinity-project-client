@@ -5,6 +5,7 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 import FullPageSpinner from '../components/FullPageSpinner';
 import GameList from '../components/GameList';
+import { ErrorNotification } from '../components/styledComponentsLibrary';
 import { GET_RANKING } from '../graphql/queries';
 import { Game } from '../types';
 
@@ -17,10 +18,10 @@ const style = css({
 const Ranking = () => {
   const { data, loading: loadingGames, error } = useQuery(GET_RANKING);
   const [genreFilter, setGenreFilter] = useState('All');
-  if (error) return <div>Something went wrong: ${error.message}</div>;
+  if (error) return <ErrorNotification variant='inline'>Something went wrong: {error.message}</ErrorNotification>;
 
   if (loadingGames) return <FullPageSpinner />;
-  if (!data) return <div>No games are rated yet.</div>;
+  if (!data) return <ErrorNotification variant='inline'>No games are rated yet.</ErrorNotification>;
 
   const genres: string[] = [
     ...new Set<string>( // Set is just to isolate unique values.
