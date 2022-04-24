@@ -18,6 +18,9 @@ const outerNavBarStyle = css({
   padding: '0px 50px',
   position: 'fixed',
   top: '0px',
+
+  // Test
+  // backgroundImage:
 });
 
 const innerNavBarStyle = css({
@@ -64,8 +67,8 @@ const NavBar = () => {
     useState<OpenLoginRegisterModalOptions>('none');
 
   return (
-    <div className='OuterNavbar' css={outerNavBarStyle}>
-      <div className='InnerNavbar' css={innerNavBarStyle}>
+    <div className='outer-navbar' css={outerNavBarStyle}>
+      <div className='inner-navbar' css={innerNavBarStyle}>
         <div css={navLinkGroupStyle}>
           <NavLink
             to='/'

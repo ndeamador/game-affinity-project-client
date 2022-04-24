@@ -19,6 +19,7 @@ import Library from './views/Library';
 import useCurrentUser from './hooks/useCurrentUser';
 import Ranking from './views/Ranking';
 import { css } from '@emotion/react';
+import Background from './components/Background/Background';
 
 const bodyStyle = css({
   display: 'flex',
@@ -47,10 +48,12 @@ const contentStyle = css({
 
 function App() {
   const { currentUser, loading: loadingUser } = useCurrentUser();
-  console.log('----App: ', currentUser?.email, currentUser?.gamesInLibrary);
+  // console.log('----App: ', currentUser?.email, currentUser?.gamesInLibrary);
 
   return (
     <div className='App' css={bodyStyle}>
+      <Background />
+
       <Router>
         <NavBar />
         <div className='AppContentContainer' css={contentStyle}>
@@ -90,6 +93,8 @@ function App() {
           </Route>
         </Switch> */}
       </Router>
+
+
     </div>
   );
 }

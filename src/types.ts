@@ -85,3 +85,16 @@ export type ButtonTypes = 'regular' | 'hoverDot';
 export interface LoginOrRegisterButtonProps extends LoginOrRegisterModalProps {
   buttonType: ButtonTypes;
 }
+
+
+// temp anys
+export interface SquidParticleProps {
+  // context?: any;
+  x?: any;
+  y?: any;
+  directionX?: any;
+  directionY?: any;
+  size?: any;
+  color?: string;
+  // frameId?: any;
+}
