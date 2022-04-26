@@ -37,3 +37,12 @@ fragment UserDetails on User {
   email
 }
 `
+
+export const GAME_IN_LIBRARY_DETAILS = gql`
+fragment GameInLibraryDetails on GameInUserLibrary {
+  id
+  igdb_game_id
+  rating
+  subrating
+}
+`

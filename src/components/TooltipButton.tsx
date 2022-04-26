@@ -3,14 +3,44 @@ import { CircleButton, Spinner } from './styledComponentsLibrary';
 import Tooltip from '@reach/tooltip';
 import { FaTimesCircle } from 'react-icons/fa';
 import { IconBaseProps } from 'react-icons';
-import * as colors from '../styles/colors';
+import { css } from '@emotion/react';
+
+const style = css({
+  backgroundColor: 'var(--color-base)',
+  '&:hover, :focus': {
+    color: 'var(--color-indigo)',
+  },
+});
+
+const errorStyle = css({
+  color: 'var(--color-danger)',
+});
+
+const altHighlightStyle = css({
+  '&:hover,:focus': {
+    color: 'var(--color-danger)',
+  },
+});
+
+const loadingStyle = css({
+  color: 'var(--color-gray80)',
+  '&:hover, :focus': {
+    color: 'var(--color-gray80)',
+  },
+});
+
+const iconDivStyle = css({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
 
 interface TooltipButtonProps {
   label: string;
-  highlight?: string;
+  altColor?: boolean;
   onClick: () => void;
   // icon: IconType;
-  icon: IconBaseProps; //https://stackoverflow.com/questions/60819522/typescript-compilation-error-with-react-type-element-is-not-assignable-to-ty
+  icon?: IconBaseProps; //https://stackoverflow.com/questions/60819522/typescript-compilation-error-with-react-type-element-is-not-assignable-to-ty
   isLoading?: boolean;
   isError?: boolean;
   errorMessage?: string;
@@ -20,17 +50,13 @@ function TooltipButton({
   label,
   onClick,
   icon,
-  highlight = colors.indigo,
   isLoading,
   isError,
   errorMessage,
+  altColor,
   ...rest
 }: TooltipButtonProps) {
-  // const { isLoading, isError, error, run } = useAsync();
-
   function handleClick(event: React.SyntheticEvent) {
-    // run(onClick());
-
     // These two prevent that clicking the button also triggers other clickables underneath (like a react-router's Link)
     event.stopPropagation();
     event.preventDefault();
@@ -42,27 +68,23 @@ function TooltipButton({
     message: errorMessage,
   };
 
-  // console.log('In Tooltipbutton: loading:', isLoading, ' - error: ', isError);
-
   return (
     <Tooltip label={isError ? error.message : label}>
       <CircleButton
-        css={{
-          backgroundColor: 'white',
-          ':hover,:focus': {
-            color: isLoading
-              ? colors.gray80
-              : isError
-              ? colors.danger
-              : highlight,
-          },
-        }}
+        css={[
+          style,
+          altColor && altHighlightStyle,
+          isError && errorStyle,
+          isLoading && loadingStyle,
+        ]}
         disabled={isLoading}
         onClick={handleClick}
         aria-label={isError ? error.message : label}
         {...rest}
       >
-        {isLoading ? <Spinner /> : isError ? <FaTimesCircle /> : icon}
+        <div css={iconDivStyle}>
+          {isLoading ? <Spinner /> : isError ? <FaTimesCircle /> : icon}
+        </div>
       </CircleButton>
     </Tooltip>
   );

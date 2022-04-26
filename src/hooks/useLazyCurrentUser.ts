@@ -4,21 +4,16 @@ import { CURRENT_USER } from '../graphql/queries';
 
 const useLazyCurrentUser = () => {
 
-  // return useLazyQuery(CURRENT_USER, {
-  //   fetchPolicy: 'cache-first',
-  //   onError: (err) => {
-  //     console.log('CURRENT_USER Query error: ', err.message);
-  //   },
-  // });
-
-
   const [getCurrentUser, { data, ...result }] = useLazyQuery(CURRENT_USER, {
     fetchPolicy: 'cache-first',
     onError: (err: ApolloError) => {
       console.log('useLazyCurrentUser error: ', err.message);
     },
   });
+
   const currentUser = data?.me;
+  console.log('uselazycurrentuser response: ', data);
+  // console.log('useLazyCurrentUser data:', currentUser?.email);
   return { getCurrentUser, currentUser, ...result };
 };
 

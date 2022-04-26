@@ -1,26 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled/macro'; // /macro so that elements appear named in the dom
 import { keyframes } from '@emotion/react';
-import * as colors from '../styles/colors';
 // import * as mediaQueries from '../styles/media-queries';
 // import { Dialog } from '@reach/dialog';
 import { ImSpinner2 } from 'react-icons/im'; // svg library
 import { ApolloError } from '@apollo/client';
 
 // BUTTON
-
 interface ButtonProps {
   variant?: 'primary' | 'regular';
 }
 
 const buttonVariants = {
   primary: {
-    background: colors.indigo,
-    color: colors.base,
+    background: 'var(--color-indigo)',
+    color: 'var(--color-base)',
   },
   regular: {
-    background: colors.gray,
-    color: colors.text,
+    background: 'var(--color-gray)',
+    color: 'var(--color-text)',
   },
 };
 
@@ -29,9 +27,14 @@ export const Button = styled.button(
     padding: '13px 18px',
     border: '0',
     lineHeight: '1',
-    borderRadius: '3px',
+    borderRadius: 'var(--border-radius)',
     margin: '0',
     boxSizing: 'border-box',
+    '&:hover': {
+      backgroundColor: 'var(--color-indigoLighten80)',
+      transitionDuration: '0.2s',
+      transitionProperty: 'background-color',
+    },
   },
   // we can add as many other properties, and they will append to the ones before. Functions can be used
   ({ variant = 'regular' }: ButtonProps) => buttonVariants[variant] // variant comes from props.variant, the props passed to the button, defaulted to regular.
@@ -49,12 +52,12 @@ export const CircleButton = styled.button({
   boxSizing: 'border-box', // padding and border are included in the element's total width and height
   borderRadius: '9999px',
   borderStyle: 'none',
-  color: colors.text,
-  backgroundColor: colors.base,
+  color: 'var(--color-text)',
+  backgroundColor: 'var(--color-base)',
   transitionDuration: '0.2s',
   transitionProperty: 'background-color',
-  ':hover': {
-    backgroundColor: colors.gray,
+  '&:hover': {
+    backgroundColor: 'var(--color-gray)',
     transitionDuration: '0.2s',
     transitionProperty: 'background-color',
   },
@@ -63,10 +66,8 @@ export const CircleButton = styled.button({
 // INPUT
 
 export const Input = styled.input({
-  borderRadius: '8px',
-  // border: `1px solid ${colors.gray10}`,
+  borderRadius: 'var(--border-radius)',
   border: '0px',
-  // background: colors.gray,
   background: 'ghostwhite',
   padding: '15px 20px',
   width: '100%',
@@ -122,7 +123,7 @@ export const FullPageError = ({
     <div
       role='alert'
       css={{
-        color: colors.danger,
+        color: 'var(--color-danger)',
         height: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -139,11 +140,12 @@ export const FullPageError = ({
 // ERROR MESSAGE
 export const ErrorNotification = styled.div(
   {
-    color: colors.danger,
+    color: 'var(--color-danger)',
     margin: 0,
     paddingTop: '2px',
     position: 'absolute',
     fontSize: '85%',
+    textAlign: 'center',
   },
   ({ variant }: { variant: 'inline' | 'stacked' }) => ({
     display: variant === 'inline' ? 'inline' : 'block',

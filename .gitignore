@@ -23,3 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .vercel
+
+# cypress test results
+/cypress/screenshots
+/cypress/videos

@@ -4,6 +4,10 @@ import FullPageSpinner from '../components/FullPageSpinner';
 import { FullPageError } from '../components/styledComponentsLibrary';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 
+
+// THIS FILE IS DEPRECATED
+// Access to authentication info has been refactored to use exclusively Apollo's caching instead of React Context.
+
 interface AuthContextValue {
   currentUser: User;
 }
@@ -18,9 +22,10 @@ AuthContext.displayName = 'AuthContext';
 
 const useAuthContext = () => {
   const context = React.useContext(AuthContext);
+  console.log('in useauthcontext:', context?.currentUser);
   if (context === undefined) {
     throw new Error(
-      `Context is undefined. useAuth must be used withing an AuthContext provider.`
+      `Context is undefined. useAuth must be used within an AuthContext provider.`
     );
   }
   return { currentUser: context.currentUser };
@@ -38,7 +43,13 @@ const AuthProvider: React.FunctionComponent<AuthCtxtProviderPropsOmitValue> = (p
   if (loading) return <FullPageSpinner />;
   if (error) return <FullPageError error={error} />;
 
+  // Thanks to {...props} we can wrap other components with this exported context provider.
   return <AuthContext.Provider value={{ currentUser }} {...props} />;
 };
 
 export { AuthProvider, useAuthContext };
+
+
+// Resources:
+// https://stackoverflow.com/questions/67067155/type-props-for-a-context-provider-wrapping-app
+// https://kentcdodds.com/blog/how-to-use-react-context-effectively/

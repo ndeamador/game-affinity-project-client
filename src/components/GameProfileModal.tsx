@@ -1,31 +1,30 @@
 /** @jsxImportSource @emotion/react */
 
-import { capitalizeFirstLetter } from '../utils/misc';
-import { LoginOrRegisterModalProps } from '../types';
 import { FaTimes } from 'react-icons/fa';
 
 import { CircleButton } from './styledComponentsLibrary';
-import LoginForm from '../components/LoginForm';
 import { Dialog } from '@reach/dialog';
+import GameProfile from '../views/GameProfile';
 
-const LoginRegisterModal = ({
-  loginOrRegister,
+const GameProfileModal = ({
   setOpenModal,
   openModal,
-}: LoginOrRegisterModalProps) => {
-  const ariaLabel =
-    loginOrRegister === 'login' ? 'Login form' : 'Registration form';
+}: {
+  setOpenModal: React.Dispatch<React.SetStateAction<string>>;
+  openModal: string;
+}) => {
+  const ariaLabel = `Game Profile`;
 
   return (
     <Dialog
       aria-label={ariaLabel}
-      isOpen={openModal === loginOrRegister}
+      isOpen={openModal !== 'none'}
       css={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        maxWidth: '380px',
+        // maxWidth: '380px',
         ':click': {
           transition: 'transform 0.3s',
           transitionDuration: '0.3s',
@@ -40,16 +39,10 @@ const LoginRegisterModal = ({
         </CircleButton>
       </div>
       <div className='modalInnerContainer' css={{ padding: '40px 0 30px 0' }}>
-        <h3 css={{ margin: '0 0 20px 0' }}>
-          {capitalizeFirstLetter(loginOrRegister)}
-        </h3>
-        <LoginForm
-          setOpenModal={setOpenModal}
-          loginOrRegister={loginOrRegister}
-        />
+        <GameProfile modalGame={openModal} />
       </div>
     </Dialog>
   );
 };
 
-export default LoginRegisterModal;
+export default GameProfileModal;

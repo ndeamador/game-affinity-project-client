@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client"
-import { GAME_DETAILS, USER_DETAILS } from './fragments';
+import { GAME_DETAILS, GAME_IN_LIBRARY_DETAILS, USER_DETAILS } from './fragments';
 
 export const FIND_GAMES = gql`
   query findGames(
@@ -24,13 +24,12 @@ export const CURRENT_USER = gql`
     me {
       ...UserDetails
       gamesInLibrary {
-        id
-        igdb_game_id
-        rating
+        ...GameInLibraryDetails
     }
     }
   }
-  ${USER_DETAILS}
+  ${USER_DETAILS},
+  ${GAME_IN_LIBRARY_DETAILS}
 `
 
 
@@ -45,6 +44,25 @@ export const GET_LIBRARY_IDS = gql`
 export const GET_LIBRARY = gql`
   query getLibrary{
     getLibrary {
+      ...GameDetails
+    }
+  }
+  ${GAME_DETAILS}
+`
+
+// export const GET_AVERAGE_RATINGS = gql`
+//   query getAverageRatings {
+//     getAverageRatings {
+//       igdb_game_id
+//       average_rating
+//     }
+//   }
+// `
+
+export const GET_RANKING = gql`
+  query getRankedGames {
+    getRankedGames {
+      average_rating,
       ...GameDetails
     }
   }

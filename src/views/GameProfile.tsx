@@ -8,29 +8,38 @@ import AddToLibraryButton from '../components/AddToLibraryButton';
 import PlatformIcons from '../components/PlatformIcons';
 import ReleaseDeveoperRow from '../components/ReleaseDeveloperRow';
 import Rater from '../components/Rater';
-import { useAuthContext } from '../context/AuthContext';
 import { useEffect } from 'react';
+import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 
-const GameProfile = () => {
-  const { currentUser } = useAuthContext();
-  // const currentUser = authContext?.currentUser;
+const GameProfile = ({ modalGame }: { modalGame?: string }) => {
+  const {
+    getCurrentUser,
+    currentUser,
+    loading: userLoading,
+    error: getUserError,
+  } = useLazyCurrentUser();
+
+  useEffect(() => {
+    (async () => await getCurrentUser())(); // Worked fine without async but gave an unmounted update error when used as modal in Library.
+  }, [getCurrentUser]);
+  if (getUserError) {
+    return <div>Test error: {getUserError.message}</div>;
+  }
+  console.log(
+    '----GameProfile: ',
+    currentUser?.email,
+    currentUser?.gamesInLibrary
+  );
+
   const { gameId } = useParams<{ gameId: string }>();
-  const parsedGameId = parseInt(gameId);
+  let parsedGameId = parseInt(gameId);
 
-  // const { loading, data, error } = useQuery(FIND_GAMES, {
-  //   variables: { id: parsedGameId },
-  //   fetchPolicy: 'cache-first',
-  //   onError: (err) => {
-  //     console.log('Failed to find games: ', err);
-  //     <Redirect to='/' />;
-  //   },
-  // });
+  if (modalGame) parsedGameId = parseInt(modalGame);
 
   const [findGames, { data, loading, error }] = useLazyQuery(FIND_GAMES, {
     variables: { id: parsedGameId },
   });
 
-  // execute query on component mount
   useEffect(() => {
     findGames();
   }, [findGames]);
@@ -43,7 +52,6 @@ const GameProfile = () => {
   }
 
   const game = data?.findGames[0];
-  console.log('GAME: ', game);
 
   // Setting image resolution from url: https://api-docs.igdb.com/#images
   const imageSize = 'cover_big';
@@ -90,7 +98,10 @@ const GameProfile = () => {
         <PlatformIcons platforms={game.platforms} />
         <p css={{ paddingTop: '10px', paddingBottom: 0 }}>{game.summary}</p>
 
-        {currentUser && <Rater gameId={parsedGameId} />}
+        {/* {currentUser && <Rater gameId={parsedGameId} />} */}
+        {currentUser && (
+          <Rater gameId={parsedGameId} currentUser={currentUser} />
+        )}
       </div>
 
       {currentUser && <AddToLibraryButton gameId={parsedGameId} />}

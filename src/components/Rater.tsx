@@ -6,18 +6,133 @@ import findGameInLibrary from '../utils/findGameInLibrary';
 import { useMutation } from '@apollo/client';
 import { ADD_TO_LIBRARY, UPDATE_RATING } from '../graphql/mutations';
 import { CURRENT_USER } from '../graphql/queries';
-import { useAuthContext } from '../context/AuthContext';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
+import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
+import { Spinner } from './styledComponentsLibrary';
+import { MeResponse, GameInUserLibrary, Rating, User } from '../types';
+import useAddToLibrary from '../hooks/useAddToLibrary';
+import useUpdateRating from '../hooks/useUpdateRating';
 
-const Rater = ({ gameId }: { gameId: number }) => {
-  const { currentUser } = useAuthContext();
-  const [updateRating] = useMutation(UPDATE_RATING, {
-    refetchQueries: [{ query: CURRENT_USER }],
-  });
-  const [addGameToLibrary] = useMutation(ADD_TO_LIBRARY, {
-    variables: { gameId: gameId },
-    // refetchQueries: [{ query: CURRENT_USER }],
-  });
+// const Rater = ({ gameId }: { gameId: number }) => {
+const Rater = ({
+  gameId,
+  currentUser,
+}: {
+  gameId: number;
+  currentUser: User;
+}) => {
+  const [updateRating, { data: updateRatingResult, error: updateRatingError }] =
+    useUpdateRating();
+
+  const [
+    addGameToLibrary,
+    { data: addToLibraryResult, loading: addingToLibrary, error: addGameError },
+  ] = useAddToLibrary();
+
+  // const {
+  //   getCurrentUser,
+  //   currentUser,
+  //   loading: userLoading,
+  //   error: getUserError,
+  // } = useLazyCurrentUser();
+
+  // useEffect(() => {
+  //   getCurrentUser();
+  //   // (async () => await getCurrentUser())();
+  //   // }, [getCurrentUser]);
+  // }, [updateRatingResult, addToLibraryResult]);
+
+  console.log(
+    '::In rater:: user: ',
+    currentUser?.email,
+    currentUser ? Object.keys(currentUser?.gamesInLibrary).length : undefined
+  );
+
+  // console.log('currentuser:', addingToLibrary, currentUser);
+
+  const handleRatingChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const gameInUserLibrary = findGameInLibrary({
+      gameId: gameId,
+      user: currentUser,
+    });
+
+    const newRating = parseInt(event.target.value);
+
+    console.log(
+      '---------- Handling Change => gameInUserLibrary',
+      gameInUserLibrary
+    );
+
+    if (!gameInUserLibrary) {
+      console.log('parsedint:', newRating);
+      // const newGame = await addGameToLibrary({
+      const newGame = await addGameToLibrary({
+        variables: { gameId: gameId, rating: newRating },
+        optimisticResponse: {
+          isOptimistic: true,
+          addGameToLibrary: {
+            __typename: 'GameInUserLibrary',
+            id: '-1',
+            igdb_game_id: gameId,
+            rating: newRating,
+            subrating: null,
+          },
+        },
+      });
+
+      // gameInUserLibrary = findGameInLibrary({
+      //   gameId: gameId,
+      //   user: currentUser,
+      // });
+
+      ratingValue = newRating as Rating;
+
+      console.log(
+        '============================================================='
+      );
+      console.log('addedtolibrary: ', newGame);
+      console.log('updated gameInUserLibrary', gameInUserLibrary);
+      console.log(' user after:', currentUser);
+      console.log(
+        '============================================================='
+      );
+    } else {
+      console.log('else');
+      updateRating({
+        variables: {
+          igdb_game_id: gameId,
+          rating: newRating,
+        },
+        optimisticResponse: {
+          isOptimistic: true,
+          updateRating: gameInUserLibrary
+            ? {
+                ...gameInUserLibrary,
+                rating: newRating,
+              }
+            : {
+                id: '-1', // dummy value (will be updated with the server generated id)
+                rating: newRating,
+                subrating: null,
+                igdb_game_id: gameId,
+                __typename: 'GameInUserLibrary',
+              },
+        },
+      });
+    }
+  };
+
+  // Extract game rating from me query.
+  let ratingValue = currentUser
+    ? findGameInLibrary({ gameId, user: currentUser })?.rating
+    : undefined;
+
+  // let ratingValue = findGameInLibrary({ gameId, user: currentUser })?.rating;
+  console.log('is rating undefined?', ratingValue);
+  // // Extract game rating from me query.
+  // const ratingValue = currentUser
+  //   ? findGameInLibrary({ gameId, user: currentUser })?.rating
+  //   : undefined;
 
   const iconColors = ['DarkSlateBlue', 'green', 'gold', 'red'];
   const iconLevels = [
@@ -43,28 +158,11 @@ const Rater = ({ gameId }: { gameId: number }) => {
     />,
   ];
 
-  // Extract game rating from me query.
-  const ratingValue = currentUser
-    ? findGameInLibrary({ gameId, user: currentUser })?.rating
-    : undefined;
-  console.log('rating: ', ratingValue);
-
   const elementClassName = `rating-${gameId}`;
-
-  const handleRatingChange = (event: ChangeEvent<HTMLInputElement>) => {
-    findGameInLibrary({ gameId: gameId, user: currentUser }) ??
-      addGameToLibrary();
-
-    updateRating({
-      variables: {
-        gameId: gameId,
-        rating: parseInt(event.target.value),
-      },
-    });
-  };
 
   const icons = Array.from({ length: 4 }).map((_x, i) => {
     const inputId = `rating-input-${String(iconLevels[i].key)}`;
+
     return (
       <div key={iconLevels[i].key}>
         <input
@@ -158,11 +256,13 @@ const Rater = ({ gameId }: { gameId: number }) => {
     <div
       className={elementClassName}
       css={{
-        display: 'inline-flex',
-        alignItems: 'center',
+        display: 'flex',
+        // alignItems: 'center',
+        // alignItems: 'flex-start',
         marginTop: '20px',
         paddingBottom: '0px',
         justifySelf: 'flex-end',
+        flexDirection: 'column',
       }}
     >
       <span
@@ -170,10 +270,13 @@ const Rater = ({ gameId }: { gameId: number }) => {
           display: 'inline-flex',
           background: 'whitesmoke',
           padding: '10px 10px 10px 8px',
-          borderRadius: '8px',
-          flexGrow: 0.25,
+          borderRadius: 'var(--border-radius)',
+          width: '25%',
+          minWidth: '150px',
+          // flexGrow: 0.25,
+          // flex: '0 0 100%',
+          alignSelf: 'flex-start',
           justifyContent: 'space-around',
-
           '.rating-icon': {
             padding: '0',
             height: '20px',
@@ -190,8 +293,21 @@ const Rater = ({ gameId }: { gameId: number }) => {
           },
         }}
       >
+        {/* {userLoading ? <Spinner /> : icons} */}
         {icons}
       </span>
+      {
+        /* getUserError  ||*/ (updateRatingError || addGameError) && (
+          <div css={{ padding: '10px', color: 'red' }}>
+            {
+              /* getUserError?.message || */
+              updateRatingError?.message ||
+                addGameError?.message ||
+                'Something went wrong.'
+            }
+          </div>
+        )
+      }
     </div>
   );
 };

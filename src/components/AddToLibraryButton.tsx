@@ -1,55 +1,95 @@
 /** @jsxImportSource @emotion/react */
 
 import TooltipButton from '../components/TooltipButton';
-import { FaPlusCircle, FaTimes } from 'react-icons/fa';
-import { GameInUserLibrary } from '../types';
+import { FaPlusCircle, FaRegTrashAlt } from 'react-icons/fa';
 import useAddToLibrary from '../hooks/useAddToLibrary';
 import useRemoveFromLibrary from '../hooks/useRemoveFromLibrary';
-import { useAuthContext } from '../context/AuthContext';
+import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
+import { useEffect } from 'react';
+import findGameInLibrary from '../utils/findGameInLibrary';
 
 const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
   const parsedGameId = typeof gameId === 'string' ? parseInt(gameId) : gameId;
-  const { currentUser } = useAuthContext();
 
-  const library = currentUser.gamesInLibrary;
+  const {
+    getCurrentUser,
+    currentUser,
+    loading,
+    error: getUserError,
+  } = useLazyCurrentUser();
 
-  const isGameInLibrary: boolean = library?.find(
-    (game: GameInUserLibrary) => game.igdb_game_id === parsedGameId
-  )
-    ? true
-    : false;
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
 
-  const [
-    addGameToLibrary,
-    { loading: addingToLibrary, error: libraryError },
-  ] = useAddToLibrary();
+  if (loading) {
+    return (
+      <TooltipButton
+        isLoading={true}
+        label='Loading...'
+        onClick={() => {
+          return false;
+        }}
+      />
+    );
+  }
 
-  const [
-    removeGameFromLibrary,
-    { loading: deletingGame },
-  ] = useRemoveFromLibrary({ gameId: parsedGameId });
+  const gameInLibrary = currentUser
+    ? findGameInLibrary({
+        gameId: parsedGameId,
+        user: currentUser,
+      })
+    : undefined;
+
+  const [addGameToLibrary, { loading: addingToLibrary, error: libraryError }] =
+    useAddToLibrary();
+
+  const [removeGameFromLibrary, { loading: deletingGame }] =
+    useRemoveFromLibrary();
 
   return (
     <div>
-      {isGameInLibrary ? (
+      {gameInLibrary ? (
         <TooltipButton
           label='Remove from library'
-          onClick={() => removeGameFromLibrary()}
-          icon={<FaTimes />}
+          onClick={() =>
+            removeGameFromLibrary({
+              variables: { igdb_game_id: parsedGameId },
+              optimisticResponse: {
+                removeGameFromLibrary: gameInLibrary.id,
+                isOptimistic: true,
+              },
+            })
+          }
+          icon={<FaRegTrashAlt />}
           isLoading={deletingGame}
-          highlight='red'
+          altColor
         />
       ) : (
         <TooltipButton
           label='Add to library'
           onClick={() =>
-            addGameToLibrary({ variables: { gameId: parsedGameId } })
+            addGameToLibrary({
+              variables: { gameId: parsedGameId },
+
+              optimisticResponse: {
+                isOptimistic: true,
+                addGameToLibrary: {
+                  __typename: 'GameInUserLibrary',
+                  id: '-1', // dummy value (will be updated with the server generated id)
+                  igdb_game_id: parsedGameId,
+                  rating: null,
+                  subrating: null,
+                },
+              },
+            })
           }
           icon={<FaPlusCircle />}
           isLoading={addingToLibrary}
-          isError={libraryError ? true : false}
-          errorMessage={libraryError?.message}
-          highlight='blue'
+          isError={getUserError || libraryError ? true : false}
+          errorMessage={
+            getUserError ? getUserError.message : libraryError?.message
+          }
         />
       )}
     </div>

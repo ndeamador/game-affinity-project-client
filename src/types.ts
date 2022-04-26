@@ -8,6 +8,7 @@ export interface Game {
   genres: Genre[];
   total_rating_count: number;
   involved_companies: InvolvedCompany[];
+  average_rating?: number;
 }
 
 export interface InvolvedCompany {
@@ -56,12 +57,12 @@ export interface User {
 }
 
 export interface GameInUserLibrary {
-  id: number;
+  id: string;
   igdb_game_id: number;
   rating?: Rating;
 }
 
-export type Rating = 0 | 1 | 2 | 3;
+export type Rating = 0 | 1 | 2 | 3 | null;
 
 export interface libraryIdsResponse { // review
   getLibraryIds: GameInUserLibrary[];
@@ -83,4 +84,17 @@ export interface LoginOrRegisterModalProps {
 export type ButtonTypes = 'regular' | 'hoverDot';
 export interface LoginOrRegisterButtonProps extends LoginOrRegisterModalProps {
   buttonType: ButtonTypes;
+}
+
+
+// temp anys
+export interface SquidParticleProps {
+  // context?: any;
+  x?: any;
+  y?: any;
+  directionX?: any;
+  directionY?: any;
+  size?: any;
+  color?: string;
+  // frameId?: any;
 }

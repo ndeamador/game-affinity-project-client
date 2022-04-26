@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import 'normalize.css';
 import '@reach/dialog/styles.css';
 import '@reach/tooltip/styles.css';
 import './styles/global.css';
@@ -10,45 +11,90 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-import GameProfile from './pages/GameProfile';
+import GameProfile from './views/GameProfile';
 import NavBar from './components/NavBar';
-import Home from './pages/Home';
-import Library from './pages/Library';
+import Home from './views/Home';
+import Library from './views/Library';
 
-import { useAuthContext } from './context/AuthContext';
+import useCurrentUser from './hooks/useCurrentUser';
+import Ranking from './views/Ranking';
+import { css } from '@emotion/react';
+import Background from './components/Background/Background';
+
+const bodyStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  width: '100vw',
+  height: '100vh',
+  // '& > *': {
+  //   width: '80vw',
+  //   maxWidth: '1200px',
+  // }
+});
+
+const contentStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  width: '80vw',
+  maxWidth: '1200px',
+  paddingTop: 'calc(50px + var(--navbar-height))',
+  '& > *': {
+    width: '100%',
+  },
+});
 
 function App() {
-  const { currentUser } = useAuthContext();
+  const { currentUser, loading: loadingUser } = useCurrentUser();
+  // console.log('----App: ', currentUser?.email, currentUser?.gamesInLibrary);
 
   return (
-    <div
-      className='App'
-      css={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        // justifyContent: 'flex-start',
-        width: '100vw',
-        height: '100vh',
-      }}
-    >
+    <div className='App' css={bodyStyle}>
+      <Background />
+
       <Router>
         <NavBar />
+        <div className='AppContentContainer' css={contentStyle}>
+          <Switch>
+            <Route path={'/games/:gameId'}>
+              <GameProfile />
+            </Route>
 
-        <Switch>
+            <Route path={'/ranking'}>
+              <Ranking />
+            </Route>
+
+            <Route path={'/library'}>
+              {!loadingUser && !currentUser ? <Redirect to='/' /> : <Library />}
+            </Route>
+
+            <Route path='/'>
+              <Home />
+            </Route>
+          </Switch>
+        </div>
+        {/* <Switch>
           <Route path={'/games/:gameId'}>
             <GameProfile />
           </Route>
 
+          <Route path={'/ranking'}>
+            <Ranking />
+          </Route>
+
           <Route path={'/library'}>
-            {!currentUser ? <Redirect to='/' /> : <Library />}
+            {!loadingUser && !currentUser ? <Redirect to='/' /> : <Library />}
           </Route>
 
           <Route path='/'>
             <Home />
           </Route>
-        </Switch>
+        </Switch> */}
       </Router>
+
+
     </div>
   );
 }
