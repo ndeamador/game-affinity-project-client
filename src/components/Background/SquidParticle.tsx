@@ -7,6 +7,7 @@ import {
   MousePositionContext,
   useAnimation,
 } from './AnimatedCanvas';
+import BoundingBox from './BoundingBox';
 
 const SquidParticle: FC<SquidParticleProps> = (
   props
@@ -24,6 +25,11 @@ const SquidParticle: FC<SquidParticleProps> = (
     const particle = {
       ...initialParticle,
     };
+
+    // const reverseParticleDirection = () => {
+    //   particle.directionX = -particle.directionX;
+    //   particle.directionY = -particle.directionY;
+    // };
 
     // check if particle is still within canvas and reverse direction if at the limit
     if (particle.x > props.windowSize.width || particle.x < 0) {
@@ -64,6 +70,29 @@ const SquidParticle: FC<SquidParticleProps> = (
         }
         if (mouse.y > particle.y && particle.y > particle.size * 10) {
           particle.y -= 10;
+        }
+      }
+    }
+
+    // Interaction with bouncing element
+    if (props.bounceElement) {
+      const box = props.bounceElement;
+      // Check if particle colides with box
+      if (
+        particle.x <= box.x + box.width && // right edge
+        particle.x + particle.size >= box.x && // left edge
+        particle.y <= box.y + box.height && // bottom edge
+        particle.y + particle.size >= box.y // top edge
+      ) {
+        // Bounce from box (angle depends on side touched)
+        if (
+          particle.x - particle.directionX > box.x + box.width || // right edge
+          particle.x + particle.size - particle.directionX < box.x // left edge
+        ) {
+          particle.directionX = -particle.directionX;
+        }
+        else {
+          particle.directionY = -particle.directionY;
         }
       }
     }

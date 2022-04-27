@@ -96,17 +96,19 @@ export interface WindowSize {
 
 // temp anys
 export interface SquidParticleBaseProps {
-  x: any;
-  y: any;
-  directionX?: any;
-  directionY?: any;
-  size: any;
+  x: number;
+  y: number;
+  directionX: number;
+  directionY: number;
+  size: number;
   color?: string;
 }
 
 export interface SquidParticleProps extends SquidParticleBaseProps {
   mouseRadius: number;
   windowSize: WindowSize;
+  // bounceElement?: React.MutableRefObject<HTMLDivElement | null>
+  bounceElement?: DOMRect | undefined;
 }
 
 export interface MousePositionProps {

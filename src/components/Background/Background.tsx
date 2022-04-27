@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+
 import { useEffect, useRef, useState } from 'react';
 import { nanoid } from 'nanoid'; // Id generator to avoid using .map index as keys, which is an antipattern.
 import AnimatedCanvas from './AnimatedCanvas';
@@ -5,7 +7,6 @@ import SquidParticle from './SquidParticle';
 import getRandomParticles from '../../utils/getRandomParticles';
 import useWindowSize from '../../hooks/useWindowSize';
 import { SquidParticleBaseProps } from '../../types';
-import ConnectingLines from './ConnectingLines';
 
 const Background = () => {
   const windowSize = useWindowSize();
@@ -15,9 +16,19 @@ const Background = () => {
   >([]);
 
   useEffect(() => {
-    setMouseRadius((windowSize.height / 80) * (windowSize.width / 80));
+    setMouseRadius((windowSize.height / 120) * (windowSize.width / 120));
     setParticlesArray(getRandomParticles(windowSize));
   }, [windowSize]);
+
+  const particlesArrayRef = useRef<SquidParticleBaseProps[]>();
+
+  // if (particlesArray && particlesArray.c)
+  particlesArrayRef.current = particlesArray;
+  // console.log('CURREEENNTTT: ', particlesArrayRef.current);
+  const testDivRef = useRef<HTMLDivElement | null>(null);
+  const test = testDivRef.current?.getBoundingClientRect();
+  console.log('testDivRef:', testDivRef.current?.getBoundingClientRect());
+  // console.log('byid:', document.getElementById('testdiv')?.getBoundingClientRect());
 
   return (
     // <AnimatedCanvas>
@@ -25,20 +36,31 @@ const Background = () => {
     //     <SquidParticle key={nanoid()} windowSize={windowSize} mouseRadius={mouseRadius} {...particle} />
     //   ))}
     // </AnimatedCanvas>
-    <AnimatedCanvas>
-      {particlesArray.map((particle) => (
-        <SquidParticle
-          key={nanoid()}
-          windowSize={windowSize}
-          mouseRadius={mouseRadius}
-          {...particle}
-        />
-      ))}
-      {/* <ConnectingLines
-        particlesArray={particlesArray}
-        windowSize={windowSize}
-      /> */}
-    </AnimatedCanvas>
+    <>
+      <div
+        id='testdiv'
+        css={{
+          margin: 'auto',
+          width: '210px',
+          height: '200px',
+          backgroundColor: 'rgb(255, 99, 71, 0.5)',
+        }}
+        ref={testDivRef}
+      ></div>
+      <AnimatedCanvas>
+        {particlesArray.map((particle) => (
+          <SquidParticle
+            key={nanoid()}
+            windowSize={windowSize}
+            mouseRadius={mouseRadius}
+            // bounceElement={testDivRef}
+            bounceElement={testDivRef.current?.getBoundingClientRect()}
+            {...particle}
+          />
+        ))}
+
+      </AnimatedCanvas>
+    </>
   );
 };
 
