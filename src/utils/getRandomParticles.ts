@@ -1,12 +1,14 @@
-import { SquidParticleProps } from '../types';
+import { SquidParticleBaseProps, WindowSize } from '../types';
 
 const getRandomParticles = (
-  canvasHeight: number,
-  canvasWidth: number
-): SquidParticleProps[] => {
-  console.log('ingetrandom ======================================', canvasHeight, canvasWidth);
-  const particlesArray: SquidParticleProps[] = [];
-  const numberOfParticles = (canvasHeight * canvasWidth) / 9000;
+  // canvasHeight: number,
+  // canvasWidth: number
+  windowSize: WindowSize
+): SquidParticleBaseProps[] => {
+  const particlesArray: SquidParticleBaseProps[] = [];
+  // const numberOfParticles = (canvasHeight * canvasWidth) / 9000;
+  const numberOfParticles = (windowSize.height * windowSize.width) / 9000;
+
 
   for (let i = 0; i < numberOfParticles; i++) {
     const size = Math.random() * 5 + 1; // random number between 1 and 5

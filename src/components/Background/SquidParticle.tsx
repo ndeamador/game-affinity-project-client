@@ -1,88 +1,129 @@
 import { FC, Props, useContext } from 'react';
+import { createTextSpanFromBounds } from 'typescript';
 import { SquidParticleProps } from '../../types';
-import { Canvas2dContext, FrameContext, useAnimation } from './AnimatedCanvas';
-
-// const SquidParticle = ({
-//   // context,
-//   x,
-//   y,
-//   directionX,
-//   directionY,
-//   size,
-//   color,
-// }: // frameId
-// {
-//   // context: any;
-//   x?: any;
-//   y?: any;
-//   directionX?: any;
-//   directionY?: any;
-//   size?: any;
-//   color?: any;
-//   // frameId?: any;
-// }) => {
+import {
+  Canvas2dContext,
+  FrameContext,
+  MousePositionContext,
+  useAnimation,
+} from './AnimatedCanvas';
 
 const SquidParticle: FC<SquidParticleProps> = (
   props
   // { x, y, directionX, directionY, size, color }
+  // {mouseRadius: number, windowSize: WindowSize}
 ) => {
-  const canvasContext = useContext(Canvas2dContext);
+  const canvas = useContext(Canvas2dContext);
+  const mouse = useContext(MousePositionContext);
   useContext(FrameContext); // only present to force that the particle re-renders after each frame clears the canvas.
 
   // TEMP, DELETE
-  const canvas = { width: window.innerWidth, height: window.innerHeight };
+  // const canvas = { width: window.innerWidth, height: window.innerHeight };
 
-  const updateParticle = (initialParticle: SquidParticleProps) => {
-    const updatedParticle = {
+  const getNextFrameParticle = (initialParticle: SquidParticleProps) => {
+    const particle = {
       ...initialParticle,
     };
 
     // check if particle is still within canvas and reverse direction if at the limit
-    if (updatedParticle.x > canvas.width || updatedParticle.x < 0) {
-      updatedParticle.directionX = -updatedParticle.directionX;
+    if (particle.x > props.windowSize.width || particle.x < 0) {
+      particle.directionX = -particle.directionX;
     }
-    if (updatedParticle.y > canvas.height || updatedParticle.y < 0) {
-      // console.log('checking canvas height', canvas.height ,'particle y:', updatedParticle.y);
-      updatedParticle.directionY = -updatedParticle.directionY;
-      // console.log('afterupdate:', updated.particle.y);
+    if (particle.y > props.windowSize.height || particle.y < 0) {
+      particle.directionY = -particle.directionY;
     }
 
-    // regular movement (not colliding with mouse, edges)
-    updatedParticle.x += updatedParticle.directionX;
-    updatedParticle.y += updatedParticle.directionY;
+    if (mouse.x && mouse.y) {
+      // collision detection (mouse position / particle position)
+      // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+      const diffX = mouse.x - particle.x;
+      const diffY = mouse.y - particle.y;
+      // check if distance between particle centre and mouse position is smaller than specificed mouse collision radius.
+      const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
+      if (distance < props.mouseRadius + particle.size) {
+        // push the particle to the opposite side of the mouse pointer
+        if (
+          mouse.x < particle.x &&
+          particle.x < props.windowSize.width - particle.size * 10
+        ) {
+          particle.x += 10;
+          // particle.directionY = -particle.directionY;
+          // particle.directionX = -particle.directionX;
+        }
+        // but not beyond the canvas size (size * 10 is a buffer area around the edge)
+        if (mouse.x > particle.x && particle.x > particle.size * 10) {
+          particle.x -= 10;
+        }
+        if (
+          mouse.y < particle.y &&
+          particle.y < props.windowSize.height - particle.size * 10
+        ) {
+          particle.y += 10;
+          // particle.directionY = -particle.directionY;
+          // particle.directionX = -particle.directionX;
+        }
+        if (mouse.y > particle.y && particle.y > particle.size * 10) {
+          particle.y -= 10;
+        }
+      }
+    }
 
-    return updatedParticle;
+    // regular movement
+    particle.x += particle.directionX;
+    particle.y += particle.directionY;
+
+    return particle;
   };
 
-  const updatedParticle = useAnimation({
+  const particle = useAnimation({
     initialValue: { ...props },
-    // updaterFunction: updateParticle(),
     updaterFunction: (initialParticle: SquidParticleProps) =>
-      updateParticle(initialParticle),
+      getNextFrameParticle(initialParticle),
   });
 
-  // const updatedParticle = useAnimation({
-  //   initialValue: directionX,
-  //   // updaterFunction: updateParticle(),
-  //   updaterFunction: (direction: any) => direction + 10,
-  // });
+  // // Connecting lines
+  // for (const a = 0; a < particlesArray.length; a++) {
+  //   for (const b = 0; b < particlesArrag.lenght; b++) {
+  //     const distance =
+  //       (particlesArray[a].x - particlesARrab[b].x) *
+  //         (particlesArray[a].x - particlesArray[b].x) +
+  //       (particlesArray[a].y - particlesArra[b].y - particlesArray[b].y);
+  //     if (distance < (canvas.width / 7) * (Canvas.height / 7)) {
+  //       canvas.strokeStyle = 'rgba(140, 85, 31, 1)';
+  //       canvas.lineWidth = 1;
+  //       canvas?.beginPath();
+  //       canvas?.moveTo(particlesArray[a].x, particlesArray[a].y);
+  //       canvas?.lineTo(particlesArray[b].x, particlesArray[b].y);
+  //       canvas?.stroke();
+  //     }
+  //   }
+  // }
+
+  // function connect(){
+  //   for(const a = 0; a < particlesArray.length; a++) {
+  //     for(const b=0; b < particlesArrag.lenght; b++) {
+  //       const distance = ((particlesArray[a].x - particlesARrab[b].x) * (particlesArray[a].x - particlesArray[b].x))+ ((particlesArray[a].y - particlesArra[b].y) - particlesArray[b].y);
+  //       if (distance < (canvas.width/7) * (Canvas.height/7)) {
+  //         canvas.strokeStyle='rgba(140, 85, 31, 1)';
+  //         canvas.lineWidth =1;
+  //         canvas?.beginPath();
+  //         canvas?.moveTo(particlesArray[a].x, particlesArray[a].y);
+  //         canvas?.lineTo(particlesArray[b].x, particlesArray[b].y);
+  //         canvas?.stroke();
+  //       }
+  //     }
+  //   }
+  // }
 
   // Draw particle in canvas
-  if (canvasContext !== null) {
-    canvasContext.beginPath();
+  if (canvas !== null) {
+    canvas.beginPath();
     // ctx.arc(x, y, radius, startAngle, endAngle [, counterclockwise]);
-    // canvasContext.arc(x, y, size, 0, Math.PI * 2, false);
-    canvasContext.arc(
-      updatedParticle.x,
-      updatedParticle.y,
-      updatedParticle.size,
-      0,
-      Math.PI * 2,
-      false
-    );
+    // canvas.arc(x, y, size, 0, Math.PI * 2, false);
+    canvas.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2, false);
 
-    canvasContext.fillStyle = '#8C5523';
-    canvasContext.fill();
+    canvas.fillStyle = '#8C5523';
+    canvas.fill();
   }
 
   // //temp

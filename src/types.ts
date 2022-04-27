@@ -1,3 +1,5 @@
+import { number } from 'yup';
+
 export interface Game {
   id: string;
   name: string;
@@ -86,15 +88,28 @@ export interface LoginOrRegisterButtonProps extends LoginOrRegisterModalProps {
   buttonType: ButtonTypes;
 }
 
+export interface WindowSize {
+  height: number;
+  width: number;
+}
+
 
 // temp anys
-export interface SquidParticleProps {
-  // context?: any;
-  x?: any;
-  y?: any;
+export interface SquidParticleBaseProps {
+  x: any;
+  y: any;
   directionX?: any;
   directionY?: any;
-  size?: any;
+  size: any;
   color?: string;
-  // frameId?: any;
+}
+
+export interface SquidParticleProps extends SquidParticleBaseProps {
+  mouseRadius: number;
+  windowSize: WindowSize;
+}
+
+export interface MousePositionProps {
+  x: number | null;
+  y: number | null;
 }
