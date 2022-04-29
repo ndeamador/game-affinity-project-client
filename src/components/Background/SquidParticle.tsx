@@ -7,7 +7,6 @@ import {
   MousePositionContext,
   useAnimation,
 } from './AnimatedCanvas';
-import BoundingBox from './BoundingBox';
 
 const SquidParticle: FC<SquidParticleProps> = (
   props
@@ -77,6 +76,16 @@ const SquidParticle: FC<SquidParticleProps> = (
     // Interaction with bouncing element
     if (props.bounceElement) {
       const box = props.bounceElement;
+      const boxCenter = {
+        x: props.bounceElement.x + props.bounceElement.width / 2,
+        y: props.bounceElement.y + props.bounceElement.height / 2,
+      };
+      const distanceToCenter = Math.sqrt(
+        (particle.x - boxCenter.x) ** 2 + (particle.y - boxCenter.y) ** 2
+      );
+      const boxField = 160;
+
+
       // Check if particle colides with box
       if (
         particle.x <= box.x + box.width && // right edge
@@ -90,9 +99,28 @@ const SquidParticle: FC<SquidParticleProps> = (
           particle.x + particle.size - particle.directionX < box.x // left edge
         ) {
           particle.directionX = -particle.directionX;
-        }
-        else {
+        } else {
           particle.directionY = -particle.directionY;
+        }
+      }
+
+      // Connect nearby particles with lines
+      if (
+        // particle.x <= box.x + box.width + boxField && // right edge
+        // particle.x + particle.size + boxField >= box.x && // left edge
+        // particle.y <= box.y + box.height + boxField && // bottom edge
+        // particle.y + particle.size + boxField >= box.y // top edge
+        distanceToCenter < Math.max(box.width, box.height) * 1.4142135 / 2 + boxField // A cheaper way estimating the maximum diagonal avoiding an expensive sqrt()
+      ) {
+        const opacity = 1 - (distanceToCenter*100/boxField)/boxField;
+
+        if (canvas != null) {
+          canvas.strokeStyle = 'rgba(140, 85, 31, ' + opacity + ')';
+          canvas.lineWidth = 1;
+          canvas.beginPath();
+          canvas.moveTo(particle.x, particle.y);
+          canvas.lineTo(boxCenter.x, boxCenter.y);
+          canvas.stroke();
         }
       }
     }

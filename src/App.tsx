@@ -20,6 +20,8 @@ import useCurrentUser from './hooks/useCurrentUser';
 import Ranking from './views/Ranking';
 import { css } from '@emotion/react';
 import Background from './components/Background/Background';
+import { createContext, useState } from 'react';
+import { BounceBoxUseStateContext } from './types';
 
 const bodyStyle = css({
   display: 'flex',
@@ -50,32 +52,42 @@ function App() {
   const { currentUser, loading: loadingUser } = useCurrentUser();
   // console.log('----App: ', currentUser?.email, currentUser?.gamesInLibrary);
 
+  // Context for elements with wich the animated background reacts.
+  const [bounceBoxes, setBounceBoxes] = useState<{
+    searchBar: DOMRect | undefined;
+  }>({ searchBar: undefined });
+
   return (
-    <div className='App' css={bodyStyle}>
-      <Background />
+    <BounceBoxesContext.Provider value={{ bounceBoxes, setBounceBoxes }}>
+      <div className='App' css={bodyStyle}>
+        <Background />
 
-      <Router>
-        <NavBar />
-        <div className='AppContentContainer' css={contentStyle}>
-          <Switch>
-            <Route path={'/games/:gameId'}>
-              <GameProfile />
-            </Route>
+        <Router>
+          <NavBar />
+          <div className='AppContentContainer' css={contentStyle}>
+            <Switch>
+              <Route path={'/games/:gameId'}>
+                <GameProfile />
+              </Route>
 
-            <Route path={'/ranking'}>
-              <Ranking />
-            </Route>
+              <Route path={'/ranking'}>
+                <Ranking />
+              </Route>
 
-            <Route path={'/library'}>
-              {!loadingUser && !currentUser ? <Redirect to='/' /> : <Library />}
-            </Route>
+              <Route path={'/library'}>
+                {!loadingUser && !currentUser ? (
+                  <Redirect to='/' />
+                ) : (
+                  <Library />
+                )}
+              </Route>
 
-            <Route path='/'>
-              <Home />
-            </Route>
-          </Switch>
-        </div>
-        {/* <Switch>
+              <Route path='/'>
+                <Home />
+              </Route>
+            </Switch>
+          </div>
+          {/* <Switch>
           <Route path={'/games/:gameId'}>
             <GameProfile />
           </Route>
@@ -92,11 +104,15 @@ function App() {
             <Home />
           </Route>
         </Switch> */}
-      </Router>
-
-
-    </div>
+        </Router>
+      </div>
+    </BounceBoxesContext.Provider>
   );
 }
 
 export default App;
+
+export const BounceBoxesContext = createContext<BounceBoxUseStateContext>({
+  bounceBoxes: { searchBar: undefined },
+  setBounceBoxes: () => undefined,
+});

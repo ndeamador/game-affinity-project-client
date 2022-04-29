@@ -1,5 +1,3 @@
-import { number } from 'yup';
-
 export interface Game {
   id: string;
   name: string;
@@ -23,7 +21,6 @@ export interface Company {
   id: number;
   name: string;
 }
-
 
 export interface Platform {
   id: number;
@@ -93,8 +90,6 @@ export interface WindowSize {
   width: number;
 }
 
-
-// temp anys
 export interface SquidParticleBaseProps {
   x: number;
   y: number;
@@ -107,11 +102,21 @@ export interface SquidParticleBaseProps {
 export interface SquidParticleProps extends SquidParticleBaseProps {
   mouseRadius: number;
   windowSize: WindowSize;
-  // bounceElement?: React.MutableRefObject<HTMLDivElement | null>
   bounceElement?: DOMRect | undefined;
 }
 
 export interface MousePositionProps {
   x: number | null;
   y: number | null;
+}
+
+export interface BounceBoxUseStateContext {
+  bounceBoxes: {
+    searchBar: DOMRect | undefined;
+  };
+  setBounceBoxes: React.Dispatch<
+    React.SetStateAction<{
+      searchBar: DOMRect | undefined;
+    }>
+  >;
 }

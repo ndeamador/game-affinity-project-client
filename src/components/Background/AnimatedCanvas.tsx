@@ -84,6 +84,5 @@ export const useAnimation = ({
 }) => {
   const animationRef = useRef(initialValue);
   animationRef.current = updaterFunction(animationRef.current);
-  // console.log('CURRENT:', animationRef);
   return animationRef.current;
 };
