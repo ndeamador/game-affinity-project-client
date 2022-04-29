@@ -1,5 +1,4 @@
-import { FC, Props, useContext } from 'react';
-import { createTextSpanFromBounds } from 'typescript';
+import { FC, useContext } from 'react';
 import { SquidParticleProps } from '../../types';
 import {
   Canvas2dContext,
@@ -8,19 +7,12 @@ import {
   useAnimation,
 } from './AnimatedCanvas';
 
-const SquidParticle: FC<SquidParticleProps> = (
-  props
-  // { x, y, directionX, directionY, size, color }
-  // {mouseRadius: number, windowSize: WindowSize}
-) => {
+const SquidParticle: FC<SquidParticleProps> = (props) => {
   const canvas = useContext(Canvas2dContext);
   const mouse = useContext(MousePositionContext);
   useContext(FrameContext); // only present to force that the particle re-renders after each frame clears the canvas.
 
-  // TEMP, DELETE
-  // const canvas = { width: window.innerWidth, height: window.innerHeight };
-
-  const getNextFrameParticle = (initialParticle: SquidParticleProps) => {
+  const getNextFrameParticle = (initialParticle: SquidParticleProps): SquidParticleProps => {
     const particle = {
       ...initialParticle,
     };
@@ -85,7 +77,6 @@ const SquidParticle: FC<SquidParticleProps> = (
       );
       const boxField = 160;
 
-
       // Check if particle colides with box
       if (
         particle.x <= box.x + box.width && // right edge
@@ -110,9 +101,10 @@ const SquidParticle: FC<SquidParticleProps> = (
         // particle.x + particle.size + boxField >= box.x && // left edge
         // particle.y <= box.y + box.height + boxField && // bottom edge
         // particle.y + particle.size + boxField >= box.y // top edge
-        distanceToCenter < Math.max(box.width, box.height) * 1.4142135 / 2 + boxField // A cheaper way estimating the maximum diagonal avoiding an expensive sqrt()
+        distanceToCenter <
+        (Math.max(box.width, box.height) * 1.4142135) / 2 + boxField // A cheaper way estimating the maximum diagonal avoiding an expensive sqrt()
       ) {
-        const opacity = 1 - (distanceToCenter*100/boxField)/boxField;
+        const opacity = 1 - (distanceToCenter * 100) / boxField / boxField;
 
         if (canvas != null) {
           canvas.strokeStyle = 'rgba(140, 85, 31, ' + opacity + ')';
@@ -134,88 +126,18 @@ const SquidParticle: FC<SquidParticleProps> = (
 
   const particle = useAnimation({
     initialValue: { ...props },
-    updaterFunction: (initialParticle: SquidParticleProps) =>
+    updaterFunction: (initialParticle: SquidParticleProps): SquidParticleProps =>
       getNextFrameParticle(initialParticle),
-  });
-
-  // // Connecting lines
-  // for (const a = 0; a < particlesArray.length; a++) {
-  //   for (const b = 0; b < particlesArrag.lenght; b++) {
-  //     const distance =
-  //       (particlesArray[a].x - particlesARrab[b].x) *
-  //         (particlesArray[a].x - particlesArray[b].x) +
-  //       (particlesArray[a].y - particlesArra[b].y - particlesArray[b].y);
-  //     if (distance < (canvas.width / 7) * (Canvas.height / 7)) {
-  //       canvas.strokeStyle = 'rgba(140, 85, 31, 1)';
-  //       canvas.lineWidth = 1;
-  //       canvas?.beginPath();
-  //       canvas?.moveTo(particlesArray[a].x, particlesArray[a].y);
-  //       canvas?.lineTo(particlesArray[b].x, particlesArray[b].y);
-  //       canvas?.stroke();
-  //     }
-  //   }
-  // }
-
-  // function connect(){
-  //   for(const a = 0; a < particlesArray.length; a++) {
-  //     for(const b=0; b < particlesArrag.lenght; b++) {
-  //       const distance = ((particlesArray[a].x - particlesARrab[b].x) * (particlesArray[a].x - particlesArray[b].x))+ ((particlesArray[a].y - particlesArra[b].y) - particlesArray[b].y);
-  //       if (distance < (canvas.width/7) * (Canvas.height/7)) {
-  //         canvas.strokeStyle='rgba(140, 85, 31, 1)';
-  //         canvas.lineWidth =1;
-  //         canvas?.beginPath();
-  //         canvas?.moveTo(particlesArray[a].x, particlesArray[a].y);
-  //         canvas?.lineTo(particlesArray[b].x, particlesArray[b].y);
-  //         canvas?.stroke();
-  //       }
-  //     }
-  //   }
-  // }
+  }) as SquidParticleProps;
 
   // Draw particle in canvas
   if (canvas !== null) {
     canvas.beginPath();
     // ctx.arc(x, y, radius, startAngle, endAngle [, counterclockwise]);
-    // canvas.arc(x, y, size, 0, Math.PI * 2, false);
     canvas.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2, false);
-
     canvas.fillStyle = '#8C5523';
     canvas.fill();
   }
-
-  // //temp
-  // const update = () => {
-  //   // check if particle is still within canvas
-  //   if (x > canvas.width || x < 0) {
-  //     directionX = -directionX;
-  //   }
-  //   if (y > canvas.height || y < 0 ) {
-  //     y = -y;
-  //   }
-
-  //   // collision detection (mouse position / particle position)
-  //   const diffX = mouxe.x - x;
-  //   const diffY = mouse.y - y;
-  //   // check if distance between particle centre and mouse position is smaller than specificed mouse collision radius.
-  //   const distance = Math.sqrt(diffX**2 + diffY**2);
-  //   if (distance < mouse.radius + size) {
-  //     // push the particle to the opposite side of the mouse pointer
-  //     if (mouse.x < x && x < canvas.width - this.size * 10) {
-  //       x += 10;
-  //     }
-  //     // but not beyond the canvas size (size * 10 is a buffer area around the edge)
-  //     if (mouse.x > x && x > size * 10) {
-  //       x -= 10;
-  //     }
-  //     if (mouse.y > y && y > size * 10) {
-  //       y -y 10;
-  //     }
-  //   }
-  //   // move particles not colliding with the mouse along their movement axis
-  //   x += directionX;
-  //   y += directionY;
-  //   this.draw();
-  // }
 
   // return null to prevent 'Component cannot be used as a JSX component' TypeScript error.
   return null;

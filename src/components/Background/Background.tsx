@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import { useContext, useEffect, useRef, useState } from 'react';
 import { nanoid } from 'nanoid'; // Id generator to avoid using .map index as keys, which is an antipattern.
 import AnimatedCanvas from './AnimatedCanvas';
@@ -26,42 +24,20 @@ const Background = () => {
   // if (particlesArray && particlesArray.c)
   particlesArrayRef.current = particlesArray;
 
-  const testDivRef = useRef<HTMLDivElement | null>(null);
   const bounceContext = useContext(BounceBoxesContext);
 
-
   return (
-    // <AnimatedCanvas>
-    //   {getRandomParticles(windowSize).map((particle) => (
-    //     <SquidParticle key={nanoid()} windowSize={windowSize} mouseRadius={mouseRadius} {...particle} />
-    //   ))}
-    // </AnimatedCanvas>
-    <>
-      {/* <div
-        id='testdiv'
-        css={{
-          margin: 'auto',
-          width: '210px',
-          height: '200px',
-          backgroundColor: 'rgb(255, 99, 71, 0.5)',
-        }}
-        ref={testDivRef}
-      ></div> */}
-      <AnimatedCanvas>
-        {particlesArray.map((particle) => (
-          <SquidParticle
-            key={nanoid()}
-            windowSize={windowSize}
-            mouseRadius={mouseRadius}
-            // bounceElement={testDivRef}
-            // bounceElement={testDivRef.current?.getBoundingClientRect()}
-            bounceElement={bounceContext.bounceBoxes.searchBar}
-            {...particle}
-          />
-        ))}
-
-      </AnimatedCanvas>
-    </>
+    <AnimatedCanvas>
+      {particlesArray.map((particle) => (
+        <SquidParticle
+          key={nanoid()}
+          windowSize={windowSize}
+          mouseRadius={mouseRadius}
+          bounceElement={bounceContext.bounceBoxes.searchBar}
+          {...particle}
+        />
+      ))}
+    </AnimatedCanvas>
   );
 };
 

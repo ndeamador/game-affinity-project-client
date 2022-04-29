@@ -73,14 +73,13 @@ export const Canvas2dContext = createContext<CanvasRenderingContext2D | null>(
   null
 );
 
-// temp anys
 // check that ref resets if component unmounts (declaring ref out of component)
-export const useAnimation = ({
+export const useAnimation = <T, >({
   initialValue,
   updaterFunction,
 }: {
-  initialValue: any;
-  updaterFunction: any;
+  initialValue: T;
+  updaterFunction: (initialValue: T) => T;
 }) => {
   const animationRef = useRef(initialValue);
   animationRef.current = updaterFunction(animationRef.current);
