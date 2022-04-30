@@ -26,6 +26,16 @@ const Background = () => {
 
   const bounceContext = useContext(BounceBoxesContext);
 
+
+  // const mousePosition = useRef<MousePositionProps>({ x: null, y: null });
+  // const handleMouseMove = (event) => {
+  //   mousePosition.current = {
+  //     ...mousePosition.current,
+  //     x: event.clientX,
+  //     y: event.clientY
+  //   }
+  // }
+
   return (
     <AnimatedCanvas>
       {particlesArray.map((particle) => (

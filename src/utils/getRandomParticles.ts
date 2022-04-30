@@ -5,7 +5,7 @@ const getRandomParticles = (
 ): SquidParticleBaseProps[] => {
   const particlesArray: SquidParticleBaseProps[] = [];
   const numberOfParticles = (windowSize.height * windowSize.width) / 9000;
-  const speedMultiplier = 0.5; //5
+  const speedMultiplier = 5; //5do
 
 
   for (let i = 0; i < numberOfParticles; i++) {

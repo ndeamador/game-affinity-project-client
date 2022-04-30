@@ -2,13 +2,11 @@ import { createContext, useEffect, useRef, useState } from 'react';
 import useWindowSize from '../../hooks/useWindowSize';
 import { MousePositionProps } from '../../types';
 
-
-
 const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [renderingContext, setRenderingContext] =
     useState<CanvasRenderingContext2D | null>(null);
-  const [mousePosition, setMousePosition] = useState<MousePositionProps>({ x: null, y: null });
+  // const [mousePosition, setMousePosition] = useState<MousePositionProps>({ x: null, y: null });
   const [frameCount, setFrameCount] = useState(0);
   const windowSize = useWindowSize();
 
@@ -40,22 +38,39 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
     renderingContext.clearRect(0, 0, windowSize.width, windowSize.height);
   }
 
-  useEffect(() => {
-    window.addEventListener('mousemove', (event) => {
-      setMousePosition({ x: event.x, y: event.y });
-    });
-  }, [setMousePosition]);
+  // useEffect(() => {
+  //   window.addEventListener('mousemove', (event) => {
+  //     setMousePosition({ x: event.x, y: event.y });
+  //   });
+  // }, [setMousePosition]);
 
+  // useEffect(() => {
+  //   window.addEventListener('mouseout', () => {
+  //     setMousePosition({ x: null, y: null });
+  //   });
+  // }, [setMousePosition]);
+
+
+  // Done with useRef instead of useState to prevent additional re-renders on mouse move that accelerate the animation.
+  const mousePosition = useRef<MousePositionProps>({ x: null, y: null });
+  const handleMouseMove = (event: MouseEvent) => {
+    mousePosition.current = {
+      ...mousePosition.current,
+      x: event.clientX,
+      y: event.clientY,
+    };
+  };
   useEffect(() => {
-    window.addEventListener('mouseout', () => {
-      setMousePosition({ x: null, y: null });
-    });
-  }, [setMousePosition]);
+    window.addEventListener('mousemove', (event: MouseEvent) =>
+      handleMouseMove(event)
+    );
+  });
+
 
   return (
     <Canvas2dContext.Provider value={renderingContext}>
       <FrameContext.Provider value={frameCount}>
-        <MousePositionContext.Provider value={mousePosition}>
+        <MousePositionContext.Provider value={mousePosition.current}>
           <canvas id='background' ref={canvasRef}>
             {children}
           </canvas>
@@ -68,13 +83,16 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
 export default AnimatedCanvas;
 
 export const FrameContext = createContext<number>(0);
-export const MousePositionContext = createContext<MousePositionProps>({ x: null, y: null });
+export const MousePositionContext = createContext<MousePositionProps>({
+  x: null,
+  y: null,
+});
 export const Canvas2dContext = createContext<CanvasRenderingContext2D | null>(
   null
 );
 
 // check that ref resets if component unmounts (declaring ref out of component)
-export const useAnimation = <T, >({
+export const useAnimation = <T,>({
   initialValue,
   updaterFunction,
 }: {
