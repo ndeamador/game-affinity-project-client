@@ -6,21 +6,20 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [renderingContext, setRenderingContext] =
     useState<CanvasRenderingContext2D | null>(null);
-  // const [mousePosition, setMousePosition] = useState<MousePositionProps>({ x: null, y: null });
   const [frameCount, setFrameCount] = useState(0);
   const windowSize = useWindowSize();
 
   // Initialize Canvas
   useEffect(() => {
     if (!canvasRef.current) return;
-    const current = canvasRef.current;
-    const canvas2DContext = current.getContext('2d');
+    const canvas = canvasRef.current;
+    const canvas2DContext = canvas.getContext('2d');
     setRenderingContext(canvas2DContext);
 
     // Set canvas "resolution"
     // https://stackoverflow.com/questions/4938346/canvas-width-and-height-in-html5
-    current.width = windowSize.width;
-    current.height = windowSize.height;
+    canvas.width = windowSize.width;
+    canvas.height = windowSize.height;
   }, [windowSize]);
 
   // make component and context re-render at every frame
@@ -28,6 +27,7 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
     const frameId = requestAnimationFrame(() => {
       setFrameCount(frameCount + 1);
     });
+
     return () => {
       cancelAnimationFrame(frameId);
     };
@@ -99,7 +99,9 @@ export const useAnimation = <T,>({
   initialValue: T;
   updaterFunction: (initialValue: T) => T;
 }) => {
+  // console.log('initial:', initialValue);
   const animationRef = useRef(initialValue);
   animationRef.current = updaterFunction(animationRef.current);
+  // console.log(animationRef.current);
   return animationRef.current;
 };

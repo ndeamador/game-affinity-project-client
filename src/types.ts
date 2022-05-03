@@ -90,7 +90,7 @@ export interface WindowSize {
   width: number;
 }
 
-export interface SquidParticleBaseProps {
+export interface AnimatedParticleBaseProps {
   x: number;
   y: number;
   directionX: number;
@@ -99,10 +99,12 @@ export interface SquidParticleBaseProps {
   color?: string;
 }
 
-export interface SquidParticleProps extends SquidParticleBaseProps {
-  mouseRadius: number;
+export interface AnimatedParticleProps extends AnimatedParticleBaseProps {
+  mouseRadius?: number;
   windowSize: WindowSize;
   bounceElement?: DOMRect | undefined;
+  index: number;
+  onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
 }
 
 export interface MousePositionProps {

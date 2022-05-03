@@ -1,18 +1,19 @@
 import { FC, useContext } from 'react';
-import { SquidParticleProps } from '../../types';
+import { AnimatedParticleProps } from '../../types';
 import {
   Canvas2dContext,
   FrameContext,
   MousePositionContext,
-  useAnimation,
 } from './AnimatedCanvas';
 
-const SquidParticle: FC<SquidParticleProps> = (props) => {
+const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
   const canvas = useContext(Canvas2dContext);
   const mouse = useContext(MousePositionContext);
   useContext(FrameContext); // only present to force that the particle re-renders after each frame clears the canvas.
 
-  const getNextFrameParticle = (initialParticle: SquidParticleProps): SquidParticleProps => {
+  const getNextFrameParticle = (
+    initialParticle: AnimatedParticleProps
+  ): AnimatedParticleProps => {
     const particle = {
       ...initialParticle,
     };
@@ -30,7 +31,7 @@ const SquidParticle: FC<SquidParticleProps> = (props) => {
       particle.directionY = -particle.directionY;
     }
 
-    if (mouse.x && mouse.y) {
+    if (mouse.x && mouse.y && props.mouseRadius) {
       // collision detection (mouse position / particle position)
       // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
       const diffX = mouse.x - particle.x;
@@ -68,15 +69,6 @@ const SquidParticle: FC<SquidParticleProps> = (props) => {
     // Interaction with bouncing element
     if (props.bounceElement) {
       const box = props.bounceElement;
-      const boxCenter = {
-        x: props.bounceElement.x + props.bounceElement.width / 2,
-        y: props.bounceElement.y + props.bounceElement.height / 2,
-      };
-      const distanceToCenter = Math.sqrt(
-        (particle.x - boxCenter.x) ** 2 + (particle.y - boxCenter.y) ** 2
-      );
-      const boxField = 160;
-
       // Check if particle colides with box
       if (
         particle.x <= box.x + box.width && // right edge
@@ -94,27 +86,6 @@ const SquidParticle: FC<SquidParticleProps> = (props) => {
           particle.directionY = -particle.directionY;
         }
       }
-
-      // Connect nearby particles with lines
-      if (
-        // particle.x <= box.x + box.width + boxField && // right edge
-        // particle.x + particle.size + boxField >= box.x && // left edge
-        // particle.y <= box.y + box.height + boxField && // bottom edge
-        // particle.y + particle.size + boxField >= box.y // top edge
-        distanceToCenter <
-        (Math.max(box.width, box.height) * 1.4142135) / 2 + boxField // A cheaper way estimating the maximum diagonal avoiding an expensive sqrt()
-      ) {
-        const opacity = 1 - (distanceToCenter * 100) / boxField / boxField;
-
-        if (canvas != null) {
-          canvas.strokeStyle = 'rgba(140, 85, 31, ' + opacity + ')';
-          canvas.lineWidth = 1;
-          canvas.beginPath();
-          canvas.moveTo(particle.x, particle.y);
-          canvas.lineTo(boxCenter.x, boxCenter.y);
-          canvas.stroke();
-        }
-      }
     }
 
     // regular movement
@@ -124,23 +95,65 @@ const SquidParticle: FC<SquidParticleProps> = (props) => {
     return particle;
   };
 
-  const particle = useAnimation({
-    initialValue: { ...props },
-    updaterFunction: (initialParticle: SquidParticleProps): SquidParticleProps =>
-      getNextFrameParticle(initialParticle),
-  }) as SquidParticleProps;
+  const currentFrameParticle = { ...props };
+  const nextFrameParticle = getNextFrameParticle(currentFrameParticle);
+  props.onNewFrame(props.index, nextFrameParticle);
 
+
+
+  // DRAWING LOGIC ==============================================================================
   // Draw particle in canvas
   if (canvas !== null) {
     canvas.beginPath();
     // ctx.arc(x, y, radius, startAngle, endAngle [, counterclockwise]);
-    canvas.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2, false);
+    canvas.arc(
+      currentFrameParticle.x,
+      currentFrameParticle.y,
+      currentFrameParticle.size,
+      0,
+      Math.PI * 2,
+      false
+    );
     canvas.fillStyle = '#8C5523';
     canvas.fill();
+  }
+
+  // Connect particle with bounce element with lines.
+  if (props.bounceElement) {
+    const box = props.bounceElement;
+    const boxCenter = {
+      x: props.bounceElement.x + props.bounceElement.width / 2,
+      y: props.bounceElement.y + props.bounceElement.height / 2,
+    };
+    const distanceToCenter = Math.sqrt(
+      (currentFrameParticle.x - boxCenter.x) ** 2 +
+        (currentFrameParticle.y - boxCenter.y) ** 2
+    );
+    const boxField = 160;
+    // Connect nearby particles with lines
+    if (
+      // particle.x <= box.x + box.width + boxField && // right edge
+      // particle.x + particle.size + boxField >= box.x && // left edge
+      // particle.y <= box.y + box.height + boxField && // bottom edge
+      // particle.y + particle.size + boxField >= box.y // top edge
+      distanceToCenter <
+      (Math.max(box.width, box.height) * 1.4142135) / 2 + boxField // A cheaper way estimating the maximum diagonal avoiding an expensive sqrt()
+    ) {
+      const opacity = 1 - (distanceToCenter * 100) / boxField / boxField;
+
+      if (canvas != null) {
+        canvas.strokeStyle = 'rgba(140, 85, 31, ' + opacity + ')';
+        canvas.lineWidth = 1;
+        canvas.beginPath();
+        canvas.moveTo(currentFrameParticle.x, currentFrameParticle.y);
+        canvas.lineTo(boxCenter.x, boxCenter.y);
+        canvas.stroke();
+      }
+    }
   }
 
   // return null to prevent 'Component cannot be used as a JSX component' TypeScript error.
   return null;
 };
 
-export default SquidParticle;
+export default AnimatedParticle;

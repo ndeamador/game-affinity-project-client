@@ -1,11 +1,11 @@
-import { SquidParticleBaseProps, WindowSize } from '../types';
+import { AnimatedParticleBaseProps, WindowSize } from '../types';
 
 const getRandomParticles = (
   windowSize: WindowSize
-): SquidParticleBaseProps[] => {
-  const particlesArray: SquidParticleBaseProps[] = [];
-  const numberOfParticles = (windowSize.height * windowSize.width) / 9000;
-  const speedMultiplier = 5; //5do
+): AnimatedParticleBaseProps[] => {
+  const particlesArray: AnimatedParticleBaseProps[] = [];
+  const numberOfParticles = (windowSize.height * windowSize.width) / 18000;
+  const speedMultiplier = 1; //5do
 
 
   for (let i = 0; i < numberOfParticles; i++) {
