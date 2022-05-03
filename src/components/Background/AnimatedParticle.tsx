@@ -100,9 +100,7 @@ const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
   props.onNewFrame(props.index, nextFrameParticle);
 
 
-
-  // DRAWING LOGIC ==============================================================================
-  // Draw particle in canvas
+  // Drawing logic
   if (canvas !== null) {
     canvas.beginPath();
     // ctx.arc(x, y, radius, startAngle, endAngle [, counterclockwise]);
@@ -116,40 +114,6 @@ const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
     );
     canvas.fillStyle = '#8C5523';
     canvas.fill();
-  }
-
-  // Connect particle with bounce element with lines.
-  if (props.bounceElement) {
-    const box = props.bounceElement;
-    const boxCenter = {
-      x: props.bounceElement.x + props.bounceElement.width / 2,
-      y: props.bounceElement.y + props.bounceElement.height / 2,
-    };
-    const distanceToCenter = Math.sqrt(
-      (currentFrameParticle.x - boxCenter.x) ** 2 +
-        (currentFrameParticle.y - boxCenter.y) ** 2
-    );
-    const boxField = 160;
-    // Connect nearby particles with lines
-    if (
-      // particle.x <= box.x + box.width + boxField && // right edge
-      // particle.x + particle.size + boxField >= box.x && // left edge
-      // particle.y <= box.y + box.height + boxField && // bottom edge
-      // particle.y + particle.size + boxField >= box.y // top edge
-      distanceToCenter <
-      (Math.max(box.width, box.height) * 1.4142135) / 2 + boxField // A cheaper way estimating the maximum diagonal avoiding an expensive sqrt()
-    ) {
-      const opacity = 1 - (distanceToCenter * 100) / boxField / boxField;
-
-      if (canvas != null) {
-        canvas.strokeStyle = 'rgba(140, 85, 31, ' + opacity + ')';
-        canvas.lineWidth = 1;
-        canvas.beginPath();
-        canvas.moveTo(currentFrameParticle.x, currentFrameParticle.y);
-        canvas.lineTo(boxCenter.x, boxCenter.y);
-        canvas.stroke();
-      }
-    }
   }
 
   // return null to prevent 'Component cannot be used as a JSX component' TypeScript error.

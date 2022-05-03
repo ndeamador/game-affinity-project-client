@@ -122,3 +122,13 @@ export interface BounceBoxUseStateContext {
     }>
   >;
 }
+
+export interface Point {
+  x: number,
+  y: number,
+}
+
+export interface ConnectingLinesProps {
+  particlesArray: AnimatedParticleBaseProps[] | undefined;
+  stickyElement: DOMRect | undefined;
+}

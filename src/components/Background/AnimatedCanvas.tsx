@@ -10,17 +10,20 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
   const [frameCount, setFrameCount] = useState(0);
   const windowSize = useWindowSize();
 
+  // console.log("canvasrefcurrent", canvasRef.current);
+
   // Initialize Canvas
   useEffect(() => {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
-    const canvas2DContext = canvas.getContext('2d');
-    setRenderingContext(canvas2DContext);
 
     // Set canvas "resolution"
     // https://stackoverflow.com/questions/4938346/canvas-width-and-height-in-html5
     canvas.width = windowSize.width;
     canvas.height = windowSize.height;
+
+    const canvas2DContext = canvas.getContext('2d');
+    setRenderingContext(canvas2DContext);
   }, [windowSize]);
 
   // make component and context re-render at every frame
@@ -42,15 +45,15 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
   const mousePosition = useMousePosition();
 
   return (
-    <Canvas2dContext.Provider value={renderingContext}>
-      <FrameContext.Provider value={frameCount}>
-        <MousePositionContext.Provider value={mousePosition}>
-          <canvas id='background' ref={canvasRef}>
-            {children}
-          </canvas>
-        </MousePositionContext.Provider>
-      </FrameContext.Provider>
-    </Canvas2dContext.Provider>
+      <Canvas2dContext.Provider value={renderingContext}>
+        <FrameContext.Provider value={frameCount}>
+          <MousePositionContext.Provider value={mousePosition}>
+            <canvas id='background' ref={canvasRef}>
+              {children}
+            </canvas>
+          </MousePositionContext.Provider>
+        </FrameContext.Provider>
+      </Canvas2dContext.Provider>
   );
 };
 
@@ -64,7 +67,6 @@ export const MousePositionContext = createContext<MousePositionProps>({
 export const Canvas2dContext = createContext<CanvasRenderingContext2D | null>(
   null
 );
-
 
 // // Only useable for animated elements that don't depend on others.
 // export const useAnimation = <T,>({

@@ -29,13 +29,11 @@ const Composition = () => {
     }
   };
 
-  console.log('mouseradius:', mouseRadius);
-
   return (
     <>
       <ConnectingLines
         particlesArray={particlesArrayRef.current}
-        windowSize={windowSize}
+        stickyElement={bounceContext.bounceBoxes.searchBar}
       />
       {particlesArrayRef.current &&
         particlesArrayRef.current?.map((particle, i) => (
