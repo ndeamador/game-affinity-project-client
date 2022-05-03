@@ -1,4 +1,5 @@
 import { createContext, useEffect, useRef, useState } from 'react';
+import useMousePosition from '../../hooks/useMousePosition';
 import useWindowSize from '../../hooks/useWindowSize';
 import { MousePositionProps } from '../../types';
 
@@ -38,39 +39,12 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
     renderingContext.clearRect(0, 0, windowSize.width, windowSize.height);
   }
 
-  // useEffect(() => {
-  //   window.addEventListener('mousemove', (event) => {
-  //     setMousePosition({ x: event.x, y: event.y });
-  //   });
-  // }, [setMousePosition]);
-
-  // useEffect(() => {
-  //   window.addEventListener('mouseout', () => {
-  //     setMousePosition({ x: null, y: null });
-  //   });
-  // }, [setMousePosition]);
-
-
-  // Done with useRef instead of useState to prevent additional re-renders on mouse move that accelerate the animation.
-  const mousePosition = useRef<MousePositionProps>({ x: null, y: null });
-  const handleMouseMove = (event: MouseEvent) => {
-    mousePosition.current = {
-      ...mousePosition.current,
-      x: event.clientX,
-      y: event.clientY,
-    };
-  };
-  useEffect(() => {
-    window.addEventListener('mousemove', (event: MouseEvent) =>
-      handleMouseMove(event)
-    );
-  });
-
+  const mousePosition = useMousePosition();
 
   return (
     <Canvas2dContext.Provider value={renderingContext}>
       <FrameContext.Provider value={frameCount}>
-        <MousePositionContext.Provider value={mousePosition.current}>
+        <MousePositionContext.Provider value={mousePosition}>
           <canvas id='background' ref={canvasRef}>
             {children}
           </canvas>
@@ -91,17 +65,16 @@ export const Canvas2dContext = createContext<CanvasRenderingContext2D | null>(
   null
 );
 
-// check that ref resets if component unmounts (declaring ref out of component)
-export const useAnimation = <T,>({
-  initialValue,
-  updaterFunction,
-}: {
-  initialValue: T;
-  updaterFunction: (initialValue: T) => T;
-}) => {
-  // console.log('initial:', initialValue);
-  const animationRef = useRef(initialValue);
-  animationRef.current = updaterFunction(animationRef.current);
-  // console.log(animationRef.current);
-  return animationRef.current;
-};
+
+// // Only useable for animated elements that don't depend on others.
+// export const useAnimation = <T,>({
+//   initialValue,
+//   updaterFunction,
+// }: {
+//   initialValue: T;
+//   updaterFunction: (initialValue: T) => T;
+// }) => {
+//   const animationRef = useRef(initialValue);
+//   animationRef.current = updaterFunction(animationRef.current);
+//   return animationRef.current;
+// };
