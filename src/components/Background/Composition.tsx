@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { BounceBoxesContext } from '../../App';
+import useBounceBoxes from '../../hooks/useBounceBoxes';
 import useWindowSize from '../../hooks/useWindowSize';
 import { AnimatedParticleBaseProps } from '../../types';
 import getRandomParticles from '../../utils/getRandomParticles';
@@ -14,6 +15,7 @@ const Composition = () => {
   const bounceContext = useContext(BounceBoxesContext);
   const particlesArrayRef = useRef<AnimatedParticleBaseProps[]>();
   useContext(FrameContext); // only present to force re-render after each frame clears the canvas.
+  // const {bounceBoxes} = useBounceBoxes();
 
   useEffect(() => {
     setMouseRadius((windowSize.height / 120) * (windowSize.width / 120));
@@ -33,7 +35,8 @@ const Composition = () => {
     <>
       <ConnectingLines
         particlesArray={particlesArrayRef.current}
-        stickyElement={bounceContext.bounceBoxes.searchBar}
+        stickyElements={bounceContext.bounceBoxes}
+
       />
       {particlesArrayRef.current &&
         particlesArrayRef.current?.map((particle, i) => (
@@ -41,7 +44,7 @@ const Composition = () => {
             key={nanoid()}
             windowSize={windowSize}
             mouseRadius={mouseRadius}
-            bounceElement={bounceContext.bounceBoxes.searchBar}
+            // bounceElement={bounceContext.bounceBoxes.searchBar}
             index={i}
             onNewFrame={updateParticle}
             {...particle}

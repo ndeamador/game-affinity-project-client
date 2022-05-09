@@ -4,8 +4,9 @@ const getRandomParticles = (
   windowSize: WindowSize
 ): AnimatedParticleBaseProps[] => {
   const particlesArray: AnimatedParticleBaseProps[] = [];
-  const numberOfParticles = (windowSize.height * windowSize.width) / 12000;
-  const speedMultiplier = 1; //5do
+  const particleMultiplier = 10;
+  const numberOfParticles = particleMultiplier * (windowSize.height * windowSize.width) / 100000
+  const speedMultiplier = 3; //5do
 
 
   for (let i = 0; i < numberOfParticles; i++) {

@@ -1,13 +1,13 @@
-import { props } from 'cypress/types/bluebird';
 import { useContext } from 'react';
-import { ConnectingLinesProps, Point } from '../../types';
+import { ConnectingLinesProps, Point, RectWithBoundingPoints } from '../../types';
 import { Canvas2dContext } from './AnimatedCanvas';
 
 const ConnectingLines = ({
   particlesArray,
-  stickyElement
+  stickyElements
 }: ConnectingLinesProps) => {
   const canvas = useContext(Canvas2dContext);
+
   if (!canvas || !particlesArray) return null;
 
   const connectWithLine = (pointA: Point, pointB: Point, opacity: number) => {
@@ -26,36 +26,34 @@ const ConnectingLines = ({
     )
   }
 
-  const linkWithDOMComponent = (bounceElement: DOMRect | undefined, particle: Point) => {
-    if (bounceElement) {
-      const box = bounceElement;
-      const boxCenter = {
-        x: bounceElement.x + bounceElement.width / 2,
-        y: bounceElement.y + bounceElement.height / 2,
-      };
-      const distanceToCenter = calculateDistance(particle, boxCenter);
+  const linkWithDOMComponent = (bounceElement: RectWithBoundingPoints, particle: Point) => {
+    if (bounceElement.boundingPoints && bounceElement.width && bounceElement.height) {
+      const distanceToCenter = calculateDistance(particle, bounceElement.boundingPoints.center);
       const boxField = 160;
       if (
         distanceToCenter <
-        (Math.max(box.width, box.height) * 1.4142135) / 2 + boxField // A cheaper way estimating the maximum diagonal avoiding an expensive sqrt()
+        (Math.max(bounceElement.width, bounceElement.height) * 1.4142135) / 2 + boxField // A cheaper way estimating the maximum diagonal avoiding an expensive sqrt()
       ) {
         const opacity = 1 - (distanceToCenter * 100) / boxField / boxField;
-        connectWithLine(particle, boxCenter, opacity);
+        connectWithLine(particle, bounceElement.boundingPoints.center, opacity);
       }
     }
   }
 
   const linkWithEachOther = (pointA: Point, pointB: Point) => {
     const distance = calculateDistance(pointA, pointB)
-    if (distance < 75) {
-      connectWithLine(pointA, pointB, 0.1)
+    const maxDistance = 85;
+
+    if (distance < maxDistance) {
+      const opacity = 1 - distance / maxDistance;
+      connectWithLine(pointA, pointB, opacity)
     }
   }
 
-
-
   for (let a = 0; a < particlesArray.length; a++) {
-    linkWithDOMComponent(stickyElement, particlesArray[a]);
+    if (stickyElements) {
+      Object.values(stickyElements).forEach(element => linkWithDOMComponent(element, particlesArray[a]))
+    }
 
     for (let b = 0; b < particlesArray.length; b++) {
       linkWithEachOther(particlesArray[a], particlesArray[b])

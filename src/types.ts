@@ -102,7 +102,7 @@ export interface AnimatedParticleBaseProps {
 export interface AnimatedParticleProps extends AnimatedParticleBaseProps {
   mouseRadius?: number;
   windowSize: WindowSize;
-  bounceElement?: DOMRect | undefined;
+  bounceElement?: RectWithBoundingPoints | undefined;
   index: number;
   onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
 }
@@ -112,17 +112,6 @@ export interface MousePositionProps {
   y: number | null;
 }
 
-export interface BounceBoxUseStateContext {
-  bounceBoxes: {
-    searchBar: DOMRect | undefined;
-  };
-  setBounceBoxes: React.Dispatch<
-    React.SetStateAction<{
-      searchBar: DOMRect | undefined;
-    }>
-  >;
-}
-
 export interface Point {
   x: number,
   y: number,
@@ -130,5 +119,37 @@ export interface Point {
 
 export interface ConnectingLinesProps {
   particlesArray: AnimatedParticleBaseProps[] | undefined;
-  stickyElement: DOMRect | undefined;
+  stickyElements?: BounceBoxState;
 }
+
+export interface DeconstructedDOMRect {
+  top: number,
+  left: number,
+  bottom: number,
+  right: number
+}
+
+export interface RectWithBoundingPoints extends DeconstructedDOMRect {
+  width?: number,
+  height?: number,
+  boundingPoints?: {
+    center: Point
+    top: Point,
+    bottom: Point,
+    left: Point,
+    right: Point
+  }
+}
+
+export type BounceBoxKey = 'searchBar';
+
+// https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
+export type BounceBoxState = {
+  [key in BounceBoxKey]: RectWithBoundingPoints;
+};
+
+export interface BounceBoxUseStateContext {
+  bounceBoxes: BounceBoxState | undefined;
+  storeBounceBox: (propName: BounceBoxKey, ref: React.MutableRefObject<HTMLElement | null>) => void;
+}
+

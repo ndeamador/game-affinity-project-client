@@ -22,6 +22,7 @@ import { css } from '@emotion/react';
 import Background from './components/Background/Background';
 import { createContext, useState } from 'react';
 import { BounceBoxUseStateContext } from './types';
+import useBounceBoxes from './hooks/useBounceBoxes';
 
 const bodyStyle = css({
   display: 'flex',
@@ -50,15 +51,10 @@ const contentStyle = css({
 
 function App() {
   const { currentUser, loading: loadingUser } = useCurrentUser();
-  // console.log('----App: ', currentUser?.email, currentUser?.gamesInLibrary);
-
-  // Context for elements with wich the animated background reacts.
-  const [bounceBoxes, setBounceBoxes] = useState<{
-    searchBar: DOMRect | undefined;
-  }>({ searchBar: undefined });
+  const {bounceBoxes, storeBounceBox} = useBounceBoxes();
 
   return (
-    <BounceBoxesContext.Provider value={{ bounceBoxes, setBounceBoxes }}>
+    <BounceBoxesContext.Provider value={{ bounceBoxes, storeBounceBox }}>
       <div className='App' css={bodyStyle}>
         <Background />
 
@@ -113,6 +109,6 @@ function App() {
 export default App;
 
 export const BounceBoxesContext = createContext<BounceBoxUseStateContext>({
-  bounceBoxes: { searchBar: undefined },
-  setBounceBoxes: () => undefined,
+  bounceBoxes: undefined,
+  storeBounceBox: () => undefined,
 });
