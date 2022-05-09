@@ -2,7 +2,10 @@
 
 import { css } from '@emotion/react';
 import Tooltip from '@reach/tooltip';
+import { useContext, useEffect, useRef } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { BounceBoxesContext } from '../App';
+import useWindowSize from '../hooks/useWindowSize';
 import { Input, Spinner } from './styledComponentsLibrary';
 
 const formStyle = css({
@@ -26,8 +29,21 @@ const SearchBar = ({
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
   loading: boolean;
 }) => {
+  const bounceContext = useContext(BounceBoxesContext);
+  const searchBarRef = useRef<HTMLFormElement | null>(null);
+  const windowSize = useWindowSize();
+
+  // Refresh component size stored in context on windows resize (to align component with background animation)
+  useEffect(() => {
+    bounceContext.storeBounceBox('searchBar', searchBarRef);
+  }, [windowSize]);
+
   return (
-    <form onSubmit={(event) => event.preventDefault()} css={formStyle}>
+    <form
+      onSubmit={(event) => event.preventDefault()}
+      css={formStyle}
+      ref={searchBarRef}
+    >
       <Input
         id='search'
         name='search'

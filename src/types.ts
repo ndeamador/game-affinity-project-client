@@ -22,7 +22,6 @@ export interface Company {
   name: string;
 }
 
-
 export interface Platform {
   id: number;
   name: string;
@@ -86,15 +85,71 @@ export interface LoginOrRegisterButtonProps extends LoginOrRegisterModalProps {
   buttonType: ButtonTypes;
 }
 
-
-// temp anys
-export interface SquidParticleProps {
-  // context?: any;
-  x?: any;
-  y?: any;
-  directionX?: any;
-  directionY?: any;
-  size?: any;
-  color?: string;
-  // frameId?: any;
+export interface WindowSize {
+  height: number;
+  width: number;
 }
+
+export interface AnimatedParticleBaseProps {
+  x: number;
+  y: number;
+  directionX: number;
+  directionY: number;
+  size: number;
+  color?: string;
+}
+
+export interface AnimatedParticleProps extends AnimatedParticleBaseProps {
+  mouseRadius?: number;
+  windowSize: WindowSize;
+  bounceElement?: RectWithBoundingPoints | undefined;
+  index: number;
+  onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
+}
+
+export interface MousePositionProps {
+  x: number | null;
+  y: number | null;
+}
+
+export interface Point {
+  x: number,
+  y: number,
+}
+
+export interface ConnectingLinesProps {
+  particlesArray: AnimatedParticleBaseProps[] | undefined;
+  stickyElements?: BounceBoxState;
+}
+
+export interface DeconstructedDOMRect {
+  top: number,
+  left: number,
+  bottom: number,
+  right: number
+}
+
+export interface RectWithBoundingPoints extends DeconstructedDOMRect {
+  width?: number,
+  height?: number,
+  boundingPoints?: {
+    center: Point
+    top: Point,
+    bottom: Point,
+    left: Point,
+    right: Point
+  }
+}
+
+export type BounceBoxKey = 'searchBar';
+
+// https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
+export type BounceBoxState = {
+  [key in BounceBoxKey]: RectWithBoundingPoints;
+};
+
+export interface BounceBoxUseStateContext {
+  bounceBoxes: BounceBoxState | undefined;
+  storeBounceBox: (propName: BounceBoxKey, ref: React.MutableRefObject<HTMLElement | null>) => void;
+}
+
