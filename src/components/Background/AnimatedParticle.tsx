@@ -11,13 +11,13 @@ const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
   const mouse = useContext(MousePositionContext);
   useContext(FrameContext); // only present to force that the particle re-renders after each frame clears the canvas.
 
-  let particleColor = '#8C5523';
-  particleColor = '#8C5523';
+  let defaultColor = '#8C5523';
+  defaultColor = '#8C5523';
 
   const getNextFrameParticle = (
     initialParticle: AnimatedParticleProps
   ): AnimatedParticleProps => {
-    const particle = {
+    let particle = {
       ...initialParticle,
     };
 
@@ -33,9 +33,6 @@ const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
     if (particle.y > props.windowSize.height || particle.y < 0) {
       particle.directionY = -particle.directionY;
     }
-
-
-
 
     // // Interact with mouse
     // if (mouse.x && mouse.y && props.mouseRadius) {
@@ -72,41 +69,41 @@ const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
     //   }
     // }
 
-
     // Interaction with bouncing element
-    if(props.bounceElements) {
-      const bounceFromBox = (box:RectWithBoundingPoints) => {
-          if (
-            particle.x >= box.left - particle.directionX / 2 - particle.size && // left edge
-            particle.x <= box.right - particle.directionX / 2 + particle.size && // right edge
-            particle.y >= box.top - particle.directionY / 2 - particle.size && // top edge
-            particle.y <= box.bottom - particle.directionY / 2 + particle.size // bottom edge
-          ) {
+    if (props.bounceElements) {
+      // const bounceFromBox = (box:RectWithBoundingPoints) => {
+      //     if (
+      //       particle.x >= box.left - particle.directionX / 2 - particle.size && // left edge
+      //       particle.x <= box.right - particle.directionX / 2 + particle.size && // right edge
+      //       particle.y >= box.top - particle.directionY / 2 - particle.size && // top edge
+      //       particle.y <= box.bottom - particle.directionY / 2 + particle.size // bottom edge
+      //     ) {
 
-            // Bounce from box (bounce angle depends on side touched)
-            if (
-              (particle.directionX > 0 && (particle.x - particle.directionX / 2 - particle.size <= box.left)) ||
-              (particle.directionX < 0 && (particle.x - particle.directionX / 2 + particle.size >= box.right))
-            ) {
-              particle.directionX = -particle.directionX;
-              particleColor = 'yellow';
-            } else if (
-              (particle.directionY > 0 && (particle.y - particle.directionY / 2 - particle.size <= box.top)) ||
-              (particle.directionY < 0 && (particle.y - particle.directionY / 2 + particle.size >= box.bottom))
-            ) {
-              particleColor = 'blue';
-              particle.directionY = -particle.directionY;
-            }
-            // else {
-            //   particle.directionX = -particle.directionX;
-            //   particle.directionY = -particle.directionY;
-            // }
-          }
-      }
+      //       // Bounce from box (bounce angle depends on side touched)
+      //       if (
+      //         (particle.directionX > 0 && (particle.x - particle.directionX / 2 - particle.size <= box.left)) ||
+      //         (particle.directionX < 0 && (particle.x - particle.directionX / 2 + particle.size >= box.right))
+      //       ) {
+      //         particle.directionX = -particle.directionX;
+      //         particleColor = 'yellow';
+      //       } else if (
+      //         (particle.directionY > 0 && (particle.y - particle.directionY / 2 - particle.size <= box.top)) ||
+      //         (particle.directionY < 0 && (particle.y - particle.directionY / 2 + particle.size >= box.bottom))
+      //       ) {
+      //         particleColor = 'blue';
+      //         particle.directionY = -particle.directionY;
+      //       }
+      //       // else {
+      //       //   particle.directionX = -particle.directionX;
+      //       //   particle.directionY = -particle.directionY;
+      //       // }
+      //     }
+      // }
 
-      Object.values(props.bounceElements).forEach(box => {
-        bounceFromBox(box);
-      })
+      Object.values(props.bounceElements).forEach((box) => {
+        // bounceFromBox(box);
+        [particle, defaultColor] = bounceFromBox(box, particle, defaultColor);
+      });
     }
 
     // regular movement
@@ -132,7 +129,7 @@ const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
       Math.PI * 2,
       false
     );
-    canvas.fillStyle = particleColor;
+    canvas.fillStyle = defaultColor;
     canvas.fill();
   }
 
@@ -141,3 +138,47 @@ const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
 };
 
 export default AnimatedParticle;
+
+
+
+
+const bounceFromBox = (
+  box: RectWithBoundingPoints,
+  particle: AnimatedParticleProps,
+  color: string
+) => {
+  if (
+    particle.x >= box.left - particle.directionX / 2 - particle.size && // left edge
+    particle.x <= box.right - particle.directionX / 2 + particle.size && // right edge
+    particle.y >= box.top - particle.directionY / 2 - particle.size && // top edge
+    particle.y <= box.bottom - particle.directionY / 2 + particle.size // bottom edge
+  ) {
+    // Bounce from box (bounce angle depends on side touched)
+    if (
+      (particle.directionX > 0 &&
+        particle.x - particle.directionX / 2 - particle.size <= box.left) ||
+      (particle.directionX < 0 &&
+        particle.x - particle.directionX / 2 + particle.size >= box.right)
+    ) {
+      particle.directionX = -particle.directionX;
+      // particle.color = 'yellow';
+      color = 'yellow';
+    } else if (
+      (particle.directionY > 0 &&
+        particle.y - particle.directionY / 2 - particle.size <= box.top) ||
+      (particle.directionY < 0 &&
+        particle.y - particle.directionY / 2 + particle.size >= box.bottom)
+    ) {
+      particle.directionY = -particle.directionY;
+      // particle.color = 'blue';
+      color = 'blue';
+    }
+    // else {
+    //   particle.directionX = -particle.directionX;
+    //   particle.directionY = -particle.directionY;
+    // }
+  }
+
+  // return {particle, color};
+  return [particle, color] as const;
+};
