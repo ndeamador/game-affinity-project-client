@@ -35,12 +35,11 @@ const SearchBar = ({
 
   // Refresh component size stored in context on windows resize (to align component with background animation)
   useEffect(() => {
-    console.log("setting searchbar ----------------------");
     bounceContext.storeBounceBox('searchBar', searchBarRef);
     bounceContext.storeBounceBox('testBox', test);
   }, [windowSize]);
 
-  // Delete
+  // DELETE
   const test = useRef<HTMLDivElement | null>(null);
 
   return (

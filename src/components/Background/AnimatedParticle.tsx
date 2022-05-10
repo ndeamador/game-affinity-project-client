@@ -27,10 +27,10 @@ const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
     // };
 
     // check if particle is still within canvas and reverse direction if at the limit
-    if (particle.x > props.windowSize.width || particle.x < 0) {
+    if (particle.x > props.windowSize.scrollWidth/* width */ || particle.x < 0) {
       particle.directionX = -particle.directionX;
     }
-    if (particle.y > props.windowSize.height || particle.y < 0) {
+    if (particle.y > props.windowSize.scrollHeight/* height */ || particle.y < 0) {
       particle.directionY = -particle.directionY;
     }
 

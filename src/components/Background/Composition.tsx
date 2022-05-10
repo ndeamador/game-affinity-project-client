@@ -29,6 +29,8 @@ const Composition = () => {
     }
   };
 
+  // console.log('upperheight: ', windowSize.height);
+
   return (
     <>
       <ConnectingLines

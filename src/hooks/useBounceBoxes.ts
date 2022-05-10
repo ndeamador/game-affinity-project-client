@@ -41,7 +41,7 @@ const useBounceBoxes = () => {
     // })
   }
 
-  console.log('state: ', bounceBoxes);
+  // console.log('state: ', bounceBoxes);
 
   return { bounceBoxes, storeBounceBox };
 }
