@@ -88,6 +88,8 @@ export interface LoginOrRegisterButtonProps extends LoginOrRegisterModalProps {
 export interface WindowSize {
   height: number;
   width: number;
+  scrollHeight: number;
+  scrollWidth: number;
 }
 
 export interface AnimatedParticleBaseProps {

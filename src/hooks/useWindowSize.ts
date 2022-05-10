@@ -3,7 +3,7 @@ import { WindowSize } from '../types';
 
 
 const useWindowSize = () => {
-  const [windowSize, setWindowSize] = useState<WindowSize>({ width: 0, height: 0 });
+  const [windowSize, setWindowSize] = useState<WindowSize>({ width: 0, height: 0, scrollWidth: 0, scrollHeight: 0 });
 
 
   useEffect(() => {
@@ -11,6 +11,8 @@ const useWindowSize = () => {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
+        scrollWidth: document.body.scrollWidth,
+        scrollHeight: document.body.scrollHeight,
       });
     }
     window.addEventListener("resize", handleResize);
