@@ -37,15 +37,6 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
     canvas.width = windowSize.scrollWidth;
     canvas.height = windowSize.scrollHeight;
 
-    console.log(
-      'window height: ',
-      window.innerHeight,
-      'scroll height: ',
-      document.body.scrollHeight,
-      'client height: ',
-      document.body.clientHeight
-    );
-
     const canvas2DContext = canvas.getContext('2d');
     setRenderingContext(canvas2DContext);
   }, [windowSize]);

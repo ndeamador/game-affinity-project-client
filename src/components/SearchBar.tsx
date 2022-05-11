@@ -91,13 +91,14 @@ const SearchBar = ({
       <div
         ref={test}
         style={{
-          // position: 'absolute',
-          // top: 0,
-          // left: 0,
+          position: 'absolute',
+          top: 500,
+          left: 300,
           color: 'black',
           width: 300,
           height: 400,
           backgroundColor: 'rgba(140, 85, 31, 0.1)',
+          marginBottom: 100,
         }}
       ></div>
 

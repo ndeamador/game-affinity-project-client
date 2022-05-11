@@ -98,7 +98,7 @@ export interface AnimatedParticleBaseProps {
   directionX: number;
   directionY: number;
   size: number;
-  color?: string;
+  color: string | 'black';
 }
 
 export interface AnimatedParticleProps extends AnimatedParticleBaseProps {

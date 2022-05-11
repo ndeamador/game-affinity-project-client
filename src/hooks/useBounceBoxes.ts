@@ -26,7 +26,7 @@ const useBounceBoxes = () => {
     // the state needs to be set with a callback. Otherwise, if called several times in a row, the closure will use the same inital state for all calls.
     // https://typeofnan.dev/why-you-cant-setstate-multiple-times-in-a-row/
 
-    setBounceBoxes( bounceBoxes => ({
+    setBounceBoxes(bounceBoxes => ({
       ...bounceBoxes,
       [propName]: {
         ...getBoundingPoints(ref)
@@ -62,28 +62,36 @@ export const getBoundingPoints = (ref: React.MutableRefObject<HTMLElement | null
   };
 
 
+  // Note y coordinates might be counterintuitive. y = 0 is on the top of the screen.
   const center = {
     x: rect.left + width / 2,
     y: rect.top + height / 2,
   };
 
+  const longestSide = Math.max(width, height);
+
   const boundingPoints = {
     center: center,
     top: {
       x: center.x,
-      y: center.y + height / 2
-    },
-    left: {
-      x: rect.left,
-      y: rect.top - height / 2
+      // y: center.y - height / 2
+      y: center.y - longestSide / 2
+
     },
     bottom: {
       x: center.x,
-      y: center.y - height / 2
+      // y: center.y + height / 2
+      y: center.y + longestSide / 2
+    },
+    left: {
+      // x: center.x - width / 2,
+      x: center.x - longestSide / 2,
+      y: center.y
     },
     right: {
-      x: rect.right,
-      y: rect.top - height / 2
+      // x: rect.right + width / 2,
+      x: center.x + longestSide / 2,
+      y: center.y
     }
   }
 
