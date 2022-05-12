@@ -19,6 +19,10 @@ html {
   --color-orange: orange;
   --color-gold: gold;
 
+  /* Theming */
+  --navbar-background: rgb(0, 0, 0, 0.1);
+
+  /* Other */
   --font-family: ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;
 
   --navbar-height: 80px;
@@ -103,16 +107,6 @@ body {
   font-family: var(--font-family);
 }
 
-
-.outer-navbar {
-  /* background-image: radial-gradient(circle at 25% 140vw, transparent 85%, #FFD84D), radial-gradient(circle at 75% -100vw, transparent 85%, #0068B3);
-  background-color: #FF4255; */
-}
-
-.inner-navbar {
-}
-
-
 #background {
   position: absolute;
   /* background: black; */
@@ -121,7 +115,6 @@ body {
   height: 100%;
   width: 100%;
   z-index: -1;
-
 }
 
 @keyframes move {
