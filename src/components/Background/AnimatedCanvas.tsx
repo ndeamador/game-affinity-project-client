@@ -17,6 +17,15 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
   const style = css({
     minWidth: `${windowSize.scrollWidth}px`,
     minHeight: `${windowSize.scrollHeight}px`,
+
+
+    // temp
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100%',
+    width: '100%',
+    zIndex: -1,
   });
   // const style = css({
   //   width: `${windowSize.width}px`,
@@ -64,7 +73,7 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
     <Canvas2dContext.Provider value={renderingContext}>
       <FrameContext.Provider value={frameCount}>
         <MousePositionContext.Provider value={mousePosition}>
-          <canvas id='background' ref={canvasRef} css={style}>
+          <canvas ref={canvasRef} css={style}>
           {/* <canvas id='background' ref={canvasRef}> */}
             {children}
           </canvas>
