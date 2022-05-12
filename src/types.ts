@@ -88,6 +88,8 @@ export interface LoginOrRegisterButtonProps extends LoginOrRegisterModalProps {
 export interface WindowSize {
   height: number;
   width: number;
+  scrollHeight: number;
+  scrollWidth: number;
 }
 
 export interface AnimatedParticleBaseProps {
@@ -96,13 +98,13 @@ export interface AnimatedParticleBaseProps {
   directionX: number;
   directionY: number;
   size: number;
-  color?: string;
+  color: string | 'black';
 }
 
 export interface AnimatedParticleProps extends AnimatedParticleBaseProps {
   mouseRadius?: number;
   windowSize: WindowSize;
-  bounceElement?: RectWithBoundingPoints | undefined;
+  bounceElements?: BounceBoxState;
   index: number;
   onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
 }
@@ -130,8 +132,8 @@ export interface DeconstructedDOMRect {
 }
 
 export interface RectWithBoundingPoints extends DeconstructedDOMRect {
-  width?: number,
-  height?: number,
+  width: number,
+  height: number,
   boundingPoints?: {
     center: Point
     top: Point,
@@ -141,7 +143,9 @@ export interface RectWithBoundingPoints extends DeconstructedDOMRect {
   }
 }
 
-export type BounceBoxKey = 'searchBar';
+export type BounceBoxKey = 'searchBar' | 'testBox';
+// export type BounceBoxKey = 'searchBar';
+
 
 // https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
 export type BounceBoxState = {
