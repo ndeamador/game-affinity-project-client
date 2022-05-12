@@ -40,8 +40,10 @@ const ConnectingLines = ({
 
   const linkWithDOMComponent = (box: RectWithBoundingPoints, particle: AnimatedParticleBaseProps) => {
     if (box.boundingPoints && box.width && box.height) {
-      const distanceToCenter = calculateDistance(particle, box.boundingPoints.center);
-      const boxField = 200;
+      // const distanceToCenter = calculateDistance(particle, box.boundingPoints.center);
+      const boxField = 220;
+      // const opacity = 1 - (distanceToCenter * 100) / boxField / boxField;
+
       // if (
       //   distanceToCenter <
       //   (Math.max(box.width, box.height) * 1.4142135) / 2 + boxField // A cheaper way estimating the maximum diagonal avoiding an expensive sqrt()
@@ -51,6 +53,7 @@ const ConnectingLines = ({
       //   connectWithLine(particle, box.boundingPoints.center, style);
       // }
 
+
       // limit the area to calculate particle distances to improve performance
       if (particle.x > box.left - boxField && particle.x < box.right + boxField && particle.y > box.top - boxField && particle.y < box.bottom + boxField) {
 
@@ -59,34 +62,18 @@ const ConnectingLines = ({
         const getPointFromCoordinate = (xOrY: 'x' | 'y', providedCoord: number, referencePoint: Point, slope: number) => {
           // y = slope * x + b
           const b = referencePoint.y - slope * referencePoint.x;
-          // let pointInLine: [number, number] = [0, 0];
           let pointInLine = { x: 0, y: 0 };
-          // let missingCoordinate = 0;
-
           if (xOrY == 'x') {
             pointInLine = { x: providedCoord, y: slope * providedCoord + b };
-            // pointInLine = [providedCoord, slope * providedCoord + b];
-            // missingCoordinate = slope * providedCoord + b;
           }
           else if (xOrY == 'y') {
             pointInLine = { x: (providedCoord - b) / slope, y: providedCoord };
-            // pointInLine = [(providedCoord - b) / slope, providedCoord];
-            // missingCoordinate = (providedCoord - b) / slope;
           }
           return pointInLine;
         }
 
         const getSlope = (pointA: Point, pointB: Point): number => {
           return (pointB.y - pointA.y) / (pointB.x - pointA.x);
-        }
-
-        const drawAuxiliaryLine = (pointA: Point, pointB: Point, style: string) => {
-          canvas.strokeStyle = style
-          canvas.lineWidth = 1;
-          canvas.beginPath();
-          canvas.moveTo(pointA.x, pointA.y);
-          canvas.lineTo(pointB.x, pointB.y);
-          canvas.stroke();
         }
 
         // const getIntersection = (point1, slope1, point2, slope2) => {
@@ -108,62 +95,73 @@ const ConnectingLines = ({
         // Lines between bounding points and opposite box corners
         const slopeVertical = getSlope(box.boundingPoints.bottom, { x: box.right, y: box.top });
         const slopeHorizontal = getSlope(box.boundingPoints.left, { x: box.right, y: box.top });
-        const slopeChopperDiagonal = getSlope({ x: box.left, y: box.top }, { x: box.right, y: box.bottom });
 
-        drawAuxiliaryLine(box.boundingPoints.bottom, { x: box.right, y: box.top }, getColorString(0, 255, 255, 0.5));
-        drawAuxiliaryLine(box.boundingPoints.bottom, { x: box.left, y: box.top }, getColorString(0, 255, 255, 0.5));
-        drawAuxiliaryLine(box.boundingPoints.top, { x: box.right, y: box.bottom }, getColorString(255, 0, 0, 0.5));
-        drawAuxiliaryLine(box.boundingPoints.top, { x: box.left, y: box.bottom }, getColorString(255, 0, 0, 0.5));
-        drawAuxiliaryLine(box.boundingPoints.right, { x: box.left, y: box.top }, getColorString(0, 255, 0, 0.5));
-        drawAuxiliaryLine(box.boundingPoints.right, { x: box.left, y: box.bottom }, getColorString(0, 255, 0, 0.5));
-        drawAuxiliaryLine(box.boundingPoints.left, { x: box.right, y: box.top }, getColorString(255, 0, 255, 0.5));
-        drawAuxiliaryLine(box.boundingPoints.left, { x: box.right, y: box.bottom }, getColorString(255, 0, 255, 0.5));
+        // Auxiliary lines just for development
+        // const drawAuxiliaryLine = (pointA: Point, pointB: Point, style: string) => {
+        //   canvas.strokeStyle = style
+        //   canvas.lineWidth = 1;
+        //   canvas.beginPath();
+        //   canvas.moveTo(pointA.x, pointA.y);
+        //   canvas.lineTo(pointB.x, pointB.y);
+        //   canvas.stroke();
+        // }
+        // drawAuxiliaryLine(box.boundingPoints.bottom, { x: box.right, y: box.top }, getColorString(0, 255, 255, 0.5));
+        // drawAuxiliaryLine(box.boundingPoints.bottom, { x: box.left, y: box.top }, getColorString(0, 255, 255, 0.5));
+        // drawAuxiliaryLine(box.boundingPoints.top, { x: box.right, y: box.bottom }, getColorString(255, 0, 0, 0.5));
+        // drawAuxiliaryLine(box.boundingPoints.top, { x: box.left, y: box.bottom }, getColorString(255, 0, 0, 0.5));
+        // drawAuxiliaryLine(box.boundingPoints.right, { x: box.left, y: box.top }, getColorString(0, 255, 0, 0.5));
+        // drawAuxiliaryLine(box.boundingPoints.right, { x: box.left, y: box.bottom }, getColorString(0, 255, 0, 0.5));
+        // drawAuxiliaryLine(box.boundingPoints.left, { x: box.right, y: box.top }, getColorString(255, 0, 255, 0.5));
+        // drawAuxiliaryLine(box.boundingPoints.left, { x: box.right, y: box.bottom }, getColorString(255, 0, 255, 0.5));
 
 
-        const opacity = 1 - (distanceToCenter * 100) / boxField / boxField;
 
-
-
+        // the checks to particle position relative to box borders is added to reduce unnecessary calculations
         // if the particle is above the two diagonals
-        if (particle.y < getPointFromCoordinate('x', particle.x, box.boundingPoints.bottom, slopeVertical).y
+        if (particle.y < box.top &&
+          particle.y < getPointFromCoordinate('x', particle.x, box.boundingPoints.bottom, slopeVertical).y
           && particle.y < getPointFromCoordinate('x', particle.x, box.boundingPoints.bottom, -slopeVertical).y
-          && particle.y < box.top) {
-          const style = getColorString(0, 255, 255, 0.04);
+        ) {
+          const opacity = 1 - (calculateDistance(particle, box.boundingPoints.bottom) * 100) / boxField / boxField;
+          const style = getColorString(0, 255, 255, opacity);
           // particle.color = getColorString(0, 255, 255, 0.5)
           // connectWithLine(particle, box.boundingPoints.bottom, style);
           connectWithLine(particle, getPointFromCoordinate('y', box.top, particle, getSlope(particle, box.boundingPoints.bottom)), style);
-
         }
         // if the particle is below the two diagonals
-        else if (particle.y > getPointFromCoordinate('x', particle.x, box.boundingPoints.top, -slopeVertical).y
+        else if (particle.y > box.bottom &&
+          particle.y > getPointFromCoordinate('x', particle.x, box.boundingPoints.top, -slopeVertical).y
           && particle.y > getPointFromCoordinate('x', particle.x, box.boundingPoints.top, +slopeVertical).y
-          && particle.y > box.bottom) {
-          const style = getColorString(255, 0, 0, 0.04);
+        ) {
+          const opacity = 1 - (calculateDistance(particle, box.boundingPoints.top) * 100) / boxField / boxField;
+          const style = getColorString(255, 0, 0, opacity);
           // connectWithLine(particle, box.boundingPoints.top, style);
           connectWithLine(particle, getPointFromCoordinate('y', box.bottom, particle, getSlope(particle, box.boundingPoints.top)), style);
-
         }
         // if the particle is to the left of the two diagonals
-        else if (particle.x < getPointFromCoordinate('y', particle.y, box.boundingPoints.right, -slopeHorizontal).x
+        else if (particle.x < box.left &&
+          particle.x < getPointFromCoordinate('y', particle.y, box.boundingPoints.right, -slopeHorizontal).x
           && particle.x < getPointFromCoordinate('y', particle.y, box.boundingPoints.right, slopeHorizontal).x
-          && particle.x < box.left) {
-          const style = getColorString(0, 255, 0, 0.04);
+        ) {
+          const opacity = 1 - (calculateDistance(particle, box.boundingPoints.right) * 100) / boxField / boxField;
+          const style = getColorString(0, 255, 0, opacity);
           // connectWithLine(particle, box.boundingPoints.right, style);
           connectWithLine(particle, getPointFromCoordinate('x', box.left, particle, getSlope(particle, box.boundingPoints.right)), style);
-
         }
         // if the particle is to the right of the two diagonals
-        else if (particle.x > getPointFromCoordinate('y', particle.y, box.boundingPoints.left, -slopeHorizontal).x
+        else if (particle.x > box.right &&
+          particle.x > getPointFromCoordinate('y', particle.y, box.boundingPoints.left, -slopeHorizontal).x
           && particle.x > getPointFromCoordinate('y', particle.y, box.boundingPoints.left, slopeHorizontal).x
-          && particle.x > box.right) {
-          const style = getColorString(255, 0, 255, 0.04);
+        ) {
+          const opacity = 1 - (calculateDistance(particle, box.boundingPoints.left) * 100) / boxField / boxField;
+          const style = getColorString(255, 0, 255, opacity);
           // connectWithLine(particle, box.boundingPoints.left, style);
           connectWithLine(particle, getPointFromCoordinate('x', box.right, particle, getSlope(particle, box.boundingPoints.left)), style);
         }
-        else {
-          const style = getColorString(0, 0, 0, 1);
-          connectWithLine(particle, box.boundingPoints.center, style);
-        }
+        // else {
+        //   const style = getColorString(0, 0, 0, 1);
+        //   connectWithLine(particle, box.boundingPoints.center, style);
+        // }
 
         // if the particle is both above the two diagonals and about the top of the box
         // if (particle.y < yInLine1 && particle.y < yInLine2 && particle.y < box.top) {
@@ -210,12 +208,10 @@ const ConnectingLines = ({
   for (let a = 0; a < particlesArray.length; a++) {
     if (stickyElements) {
       Object.values(stickyElements).forEach(element => linkWithDOMComponent(element, particlesArray[a]))
-      //  linkWithDOMComponent(stickyElements.testBox, particlesArray[a])
-
     }
 
     for (let b = 0; b < particlesArray.length; b++) {
-      // linkWithEachOther(particlesArray[a], particlesArray[b])
+      linkWithEachOther(particlesArray[a], particlesArray[b])
     }
   }
   return null;
