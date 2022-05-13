@@ -1,14 +1,9 @@
 import { FC, useContext } from 'react';
 import { AnimatedParticleProps, RectWithBoundingPoints } from '../../types';
-import {
-  Canvas2dContext,
-  FrameContext,
-  MousePositionContext,
-} from './AnimatedCanvas';
+import { Canvas2dContext, FrameContext } from './AnimatedCanvas';
 
 const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
   const canvas = useContext(Canvas2dContext);
-  const mouse = useContext(MousePositionContext);
   useContext(FrameContext); // only present to force that the particle re-renders after each frame clears the canvas.
 
   let defaultColor = '#8C5523';
@@ -27,10 +22,16 @@ const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
     // };
 
     // check if particle is still within canvas and reverse direction if at the limit
-    if (particle.x > props.windowSize.scrollWidth/* width */ || particle.x < 0) {
+    if (
+      particle.x > props.windowSize.scrollWidth /* width */ ||
+      particle.x < 0
+    ) {
       particle.directionX = -particle.directionX;
     }
-    if (particle.y > props.windowSize.scrollHeight/* height */ || particle.y < 0) {
+    if (
+      particle.y > props.windowSize.scrollHeight /* height */ ||
+      particle.y < 0
+    ) {
       particle.directionY = -particle.directionY;
     }
 
@@ -138,9 +139,6 @@ const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
 };
 
 export default AnimatedParticle;
-
-
-
 
 const bounceFromBox = (
   box: RectWithBoundingPoints,

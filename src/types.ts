@@ -107,6 +107,7 @@ export interface AnimatedParticleProps extends AnimatedParticleBaseProps {
   bounceElements?: BounceBoxState;
   index: number;
   onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
+  mouse: MousePositionProps;
 }
 
 export interface MousePositionProps {

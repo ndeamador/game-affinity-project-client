@@ -4,6 +4,7 @@ import AnimatedCanvas from './AnimatedCanvas';
 import Composition from './Composition';
 import { css } from '@emotion/react';
 import useWindowSize from '../../hooks/useWindowSize';
+import useMousePosition from '../../hooks/useMousePosition';
 
 const Background = () => {
   const windowSize = useWindowSize();
@@ -20,17 +21,19 @@ const Background = () => {
   });
   console.log('in background');
 
+  const mousePosition = useMousePosition();
+
   return (
-    <div css={style}>
-      <AnimatedCanvas
-        dimensions={{
-          width: windowSize.scrollWidth,
-          height: windowSize.scrollHeight,
-        }}
-      >
-        <Composition windowSize={windowSize} />
-      </AnimatedCanvas>
-    </div>
+      <div css={style}>
+        <AnimatedCanvas
+          dimensions={{
+            width: windowSize.scrollWidth,
+            height: windowSize.scrollHeight,
+          }}
+        >
+          <Composition windowSize={windowSize} mousePosition={mousePosition} />
+        </AnimatedCanvas>
+      </div>
   );
 };
 

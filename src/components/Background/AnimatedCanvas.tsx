@@ -1,9 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { css } from '@emotion/react';
 import { createContext, useEffect, useRef, useState } from 'react';
-import useMousePosition from '../../hooks/useMousePosition';
-import { MousePositionProps } from '../../types';
 
 const AnimatedCanvas = ({
   children,
@@ -53,21 +50,15 @@ const AnimatedCanvas = ({
 
   // clear canvas with each render to erase previous frame
   if (renderingContext !== null) {
-    // renderingContext.clearRect(0, 0, dimensions.width, dimensions.height);
     renderingContext.clearRect(0, 0, dimensions.width, dimensions.height);
   }
-
-  const mousePosition = useMousePosition();
 
   return (
     <Canvas2dContext.Provider value={renderingContext}>
       <FrameContext.Provider value={frameCount}>
-        <MousePositionContext.Provider value={mousePosition}>
-          <canvas ref={canvasRef} style={style}>
-            {/* <canvas id='background' ref={canvasRef}> */}
-            {children}
-          </canvas>
-        </MousePositionContext.Provider>
+        <canvas ref={canvasRef} css={style}>
+          {children}
+        </canvas>
       </FrameContext.Provider>
     </Canvas2dContext.Provider>
   );
@@ -76,10 +67,6 @@ const AnimatedCanvas = ({
 export default AnimatedCanvas;
 
 export const FrameContext = createContext<number>(0);
-export const MousePositionContext = createContext<MousePositionProps>({
-  x: null,
-  y: null,
-});
 export const Canvas2dContext = createContext<CanvasRenderingContext2D | null>(
   null
 );

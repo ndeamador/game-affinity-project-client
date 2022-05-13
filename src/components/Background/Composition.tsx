@@ -1,13 +1,23 @@
 import { nanoid } from 'nanoid';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { BounceBoxesContext } from '../../App';
-import { AnimatedParticleBaseProps, WindowSize } from '../../types';
+import {
+  AnimatedParticleBaseProps,
+  MousePositionProps,
+  WindowSize,
+} from '../../types';
 import getRandomParticles from '../../utils/getRandomParticles';
 import { FrameContext } from './AnimatedCanvas';
 import AnimatedParticle from './AnimatedParticle';
 import ConnectingLines from './ConnectingLines';
 
-const Composition = ({windowSize}: {windowSize: WindowSize}) => {
+const Composition = ({
+  windowSize,
+  mousePosition,
+}: {
+  windowSize: WindowSize;
+  mousePosition: MousePositionProps;
+}) => {
   const [mouseRadius, setMouseRadius] = useState(0);
   const bounceContext = useContext(BounceBoxesContext);
   const particlesArrayRef = useRef<AnimatedParticleBaseProps[]>();
@@ -42,6 +52,7 @@ const Composition = ({windowSize}: {windowSize: WindowSize}) => {
             bounceElements={bounceContext.bounceBoxes}
             index={i}
             onNewFrame={updateParticle}
+            mouse={mousePosition}
             {...particle}
           />
         ))}
