@@ -13,7 +13,7 @@ const style = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'stretch',
-  marginTop: '15vh',
+  // marginTop: '15vh',
   maxWidth: 'var(--searchbar-max-width)',
 });
 

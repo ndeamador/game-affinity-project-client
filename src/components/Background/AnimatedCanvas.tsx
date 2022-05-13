@@ -3,36 +3,29 @@
 import { css } from '@emotion/react';
 import { createContext, useEffect, useRef, useState } from 'react';
 import useMousePosition from '../../hooks/useMousePosition';
-import useWindowSize from '../../hooks/useWindowSize';
 import { MousePositionProps } from '../../types';
 
-const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
+const AnimatedCanvas = ({
+  children,
+  dimensions,
+}: {
+  children?: React.ReactNode;
+  dimensions: { width: number; height: number };
+}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [renderingContext, setRenderingContext] =
     useState<CanvasRenderingContext2D | null>(null);
   const [frameCount, setFrameCount] = useState(0);
-  const windowSize = useWindowSize();
 
   // manually forced canvas size to adapt to scrollsize and not windowsize to prevent canvas to be cut when the scrollbar appears.
-  const style = css({
-    minWidth: `${windowSize.scrollWidth}px`,
-    minHeight: `${windowSize.scrollHeight}px`,
-
-
-    // temp
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: '100%',
-    width: '100%',
-    zIndex: -1,
-  });
-  // const style = css({
-  //   width: `${windowSize.width}px`,
-  //   height: `${windowSize.height}px`,
-  // });
-
-  // console.log("canvasrefcurrent", canvasRef.current);
+  const style = {
+    // height: '100%',
+    // width: '100%',
+    width: dimensions.width,
+    height: dimensions.height,
+    // minWidth: dimensions.width,
+    // minHeight: dimensions.height,
+  };
 
   // Initialize Canvas
   useEffect(() => {
@@ -41,14 +34,11 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
 
     // Set canvas "resolution"
     // https://stackoverflow.com/questions/4938346/canvas-width-and-height-in-html5
-    // canvas.width = windowSize.width;
-    // canvas.height = windowSize.height;
-    canvas.width = windowSize.scrollWidth;
-    canvas.height = windowSize.scrollHeight;
-
+    canvas.width = dimensions.width;
+    canvas.height = dimensions.height;
     const canvas2DContext = canvas.getContext('2d');
     setRenderingContext(canvas2DContext);
-  }, [windowSize]);
+  }, [dimensions]);
 
   // make component and context re-render at every frame
   useEffect(() => {
@@ -63,8 +53,8 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
 
   // clear canvas with each render to erase previous frame
   if (renderingContext !== null) {
-    // renderingContext.clearRect(0, 0, windowSize.width, windowSize.height);
-    renderingContext.clearRect(0, 0, windowSize.scrollWidth, windowSize.scrollHeight);
+    // renderingContext.clearRect(0, 0, dimensions.width, dimensions.height);
+    renderingContext.clearRect(0, 0, dimensions.width, dimensions.height);
   }
 
   const mousePosition = useMousePosition();
@@ -73,8 +63,8 @@ const AnimatedCanvas = ({ children }: { children?: React.ReactNode }) => {
     <Canvas2dContext.Provider value={renderingContext}>
       <FrameContext.Provider value={frameCount}>
         <MousePositionContext.Provider value={mousePosition}>
-          <canvas ref={canvasRef} css={style}>
-          {/* <canvas id='background' ref={canvasRef}> */}
+          <canvas ref={canvasRef} style={style}>
+            {/* <canvas id='background' ref={canvasRef}> */}
             {children}
           </canvas>
         </MousePositionContext.Provider>
