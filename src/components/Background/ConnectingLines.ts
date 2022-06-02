@@ -10,6 +10,9 @@ const ConnectingLines = ({
 
   if (!canvas || !particlesArray) return null;
 
+  const greyShadow = 255;
+
+
   // const connectWithLine = (pointA: Point, pointB: Point, opacity: number, color: string) => {
   //   canvas.strokeStyle = 'rgba(140, 85, 31, ' + opacity + ')';
   //   canvas.lineWidth = 1;
@@ -21,7 +24,7 @@ const ConnectingLines = ({
 
   const connectWithLine = (pointA: Point, pointB: Point, style: string) => {
     canvas.strokeStyle = style;
-    canvas.lineWidth = 1;
+    canvas.lineWidth = 4;
     canvas.beginPath();
     canvas.moveTo(pointA.x, pointA.y);
     canvas.lineTo(pointB.x, pointB.y);
@@ -41,7 +44,7 @@ const ConnectingLines = ({
   const linkWithDOMComponent = (box: RectWithBoundingPoints, particle: AnimatedParticleBaseProps) => {
     if (box.boundingPoints && box.width && box.height) {
       // const distanceToCenter = calculateDistance(particle, box.boundingPoints.center);
-      const boxField = 220;
+      const boxField = 250;
       // const opacity = 1 - (distanceToCenter * 100) / boxField / boxField;
 
       // if (
@@ -114,7 +117,7 @@ const ConnectingLines = ({
         // drawAuxiliaryLine(box.boundingPoints.left, { x: box.right, y: box.top }, getColorString(255, 0, 255, 0.5));
         // drawAuxiliaryLine(box.boundingPoints.left, { x: box.right, y: box.bottom }, getColorString(255, 0, 255, 0.5));
 
-
+        // console.log(getColorString(greyShadow, greyShadow, greyShadow, 1));
 
         // the checks to particle position relative to box borders is added to reduce unnecessary calculations
         // if the particle is above the two diagonals
@@ -123,7 +126,7 @@ const ConnectingLines = ({
           && particle.y < getPointFromCoordinate('x', particle.x, box.boundingPoints.bottom, -slopeVertical).y
         ) {
           const opacity = 1 - (calculateDistance(particle, box.boundingPoints.bottom) * 100) / boxField / boxField;
-          const style = getColorString(0, 255, 255, opacity);
+          const style = getColorString(greyShadow, greyShadow, greyShadow, opacity);
           // particle.color = getColorString(0, 255, 255, 0.5)
           // connectWithLine(particle, box.boundingPoints.bottom, style);
           connectWithLine(particle, getPointFromCoordinate('y', box.top, particle, getSlope(particle, box.boundingPoints.bottom)), style);
@@ -134,7 +137,7 @@ const ConnectingLines = ({
           && particle.y > getPointFromCoordinate('x', particle.x, box.boundingPoints.top, +slopeVertical).y
         ) {
           const opacity = 1 - (calculateDistance(particle, box.boundingPoints.top) * 100) / boxField / boxField;
-          const style = getColorString(255, 0, 0, opacity);
+          const style = getColorString(greyShadow, greyShadow, greyShadow, opacity);
           // connectWithLine(particle, box.boundingPoints.top, style);
           connectWithLine(particle, getPointFromCoordinate('y', box.bottom, particle, getSlope(particle, box.boundingPoints.top)), style);
         }
@@ -144,7 +147,7 @@ const ConnectingLines = ({
           && particle.x < getPointFromCoordinate('y', particle.y, box.boundingPoints.right, slopeHorizontal).x
         ) {
           const opacity = 1 - (calculateDistance(particle, box.boundingPoints.right) * 100) / boxField / boxField;
-          const style = getColorString(0, 255, 0, opacity);
+          const style = getColorString(greyShadow, greyShadow, greyShadow, opacity);
           // connectWithLine(particle, box.boundingPoints.right, style);
           connectWithLine(particle, getPointFromCoordinate('x', box.left, particle, getSlope(particle, box.boundingPoints.right)), style);
         }
@@ -154,7 +157,7 @@ const ConnectingLines = ({
           && particle.x > getPointFromCoordinate('y', particle.y, box.boundingPoints.left, slopeHorizontal).x
         ) {
           const opacity = 1 - (calculateDistance(particle, box.boundingPoints.left) * 100) / boxField / boxField;
-          const style = getColorString(255, 0, 255, opacity);
+          const style = getColorString(greyShadow, greyShadow, greyShadow, opacity);
           // connectWithLine(particle, box.boundingPoints.left, style);
           connectWithLine(particle, getPointFromCoordinate('x', box.right, particle, getSlope(particle, box.boundingPoints.left)), style);
         }
@@ -200,7 +203,7 @@ const ConnectingLines = ({
 
     if (distance < maxDistance) {
       const opacity = 1 - distance / maxDistance;
-      const style = getColorString(140, 85, 31, opacity);
+      const style = getColorString(greyShadow, greyShadow, greyShadow, opacity);
       connectWithLine(pointA, pointB, style)
     }
   }

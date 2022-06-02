@@ -4,11 +4,11 @@ const getRandomParticles = (
   windowSize: WindowSize
 ): AnimatedParticleBaseProps[] => {
   const particlesArray: AnimatedParticleBaseProps[] = [];
-  const particleMultiplier = 10;
+  const particleMultiplier = 7;
   const numberOfParticles = particleMultiplier * (windowSize.height * windowSize.width) / 100000
   // const numberOfParticles = 50;
-  const speedMultiplier = 5; //3 0.3
-  const sizeMultiplier = 1; // used as radius for canvas.arc(). Unit not pixels.
+  const speedMultiplier = 1; //3 0.3
+  const sizeMultiplier = 0.3; // used as radius for canvas.arc(). Unit not pixels.
   const sizeVariation = 3 // 5
 
 

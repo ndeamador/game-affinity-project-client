@@ -6,8 +6,8 @@ const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
   const canvas = useContext(Canvas2dContext);
   useContext(FrameContext); // only present to force that the particle re-renders after each frame clears the canvas.
 
-  let defaultColor = '#8C5523';
-  defaultColor = '#8C5523';
+  let defaultColor = '#ffffff'; /* '#8C5523' */
+  // defaultColor = '#8C5523';
 
   const getNextFrameParticle = (
     initialParticle: AnimatedParticleProps
