@@ -19,7 +19,8 @@ const animations = {
 };
 
 const styles = {
-  overlay: {
+  container: {
+    // position: 'absolute',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -28,8 +29,17 @@ const styles = {
     // filter: 'blur(10px)',
     // backdropFilter: 'blur(10px)',
 
+    // overflow: 'clip',
     overflow: 'hidden',
     zIndex: -2,
+  },
+  overlay: {
+    width: '100vw',
+    height: '100vh',
+    // filter: 'blur(10px)',
+    backgroundColor: 'white',
+    zIndex: 1,
+    opacity: 0.5,
   },
   sharedBlobStyle: {
     // filter: 'blur(30px)',
@@ -49,8 +59,8 @@ const styles = {
     height: '40vh',
     minWidth: '1000px',
     margin: 'auto',
-    backgroundImage: 'linear-gradient(120deg, var(--blob-center-1) 0%, var(--blob-center-2) 100%)',
-
+    backgroundImage:
+      'linear-gradient(120deg, var(--blob-center-1) 0%, var(--blob-center-2) 100%)',
     animation: `${animations.blob} 25s linear infinite`,
     marginTop: 'var(--searchbar-margin-top)',
   },
@@ -61,7 +71,8 @@ const styles = {
     // top: '-400px',
     width: '110vw',
     height: '110vw',
-    backgroundImage: 'linear-gradient(120deg, var(--blob-big-1) 0%, var(--blob-big-2) 100%)',
+    backgroundImage:
+      'linear-gradient(120deg, var(--blob-big-1) 0%, var(--blob-big-2) 100%)',
     opacity: 0.8,
     animation: `${animations.blob} 30s linear infinite, ${animations.rotate} 50s linear infinite`,
     filter: 'blur(50px)',
@@ -72,7 +83,8 @@ const styles = {
     margin: 'min(-50vw, -50vh)', // here to allow the rotating background image to be larger than the viewport
     // width: '10000px',
     // height: '30vh',
-    backgroundImage: 'linear-gradient(120deg, var(--blob-background-1) 0%, var(--blob-background-2) 100%)',
+    backgroundImage:
+      'linear-gradient(120deg, var(--blob-background-1) 0%, var(--blob-background-2) 100%)',
     // border: '10px solid black',
     overflow: 'overlay',
     animation: `${animations.rotate} 10s linear infinite`,
@@ -83,9 +95,9 @@ const styles = {
 
 const CssBlobs = () => {
   return (
-    <div style={styles.overlay}>
-      <div css={{ position: 'absolute', ...styles.backgroundBlob}} />
-
+    <div css={{ position: 'absolute', top: 0, left: 0, ...styles.container }}>
+      <div css={{ position: 'absolute', top: 0, left: 0, ...styles.overlay}} />
+      <div css={{ position: 'absolute', ...styles.backgroundBlob }} />
       <div css={{ ...styles.centerBlob, ...styles.sharedBlobStyle }} />
       <div
         css={{
