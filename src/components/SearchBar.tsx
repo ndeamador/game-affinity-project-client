@@ -20,6 +20,7 @@ const inputStyle = css({
   width: '100%',
   maxWidth: '800px',
   minwidth: '600px',
+  // marginTop: 'var(--searchbar-margin-top)',
 });
 
 const SearchBar = ({
@@ -36,59 +37,15 @@ const SearchBar = ({
   // Refresh component size stored in context on windows resize (to align component with background animation)
   useEffect(() => {
     bounceContext.storeBounceBox('searchBar', searchBarRef);
-    bounceContext.storeBounceBox('testBox', test);
+    // bounceContext.storeBounceBox('testBox', test);
   }, [windowSize]);
 
   // DELETE
-  const test = useRef<HTMLDivElement | null>(null);
+  // const test = useRef<HTMLDivElement | null>(null);
 
   return (
-    // <form
-    //   ref={searchBarRef}
-    //   style={{
-    //     // position: 'absolute',
-    //     // top: 0,
-    //     // left: 0,
-    //     color: 'black',
-    //     width: 900,
-    //     height: 400,
-    //     backgroundColor: 'rgba(140, 85, 31, 0.1)',
-    //   }}
-    // >
-    // </form>
-
-    // <form
-    //   onSubmit={(event) => event.preventDefault()}
-    //   css={formStyle}
-    //   ref={searchBarRef}
-    // >
-    //   <Input
-    //     id='search'
-    //     name='search'
-    //     placeholder='Find a video game...'
-    //     type='text'
-    //     onChange={handleChange}
-    //     css={inputStyle}
-    //   />
-    //   <Tooltip label='Search Games'>
-    //     <label htmlFor='search'>
-    //       <button
-    //         type='submit'
-    //         css={{
-    //           border: '0',
-    //           position: 'relative',
-    //           marginLeft: '-35px',
-    //           background: 'transparent',
-    //         }}
-    //       >
-    //         {loading ? <Spinner /> : <FaSearch aria-label='search' />}
-    //       </button>
-    //     </label>
-    //   </Tooltip>
-    // </form>
-
     <>
-      <div
+      {/* <div
         ref={test}
         style={{
           // position: 'absolute',
@@ -101,7 +58,7 @@ const SearchBar = ({
           // margin: 100,
           // paddingBottom: 50,
         }}
-      ></div>
+      ></div> */}
 
       <form
         onSubmit={(event) => event.preventDefault()}
