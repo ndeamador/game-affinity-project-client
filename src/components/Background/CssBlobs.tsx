@@ -63,8 +63,6 @@ const styles = {
       'linear-gradient(120deg, var(--blob-center-1) 0%, var(--blob-center-2) 100%)',
     animation: `${animations.blob} 25s linear infinite`,
     marginTop: 'var(--searchbar-margin-top)',
-
-
   },
 
   bigBlob: {
@@ -95,10 +93,36 @@ const styles = {
   },
 };
 
-const CssBlobs = () => {
+const CssBlobs = ({
+  dimensions,
+}: {
+  dimensions: { width: number; height: number };
+}) => {
+  // manually forced canvas size to adapt to scrollsize and not windowsize to prevent canvas to be cut when the scrollbar appears.
+  const adaptableSize = {
+    width: dimensions.width,
+    height: dimensions.height,
+  };
+
   return (
-    <div css={{ position: 'absolute', top: 0, left: 0, ...styles.container }}>
-      <div css={{ position: 'absolute', top: 0, left: 0, ...styles.overlay}} />
+    <div
+      css={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        ...styles.container,
+        ...adaptableSize,
+      }}
+    >
+      <div
+        css={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          ...styles.overlay,
+          ...adaptableSize,
+        }}
+      />
       <div css={{ position: 'absolute', ...styles.backgroundBlob }} />
       <div css={{ ...styles.centerBlob, ...styles.sharedBlobStyle }} />
       <div

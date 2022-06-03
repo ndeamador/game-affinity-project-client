@@ -21,10 +21,10 @@ html {
 
   /* Theming */
   --navbar-background: rgb(0, 0, 0, 0.1);
-  --background: #ffffff;
+  --background: #000000;
   --rays: #b6b6b6;
   --rays-contact: #e2e2e2;
-  --searchbar-margin-top: 20vh;
+  --searchbar-margin-top: 10vh;
   --blob-background-1: #ffd23e;
   --blob-background-2: #ff3e98;
   --blob-big-1: #443eff;
@@ -73,6 +73,7 @@ body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  background-color: var(--background);
 }
 
 img,

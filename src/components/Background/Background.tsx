@@ -39,7 +39,12 @@ const Background = () => {
 
   return (
     <div css={style}>
-      <CssBlobs />
+      <CssBlobs
+        dimensions={{
+          width: windowSize.scrollWidth,
+          height: windowSize.scrollHeight,
+        }}
+      />
       <AnimatedCanvas
         dimensions={{
           width: windowSize.scrollWidth,
