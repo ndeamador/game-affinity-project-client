@@ -11,16 +11,16 @@ import { Input, Spinner } from './styledComponentsLibrary';
 const formStyle = css({
   display: 'flex',
   flexDirection: 'row',
-  alignItems: 'center',
   justifyContent: 'center',
+  alignItems: 'center',
   width: '100%',
+  marginTop: 'var(--searchbar-margin-top)',
 });
 
 const inputStyle = css({
   width: '100%',
   maxWidth: '800px',
   minwidth: '600px',
-  // marginTop: 'var(--searchbar-margin-top)',
 });
 
 const SearchBar = ({
@@ -79,7 +79,7 @@ const SearchBar = ({
               type='submit'
               css={{
                 border: '0',
-                position: 'relative',
+                // position: 'relative',
                 marginLeft: '-35px',
                 background: 'transparent',
               }}

@@ -28,7 +28,6 @@ const styles = {
     height: '100%',
     // filter: 'blur(10px)',
     // backdropFilter: 'blur(10px)',
-
     // overflow: 'clip',
     overflow: 'hidden',
     zIndex: -2,
@@ -56,13 +55,16 @@ const styles = {
 
   centerBlob: {
     width: '60vw',
-    height: '40vh',
+    height: '35vh',
     minWidth: '1000px',
+    minHeight: '250px',
     margin: 'auto',
     backgroundImage:
       'linear-gradient(120deg, var(--blob-center-1) 0%, var(--blob-center-2) 100%)',
     animation: `${animations.blob} 25s linear infinite`,
     marginTop: 'var(--searchbar-margin-top)',
+
+
   },
 
   bigBlob: {

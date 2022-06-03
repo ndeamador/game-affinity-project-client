@@ -25,18 +25,18 @@ html {
   --rays: #b6b6b6;
   --rays-contact: #e2e2e2;
   --searchbar-margin-top: 20vh;
-  /* --blob-background-1: #ffd23e;
-  --blob-background-2: #ff3e98;
-  --blob-big-1: #443eff;
-  --blob-big-2: #3eff4e;
-  --blob-center-1: #3eefff;
-  --blob-center-2: #b300ff; */
   --blob-background-1: #ffd23e;
   --blob-background-2: #ff3e98;
   --blob-big-1: #443eff;
   --blob-big-2: #3eff4e;
+  --blob-center-1: #3eefff;
+  --blob-center-2: #b300ff;
+  /* --blob-background-1: #ffd23e;
+  --blob-background-2: #ff3e98;
+  --blob-big-1: #443eff;
+  --blob-big-2: #3eff4e;
   --blob-center-1: #ff713e;
-  --blob-center-2: #3eefff;
+  --blob-center-2: #3eefff; */
 
 
 
