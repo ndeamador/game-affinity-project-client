@@ -43,7 +43,8 @@ const contentStyle = css({
   alignItems: 'center',
   width: '80vw',
   maxWidth: '1200px',
-  paddingTop: 'calc(50px + var(--navbar-height))',
+  paddingTop: 'calc(5vh + var(--navbar-height))',
+  // paddingTop: 'var(--navbar-height)',
   '& > *': {
     width: '100%',
   },

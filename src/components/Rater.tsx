@@ -186,7 +186,8 @@ const Rater = ({
               width: '1px',
             },
             {
-              // & is Emotions nesting operator, :checked and + are vanilla css: https://www.w3schools.com/cssref/css_selectors.asp
+              // & css nesting operator.
+              // + css adyacent sibling selector.
               // [] are needed here to use template literals.
               [`.${elementClassName} &:checked + label`]: {
                 color: iconColors[i],

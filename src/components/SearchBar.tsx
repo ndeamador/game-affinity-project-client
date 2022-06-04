@@ -11,9 +11,10 @@ import { Input, Spinner } from './styledComponentsLibrary';
 const formStyle = css({
   display: 'flex',
   flexDirection: 'row',
-  alignItems: 'center',
   justifyContent: 'center',
+  alignItems: 'center',
   width: '100%',
+  marginTop: 'var(--searchbar-margin-top)',
 });
 
 const inputStyle = css({
@@ -36,71 +37,28 @@ const SearchBar = ({
   // Refresh component size stored in context on windows resize (to align component with background animation)
   useEffect(() => {
     bounceContext.storeBounceBox('searchBar', searchBarRef);
-    bounceContext.storeBounceBox('testBox', test);
+    // bounceContext.storeBounceBox('testBox', test);
   }, [windowSize]);
 
   // DELETE
-  const test = useRef<HTMLDivElement | null>(null);
+  // const test = useRef<HTMLDivElement | null>(null);
 
   return (
-    // <form
-    //   ref={searchBarRef}
-    //   style={{
-    //     // position: 'absolute',
-    //     // top: 0,
-    //     // left: 0,
-    //     color: 'black',
-    //     width: 900,
-    //     height: 400,
-    //     backgroundColor: 'rgba(140, 85, 31, 0.1)',
-    //   }}
-    // >
-    // </form>
-
-    // <form
-    //   onSubmit={(event) => event.preventDefault()}
-    //   css={formStyle}
-    //   ref={searchBarRef}
-    // >
-    //   <Input
-    //     id='search'
-    //     name='search'
-    //     placeholder='Find a video game...'
-    //     type='text'
-    //     onChange={handleChange}
-    //     css={inputStyle}
-    //   />
-    //   <Tooltip label='Search Games'>
-    //     <label htmlFor='search'>
-    //       <button
-    //         type='submit'
-    //         css={{
-    //           border: '0',
-    //           position: 'relative',
-    //           marginLeft: '-35px',
-    //           background: 'transparent',
-    //         }}
-    //       >
-    //         {loading ? <Spinner /> : <FaSearch aria-label='search' />}
-    //       </button>
-    //     </label>
-    //   </Tooltip>
-    // </form>
-
     <>
-      <div
+      {/* <div
         ref={test}
         style={{
-          position: 'absolute',
+          // position: 'absolute',
           top: 500,
           left: 300,
           color: 'black',
           width: 300,
           height: 400,
           backgroundColor: 'rgba(140, 85, 31, 0.1)',
-          marginBottom: 100,
+          // margin: 100,
+          // paddingBottom: 50,
         }}
-      ></div>
+      ></div> */}
 
       <form
         onSubmit={(event) => event.preventDefault()}
@@ -121,7 +79,7 @@ const SearchBar = ({
               type='submit'
               css={{
                 border: '0',
-                position: 'relative',
+                // position: 'relative',
                 marginLeft: '-35px',
                 background: 'transparent',
               }}

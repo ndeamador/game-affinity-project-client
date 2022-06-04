@@ -107,6 +107,7 @@ export interface AnimatedParticleProps extends AnimatedParticleBaseProps {
   bounceElements?: BounceBoxState;
   index: number;
   onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
+  mouse: MousePositionProps;
 }
 
 export interface MousePositionProps {
@@ -143,8 +144,8 @@ export interface RectWithBoundingPoints extends DeconstructedDOMRect {
   }
 }
 
-export type BounceBoxKey = 'searchBar' | 'testBox';
-// export type BounceBoxKey = 'searchBar';
+// export type BounceBoxKey = 'searchBar' | 'testBox';
+export type BounceBoxKey = 'searchBar';
 
 
 // https://www.typescriptlang.org/docs/handbook/2/mapped-types.html

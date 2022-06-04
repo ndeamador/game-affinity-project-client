@@ -5,7 +5,6 @@ import { WindowSize } from '../types';
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState<WindowSize>({ width: 0, height: 0, scrollWidth: 0, scrollHeight: 0 });
 
-
   useEffect(() => {
     function handleResize() {
       setWindowSize({
@@ -21,7 +20,7 @@ const useWindowSize = () => {
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
+  console.log('useWindow() => height: ', windowSize.height, ' scrollheight: ' , windowSize.scrollHeight);
   return windowSize;
 }
 
