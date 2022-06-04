@@ -14,16 +14,6 @@ const AnimatedCanvas = ({
     useState<CanvasRenderingContext2D | null>(null);
   const [frameCount, setFrameCount] = useState(0);
 
-  // manually forced canvas size to adapt to scrollsize and not windowsize to prevent canvas to be cut when the scrollbar appears.
-  const style = {
-    // height: '100%',
-    // width: '100%',
-    width: dimensions.width,
-    height: dimensions.height,
-    // minWidth: dimensions.width,
-    // minHeight: dimensions.height,
-  };
-
   // Initialize Canvas
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -56,9 +46,7 @@ const AnimatedCanvas = ({
   return (
     <Canvas2dContext.Provider value={renderingContext}>
       <FrameContext.Provider value={frameCount}>
-        <canvas ref={canvasRef} css={style}>
-          {children}
-        </canvas>
+        <canvas ref={canvasRef}>{children}</canvas>
       </FrameContext.Provider>
     </Canvas2dContext.Provider>
   );
