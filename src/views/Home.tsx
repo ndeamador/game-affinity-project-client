@@ -8,6 +8,7 @@ import { useDebounce } from 'use-debounce';
 
 import { css } from '@emotion/react';
 import SearchBar from '../components/SearchBar';
+import GenericContainer from '../components/GenericContainer';
 
 const style = css({
   display: 'flex',
@@ -16,6 +17,11 @@ const style = css({
   // marginTop: '15vh',
   maxWidth: 'var(--searchbar-max-width)',
 });
+
+const containerStyle = css({
+  marginTop: 'var(--searchbar-margin-top)',
+  flexDirection: 'column',
+})
 
 const Home = () => {
   const [games, setGames] = useState([]);
@@ -46,14 +52,16 @@ const Home = () => {
 
   return (
     <div id='Home page div' css={style}>
-      <SearchBar handleChange={handleGameQueryChange} loading={loading} />
+      <GenericContainer additionalStyle={containerStyle}>
+        <SearchBar handleChange={handleGameQueryChange} loading={loading} />
 
-      {error ? (
-        <div>Something went wrong.</div>
-      ) : query && !loading ? (
-        <GameList games={games} />
-      ) : null}
-      {/* {query && !loading ? <GameList games={games} /> : null} */}
+        {error ? (
+          <div>Something went wrong.</div>
+        ) : query && !loading ? (
+          <GameList games={games} />
+        ) : null}
+        {/* {query && !loading ? <GameList games={games} /> : null} */}
+      </GenericContainer>
     </div>
   );
 };

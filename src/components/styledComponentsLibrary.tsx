@@ -68,7 +68,7 @@ export const CircleButton = styled.button({
 export const Input = styled.input({
   borderRadius: 'var(--border-radius)',
   border: '0px',
-  background: 'ghostwhite',
+  // background: 'ghostwhite',
   padding: '15px 20px',
   width: '100%',
   boxSizing: 'border-box',

@@ -14,13 +14,28 @@ const formStyle = css({
   justifyContent: 'center',
   alignItems: 'center',
   width: '100%',
-  marginTop: 'var(--searchbar-margin-top)',
+  // marginTop: 'var(--searchbar-margin-top)',
 });
 
 const inputStyle = css({
   width: '100%',
   maxWidth: '800px',
   minwidth: '600px',
+  backgroundColor: 'white',
+  '&:focus': {
+    outline: 'none',
+  },
+  // '&:active': {
+  //   outline: 'none',
+  //   backgroundColor: 'white',
+  // },
+});
+
+const buttonStyle = css({
+  border: '0',
+  // position: 'relative',
+  marginLeft: '-42px',
+  background: 'transparent',
 });
 
 const SearchBar = ({
@@ -70,20 +85,13 @@ const SearchBar = ({
           name='search'
           placeholder='Find a video game...'
           type='text'
+          spellCheck='false'
           onChange={handleChange}
           css={inputStyle}
         />
         <Tooltip label='Search Games'>
           <label htmlFor='search'>
-            <button
-              type='submit'
-              css={{
-                border: '0',
-                // position: 'relative',
-                marginLeft: '-35px',
-                background: 'transparent',
-              }}
-            >
+            <button type='submit' css={buttonStyle}>
               {loading ? <Spinner /> : <FaSearch aria-label='search' />}
             </button>
           </label>

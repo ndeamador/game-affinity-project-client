@@ -16,7 +16,7 @@ const mainContainerStyle = css({
   // alignItems: 'stretch',
   margin: '0',
   // padding: '10px',
-  marginTop: '10px',
+  // marginTop: '10px',
   borderRadius: 'var(--border-radius)',
   boxSizing: 'border-box',
   transitionDuration: '0.2s',
