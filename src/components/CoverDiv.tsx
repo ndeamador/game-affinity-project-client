@@ -15,8 +15,10 @@ const imageStyle = css({
 });
 
 const genericIconStyle = css({
-  width: 'auto',
-  maxwidth: 'var(--cover-width)',
+  // width: 'auto',
+  // maxwidth: 'var(--cover-width)',
+  // minWidth: 'var(--cover-width)',
+  width: 'var(--cover-width)',
   height: '100%',
   border: 'solid 2px var(--color-gray20)',
   borderRadius: 'var(--border-radius)',
