@@ -80,23 +80,13 @@ const styles = {
   }),
 };
 
-const CssBlobs = ({
-  dimensions,
-}: {
-  dimensions: { width: number; height: number };
-}) => {
-  // manually forced canvas size to adapt to scrollsize and not windowsize to prevent canvas to be cut when the scrollbar appears.
-  const adaptableSize = {
-    width: dimensions.width,
-    height: dimensions.height,
-  };
-
+const CssBlobs = () => {
   return (
-    <div css={{ ...styles.container, ...adaptableSize }}>
-      <div css={{ ...styles.overlay, ...adaptableSize }} />
-      <div css={styles.backgroundBlob} />
-      <div css={styles.centerBlob} />
-      <div css={styles.bigBlob} />
+    <div css={styles.container}>
+      <div id='blobsOverlay' css={styles.overlay} />
+      <div id='backgroundBlob' css={styles.backgroundBlob} />
+      <div id='centerBlob' css={styles.centerBlob} />
+      <div id='bigBlog' css={styles.bigBlob} />
     </div>
   );
 };

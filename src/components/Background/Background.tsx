@@ -16,7 +16,7 @@ const Background = () => {
     // display: 'flex',
     // alignItems: 'center',
     // justifyContent: 'center',
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     left: 0,
     display: 'flex',
@@ -32,19 +32,14 @@ const Background = () => {
       left: 0,
       // backgroundColor: 'red',
     },
+    // objectFit: 'cover',
   });
-  console.log('in background');
 
   const mousePosition = useMousePosition();
 
   return (
     <div css={style}>
-      <CssBlobs
-        dimensions={{
-          width: windowSize.scrollWidth,
-          height: windowSize.scrollHeight,
-        }}
-      />
+      <CssBlobs />
       <AnimatedCanvas
         dimensions={{
           width: windowSize.scrollWidth,
