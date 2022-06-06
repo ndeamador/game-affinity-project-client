@@ -13,6 +13,7 @@ const styles = {
     display: 'flex',
     maxHeight: '90vh',
     backgroundColor: 'transparent',
+    justifyContent: 'center',
     ':click': {
       transition: 'transform 0.3s',
       transitionDuration: '0.3s',
