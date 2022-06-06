@@ -34,13 +34,21 @@ const styles = {
     paddingLeft: '20px',
     '> *': {
       margin: '0',
-      paddingBottom: '15px',
+      marginBottom: '10px',
     },
   }),
-  gameSummaryDiv: css({
-    overflowY: 'scroll',
-    paddingTop: '10px',
-    paddingBottom: 0,
+  gameHeader: css({
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: '15px',
+  }),
+  title: css({
+    lineHeight: 1,
+    marginBottom: '10px',
+  }),
+  gameSummary: css({
+    overflowY: 'auto',
   }),
 };
 
@@ -93,24 +101,51 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
     : loadingTravolta;
 
   return (
+    // <GenericContainer additionalStyle={styles.container}>
+    //   <div css={styles.coverDiv}>
+    //     <img src={imageLink} css={styles.coverImage}></img>
+    //   </div>
+
+    //   <div css={styles.gameInfoDiv}>
+    //     <h2>{game.name}</h2>
+    //     <ReleaseDeveoperRow game={game} />
+    //     <PlatformIcons platforms={game.platforms} />
+    //     <p css={styles.gameSummary}>{game.summary}</p>
+
+    //     {/* {currentUser && <Rater gameId={parsedGameId} />} */}
+    //     {currentUser && (
+    //       <Rater gameId={parsedGameId} currentUser={currentUser} />
+    //     )}
+    //   </div>
+
+    //   {currentUser && <AddToLibraryButton gameId={parsedGameId} />}
+    // </GenericContainer>
+
     <GenericContainer additionalStyle={styles.container}>
       <div css={styles.coverDiv}>
         <img src={imageLink} css={styles.coverImage}></img>
       </div>
 
       <div css={styles.gameInfoDiv}>
-        <h2>{game.name}</h2>
-        <ReleaseDeveoperRow game={game} />
-        <PlatformIcons platforms={game.platforms} />
-        <p css={styles.gameSummaryDiv}>{game.summary}</p>
+        <div css={styles.gameHeader}>
+          <div>
+            <h2 css={styles.title}>{game.name}</h2>
+            <ReleaseDeveoperRow game={game} />
+            <PlatformIcons platforms={game.platforms} />
+          </div>
+          {currentUser && <AddToLibraryButton gameId={parsedGameId} />}
+        </div>
 
-        {/* {currentUser && <Rater gameId={parsedGameId} />} */}
         {currentUser && (
           <Rater gameId={parsedGameId} currentUser={currentUser} />
         )}
-      </div>
 
-      {currentUser && <AddToLibraryButton gameId={parsedGameId} />}
+        <p css={styles.gameSummary}>{game.summary}</p>
+
+        {/* {currentUser && (
+          <Rater gameId={parsedGameId} currentUser={currentUser} />
+        )} */}
+      </div>
     </GenericContainer>
   );
 };

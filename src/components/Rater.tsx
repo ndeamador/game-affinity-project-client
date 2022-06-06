@@ -260,7 +260,7 @@ const Rater = ({
         display: 'flex',
         // alignItems: 'center',
         // alignItems: 'flex-start',
-        marginTop: '20px',
+        // marginTop: '20px',
         paddingBottom: '0px',
         justifySelf: 'flex-end',
         flexDirection: 'column',

@@ -1,18 +1,26 @@
 /** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { Game } from '../types';
 import { convertMilisecondsToDate } from '../utils/misc';
 
+const styles = {
+  container: css({
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    lineHeight: 1.2,
+    marginBottom: '6px',
+    '> *': {
+      margin: '0',
+    },
+  }),
+  separator: css({ padding: '0 5px' }),
+  // container: css({}),
+};
+
 const ReleaseDeveloperRow = ({ game }: { game: Game }) => {
   return (
-    <div
-      css={{
-        display: 'flex',
-        flexDirection: 'row',
-        '> *': {
-          margin: '0',
-        },
-      }}
-    >
+    <div css={styles.container}>
       {game.first_release_date && (
         <p css={{ margin: 0 }}>
           {convertMilisecondsToDate(game.first_release_date).year}
@@ -20,7 +28,7 @@ const ReleaseDeveloperRow = ({ game }: { game: Game }) => {
       )}
 
       {game.first_release_date && game.involved_companies && (
-        <p css={{ padding: '0 5px' }}>-</p>
+        <p css={styles.separator}>-</p>
       )}
 
       {game.involved_companies &&

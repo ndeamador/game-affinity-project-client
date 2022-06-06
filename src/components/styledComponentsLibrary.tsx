@@ -49,7 +49,7 @@ export const Button = styled.button(
 export const CircleButton = styled.button({
   minWidth: '40px',
   minHeight: '40px',
-  margin: '0px 5px',
+  // margin: '0px 5px',
   height: '40px',
   outlineStyle: 'none',
   fontSize: '15px',
