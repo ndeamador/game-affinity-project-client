@@ -3,13 +3,15 @@
 import { useQuery } from '@apollo/client';
 import { css } from '@emotion/react';
 import { useState } from 'react';
+import GenreFiltersBox from '../components/GenreFiltersBox';
 import FullPageSpinner from '../components/FullPageSpinner';
 import GameList from '../components/GameList';
+import GenericContainer from '../components/GenericContainer';
 import { ErrorNotification } from '../components/styledComponentsLibrary';
 import { GET_RANKING } from '../graphql/queries';
 import { Game } from '../types';
 
-const style = css({
+const containerStyle = css({
   display: 'flex',
   flexDirection: 'column',
   // justifyContent: 'center',
@@ -18,10 +20,20 @@ const style = css({
 const Ranking = () => {
   const { data, loading: loadingGames, error } = useQuery(GET_RANKING);
   const [genreFilter, setGenreFilter] = useState('All');
-  if (error) return <ErrorNotification variant='inline'>Something went wrong: {error.message}</ErrorNotification>;
+  if (error)
+    return (
+      <ErrorNotification variant='inline'>
+        Something went wrong: {error.message}
+      </ErrorNotification>
+    );
 
   if (loadingGames) return <FullPageSpinner />;
-  if (!data) return <ErrorNotification variant='inline'>No games are rated yet.</ErrorNotification>;
+  if (!data)
+    return (
+      <ErrorNotification variant='inline'>
+        No games are rated yet.
+      </ErrorNotification>
+    );
 
   const genres: string[] = [
     ...new Set<string>( // Set is just to isolate unique values.
@@ -43,17 +55,12 @@ const Ranking = () => {
         );
 
   return (
-    <div css={style}>
-      <div>
-        <button onClick={() => setGenreFilter('All')}>All genres</button>
-        {genres.map((genre) => (
-          <button key={genre} onClick={() => setGenreFilter(genre)}>
-            {genre}
-          </button>
-        ))}
-      </div>
-      <GameList games={gamesToDisplay} ranked />
-    </div>
+    // <div css={containerStyle}>
+      <GenericContainer additionalStyle={containerStyle}>
+        <GenreFiltersBox setGenreFilter={setGenreFilter} genres={genres}/>
+        <GameList games={gamesToDisplay} ranked />
+      </GenericContainer>
+    // </div>
   );
 };
 
