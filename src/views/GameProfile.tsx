@@ -37,6 +37,11 @@ const styles = {
       paddingBottom: '15px',
     },
   }),
+  gameSummaryDiv: css({
+    overflowY: 'scroll',
+    paddingTop: '10px',
+    paddingBottom: 0,
+  }),
 };
 
 const GameProfile = ({ modalGame }: { modalGame?: string }) => {
@@ -97,7 +102,7 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
         <h2>{game.name}</h2>
         <ReleaseDeveoperRow game={game} />
         <PlatformIcons platforms={game.platforms} />
-        <p css={{ paddingTop: '10px', paddingBottom: 0 }}>{game.summary}</p>
+        <p css={styles.gameSummaryDiv}>{game.summary}</p>
 
         {/* {currentUser && <Rater gameId={parsedGameId} />} */}
         {currentUser && (

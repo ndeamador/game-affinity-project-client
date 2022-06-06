@@ -1,20 +1,24 @@
 /** @jsxImportSource @emotion/react */
 
-import { FaTimes } from 'react-icons/fa';
-
-import { CircleButton } from './styledComponentsLibrary';
-import { Dialog } from '@reach/dialog';
+import { Dialog, DialogContent, DialogOverlay } from '@reach/dialog';
 import GameProfile from '../views/GameProfile';
 import { css } from '@emotion/react';
 import GenericContainer from './GenericContainer';
 
 const styles = {
+  dialogOverlay: css({
+    backdropFilter: 'blur(10px)',
+    background: 'rgba(0, 0, 0, 0.5)',
+  }),
   dialog: css({
     display: 'flex',
     // flexDirection: 'column',
     // alignItems: 'center',
     // justifyContent: 'center',
     // maxWidth: '380px',
+    maxHeight: '90vh',
+    // width: '70vw',
+    // minHeight: '70vh',
     backgroundColor: 'transparent',
     ':click': {
       transition: 'transform 0.3s',
@@ -27,8 +31,7 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-
-  })
+  }),
 };
 
 const GameProfileModal = ({
@@ -41,22 +44,28 @@ const GameProfileModal = ({
   const ariaLabel = `Game Profile`;
 
   return (
-    <Dialog
+    // <Dialog
+    //   aria-label={ariaLabel}
+    //   isOpen={openModal !== 'none'}
+    //   css={styles.dialog}
+    //   onDismiss={() => setOpenModal('none')}
+    // >
+    //   {/* <GenericContainer additionalStyle={styles.container}> */}
+    //     <GameProfile modalGame={openModal} />
+    //   {/* </GenericContainer> */}
+    // </Dialog>
+    <DialogOverlay
       aria-label={ariaLabel}
       isOpen={openModal !== 'none'}
-      css={styles.dialog}
+      onDismiss={() => setOpenModal('none')}
+      css={styles.dialogOverlay}
     >
-      <GenericContainer additionalStyle={styles.container}>
-        <div css={{ alignSelf: 'flex-end' }}>
-          <CircleButton onClick={() => setOpenModal('none')}>
-            <FaTimes />
-          </CircleButton>
-        </div>
-        {/* <div className='modalInnerContainer' css={{ padding: '40px 0 30px 0' }}> */}
-          <GameProfile modalGame={openModal} />
-        {/* </div> */}
-      </GenericContainer>
-    </Dialog>
+      <DialogContent css={styles.dialog}>
+        {/* <GenericContainer additionalStyle={styles.container}> */}
+        <GameProfile modalGame={openModal} />
+        {/* </GenericContainer> */}
+      </DialogContent>
+    </DialogOverlay>
   );
 };
 
