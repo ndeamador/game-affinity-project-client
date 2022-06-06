@@ -7,9 +7,17 @@ const style = css({
   // padding: '10px',
   backgroundColor: 'var(--item-list-background)',
   borderRadius: 'var(--border-radius)',
-})
+  // filter: 'blur(200px)',
+  backdropFilter: 'blur(12px)',
+});
 
-const GenericContainer = ({ children, additionalStyle }: { children: React.ReactNode, additionalStyle: SerializedStyles }) => {
+const GenericContainer = ({
+  children,
+  additionalStyle,
+}: {
+  children: React.ReactNode;
+  additionalStyle?: SerializedStyles;
+}) => {
   return <div css={[style, additionalStyle]}>{children}</div>;
 };
 

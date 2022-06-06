@@ -33,9 +33,10 @@ const GameList = ({ games, ranked }: { games: Game[]; ranked?: boolean }) => {
   const style = css({
     display: 'flex',
     flexDirection: 'column',
-    gap: '5px',
-    padding: '15px 10px 10px 10px',
-    backgroundColor: 'var(--item-list-background)',
+    gap: '7px',
+    // padding: '15px 10px 10px 10px',
+    padding: '10px',
+    // backgroundColor: 'var(--item-list-background)',
     borderRadius: '0 0 var(--border-radius) var(--border-radius)',
     animation: ranked
       ? ''

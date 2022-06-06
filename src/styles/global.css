@@ -37,7 +37,7 @@ html {
   --blob-big-2: #3eff4e;
   --blob-center-1: #ff713e;
   --blob-center-2: #3eefff; */
-  --item-list-background: rgba(255, 255, 255, 1);
+  --item-list-background: rgba(255, 255, 255, 0.6);
   --searchbar-background-color: white;
 
 
