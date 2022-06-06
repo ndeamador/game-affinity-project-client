@@ -21,7 +21,7 @@ const inputStyle = css({
   width: '100%',
   maxWidth: '800px',
   minwidth: '600px',
-  backgroundColor: 'white',
+  backgroundColor: 'transparent',
   '&:focus': {
     outline: 'none',
   },

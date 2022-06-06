@@ -10,6 +10,34 @@ import ReleaseDeveoperRow from '../components/ReleaseDeveloperRow';
 import Rater from '../components/Rater';
 import { useEffect } from 'react';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
+import GenericContainer from '../components/GenericContainer';
+import { css } from '@emotion/react';
+
+const styles = {
+  container: css({
+    padding: '15px',
+  }),
+  coverDiv: css({
+    borderRadius: 'var(--border-radius)',
+    width: '264px',
+    maxWidth: '264px',
+    flexShrink: 0,
+  }),
+  coverImage: css({
+    // borderRadius: 'var(--border-radius) 0 0 var(--border-radius)',
+    borderRadius: 'var(--border-radius)',
+    width: '100%',
+  }),
+  gameInfoDiv: css({
+    display: 'flex',
+    flexDirection: 'column',
+    paddingLeft: '20px',
+    '> *': {
+      margin: '0',
+      paddingBottom: '15px',
+    },
+  }),
+};
 
 const GameProfile = ({ modalGame }: { modalGame?: string }) => {
   const {
@@ -60,39 +88,12 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
     : loadingTravolta;
 
   return (
-    <div
-      css={{
-        display: 'flex',
-      }}
-    >
-      <div
-        className='coverDiv'
-        css={{
-          width: '264px',
-          maxWidth: '264px',
-          flexShrink: 0,
-        }}
-      >
-        <img
-          src={imageLink}
-          css={{
-            width: '100%',
-          }}
-        ></img>
+    <GenericContainer additionalStyle={styles.container}>
+      <div css={styles.coverDiv}>
+        <img src={imageLink} css={styles.coverImage}></img>
       </div>
 
-      <div
-        className='gameInfoDiv'
-        css={{
-          display: 'flex',
-          flexDirection: 'column',
-          paddingLeft: '20px',
-          '> *': {
-            margin: '0',
-            paddingBottom: '15px',
-          },
-        }}
-      >
+      <div css={styles.gameInfoDiv}>
         <h2>{game.name}</h2>
         <ReleaseDeveoperRow game={game} />
         <PlatformIcons platforms={game.platforms} />
@@ -105,7 +106,7 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
       </div>
 
       {currentUser && <AddToLibraryButton gameId={parsedGameId} />}
-    </div>
+    </GenericContainer>
   );
 };
 

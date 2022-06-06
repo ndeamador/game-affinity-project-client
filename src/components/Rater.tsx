@@ -269,7 +269,7 @@ const Rater = ({
       <span
         css={{
           display: 'inline-flex',
-          background: 'whitesmoke',
+          backgroundColor: 'var(--regular-button-background-color)',
           padding: '10px 10px 10px 8px',
           borderRadius: 'var(--border-radius)',
           width: '25%',
