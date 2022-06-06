@@ -10,6 +10,46 @@ import ReleaseDeveoperRow from '../components/ReleaseDeveloperRow';
 import Rater from '../components/Rater';
 import { useEffect } from 'react';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
+import GenericContainer from '../components/GenericContainer';
+import { css } from '@emotion/react';
+
+const styles = {
+  container: css({
+    padding: '15px',
+  }),
+  coverDiv: css({
+    borderRadius: 'var(--border-radius)',
+    width: '264px',
+    maxWidth: '264px',
+    flexShrink: 0,
+  }),
+  coverImage: css({
+    borderRadius: 'var(--border-radius)',
+    width: '100%',
+  }),
+  gameInfoDiv: css({
+    display: 'flex',
+    flexDirection: 'column',
+    paddingLeft: '20px',
+    '> *': {
+      margin: '0',
+      marginBottom: '10px',
+    },
+  }),
+  gameHeader: css({
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: '15px',
+  }),
+  title: css({
+    lineHeight: 1,
+    marginBottom: '10px',
+  }),
+  gameSummary: css({
+    overflowY: 'auto',
+  }),
+};
 
 const GameProfile = ({ modalGame }: { modalGame?: string }) => {
   const {
@@ -25,11 +65,6 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
   if (getUserError) {
     return <div>Test error: {getUserError.message}</div>;
   }
-  console.log(
-    '----GameProfile: ',
-    currentUser?.email,
-    currentUser?.gamesInLibrary
-  );
 
   const { gameId } = useParams<{ gameId: string }>();
   let parsedGameId = parseInt(gameId);
@@ -60,52 +95,28 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
     : loadingTravolta;
 
   return (
-    <div
-      css={{
-        display: 'flex',
-      }}
-    >
-      <div
-        className='coverDiv'
-        css={{
-          width: '264px',
-          maxWidth: '264px',
-          flexShrink: 0,
-        }}
-      >
-        <img
-          src={imageLink}
-          css={{
-            width: '100%',
-          }}
-        ></img>
+    <GenericContainer additionalStyle={styles.container}>
+      <div css={styles.coverDiv}>
+        <img src={imageLink} css={styles.coverImage}></img>
       </div>
 
-      <div
-        className='gameInfoDiv'
-        css={{
-          display: 'flex',
-          flexDirection: 'column',
-          paddingLeft: '20px',
-          '> *': {
-            margin: '0',
-            paddingBottom: '15px',
-          },
-        }}
-      >
-        <h2>{game.name}</h2>
-        <ReleaseDeveoperRow game={game} />
-        <PlatformIcons platforms={game.platforms} />
-        <p css={{ paddingTop: '10px', paddingBottom: 0 }}>{game.summary}</p>
+      <div css={styles.gameInfoDiv}>
+        <div css={styles.gameHeader}>
+          <div>
+            <h2 css={styles.title}>{game.name}</h2>
+            <ReleaseDeveoperRow game={game} />
+            <PlatformIcons platforms={game.platforms} />
+          </div>
+          {currentUser && <AddToLibraryButton gameId={parsedGameId} />}
+        </div>
 
-        {/* {currentUser && <Rater gameId={parsedGameId} />} */}
         {currentUser && (
           <Rater gameId={parsedGameId} currentUser={currentUser} />
         )}
-      </div>
 
-      {currentUser && <AddToLibraryButton gameId={parsedGameId} />}
-    </div>
+        <p css={styles.gameSummary}>{game.summary}</p>
+      </div>
+    </GenericContainer>
   );
 };
 

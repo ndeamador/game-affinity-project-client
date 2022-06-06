@@ -8,7 +8,7 @@ import { ApolloError } from '@apollo/client';
 
 // BUTTON
 interface ButtonProps {
-  variant?: 'primary' | 'regular';
+  variant?: 'primary' | 'regular' | 'filter';
 }
 
 const buttonVariants = {
@@ -20,6 +20,11 @@ const buttonVariants = {
     background: 'var(--color-gray)',
     color: 'var(--color-text)',
   },
+  filter: {
+    padding: '8px 8px',
+    backgroundColor: 'var(--regular-button-background-color)',
+    fontSize: '15px',
+  }
 };
 
 export const Button = styled.button(
@@ -44,7 +49,7 @@ export const Button = styled.button(
 export const CircleButton = styled.button({
   minWidth: '40px',
   minHeight: '40px',
-  margin: '0px 5px',
+  // margin: '0px 5px',
   height: '40px',
   outlineStyle: 'none',
   fontSize: '15px',
@@ -68,7 +73,7 @@ export const CircleButton = styled.button({
 export const Input = styled.input({
   borderRadius: 'var(--border-radius)',
   border: '0px',
-  background: 'ghostwhite',
+  // background: 'ghostwhite',
   padding: '15px 20px',
   width: '100%',
   boxSizing: 'border-box',

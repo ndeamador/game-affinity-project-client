@@ -6,6 +6,34 @@ import DragDropColumn from './DragDropColumn';
 import { UPDATE_RATING } from '../graphql/mutations';
 import { CURRENT_USER } from '../graphql/queries';
 import { useMutation } from '@apollo/client';
+import GenericContainer from './GenericContainer';
+import { css } from '@emotion/react';
+
+const styles = {
+  container: css({
+    flexDirection: 'column',
+    padding: '15px',
+  }),
+  allDnDContainersIncUnranked: css({
+    display: 'flex',
+    flexDirection: 'column',
+  }),
+  dndColumnsDiv: css(
+    {
+      display: 'flex',
+      flexDirection: 'row',
+      columnGap: '15px',
+    }
+    // {
+    //   display: 'grid',
+    //   gridAutoFlow: 'column',
+    //   gridAutoColumns: '1fr',
+    // }
+  ),
+  textDiv: css({
+    marginBottom: '15px',
+  }),
+};
 
 const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   // Remember that using the mapped object's indexes for the key property is an anti-pattern, use unique id instead
@@ -86,7 +114,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
         update: (store, response) => {
           console.log('Updating rating...');
           console.log('updaterating response: ', response);
-          console.log('draggable id:', draggableId, typeof(draggableId));
+          console.log('draggable id:', draggableId, typeof draggableId);
           const dataInStore: MeResponse | null = store.readQuery({
             query: CURRENT_USER,
           });
@@ -152,38 +180,18 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   ];
 
   return games.length > 0 ? (
-    <div
-      css={{ display: 'flex', flexDirection: 'column' /* , width: '100%' */ }}
-    >
-      <p>
-        You can drag and drop games with your mouse or using TAB to navigate
-        games, SPACE to select them and the ARROW KEYS to move them.
-      </p>
+    <GenericContainer additionalStyle={styles.container}>
+      <div css={styles.textDiv}>
+        <p>
+          You can drag and drop games with your mouse or using TAB to navigate
+          games, SPACE to select them and the ARROW KEYS to move them.
+        </p>
+      </div>
+
       {/* <div className='DragDropContextContainer' css={{ display: 'flex', alignContent: 'center' }}> */}
       <DragDropContext onDragEnd={onDragEnd}>
-        <div
-          className='AllDnDContainersIncUnranked'
-          css={{
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <div
-            className='DnDColumnsDiv'
-            css={
-              {
-                display: 'flex',
-                flexDirection: 'row',
-                columnGap: '15px',
-                marginBottom: '15px',
-              }
-              // {
-              //   display: 'grid',
-              //   gridAutoFlow: 'column',
-              //   gridAutoColumns: '1fr',
-              // }
-            }
-          >
+        <div css={styles.allDnDContainersIncUnranked}>
+          <div css={styles.dndColumnsDiv}>
             {Columns.map((column) => {
               return (
                 <DragDropColumn
@@ -199,7 +207,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
         </div>
       </DragDropContext>
       {/* </div> */}
-    </div>
+    </GenericContainer>
   ) : (
     <div>No games found</div>
   );

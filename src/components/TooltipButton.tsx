@@ -6,7 +6,7 @@ import { IconBaseProps } from 'react-icons';
 import { css } from '@emotion/react';
 
 const style = css({
-  backgroundColor: 'var(--color-base)',
+  backgroundColor: 'var(--regular-button-background-color)',
   '&:hover, :focus': {
     color: 'var(--color-indigo)',
   },

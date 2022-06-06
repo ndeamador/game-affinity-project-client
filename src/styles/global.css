@@ -37,6 +37,10 @@ html {
   --blob-big-2: #3eff4e;
   --blob-center-1: #ff713e;
   --blob-center-2: #3eefff; */
+  --item-list-background: rgba(255, 255, 255, 0.6);
+  --searchbar-background-color: white;
+  --regular-button-background-color: var(--color-gray);
+  --inner-content-background-color: ghostwhite;
 
 
 
@@ -124,4 +128,23 @@ body {
   justify-content: center;
   align-items: center;
   font-family: var(--font-family);
+}
+
+
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  font-family: var(--font-family);
+  -webkit-text-fill-color: var(--color-text);
+  /* -webkit-box-shadow: 0 0 0px 1000px #000 inset; */
+  transition: background-color 5000s ease-in-out 0s; /* removes default autocomplete background color */
+
 }

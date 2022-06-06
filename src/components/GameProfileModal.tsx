@@ -1,10 +1,32 @@
 /** @jsxImportSource @emotion/react */
 
-import { FaTimes } from 'react-icons/fa';
-
-import { CircleButton } from './styledComponentsLibrary';
-import { Dialog } from '@reach/dialog';
+import { DialogContent, DialogOverlay } from '@reach/dialog';
 import GameProfile from '../views/GameProfile';
+import { css } from '@emotion/react';
+
+const styles = {
+  dialogOverlay: css({
+    backdropFilter: 'blur(10px)',
+    background: 'rgba(0, 0, 0, 0.4)',
+  }),
+  dialog: css({
+    display: 'flex',
+    maxHeight: '90vh',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    ':click': {
+      transition: 'transform 0.3s',
+      transitionDuration: '0.3s',
+      transitionTimingFunction: 'ease',
+      transitionProperty: 'all',
+    },
+  }),
+  container: css({
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }),
+};
 
 const GameProfileModal = ({
   setOpenModal,
@@ -16,32 +38,16 @@ const GameProfileModal = ({
   const ariaLabel = `Game Profile`;
 
   return (
-    <Dialog
+    <DialogOverlay
       aria-label={ariaLabel}
       isOpen={openModal !== 'none'}
-      css={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        // maxWidth: '380px',
-        ':click': {
-          transition: 'transform 0.3s',
-          transitionDuration: '0.3s',
-          transitionTimingFunction: 'ease',
-          transitionProperty: 'all',
-        },
-      }}
+      onDismiss={() => setOpenModal('none')}
+      css={styles.dialogOverlay}
     >
-      <div css={{ alignSelf: 'flex-end' }}>
-        <CircleButton onClick={() => setOpenModal('none')}>
-          <FaTimes />
-        </CircleButton>
-      </div>
-      <div className='modalInnerContainer' css={{ padding: '40px 0 30px 0' }}>
+      <DialogContent css={styles.dialog}>
         <GameProfile modalGame={openModal} />
-      </div>
-    </Dialog>
+      </DialogContent>
+    </DialogOverlay>
   );
 };
 

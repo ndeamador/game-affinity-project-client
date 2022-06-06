@@ -260,7 +260,7 @@ const Rater = ({
         display: 'flex',
         // alignItems: 'center',
         // alignItems: 'flex-start',
-        marginTop: '20px',
+        // marginTop: '20px',
         paddingBottom: '0px',
         justifySelf: 'flex-end',
         flexDirection: 'column',
@@ -269,7 +269,7 @@ const Rater = ({
       <span
         css={{
           display: 'inline-flex',
-          background: 'whitesmoke',
+          backgroundColor: 'var(--regular-button-background-color)',
           padding: '10px 10px 10px 8px',
           borderRadius: 'var(--border-radius)',
           width: '25%',
