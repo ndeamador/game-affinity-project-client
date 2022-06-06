@@ -15,7 +15,6 @@ const styles = {
     },
   }),
   separator: css({ padding: '0 5px' }),
-  // container: css({}),
 };
 
 const ReleaseDeveloperRow = ({ game }: { game: Game }) => {

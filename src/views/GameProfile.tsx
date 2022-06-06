@@ -24,7 +24,6 @@ const styles = {
     flexShrink: 0,
   }),
   coverImage: css({
-    // borderRadius: 'var(--border-radius) 0 0 var(--border-radius)',
     borderRadius: 'var(--border-radius)',
     width: '100%',
   }),
@@ -66,11 +65,6 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
   if (getUserError) {
     return <div>Test error: {getUserError.message}</div>;
   }
-  console.log(
-    '----GameProfile: ',
-    currentUser?.email,
-    currentUser?.gamesInLibrary
-  );
 
   const { gameId } = useParams<{ gameId: string }>();
   let parsedGameId = parseInt(gameId);
@@ -101,26 +95,6 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
     : loadingTravolta;
 
   return (
-    // <GenericContainer additionalStyle={styles.container}>
-    //   <div css={styles.coverDiv}>
-    //     <img src={imageLink} css={styles.coverImage}></img>
-    //   </div>
-
-    //   <div css={styles.gameInfoDiv}>
-    //     <h2>{game.name}</h2>
-    //     <ReleaseDeveoperRow game={game} />
-    //     <PlatformIcons platforms={game.platforms} />
-    //     <p css={styles.gameSummary}>{game.summary}</p>
-
-    //     {/* {currentUser && <Rater gameId={parsedGameId} />} */}
-    //     {currentUser && (
-    //       <Rater gameId={parsedGameId} currentUser={currentUser} />
-    //     )}
-    //   </div>
-
-    //   {currentUser && <AddToLibraryButton gameId={parsedGameId} />}
-    // </GenericContainer>
-
     <GenericContainer additionalStyle={styles.container}>
       <div css={styles.coverDiv}>
         <img src={imageLink} css={styles.coverImage}></img>
@@ -141,10 +115,6 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
         )}
 
         <p css={styles.gameSummary}>{game.summary}</p>
-
-        {/* {currentUser && (
-          <Rater gameId={parsedGameId} currentUser={currentUser} />
-        )} */}
       </div>
     </GenericContainer>
   );

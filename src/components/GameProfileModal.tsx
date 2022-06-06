@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
-import { Dialog, DialogContent, DialogOverlay } from '@reach/dialog';
+import { DialogContent, DialogOverlay } from '@reach/dialog';
 import GameProfile from '../views/GameProfile';
 import { css } from '@emotion/react';
-import GenericContainer from './GenericContainer';
 
 const styles = {
   dialogOverlay: css({
@@ -12,13 +11,7 @@ const styles = {
   }),
   dialog: css({
     display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // maxWidth: '380px',
     maxHeight: '90vh',
-    // width: '70vw',
-    // minHeight: '70vh',
     backgroundColor: 'transparent',
     ':click': {
       transition: 'transform 0.3s',
@@ -44,16 +37,6 @@ const GameProfileModal = ({
   const ariaLabel = `Game Profile`;
 
   return (
-    // <Dialog
-    //   aria-label={ariaLabel}
-    //   isOpen={openModal !== 'none'}
-    //   css={styles.dialog}
-    //   onDismiss={() => setOpenModal('none')}
-    // >
-    //   {/* <GenericContainer additionalStyle={styles.container}> */}
-    //     <GameProfile modalGame={openModal} />
-    //   {/* </GenericContainer> */}
-    // </Dialog>
     <DialogOverlay
       aria-label={ariaLabel}
       isOpen={openModal !== 'none'}
@@ -61,9 +44,7 @@ const GameProfileModal = ({
       css={styles.dialogOverlay}
     >
       <DialogContent css={styles.dialog}>
-        {/* <GenericContainer additionalStyle={styles.container}> */}
         <GameProfile modalGame={openModal} />
-        {/* </GenericContainer> */}
       </DialogContent>
     </DialogOverlay>
   );
