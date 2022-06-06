@@ -40,6 +40,7 @@ html {
   --item-list-background: rgba(255, 255, 255, 0.6);
   --searchbar-background-color: white;
   --regular-button-background-color: var(--color-gray);
+  --inner-content-background-color: ghostwhite;
 
 
 
