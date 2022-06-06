@@ -22,7 +22,7 @@ const buttonVariants = {
   },
   filter: {
     padding: '8px 8px',
-    // backgroundColor: 'var(--filter-button-background-color)',
+    backgroundColor: 'var(--regular-button-background-color)',
     fontSize: '15px',
   }
 };

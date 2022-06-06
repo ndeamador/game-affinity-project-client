@@ -39,7 +39,7 @@ html {
   --blob-center-2: #3eefff; */
   --item-list-background: rgba(255, 255, 255, 0.6);
   --searchbar-background-color: white;
-  --filter-button-background-color: var(--color-gray);
+  --regular-button-background-color: var(--color-gray);
 
 
 
@@ -147,7 +147,3 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s; /* removes default autocomplete background color */
 
 }
-
-/* .selected {
-  background-color: green;
-} */
