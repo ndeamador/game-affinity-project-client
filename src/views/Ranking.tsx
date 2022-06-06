@@ -57,7 +57,7 @@ const Ranking = () => {
   return (
     // <div css={containerStyle}>
       <GenericContainer additionalStyle={containerStyle}>
-        <GenreFiltersBox setGenreFilter={setGenreFilter} genres={genres}/>
+        <GenreFiltersBox genreFilter={genreFilter} setGenreFilter={setGenreFilter} genres={genres}/>
         <GameList games={gamesToDisplay} ranked />
       </GenericContainer>
     // </div>

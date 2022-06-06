@@ -20,6 +20,7 @@ const outerNavBarStyle = css({
   top: '0px',
   backdropFilter: 'saturate(180%) blur(5px)',
   backgroundColor: 'var(--navbar-background)',
+  zIndex: 999,
 });
 
 const innerNavBarStyle = css({

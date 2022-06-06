@@ -42,7 +42,7 @@ const GameList = ({ games, ranked }: { games: Game[]; ranked?: boolean }) => {
       ? ''
       : `${animations.dropDown} 300ms ease-in-out forwards`,
     transformOrigin: 'top center',
-    borderTop: ranked ? '' : '1px solid black',
+    borderTop: '1px solid black',
     borderImage: 'linear-gradient(to right, transparent, grey, transparent)',
     borderImageSlice: 1,
   });

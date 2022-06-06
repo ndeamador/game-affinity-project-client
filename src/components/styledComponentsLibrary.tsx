@@ -8,7 +8,7 @@ import { ApolloError } from '@apollo/client';
 
 // BUTTON
 interface ButtonProps {
-  variant?: 'primary' | 'regular';
+  variant?: 'primary' | 'regular' | 'filter';
 }
 
 const buttonVariants = {
@@ -20,6 +20,11 @@ const buttonVariants = {
     background: 'var(--color-gray)',
     color: 'var(--color-text)',
   },
+  filter: {
+    padding: '8px 8px',
+    // backgroundColor: 'var(--filter-button-background-color)',
+    fontSize: '15px',
+  }
 };
 
 export const Button = styled.button(
