@@ -26,7 +26,7 @@ const containerStyle = css({
 const Home = () => {
   const [games, setGames] = useState([]);
   const [query, setQuery] = useState('');
-  const [debouncedQuery] = useDebounce(query, 250); //https://www.npmjs.com/package/use-debounce
+  const [debouncedQuery] = useDebounce(query, 250, { leading: true}); // https://www.npmjs.com/package/use-debounce
   const [findGames, { loading, error }] = useLazyQuery(FIND_GAMES, {
     onCompleted: (result) => {
       console.log('Home found games: ', result);
