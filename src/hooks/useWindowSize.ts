@@ -20,7 +20,7 @@ const useWindowSize = () => {
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  console.log('useWindow() => height: ', windowSize.height, ' scrollheight: ' , windowSize.scrollHeight);
+
   return windowSize;
 }
 

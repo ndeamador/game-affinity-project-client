@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useLazyQuery } from '@apollo/client';
 import { FIND_GAMES } from '../graphql/queries';
@@ -9,6 +9,7 @@ import { useDebounce } from 'use-debounce';
 import { css } from '@emotion/react';
 import SearchBar from '../components/SearchBar';
 import GenericContainer from '../components/GenericContainer';
+import useClickedOutOfElement from '../hooks/useClickedOutOfElement';
 
 const style = css({
   display: 'flex',
@@ -16,17 +17,17 @@ const style = css({
   alignItems: 'stretch',
   // marginTop: '15vh',
   maxWidth: 'var(--searchbar-max-width)',
+  marginTop: 'var(--searchbar-margin-top)',
 });
 
 const containerStyle = css({
-  marginTop: 'var(--searchbar-margin-top)',
   flexDirection: 'column',
-})
+});
 
 const Home = () => {
   const [games, setGames] = useState([]);
   const [query, setQuery] = useState('');
-  const [debouncedQuery] = useDebounce(query, 250); //https://www.npmjs.com/package/use-debounce
+  const [debouncedQuery] = useDebounce(query, 250, { leading: true }); // https://www.npmjs.com/package/use-debounce
   const [findGames, { loading, error }] = useLazyQuery(FIND_GAMES, {
     onCompleted: (result) => {
       console.log('Home found games: ', result);
@@ -50,8 +51,17 @@ const Home = () => {
     findGames({ variables: { name: debouncedQuery } });
   }, [debouncedQuery]);
 
+  // Reset query to collapse results when clicking outside the element.
+  const ref = useRef<HTMLDivElement>(null);
+  const [clickedOutside] = useClickedOutOfElement(ref);
+  useEffect(() => {
+    if(clickedOutside) {
+      setQuery('');
+    }
+  })
+
   return (
-    <div id='Home page div' css={style}>
+    <div id='Home page div' css={style} ref={ref}>
       <GenericContainer additionalStyle={containerStyle}>
         <SearchBar handleChange={handleGameQueryChange} loading={loading} />
 
