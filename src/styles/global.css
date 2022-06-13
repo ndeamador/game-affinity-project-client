@@ -41,6 +41,7 @@ html {
   --searchbar-background-color: white;
   --regular-button-background-color: var(--color-gray);
   --inner-content-background-color: ghostwhite;
+  --inner-border-color: var(--color-gray80);
 
 
 
