@@ -1,11 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, {
-  ChangeEvent,
-  KeyboardEvent,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useLazyQuery } from '@apollo/client';
 import { FIND_GAMES } from '../graphql/queries';
@@ -21,7 +15,6 @@ const style = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'stretch',
-  // marginTop: '15vh',
   maxWidth: 'var(--searchbar-max-width)',
   marginTop: 'var(--searchbar-margin-top)',
 });
@@ -36,7 +29,6 @@ const Home = () => {
   const [debouncedQuery] = useDebounce(query, 250, { leading: true }); // https://www.npmjs.com/package/use-debounce
   const [findGames, { loading, error }] = useLazyQuery(FIND_GAMES, {
     fetchPolicy: 'cache-first',
-    // notifyOnNetworkStatusChange: true, // did the work
     onCompleted: (result) => {
       console.log('Home found games: ', result);
       setGames(result.findGames);
@@ -64,13 +56,6 @@ const Home = () => {
       findGames({ variables: { name: debouncedQuery } });
     }
   }, [debouncedQuery]);
-
-  //  ***************************************
-  // aprece que el problema esta en gamelist item, mirar a ver games.
-  //  intentando ahcer que al dar intro se vuelva a busrcar
-  // arreglar coverdivs en mylibrary
-  // test method: warcraft, click fuera,(intro click fuera) warcraft 2
-  // **********************************************************
 
   return (
     <div id='Home page div' css={style} ref={ref}>
