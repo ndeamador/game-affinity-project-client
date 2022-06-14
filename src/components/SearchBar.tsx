@@ -2,7 +2,15 @@
 
 import { css } from '@emotion/react';
 import Tooltip from '@reach/tooltip';
-import { useContext, useEffect, useRef } from 'react';
+import {
+  ChangeEventHandler,
+  EventHandler,
+  KeyboardEvent,
+  KeyboardEventHandler,
+  useContext,
+  useEffect,
+  useRef,
+} from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { BounceBoxesContext } from '../App';
 import useWindowSize from '../hooks/useWindowSize';
@@ -39,10 +47,10 @@ const buttonStyle = css({
 });
 
 const SearchBar = ({
-  handleChange,
+  setQuery,
   loading,
 }: {
-  handleChange: React.ChangeEventHandler<HTMLInputElement>;
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
   loading: boolean;
 }) => {
   const bounceContext = useContext(BounceBoxesContext);
@@ -57,6 +65,17 @@ const SearchBar = ({
 
   // DELETE
   // const test = useRef<HTMLDivElement | null>(null);
+
+  const handleEnter: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    const eventTarget = event.target as HTMLInputElement;
+    if (event.key == 'Enter') {
+      setQuery(eventTarget.value);
+    }
+  };
+
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setQuery(event.target.value);
+  };
 
   return (
     <>
@@ -86,7 +105,12 @@ const SearchBar = ({
           placeholder='Find a video game...'
           type='text'
           spellCheck='false'
-          onChange={handleChange}
+          // onChange={handleChange}
+          // onKeyDown={handleEnter}
+          // onChange={(e) => handleChange(e.target)}
+          // onKeyDown={(e) => handleChange(e.target)}
+          onChange={handleInputChange}
+          onKeyDown={handleEnter}
           css={inputStyle}
         />
         <Tooltip label='Search Games'>
