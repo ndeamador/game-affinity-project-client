@@ -3,7 +3,6 @@
 import { css } from '@emotion/react';
 import { Droppable } from 'react-beautiful-dnd';
 import { Game } from '../types';
-import DragDropGame from './DragDropGame';
 import DragDropInnerGameList from './DragDropInnerGameList';
 // import GameListItem from './GameListItem';
 
@@ -17,11 +16,10 @@ const styles = {
     padding: '5px',
     borderRadius: 'var(--border-radius)',
     flex: '1 0 0',
-    // border: 'solid 1px black',
   }),
   droppableGameColumnContainer: css({
     display: 'flex',
-
+    gap: '5px',
     maxWidth: '800px',
     flex: '1 0 0', // grow 1 (~ height: 100%) is important so that draggables can be dropped along the entire droppable box height.
     flexWrap: 'wrap',
@@ -47,7 +45,6 @@ const DragDropColumn = ({
       <Droppable droppableId={title} direction={droppableDirection}>
         {(provided) => (
           <div
-            className='DroppableGameColumnContainer'
             ref={provided.innerRef}
             {...provided.droppableProps}
             css={[
