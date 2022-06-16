@@ -117,7 +117,9 @@ const PlatformIcons = ({ platforms }: { platforms: Platform[] }) => {
   if (!platforms)
     return (
       <Tooltip label='Platform Unknown'>
-        <FaQuestion />
+        <div>
+          <FaQuestion />
+        </div>
       </Tooltip>
     );
 

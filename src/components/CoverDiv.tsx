@@ -57,10 +57,7 @@ const CoverDiv = ({ game }: { game: Game }) => {
           <img
             src={imageLink}
             css={styles.image}
-            onLoad={(event: any) => {
-              console.log('load: ', event);
-              setLoaded(true);
-            }}
+            onLoad={() => setLoaded(true)}
           />
           {!loaded && (
             <div css={styles.genericBox}>

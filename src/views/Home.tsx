@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useLazyQuery } from '@apollo/client';
 import { FIND_GAMES } from '../graphql/queries';
@@ -15,7 +15,6 @@ const style = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'stretch',
-  // marginTop: '15vh',
   maxWidth: 'var(--searchbar-max-width)',
   marginTop: 'var(--searchbar-margin-top)',
 });
@@ -29,6 +28,7 @@ const Home = () => {
   const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounce(query, 250, { leading: true }); // https://www.npmjs.com/package/use-debounce
   const [findGames, { loading, error }] = useLazyQuery(FIND_GAMES, {
+    fetchPolicy: 'cache-first',
     onCompleted: (result) => {
       console.log('Home found games: ', result);
       setGames(result.findGames);
@@ -37,37 +37,33 @@ const Home = () => {
       console.log(err.message);
     },
   });
-  const handleGameQueryChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    setQuery(event.target.value);
-  };
-
-  useEffect(() => {
-    if (query === '') {
-      setGames([]); // Prevents the results from the last query to appear in a new one.
-      return;
-    }
-    findGames({ variables: { name: debouncedQuery } });
-  }, [debouncedQuery]);
 
   // Reset query to collapse results when clicking outside the element.
   const ref = useRef<HTMLDivElement>(null);
   const [clickedOutside] = useClickedOutOfElement(ref);
   useEffect(() => {
-    if(clickedOutside) {
+    if (clickedOutside) {
       setQuery('');
     }
-  })
+  }, [clickedOutside]);
+
+  useEffect(() => {
+    // if (query === '') {
+    //   setGames([]); // Prevents the results from the last query to appear in a new one.
+    //   return;
+    // }
+    if (debouncedQuery) {
+      findGames({ variables: { name: debouncedQuery } });
+    }
+  }, [debouncedQuery]);
 
   return (
     <div id='Home page div' css={style} ref={ref}>
       <GenericContainer additionalStyle={containerStyle}>
-        <SearchBar handleChange={handleGameQueryChange} loading={loading} />
-
+        <SearchBar setQuery={setQuery} loading={loading} />
         {error ? (
           <div>Something went wrong.</div>
-        ) : query && !loading ? (
+        ) : debouncedQuery && !loading ? (
           <GameList games={games} />
         ) : null}
         {/* {query && !loading ? <GameList games={games} /> : null} */}
