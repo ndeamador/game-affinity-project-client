@@ -11,10 +11,8 @@ const draggableStyle = css({
   display: 'flex',
   flexDirection: 'row',
   width: '100%',
-  // maxWidth: '270px',
   height: '4rem',
   padding: '5px',
-  marginBottom: '5px',
   border: 'solid 1px var(--color-gray20)',
   borderRadius: 'var(--border-radius)',
   backgroundColor: 'var(--color-base)',
@@ -40,6 +38,7 @@ const textDivStyle = css({
   wordWrap: 'break-word',
   overflow: 'hidden',
   // textOverflow: 'ellipsis',
+  width: '100%',
 });
 
 const textStyle = css({

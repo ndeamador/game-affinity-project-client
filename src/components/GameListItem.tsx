@@ -36,7 +36,8 @@ const gameInfoContainerStyle = css({
   flexDirection: 'column',
   justifyContent: 'flex-start',
   paddingLeft: '20px',
-  width: '100%',
+  // width: '100%',
+  flexGrow: 1,
 });
 
 const linkStyle = css({
