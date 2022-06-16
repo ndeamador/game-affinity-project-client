@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Game } from '../types';
 import CoverDiv from './CoverDiv';
+import DraggablePortalHandler from './DraggablePortalHandler';
 import GameProfileModal from './GameProfileModal';
 
 const draggableStyle = css({
@@ -59,19 +60,24 @@ const DragDropGame = ({ game, index }: { game: Game; index: number }) => {
   return (
     <Draggable draggableId={game.id} index={index}>
       {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          onClick={() => setOpenModal(game.id)}
-          css={[draggableStyle, snapshot.isDragging && isDraggingStyle]}
-        >
-          <CoverDiv game={game} />
-          <div css={textDivStyle}>
-            <p css={textStyle}>{game.name}</p>
+        <DraggablePortalHandler snapshot={snapshot}>
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            onClick={() => setOpenModal(game.id)}
+            css={[draggableStyle, snapshot.isDragging && isDraggingStyle]}
+          >
+            <CoverDiv game={game} />
+            <div css={textDivStyle}>
+              <p css={textStyle}>{game.name}</p>
+            </div>
+            <GameProfileModal
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
           </div>
-          <GameProfileModal openModal={openModal} setOpenModal={setOpenModal} />
-        </div>
+        </DraggablePortalHandler>
       )}
     </Draggable>
   );
