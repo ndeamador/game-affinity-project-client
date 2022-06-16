@@ -65,9 +65,11 @@ const GameList = ({ games, ranked }: { games: Game[]; ranked?: boolean }) => {
   return (
     <div css={[style, dynamicStyles.dropDown]}>
       {games.length > 0 ? (
-        games.map((game) => (
-          <GameListItem key={game.id} game={game} ranked={ranked} />
-        ))
+        games.map((game) => {
+          // if (game.cover) {
+            return <GameListItem key={game.id} game={game} ranked={ranked} />;
+          // }
+        })
       ) : (
         <div>No games found</div>
       )}

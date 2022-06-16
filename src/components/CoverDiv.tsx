@@ -21,23 +21,19 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    // width: '100%',
     border: 'solid 2px var(--inner-border-color)',
     borderRadius: 'var(--border-radius)',
     padding: '8px',
+    aspectRatio: '1/1',
   }),
   genericIcon: css({
     width: '100%',
-    height: 'auto',
+    // height: 'auto',
+    height: '100%',
   }),
-  spinner: css({ width: '50%', height: '50%' }),
-  maintaintSquareRatio: css({
-    flex: '1 0 auto',
-    height: 'auto',
-    '&:before': {
-      content: `''`,
-    },
-  }),
+  spinner: css({ width: '50%', height: '50%' })
+
 };
 
 const CoverDiv = ({ game }: { game: Game }) => {
@@ -73,7 +69,7 @@ const CoverDiv = ({ game }: { game: Game }) => {
           )}
           <img
             src={imageLink}
-            css={[styles.image , dynamicStyles.displayOnLoad]}
+            css={[styles.image, dynamicStyles.displayOnLoad]}
             onLoad={() => setLoaded(true)}
           />
         </>
