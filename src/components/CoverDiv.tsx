@@ -8,16 +8,10 @@ import { Spinner } from './styledComponentsLibrary';
 const styles = {
   mainContainer: css({
     display: 'flex',
-    // width: 'var(--cover-width)',
-    // height: 'var(--cover-width)',
     maxWidth: 'var(--cover-width)',
     maxHeight: 'var(--cover-width)',
-    // height: '100%',
-    // width: '100%',
-    // flexShrink: 0,
     aspectRatio: '1/1',
     flexGrow: 1,
-    // width: '100%',
   }),
   image: css({
     height: '100%',
@@ -28,11 +22,6 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    // flexGrow: 1,
-    // aspectRatio: '1/1',
-
-    // width: 'var(--cover-width)',
-    // height: 'var(--cover-width)',
     border: 'solid 2px var(--inner-border-color)',
     borderRadius: 'var(--border-radius)',
     padding: '8px',
@@ -40,8 +29,6 @@ const styles = {
   genericIcon: css({
     width: '100%',
     height: 'auto',
-    // width: 'var(--cover-width)',
-    // height: 'var(--cover-width)',
   }),
   spinner: css({ width: '50%', height: '50%' }),
   maintaintSquareRatio: css({
@@ -60,6 +47,13 @@ const CoverDiv = ({ game }: { game: Game }) => {
   const imageSize = 'thumb';
   const imageLink = `//images.igdb.com/igdb/image/upload/t_${imageSize}/${game.cover?.image_id}.jpg`;
 
+  // Not necessary, but a workaround for loading spinner lingering a bit too long after image loads.
+  const dynamicStyles = {
+    displayOnLoad: css({
+      display: loaded ? 'block' : 'none',
+    }),
+  };
+
   return (
     // <div css={styles.mainContainer}>
     //   {game.cover ? (
@@ -72,16 +66,16 @@ const CoverDiv = ({ game }: { game: Game }) => {
     <div css={[styles.mainContainer]}>
       {game.cover ? (
         <>
-          <img
-            src={imageLink}
-            css={styles.image}
-            onLoad={() => setLoaded(true)}
-          />
           {!loaded && (
-            <div css={styles.genericBox}>
+            <div css={[styles.genericBox]}>
               <Spinner css={styles.spinner} />
             </div>
           )}
+          <img
+            src={imageLink}
+            css={[styles.image , dynamicStyles.displayOnLoad]}
+            onLoad={() => setLoaded(true)}
+          />
         </>
       ) : (
         <div css={styles.genericBox}>
