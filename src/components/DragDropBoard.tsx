@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { Game, MeResponse, Rating, User } from '../types';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult, OnDragEndResponder } from 'react-beautiful-dnd';
 import DragDropColumn from './DragDropColumn';
 import { UPDATE_RATING } from '../graphql/mutations';
 import { CURRENT_USER } from '../graphql/queries';
@@ -41,8 +41,12 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
 
   const [updateRating] = useMutation(UPDATE_RATING);
 
-  const onDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId } = result;
+  // const handleItemDrop = (result: DropResult) => {
+    const handleItemDrop:OnDragEndResponder = ({ destination, source, draggableId }) => {
+      // (method) onDragEnd(result: DropResult, provided: ResponderProvided): void
+
+    // const { destination, source, draggableId } = result;
+    console.log('1 testing drag', destination, typeof(destination), source, typeof(source), draggableId, typeof(draggableId));
 
     // Do nothing if the item is dropped outside of a "droppable" object:
     if (!destination) {
@@ -58,7 +62,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
     }
 
     // Just a check to please Typescript (we could use a non-null assertion operator below (result.destination!.index) but we have set a tsconfig rule against it: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator)
-    if (result.destination?.index === undefined) {
+    if (destination?.index === undefined) {
       console.log('DnD destination index missing.');
       return;
     }
@@ -88,7 +92,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
       const gameToUpdate = user.gamesInLibrary.find(
         (game) => game.igdb_game_id === parseInt(draggableId)
       );
-      console.log('gametoupdate', gameToUpdate);
+      console.log('2 gametoupdate', gameToUpdate);
       const newRating = determineNewRank(destination.droppableId);
       console.log(
         'gameId:',
@@ -189,7 +193,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
       </div>
 
       {/* <div className='DragDropContextContainer' css={{ display: 'flex', alignContent: 'center' }}> */}
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={handleItemDrop}>
         <div css={styles.allDnDContainersIncUnranked}>
           <div css={styles.dndColumnsDiv}>
             {Columns.map((column) => {
@@ -198,7 +202,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
                   games={filterByColumn(games, column.rankValue)}
                   title={column.title}
                   key={column.title}
-                  droppableDirection='vertical'
+                  // droppableDirection='vertical'
                 />
               );
             })}
