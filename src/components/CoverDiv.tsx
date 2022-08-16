@@ -2,7 +2,7 @@
 import { Game } from '../types';
 import { CgGames } from 'react-icons/cg';
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Spinner } from './styledComponentsLibrary';
 
 const styles = {
@@ -82,4 +82,6 @@ const CoverDiv = ({ game }: { game: Game }) => {
   );
 };
 
-export default CoverDiv;
+
+export default React.memo(CoverDiv);
+// export default CoverDiv;

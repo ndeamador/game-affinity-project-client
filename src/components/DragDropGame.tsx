@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Game } from '../types';
 import CoverDiv from './CoverDiv';
@@ -17,15 +17,8 @@ const draggableStyle = css({
   border: 'solid 1px var(--color-gray20)',
   borderRadius: 'var(--border-radius)',
   backgroundColor: 'var(--color-base)',
-  // transition: `transform .15s, background-color .5s, transform 0.2s`,
-  // boxShadow: snapshot.isDragging
-  //   ?
-  //   : '2px 2px 4px 0px (--color-gray20)',
   '&:hover': {
     backgroundColor: 'var(--color-gray10)',
-    transform: 'rotate(1.6deg) scale(1.07)',
-    // transform: 'rotate(1.1deg)',
-    // transform: 'scale(1.05)',
   },
 });
 
@@ -38,7 +31,7 @@ const textDivStyle = css({
   alignItems: 'flex-start',
   wordWrap: 'break-word',
   overflow: 'hidden',
-  // textOverflow: 'ellipsis',
+  textOverflow: 'ellipsis',
   width: '100%',
 });
 
