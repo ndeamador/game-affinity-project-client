@@ -70,7 +70,7 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
           label='Add to library'
           onClick={() =>
             addGameToLibrary({
-              variables: { gameId: parsedGameId },
+              variables: { gameId: parsedGameId, rating: 0 },
 
               optimisticResponse: {
                 isOptimistic: true,
@@ -78,7 +78,7 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
                   __typename: 'GameInUserLibrary',
                   id: '-1', // dummy value (will be updated with the server generated id)
                   igdb_game_id: parsedGameId,
-                  rating: null,
+                  rating: 0,
                   subrating: null,
                 },
               },

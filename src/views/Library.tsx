@@ -14,7 +14,6 @@ const style = css({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-
 });
 
 const Library = () => {
@@ -24,7 +23,7 @@ const Library = () => {
     loading: loadingUser,
     error: getUserError,
   } = useLazyCurrentUser();
-  // console.log('----Library: ', currentUser.email, currentUser.gamesInLibrary);
+  console.log('================= Library: ');
 
   useEffect(() => {
     // console.log('useeffect1');
@@ -50,13 +49,14 @@ const Library = () => {
     (game: GameInUserLibrary) => game.igdb_game_id
   );
 
+
   const [
     findGames,
     { data: gamesResponse, loading: loadingGames, error: findGamesError },
   ] = useLazyQuery(FIND_GAMES, {
     variables: {
       id: gameIdsInLibrary,
-      maxResults: 20,
+      maxResults: 30,
     },
     fetchPolicy: 'cache-first', // with cache-and-network we get a loading spinner every time an item is rearranged.
   });
@@ -73,7 +73,11 @@ const Library = () => {
     return <FullPageSpinner />;
   }
 
-  const games = gamesResponse?.findGames;
+
+  // console.log('userids: ', gameIdsInLibrary);
+  // console.log('response: ', gamesResponse.findGames)
+
+  // const games = gamesResponse?.findGames;
 
   // if (gameIdsInLibrary.length === 0) {
   //   return (
@@ -92,7 +96,8 @@ const Library = () => {
           <Link to={'/home'}>Click here to find games!</Link>
         </div>
       ) : (
-        <DragoDropBoard games={games} user={currentUser} />
+        // <DragoDropBoard games={games} user={currentUser} />
+        <DragoDropBoard games={gamesResponse.findGames} user={currentUser} />
       )}
     </div>
   );

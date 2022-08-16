@@ -162,6 +162,7 @@ const Rater = ({
 
   const icons = Array.from({ length: 4 }).map((_x, i) => {
     const inputId = `rating-input-${String(iconLevels[i].key)}`;
+    const indexFrom1 = i + 1;
 
     return (
       <div key={iconLevels[i].key}>
@@ -169,8 +170,8 @@ const Rater = ({
           aria-label={inputId}
           name={elementClassName}
           type='radio'
-          value={i}
-          checked={i === ratingValue}
+          value={indexFrom1}
+          checked={indexFrom1 === ratingValue}
           onChange={handleRatingChange}
           id={inputId}
           css={[
