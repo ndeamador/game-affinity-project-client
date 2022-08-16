@@ -32,8 +32,7 @@ const styles = {
     // height: 'auto',
     height: '100%',
   }),
-  spinner: css({ width: '50%', height: '50%' })
-
+  spinner: css({ width: '50%', height: '50%' }),
 };
 
 const CoverDiv = ({ game }: { game: Game }) => {
@@ -79,9 +78,12 @@ const CoverDiv = ({ game }: { game: Game }) => {
         </div>
       )}
     </div>
+
+    // <div css={[styles.mainContainer]}>
+    //   <img src={imageLink} css={styles.image} />
+    // </div>
   );
 };
-
 
 export default React.memo(CoverDiv);
 // export default CoverDiv;

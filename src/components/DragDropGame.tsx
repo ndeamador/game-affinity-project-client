@@ -23,7 +23,7 @@ const draggableStyle = css({
 });
 
 const isDraggingStyle = css({
-  boxShadow: '4px 4px 15px 1px rgba(0, 0, 0, 0.2)', // h-offset, v-offset, blur, spread, color
+  // boxShadow: '4px 4px 15px 1px rgba(0, 0, 0, 0.2)', // h-offset, v-offset, blur, spread, color
 });
 
 const textDivStyle = css({
