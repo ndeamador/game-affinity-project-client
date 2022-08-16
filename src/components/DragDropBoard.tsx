@@ -1,19 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
 import { Game, GameInUserLibrary, MeResponse, Rating, User } from '../types';
-import {
-  DragDropContext,
-  DropResult,
-  OnDragEndResponder,
-} from 'react-beautiful-dnd';
+import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import DragDropColumn from './DragDropColumn';
 import { UPDATE_RATING } from '../graphql/mutations';
 import { CURRENT_USER } from '../graphql/queries';
 import { useMutation } from '@apollo/client';
 import GenericContainer from './GenericContainer';
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
-import { count } from 'console';
+import { useState } from 'react';
 import { RATINGS } from '../constants';
 
 const styles = {
@@ -21,22 +16,12 @@ const styles = {
     flexDirection: 'column',
     padding: '15px',
   }),
-  allDnDContainersIncUnranked: css({
+  dndColumnsDiv: css({
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    columnGap: '15px',
+    justifyContent: 'center',
   }),
-  dndColumnsDiv: css(
-    {
-      display: 'flex',
-      flexDirection: 'row',
-      columnGap: '15px',
-    }
-    // {
-    //   display: 'grid',
-    //   gridAutoFlow: 'column',
-    //   gridAutoColumns: '1fr',
-    // }
-  ),
   textDiv: css({
     marginBottom: '15px',
   }),
@@ -58,8 +43,6 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
       .map((game) => game.igdb_game_id);
   };
 
-  // console.log('getids61:', getIdsInColumn(RATINGS.thumbsDown.value, user.gamesInLibrary));
-
   const [orderedColumns, setOrderedColums] = useState<number[][]>([
     getIdsInColumn(RATINGS.unranked.value, user.gamesInLibrary),
     getIdsInColumn(RATINGS.thumbsDown.value, user.gamesInLibrary),
@@ -68,32 +51,10 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
     getIdsInColumn(RATINGS.legendary.value, user.gamesInLibrary),
   ]);
 
-  const columnNames = Object.values(RATINGS).map((rating) => rating.title);
-
-  // useEffect(() => {
-  //   setOrderedColums([
-  //     {
-  //       title: 'unranked',
-  //       gameIds: getIdsInColumn(RATINGS.unranked, user.gamesInLibrary),
-  //     },
-  //     {
-  //       title: 'thumbs-down',
-  //       gameIds: getIdsInColumn(RATINGS.thumbsDown, user.gamesInLibrary),
-  //     },
-  //     {
-  //       title: 'thumbs-up',
-  //       gameIds: getIdsInColumn(RATINGS.thumbsUp, user.gamesInLibrary),
-  //     },
-  //     {
-  //       title: 'great',
-  //       gameIds: getIdsInColumn(RATINGS.great, user.gamesInLibrary),
-  //     },
-  //     {
-  //       title: 'legendary',
-  //       gameIds: getIdsInColumn(RATINGS.legendary, user.gamesInLibrary),
-  //     },
-  //   ]);
-  // }, []);
+  const [columnNames, _setColumnNames] = useState(
+    Object.values(RATINGS).map((rating) => rating.title)
+  );
+  // const columnNames = Object.values(RATINGS).map((rating) => rating.title);
 
   // const handleDragEnd = (result: DropResult) => {
   const handleDragEnd: OnDragEndResponder = ({
@@ -101,17 +62,6 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
     source,
     draggableId,
   }) => {
-    // (method) onDragEnd(result: DropResult, provided: ResponderProvided): void
-
-    // const { destination, source, draggableId } = result;
-
-    // console.log(
-    //   '1 destination, source, draggableid: ',
-    //   destination,
-    //   source,
-    //   draggableId
-    // );
-
     // Do nothing if the item is dropped outside of a "droppable" object:
     if (!destination) {
       return;
@@ -145,9 +95,6 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
         case RATINGS.legendary.title:
           return RATINGS.legendary.value;
 
-        // case 'deleteBox':
-        //   console.log('delete');
-        //   return null;
         default:
           throw new Error('Invalid d&d destinationId');
       }
@@ -157,36 +104,20 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
       const initialRating = determineNewRank(source.droppableId);
       const newRating = determineNewRank(destination.droppableId);
 
-      // console.log('orderedColumns', orderedColumns[initialRating]);
-
       if (initialRating == newRating) {
         const reorderedColumn = [...orderedColumns[initialRating]];
-        console.log('columna antes', reorderedColumn, source.index, destination.index, draggableId);
         reorderedColumn.splice(source.index, 1);
         reorderedColumn.splice(destination.index, 0, parseInt(draggableId));
-        console.log('columna después', reorderedColumn);
 
-        // orderedColumns.map((column, i) => console.log(i == newRating, i, column));
-        // orderedColumns.map((column, i) => console.log(i == newRating, i, i == newRating ? reorderedColumn : column));
-
-        // console.log('resultado:', orderedColumns.map((column, i) => i == newRating ? reorderedColumn : column));
         setOrderedColums((state) =>
-          state.map((column, i) => i == newRating ? reorderedColumn : column)
+          state.map((column, i) => (i == newRating ? reorderedColumn : column))
         );
       } else {
         const startColumn = [...orderedColumns[initialRating]];
         const endColumn = [...orderedColumns[newRating]];
-        console.log(
-          'clones before: ',
-          initialRating,
-          newRating,
-          startColumn,
-          endColumn
-        );
 
         startColumn.splice(source.index, 1);
         endColumn.splice(destination.index, 0, parseInt(draggableId));
-        console.log('clones after: ', startColumn, endColumn);
 
         setOrderedColums((state) =>
           state.map((column, i) =>
@@ -202,8 +133,6 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
       const gameToUpdate = user.gamesInLibrary.find(
         (game) => game.igdb_game_id === parseInt(draggableId)
       );
-
-      console.log('2 gametoupdate', gameToUpdate);
 
       updateRating({
         variables: {
@@ -255,40 +184,10 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
     }
   };
 
-  // const filterByColumn = (games: Game[], column: Rating): Game[] => {
-  //   return games.filter((game) =>
-  //     user.gamesInLibrary
-  //       .filter((userGame) => userGame.rating == column)
-  //       .map((filteredGame) => filteredGame.igdb_game_id)
-  //       .includes(parseInt(game.id))
-  //   );
-  // };
-
-  // const Columns: { title: string; rankValue: Rating }[] = [
-  //   {
-  //     title: 'unranked',
-  //     rankValue: null,
-  //   },
-  //   {
-  //     title: 'thumbs-down',
-  //     rankValue: 0,
-  //   },
-  //   {
-  //     title: 'thumbs-up',
-  //     rankValue: 1,
-  //   },
-  //   {
-  //     title: 'great',
-  //     rankValue: 2,
-  //   },
-  //   {
-  //     title: 'legendary',
-  //     rankValue: 3,
-  //   },
-  // ];
-
   const populate = (gameIds: number[], games: Game[]) => {
-    return gameIds.map(gameId => games.find(game => parseInt(game.id) == gameId) as Game)
+    return gameIds.map(
+      (gameId) => games.find((game) => parseInt(game.id) == gameId) as Game
+    );
     // return games.filter((game) => gameIds.includes(parseInt(game.id))); // filter does not preserve id order, which causes issues when reordering.
   };
 
@@ -300,35 +199,19 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
           games, SPACE to select them and the ARROW KEYS to move them.
         </p>
       </div>
-
-      {/* <div className='DragDropContextContainer' css={{ display: 'flex', alignContent: 'center' }}> */}
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div css={styles.allDnDContainersIncUnranked}>
-          <div css={styles.dndColumnsDiv}>
-            {/* {Columns.map((column) => { */}
-            {orderedColumns.map((column, i) => {
-              return (
-                <DragDropColumn
-                  // games={filterByColumn(games, column.rankValue)}
-                  // games={appendStuff(
-                  //   filterStuff(user, column.rankValue),
-                  //   games
-                  // )}
-                  games={populate(column, games)}
-                  // title={column.title}
-                  // key={column.title}
-
-                  title={columnNames[i]}
-                  key={columnNames[i]}
-                  // droppableDirection='vertical'
-                />
-              );
-            })}
-          </div>
-          {/* <DragDropDeleteBox key='dragDropDeleteBox' /> */}
+        <div css={styles.dndColumnsDiv}>
+          {orderedColumns.map((column, i) => {
+            return (
+              <DragDropColumn
+                games={populate(column, games)}
+                title={columnNames[i]}
+                key={columnNames[i]}
+              />
+            );
+          })}
         </div>
       </DragDropContext>
-      {/* </div> */}
     </GenericContainer>
   ) : (
     <div>No games found</div>

@@ -35,8 +35,8 @@ const styles = {
 const DragDropColumn = ({
   games,
   title,
-  // droppableDirection,
-}: {
+}: // droppableDirection,
+{
   games: Game[];
   title: string;
   // droppableDirection: 'vertical' | 'horizontal';
@@ -55,7 +55,7 @@ const DragDropColumn = ({
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            css={[styles.droppableGameColumnContainer/* , dynamicStyle */]}
+            css={[styles.droppableGameColumnContainer /* , dynamicStyle */]}
           >
             <DragDropInnerGameList games={games} />
             {/* {games.map((game, index) => (
