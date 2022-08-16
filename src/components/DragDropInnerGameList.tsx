@@ -8,6 +8,7 @@ import React from 'react';
 // https://blog.logrocket.com/react-pure-components-functional/#functionalcomponentsvsclasscomponents
 
 const DragDropInnerGameList = ({ games }: { games: Game[] }) => {
+  // console.log('Inner: ', games);
   return (
     <>
       {games.map((game, index) => (

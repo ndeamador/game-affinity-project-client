@@ -59,9 +59,10 @@ export interface GameInUserLibrary {
   id: string;
   igdb_game_id: number;
   rating?: Rating;
+  subrating?: number;
 }
 
-export type Rating = 0 | 1 | 2 | 3 | null;
+export type Rating = 0 | 1 | 2 | 3 | 4 ;
 
 export interface libraryIdsResponse { // review
   getLibraryIds: GameInUserLibrary[];

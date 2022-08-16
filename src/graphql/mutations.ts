@@ -70,8 +70,8 @@ mutation removeGameFromLibrary($igdb_game_id: Int!) {
 // Two versions in server, one returns a boolean, another (current, with added fragment) the updated object.
 // removed non-null from $rating: Int! to accomodate unranked games.
 export const UPDATE_RATING = gql`
-mutation updateRating($igdb_game_id: Int!, $rating: Int) {
-  updateRating(igdb_game_id: $igdb_game_id, rating:$rating) {
+mutation updateRating($igdb_game_id: Int!, $rating: Int, $subrating: Int) {
+  updateRating(igdb_game_id: $igdb_game_id, rating:$rating, subrating:$subrating) {
     ...GameInLibraryDetails
   }
 }

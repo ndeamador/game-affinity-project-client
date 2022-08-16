@@ -24,6 +24,8 @@ const styles = {
     flex: '1 0 0', // grow 1 (~ height: 100%) is important so that draggables can be dropped along the entire droppable box height.
     flexWrap: 'wrap',
     alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
   }),
 };
 
@@ -33,31 +35,27 @@ const styles = {
 const DragDropColumn = ({
   games,
   title,
-  droppableDirection,
+  // droppableDirection,
 }: {
   games: Game[];
   title: string;
-  droppableDirection: 'vertical' | 'horizontal';
+  // droppableDirection: 'vertical' | 'horizontal';
 }) => {
+  // const dynamicStyle = css({
+  //   flexDirection: droppableDirection === 'vertical' ? 'column' : 'row',
+  //   justifyContent:
+  //     droppableDirection === 'vertical' ? 'flex-start' : 'space-evenly',
+  // });
+
   return (
     <div css={styles.container}>
       <h3>{title}</h3>
-      <Droppable droppableId={title} direction={droppableDirection}>
+      <Droppable droppableId={title} direction={'vertical'}>
         {(provided) => (
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            css={[
-              styles.droppableGameColumnContainer,
-              css({
-                flexDirection:
-                  droppableDirection === 'vertical' ? 'column' : 'row',
-                justifyContent:
-                  droppableDirection === 'vertical'
-                    ? 'flex-start'
-                    : 'space-evenly',
-              }),
-            ]}
+            css={[styles.droppableGameColumnContainer/* , dynamicStyle */]}
           >
             <DragDropInnerGameList games={games} />
             {/* {games.map((game, index) => (
