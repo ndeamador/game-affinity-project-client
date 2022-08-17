@@ -31,24 +31,9 @@ const Library = () => {
     // findGames();
   }, []);
 
-  useEffect(() => {
-    // console.log('useeffect2, currentUser?', currentUser ? true : false);
-    if (currentUser) findGames();
-  }, [currentUser?.email]);
-
-  // useEffect(() => {
-  //   console.log('useeffect1');
-  //   (async () => {
-  //     await getCurrentUser();
-  //     if (currentUser) findGames();
-  //   })();
-  //   // findGames();
-  // }, []);
-
   const gameIdsInLibrary = currentUser?.gamesInLibrary.map(
     (game: GameInUserLibrary) => game.igdb_game_id
   );
-
 
   const [
     findGames,
@@ -61,18 +46,44 @@ const Library = () => {
     fetchPolicy: 'cache-first', // with cache-and-network we get a loading spinner every time an item is rearranged.
   });
 
-  if (getUserError) return <div>{getUserError.message}</div>;
-  else if (findGamesError) return <div>{findGamesError.message}</div>;
+  useEffect(() => {
+    // console.log('useeffect2, currentUser?', currentUser ? true : false);
+    console.log(
+      'currentuser: ',
+      currentUser ? true : false,
+      'ids: ',
+      gameIdsInLibrary,
+      gameIdsInLibrary?.length == 0 ? true : false
+    );
+    if (currentUser && gameIdsInLibrary?.length != 0) findGames();
+  }, [currentUser?.email]);
+
+  // useEffect(() => {
+  //   console.log('useeffect1');
+  //   (async () => {
+  //     await getCurrentUser();
+  //     if (currentUser) findGames();
+  //   })();
+  //   // findGames();
+  // }, []);
+
+  if (getUserError)
+    return (
+      <div>{`Failed to get user information: ${getUserError.message}`}</div>
+    );
+  else if (findGamesError)
+    return (
+      <div>{`Failed to find user's games: ${findGamesError.message}`}</div>
+    );
   // if (loadingUser || !currentUser || loadingGames) return <FullPageSpinner />;
   else if (
     loadingUser ||
     loadingGames ||
     !currentUser ||
-    (currentUser && !gamesResponse)
+    (currentUser && gameIdsInLibrary?.length != 0 && !gamesResponse)
   ) {
     return <FullPageSpinner />;
   }
-
 
   // console.log('userids: ', gameIdsInLibrary);
   // console.log('response: ', gamesResponse.findGames)
