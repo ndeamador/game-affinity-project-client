@@ -19,7 +19,7 @@ const styles = {
   }),
   droppableGameColumnContainer: css({
     display: 'flex',
-    gap: '5px',
+    // gap: '5px', // causes glitch with react-beautiful-dnd, replaced with margin-bottom on droppable.
     maxWidth: '800px',
     flex: '1 0 0', // grow 1 (~ height: 100%) is important so that draggables can be dropped along the entire droppable box height.
     flexWrap: 'wrap',
