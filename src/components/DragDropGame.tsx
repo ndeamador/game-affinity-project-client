@@ -61,7 +61,7 @@ const DragDropGame = ({ game, index }: { game: Game; index: number }) => {
             onClick={() => setOpenModal(game.id)}
             css={[draggableStyle, snapshot.isDragging && isDraggingStyle]}
           >
-            <CoverDiv game={game} />
+            <CoverDiv game={game} showSpinner={false} />
             <div css={textDivStyle}>
               <p css={textStyle}>{game.name}</p>
             </div>

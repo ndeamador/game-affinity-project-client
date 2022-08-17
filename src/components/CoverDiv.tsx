@@ -35,8 +35,15 @@ const styles = {
   spinner: css({ width: '50%', height: '50%' }),
 };
 
-const CoverDiv = ({ game }: { game: Game }) => {
+const CoverDiv = ({
+  game,
+  showSpinner = true,
+}: {
+  game: Game;
+  showSpinner?: boolean;
+}) => {
   const [loaded, setLoaded] = useState(false);
+  console.log('load:', loaded, game.cover, showSpinner);
 
   // Setting image resolution from url: https://api-docs.igdb.com/#images
   const imageSize = 'thumb';
@@ -58,32 +65,62 @@ const CoverDiv = ({ game }: { game: Game }) => {
     //   )}
     // </div>
 
+    // <div css={[styles.mainContainer]}>
+    //   {game.cover ? (
+    //     <>
+    //       {!loaded && (
+    //         <div css={[styles.genericBox]}>
+    //           <Spinner css={styles.spinner} />
+    //         </div>
+    //       )}
+    //       <img
+    //         src={imageLink}
+    //         css={[styles.image, dynamicStyles.displayOnLoad]}
+    //         onLoad={() => {
+    //           if (!loaded) setLoaded(true);
+    //         }}
+    //       />
+    //     </>
+    //   ) : (
+    //     <div css={styles.genericBox}>
+    //       <CgGames css={styles.genericIcon} />
+    //     </div>
+    //   )}
+    // </div>
+
+    // <div css={[styles.mainContainer]}>
+    //   <img src={imageLink} css={styles.image} />
+    // </div>
+
+    // Workaround to prevent image flickering when dragging in My Library.
     <div css={[styles.mainContainer]}>
       {game.cover ? (
-        <>
-          {!loaded && (
-            <div css={[styles.genericBox]}>
-              <Spinner css={styles.spinner} />
-            </div>
-          )}
-          <img
-            src={imageLink}
-            css={[styles.image, dynamicStyles.displayOnLoad]}
-            onLoad={() => setLoaded(true)}
-          />
-        </>
+        showSpinner ? (
+          <>
+            {!loaded && (
+              <div css={[styles.genericBox]}>
+                <Spinner css={styles.spinner} />
+              </div>
+            )}
+            <img
+              src={imageLink}
+              css={[styles.image, dynamicStyles.displayOnLoad]}
+              onLoad={() => {
+                if (!loaded) setLoaded(true);
+              }}
+            />
+          </>
+        ) : (
+          <img src={imageLink} css={styles.image} />
+        )
       ) : (
         <div css={styles.genericBox}>
           <CgGames css={styles.genericIcon} />
         </div>
       )}
     </div>
-
-    // <div css={[styles.mainContainer]}>
-    //   <img src={imageLink} css={styles.image} />
-    // </div>
   );
 };
 
-export default React.memo(CoverDiv);
-// export default CoverDiv;
+// export default React.memo(CoverDiv);
+export default CoverDiv;
