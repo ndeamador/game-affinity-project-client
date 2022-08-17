@@ -43,7 +43,6 @@ const CoverDiv = ({
   showSpinner?: boolean;
 }) => {
   const [loaded, setLoaded] = useState(false);
-  console.log('load:', loaded, game.cover, showSpinner);
 
   // Setting image resolution from url: https://api-docs.igdb.com/#images
   const imageSize = 'thumb';

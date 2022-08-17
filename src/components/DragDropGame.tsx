@@ -17,13 +17,16 @@ const draggableStyle = css({
   border: 'solid 1px var(--color-gray20)',
   borderRadius: 'var(--border-radius)',
   backgroundColor: 'var(--color-base)',
+  marginBottom: '5px',
+  transition: 'background-color 0.18s',
   '&:hover': {
+    transition: 'none',
     backgroundColor: 'var(--color-gray10)',
   },
 });
 
 const isDraggingStyle = css({
-  // boxShadow: '4px 4px 15px 1px rgba(0, 0, 0, 0.2)', // h-offset, v-offset, blur, spread, color
+  boxShadow: '4px 4px 15px 1px rgba(0, 0, 0, 0.2)', // h-offset, v-offset, blur, spread, color
 });
 
 const textDivStyle = css({
@@ -59,7 +62,7 @@ const DragDropGame = ({ game, index }: { game: Game; index: number }) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             onClick={() => setOpenModal(game.id)}
-            css={[draggableStyle, snapshot.isDragging && isDraggingStyle]}
+            css={[draggableStyle, snapshot.isDragging && !snapshot.isDropAnimating && isDraggingStyle]}
           >
             <CoverDiv game={game} showSpinner={false} />
             <div css={textDivStyle}>
