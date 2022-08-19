@@ -8,6 +8,7 @@ import LogoutButton from '../components/LogoutButton';
 import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/react';
 import useCurrentUser from '../hooks/useCurrentUser';
+import LonginWithTestAccountButton from './LoginWithTestAccountButton';
 
 const outerNavBarStyle = css({
   display: 'flex',
@@ -99,6 +100,8 @@ const NavBar = () => {
             </NavLink>
           )}
         </div>
+
+        {!currentUser && <LonginWithTestAccountButton />}
 
         {currentUser ? (
           <div css={navLinkGroupStyle}>
