@@ -47,15 +47,22 @@ const DragDropColumn = ({
   //     droppableDirection === 'vertical' ? 'flex-start' : 'space-evenly',
   // });
 
+  const DynamicContainerStyle = css({
+    backgroundColor: 'var(--regular-button-background-color)',
+    // border: '1px solid lightgrey',
+    // color: 'grey',
+    // transition: 'color 1s'
+  });
+
   return (
-    <div css={styles.container}>
+    <div css={[styles.container, title == 'Unranked' && DynamicContainerStyle]}>
       <h3>{title}</h3>
       <Droppable droppableId={title} direction={'vertical'}>
         {(provided) => (
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            css={[styles.droppableGameColumnContainer /* , dynamicStyle */]}
+            css={[styles.droppableGameColumnContainer /* dynamicStyle */]}
           >
             <DragDropInnerGameList games={games} />
             {/* {games.map((game, index) => (
