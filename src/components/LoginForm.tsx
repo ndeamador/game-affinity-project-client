@@ -11,6 +11,37 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { ErrorNotification } from './styledComponentsLibrary';
+import { css } from '@emotion/react';
+
+// Styles
+// ===========================================================
+const styles = {
+  form: css({
+    display: 'flex',
+    flexDirection: 'column',
+    // alignItems: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    '> .inputErrorDiv': {
+      margin: '0 0 10px 0',
+      width: '100%',
+      minWidth: '250px',
+    },
+  }),
+  input: css({
+    backgroundColor: 'var(--inner-content-background-color)',
+  }),
+  submitButtonAndServerErrorDiv: css({
+    alignSelf: 'flex-start',
+  }),
+  submitButton: css({
+    height: '40px',
+    minWidth: '75px',
+  }),
+  notification: css({
+    marginLeft: '20px',
+  }),
+};
 
 // TypeScript definitions
 // ===========================================================
@@ -54,18 +85,16 @@ const LoginForm = ({
   // ===========================================================
   // GraphQL Mutations
   // ===========================================================
-  const [
-    registerNewUser,
-    { loading: registerLoading, error: registerError },
-  ] = useMutation(REGISTER_NEW_USER, {
-    onCompleted: () => {
-      setOpenModal('none');
-    },
-    onError: (err) => {
-      console.log('register error:', err.message);
-    },
-    refetchQueries: [{ query: CURRENT_USER }],
-  });
+  const [registerNewUser, { loading: registerLoading, error: registerError }] =
+    useMutation(REGISTER_NEW_USER, {
+      onCompleted: () => {
+        setOpenModal('none');
+      },
+      onError: (err) => {
+        console.log('register error:', err.message);
+      },
+      refetchQueries: [{ query: CURRENT_USER }],
+    });
 
   const [login, { loading: loginLoading, error: loginError }] = useMutation(
     LOGIN,
@@ -142,23 +171,7 @@ const LoginForm = ({
   // RETURN
   // ===========================================================
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      noValidate
-      css={{
-        display: 'flex',
-        flexDirection: 'column',
-        // alignItems: 'stretch',
-        alignItems: 'center',
-        justifyContent: 'center',
-        '> .inputErrorDiv': {
-          margin: '0 0 25px 0',
-          width: '100%',
-          // maxWidth: '400px',
-          minWidth: '250px',
-        },
-      }}
-    >
+    <form onSubmit={handleSubmit(onSubmit)} noValidate css={styles.form}>
       <div className='inputErrorDiv'>
         <Input
           id='email'
@@ -169,6 +182,7 @@ const LoginForm = ({
           // ref={register({ required: true })}
           aria-invalid={errors.email ? 'true' : 'false'}
           {...register('email', { required: true })}
+          css={styles.input}
         />
         <ErrorNotification variant='stacked'>
           {errors?.email?.message}
@@ -187,24 +201,18 @@ const LoginForm = ({
             maxLength: 64,
             minLength: 8,
           })}
+          css={styles.input}
         />
         <ErrorNotification variant='stacked'>
           {errors?.password?.message}
         </ErrorNotification>
       </div>
-      <div css={{ alignSelf: 'flex-start' }}>
-        <Button
-          type='submit'
-          variant='primary'
-          css={{ height: '40px', minWidth: '75px' }}
-        >
+      <div css={styles.submitButtonAndServerErrorDiv}>
+        <Button type='submit' variant='primary' css={styles.submitButton}>
           {loading ? <Spinner /> : capitalizeFirstLetter(loginOrRegister)}
         </Button>
         {serverError && (
-          <ErrorNotification
-            variant='inline'
-            css={{ marginLeft: '20px' }}
-          >
+          <ErrorNotification variant='inline' css={styles.notification}>
             {serverError}
           </ErrorNotification>
         )}
