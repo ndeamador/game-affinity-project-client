@@ -17,9 +17,9 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'var(--regular-button-background-color)',
-    '&:hover, :focus': {
+    '&:hover': {
       color: 'var(--color-indigo)',
-      backgroundColor: 'var(--item-list-background)',
+      // backgroundColor: 'var(--item-list-background)',
     },
   }),
   iconDivStyle: css({
@@ -40,6 +40,7 @@ const GitHubButton = () => {
     <a
       href='https://github.com/ndeamador/game-affinity-project-client'
       css={styles.linkStyle}
+      target="_blank" rel="noreferrer noopener" // open link in new tab.
     >
       <Tooltip label='View GitHub repository' css={styles.tooltipStyle}>
         <CircleButton css={styles.buttonStyle}>
