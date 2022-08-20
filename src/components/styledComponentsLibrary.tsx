@@ -47,6 +47,9 @@ export const Button = styled.button(
 
 // CIRCLE BUTTON
 export const CircleButton = styled.button({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
   minWidth: '40px',
   minHeight: '40px',
   // margin: '0px 5px',
