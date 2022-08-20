@@ -23,7 +23,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     '> .inputErrorDiv': {
-      margin: '0 0 25px 0',
+      margin: '0 0 10px 0',
       width: '100%',
       minWidth: '250px',
     },
@@ -31,7 +31,7 @@ const styles = {
   input: css({
     backgroundColor: 'var(--inner-content-background-color)',
   }),
-  submitButtonAndNotificationDiv: css({
+  submitButtonAndServerErrorDiv: css({
     alignSelf: 'flex-start',
   }),
   submitButton: css({
@@ -207,7 +207,7 @@ const LoginForm = ({
           {errors?.password?.message}
         </ErrorNotification>
       </div>
-      <div css={styles.submitButtonAndNotificationDiv}>
+      <div css={styles.submitButtonAndServerErrorDiv}>
         <Button type='submit' variant='primary' css={styles.submitButton}>
           {loading ? <Spinner /> : capitalizeFirstLetter(loginOrRegister)}
         </Button>

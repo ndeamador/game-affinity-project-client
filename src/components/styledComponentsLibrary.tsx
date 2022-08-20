@@ -148,12 +148,14 @@ export const FullPageError = ({
 // ERROR MESSAGE
 export const ErrorNotification = styled.div(
   {
-    color: 'var(--color-danger)',
+    color: 'var(--color-danger-dark)',
     margin: 0,
     paddingTop: '2px',
-    position: 'absolute',
+    // position: 'absolute',
     fontSize: '85%',
-    textAlign: 'center',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    wordWrap: 'break-word',
   },
   ({ variant }: { variant: 'inline' | 'stacked' }) => ({
     display: variant === 'inline' ? 'inline' : 'block',

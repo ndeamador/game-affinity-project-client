@@ -13,7 +13,7 @@ import GenericContainer from './GenericContainer';
 const styles = {
   dialogOverlay: css({
     backdropFilter: 'blur(10px)',
-    background: 'rgba(0, 0, 0, 0.4)',
+    background: 'rgba(0, 0, 0, 0.3)',
   }),
   dialogContent: css({
     backgroundColor: 'transparent',
