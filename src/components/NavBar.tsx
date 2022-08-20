@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/react';
 import useCurrentUser from '../hooks/useCurrentUser';
 import LonginWithTestAccountButton from './LoginWithTestAccountButton';
+import GitHubButton from './GitHubButton';
 
 const outerNavBarStyle = css({
   display: 'flex',
@@ -21,7 +22,7 @@ const outerNavBarStyle = css({
   top: '0px',
   backdropFilter: 'saturate(180%) blur(5px)',
   backgroundColor: 'var(--navbar-background)',
-  zIndex: 999,
+  zIndex: 100,
 });
 
 const innerNavBarStyle = css({
@@ -36,6 +37,7 @@ const navLinkGroupStyle = css({
   alignItems: 'center',
   height: '100%',
   justifyContent: 'space-between',
+  gap: '10px',
 });
 
 const navLinkStyle = css({
@@ -103,7 +105,7 @@ const NavBar = () => {
 
         {!currentUser && <LonginWithTestAccountButton />}
 
-        {currentUser ? (
+        {/* {currentUser ? (
           <div css={navLinkGroupStyle}>
             <div aria-label='Current User' css={userStripStyle}>
               {currentUser.email}
@@ -126,6 +128,34 @@ const NavBar = () => {
             />
           </div>
         )}
+
+        <GitHubButton /> */}
+        <div css={navLinkGroupStyle}>
+          {currentUser ? (
+            <>
+              <div aria-label='Current User' css={userStripStyle}>
+                {currentUser.email}
+              </div>
+              <LogoutButton />
+            </>
+          ) : (
+            <>
+              <LoginRegisterButton
+                loginOrRegister='login'
+                setOpenModal={setOpenModal}
+                openModal={openModal}
+                buttonType='regular'
+              />
+              <LoginRegisterButton
+                loginOrRegister='register'
+                setOpenModal={setOpenModal}
+                openModal={openModal}
+                buttonType='regular'
+              />
+            </>
+          )}
+          <GitHubButton />
+        </div>
       </div>
     </div>
   );
