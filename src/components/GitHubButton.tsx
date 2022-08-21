@@ -17,8 +17,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     '&:hover': {
-      color: 'var(--color-indigo)',
-      // backgroundColor: 'var(--item-list-background)',
+      color: 'black',
     },
   }),
   iconDivStyle: css({
@@ -27,11 +26,6 @@ const styles = {
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    transition: 'transform 0.025s ease-in',
-    '&:hover': {
-      transform: 'scale(1.12)',
-      transition: 'transform 0.025s ease-in'
-    },
   }),
   iconStyle: css({
     width: 'auto',

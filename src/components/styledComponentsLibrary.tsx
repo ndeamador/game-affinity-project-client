@@ -29,7 +29,7 @@ const buttonVariants = {
       backgroundColor: 'var(--filter-button-hover-active)',
       transition: 'background-color 0.12s ease-out',
     },
-  }
+  },
 };
 
 export const Button = styled.button(
@@ -67,12 +67,14 @@ export const CircleButton = styled.button({
   borderStyle: 'none',
   color: 'var(--color-text)',
   backgroundColor: 'var(--regular-button-background-color)',
-  transitionDuration: '0.2s',
-  transitionProperty: 'background-color',
+  transition: 'background-color 0.04s ease-in',
   '&:hover': {
     backgroundColor: 'var(--regular-button-background-color-hover)',
-    transitionDuration: '0.2s',
-    transitionProperty: 'background-color',
+    transition: 'background-color 0.02s ease-in',
+    '&:first-child > *': {
+      transform: 'scale(1.1)',
+      transition: 'transform 0.025s ease-in',
+    },
   },
 });
 
