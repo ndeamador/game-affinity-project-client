@@ -7,7 +7,7 @@ import { CircleButton } from './styledComponentsLibrary';
 
 const styles = {
   linkStyle: css({
-    marginLeft: '15px',
+    marginLeft: '10px',
   }),
   tooltipStyle: css({
     zIndex: 200,
