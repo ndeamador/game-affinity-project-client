@@ -28,7 +28,7 @@ const Ranking = () => {
     );
 
   if (loadingGames) return <FullPageSpinner />;
-  if (!data)
+  if (!data || !data.getRankedGames)
     return (
       <ErrorNotification variant='inline'>
         No games are rated yet.
