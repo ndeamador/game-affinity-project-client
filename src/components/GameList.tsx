@@ -40,8 +40,8 @@ const animations = {
 const style = css({
   display: 'flex',
   flexDirection: 'column',
-  gap: '7px',
-  padding: '10px',
+  // gap: '7px',
+  padding: '5px 10px',
   // backgroundColor: 'var(--item-list-background)',
   borderRadius: '0 0 var(--border-radius) var(--border-radius)',
   borderTop: '1px solid black',
