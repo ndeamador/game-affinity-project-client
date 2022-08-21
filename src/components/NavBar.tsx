@@ -61,7 +61,7 @@ const navLinkActiveStyle: React.CSSProperties = {
 };
 
 const userStripStyle = css({
-  padding: '5px 25px',
+  padding: '5px 10px',
 });
 
 const NavBar = () => {

@@ -35,6 +35,9 @@ const Ranking = () => {
       </ErrorNotification>
     );
 
+  console.log('data:', data);
+  console.log('getranked:', data.getRankedGames);
+
   const genres: string[] = [
     ...new Set<string>( // Set is just to isolate unique values.
       data.getRankedGames
@@ -56,10 +59,14 @@ const Ranking = () => {
 
   return (
     // <div css={containerStyle}>
-      <GenericContainer additionalStyle={containerStyle}>
-        <GenreFiltersBox genreFilter={genreFilter} setGenreFilter={setGenreFilter} genres={genres}/>
-        <GameList games={gamesToDisplay} ranked />
-      </GenericContainer>
+    <GenericContainer additionalStyle={containerStyle}>
+      <GenreFiltersBox
+        genreFilter={genreFilter}
+        setGenreFilter={setGenreFilter}
+        genres={genres}
+      />
+      <GameList games={gamesToDisplay} ranked />
+    </GenericContainer>
     // </div>
   );
 };

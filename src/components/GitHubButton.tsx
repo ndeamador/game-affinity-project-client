@@ -7,7 +7,7 @@ import { CircleButton } from './styledComponentsLibrary';
 
 const styles = {
   linkStyle: css({
-    marginLeft: '15px',
+    marginLeft: '10px',
   }),
   tooltipStyle: css({
     zIndex: 200,
@@ -16,10 +16,8 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'var(--regular-button-background-color)',
-    '&:hover, :focus': {
-      color: 'var(--color-indigo)',
-      backgroundColor: 'var(--item-list-background)',
+    '&:hover': {
+      color: 'black',
     },
   }),
   iconDivStyle: css({
@@ -32,6 +30,7 @@ const styles = {
   iconStyle: css({
     width: 'auto',
     height: '65%',
+
   }),
 };
 
@@ -40,6 +39,7 @@ const GitHubButton = () => {
     <a
       href='https://github.com/ndeamador/game-affinity-project-client'
       css={styles.linkStyle}
+      target="_blank" rel="noreferrer noopener" // open link in new tab.
     >
       <Tooltip label='View GitHub repository' css={styles.tooltipStyle}>
         <CircleButton css={styles.buttonStyle}>

@@ -11,39 +11,48 @@ import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 import AverageRatingDiv from './AverageRatingDiv';
 import { css } from '@emotion/react';
 
-const mainContainerStyle = css({
-  display: 'flex',
-  // alignItems: 'stretch',
-  margin: '0',
-  // padding: '10px',
-  // marginTop: '10px',
-  borderRadius: 'var(--border-radius)',
-  boxSizing: 'border-box',
-  transitionDuration: '0.2s',
-  transitionProperty: 'background-color, box-shadow',
-  ':hover': {
-    // outline: '1px solid lightgrey',
-    // border: '1px solid lightgrey',
-    boxShadow: '0 0 0 1px lightgrey',
-    backgroundColor: 'ghostwhite',
-    transitionDuration: '0s',
+const styles = {
+  mainContainer: css({
+    display: 'flex',
+    padding: '5px 0px',
+    margin: '0',
+    borderRadius: 'var(--border-radius)',
+    boxSizing: 'border-box',
+    transitionDuration: '0.2s',
     transitionProperty: 'background-color, box-shadow',
-  },
-});
+    border: '1px solid transparent', // here just so that the hover border does not move the element
+    ':hover': {
+      // boxShadow: '0 0 0 1px lightgrey',
+      // backgroundColor: 'ghostwhite',
+      // transitionDuration: '1s',
+      // transitionProperty: 'background-color, background, box-shadow, border-image',
+      // borderTop: '1px solid black',
+      // borderBottom: '1px solid black',
+      background:
+        'linear-gradient(to right, transparent, var(--inner-content-background-color-hover) 20%, transparent)',
+      borderImage:
+        'linear-gradient(160deg, transparent 25%, grey, transparent 75%)',
+      borderImageSlice: 1,
+    },
+  }),
 
-const gameInfoContainerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-start',
-  paddingLeft: '20px',
-  // width: '100%',
-  flexGrow: 1,
-});
+  gameInfoContainer: css({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    paddingLeft: '20px',
+    // width: '100%',
+    flexGrow: 1,
+  }),
 
-const linkStyle = css({
-  textDecoration: 'none',
-  color: 'var(--color-text)',
-});
+  link: css({
+    textDecoration: 'none',
+    color: 'var(--color-text)',
+  }),
+  title: css({
+    margin: 0,
+  }),
+};
 
 const GameListItem = ({ game, ranked }: { game: Game; ranked?: boolean }) => {
   const {
@@ -57,16 +66,16 @@ const GameListItem = ({ game, ranked }: { game: Game; ranked?: boolean }) => {
   }, [getCurrentUser]);
 
   return (
-    <Link to={`/games/${game.id}`} key={game.id} css={linkStyle}>
-      <div css={mainContainerStyle}>
+    <Link to={`/games/${game.id}`} key={game.id} css={styles.link}>
+      <div css={styles.mainContainer}>
         {ranked && game.average_rating && (
           <AverageRatingDiv rating={game.average_rating} />
         )}
 
         <CoverDiv game={game} />
 
-        <div css={gameInfoContainerStyle}>
-          <h3 css={{ margin: 0 }}>{game.name}</h3>
+        <div css={styles.gameInfoContainer}>
+          <h3 css={styles.title}>{game.name}</h3>
           <ReleaseDeveloperRow game={game} />
           <PlatformIcons platforms={game.platforms} />
         </div>
