@@ -40,9 +40,12 @@ html {
   --blob-center-2: #3eefff; */
   --item-list-background: rgba(255, 255, 255, 0.6);
   --searchbar-background-color: white;
-  --regular-button-background-color: var(--color-gray);
+  --regular-button-background-color: rgba(255, 255, 255, 0.4);
+  --regular-button-background-color-hover: rgba(255, 255, 255, 0.7);
+  --filter-button-hover-active: var(--color-indigoLighten80);
   --inner-content-background-color: ghostwhite;
   --inner-border-color: var(--color-gray80);
+
 
 
 

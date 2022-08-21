@@ -12,7 +12,7 @@ const style = css({
   // rowGap: '15px',
   gap: 'var(--border-radius)',
   '> .selected': {
-    backgroundColor: 'var(--color-indigoLighten80)',
+    backgroundColor: 'var(--filter-button-hover-active)',
   },
 });
 

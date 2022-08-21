@@ -17,13 +17,18 @@ const buttonVariants = {
     color: 'var(--color-base)',
   },
   regular: {
-    background: 'var(--color-gray)',
+    backgroundColor: 'var(--regular-button-background-color)',
     color: 'var(--color-text)',
   },
   filter: {
     padding: '8px 8px',
     backgroundColor: 'var(--regular-button-background-color)',
     fontSize: '15px',
+    transition: 'background-color 0.6s ease-out',
+    '&:hover': {
+      backgroundColor: 'var(--filter-button-hover-active)',
+      transition: 'background-color 0.12s ease-out',
+    },
   }
 };
 
@@ -36,7 +41,7 @@ export const Button = styled.button(
     margin: '0',
     boxSizing: 'border-box',
     '&:hover': {
-      backgroundColor: 'var(--color-indigoLighten80)',
+      backgroundColor: 'var(--regular-button-background-color-hover)',
       transitionDuration: '0.2s',
       transitionProperty: 'background-color',
     },
@@ -61,11 +66,11 @@ export const CircleButton = styled.button({
   borderRadius: '9999px',
   borderStyle: 'none',
   color: 'var(--color-text)',
-  backgroundColor: 'var(--color-base)',
+  backgroundColor: 'var(--regular-button-background-color)',
   transitionDuration: '0.2s',
   transitionProperty: 'background-color',
   '&:hover': {
-    backgroundColor: 'var(--color-gray)',
+    backgroundColor: 'var(--regular-button-background-color-hover)',
     transitionDuration: '0.2s',
     transitionProperty: 'background-color',
   },
