@@ -71,7 +71,7 @@ export const CircleButton = styled.button({
   '&:hover': {
     backgroundColor: 'var(--regular-button-background-color-hover)',
     transition: 'background-color 0.02s ease-in',
-    '&:first-child > *': {
+    '&:first-of-type div > *': {
       transform: 'scale(1.1)',
       transition: 'transform 0.025s ease-in',
     },
