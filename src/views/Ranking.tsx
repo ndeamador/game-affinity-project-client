@@ -14,7 +14,6 @@ import { Game } from '../types';
 const containerStyle = css({
   display: 'flex',
   flexDirection: 'column',
-  // justifyContent: 'center',
 });
 
 const Ranking = () => {
@@ -35,13 +34,13 @@ const Ranking = () => {
       </ErrorNotification>
     );
 
-  console.log('data:', data);
-  console.log('getranked:', data.getRankedGames);
-
   const genres: string[] = [
     ...new Set<string>( // Set is just to isolate unique values.
       data.getRankedGames
-        .map((game: Game) => game.genres.map((genre) => genre.name))
+        .map(
+          (game: Game) =>
+            game.genres ? game.genres?.map((genre) => genre.name) : [] // workaround to filter games with no genre.
+        )
         .reduce((acc: string[], current: string[]) => {
           acc.push(...current);
           return acc;
@@ -52,13 +51,15 @@ const Ranking = () => {
   const gamesToDisplay =
     genreFilter === 'All'
       ? data.getRankedGames
+      : genreFilter === 'Other'
+      ? data.getRankedGames.filter((game: Game) => game.genres == null)
       : data.getRankedGames.filter(
           (game: Game) =>
+            game.genres &&
             game.genres.findIndex((genre) => genre.name === genreFilter) !== -1
         );
 
   return (
-    // <div css={containerStyle}>
     <GenericContainer additionalStyle={containerStyle}>
       <GenreFiltersBox
         genreFilter={genreFilter}
@@ -67,7 +68,6 @@ const Ranking = () => {
       />
       <GameList games={gamesToDisplay} ranked />
     </GenericContainer>
-    // </div>
   );
 };
 
