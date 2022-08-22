@@ -39,12 +39,11 @@ const GameProfileModal = ({
 
   return (
     <DialogOverlay
-      aria-label={ariaLabel}
       isOpen={openModal !== 'none'}
       onDismiss={() => setOpenModal('none')}
       css={styles.dialogOverlay}
     >
-      <DialogContent css={styles.dialog}>
+      <DialogContent css={styles.dialog} aria-label={ariaLabel}>
         <GameProfile modalGame={openModal} />
       </DialogContent>
     </DialogOverlay>

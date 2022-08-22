@@ -57,12 +57,11 @@ const LoginRegisterModal = ({
 
   return (
     <DialogOverlay
-      aria-label={ariaLabel}
       isOpen={openModal === loginOrRegister}
       onDismiss={() => setOpenModal('none')}
       css={styles.dialogOverlay}
     >
-      <DialogContent css={styles.dialogContent}>
+      <DialogContent css={styles.dialogContent} aria-label={ariaLabel}>
         <GenericContainer additionalStyle={styles.genericContainer}>
           <div css={styles.closeButtonDiv}>
             <CircleButton onClick={() => setOpenModal('none')}>
