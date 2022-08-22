@@ -17,9 +17,6 @@ import { css } from '@emotion/react';
 const styles = {
   mainContainer: css({
     display: 'flex',
-    // alignItems: 'center',
-    // alignItems: 'flex-start',
-    // marginTop: '20px',
     paddingBottom: '0px',
     justifySelf: 'flex-end',
     flexDirection: 'column',
@@ -31,8 +28,6 @@ const styles = {
     borderRadius: 'var(--border-radius)',
     width: '25%',
     minWidth: '150px',
-    // flexGrow: 0.25,
-    // flex: '0 0 100%',
     alignSelf: 'flex-start',
     justifyContent: 'space-around',
     '.rating-icon': {
@@ -54,8 +49,7 @@ const styles = {
     cursor: 'pointer',
     color: 'lightgrey',
   }),
-  icons: css({}),
-  input: (i: number, elementClassName: string, iconColors: string[]) => {
+  radioInput: (i: number, elementClassName: string, iconColors: string[]) => {
     return css({
       // These are to hide the radio inputs.
       // https://www.w3schools.com/cssref/pr_pos_clip.asp
@@ -71,7 +65,6 @@ const styles = {
       // [] are needed here to use template literals.
       [`.${elementClassName} &:checked + label`]: {
         color: iconColors[i],
-
         '.rating-icon': {
           '@keyframes bump': {
             '0%': {
@@ -142,6 +135,8 @@ const iconLevels = [
     className='rating-icon legendary-icon'
   />,
 ];
+
+
 
 const Rater = ({
   gameId,
@@ -232,12 +227,12 @@ const Rater = ({
 
   const elementClassName = `rating-${gameId}`;
 
-  const icons = Array.from({ length: 4 }).map((_x, i) => {
-    const inputId = `rating-input-${String(iconLevels[i].key)}`;
+  const radioInputs = iconLevels.map((icon, i) => {
+    const inputId = `rating-input-${String(icon.key)}`;
     const indexFrom1 = i + 1;
 
     return (
-      <div key={iconLevels[i].key}>
+      <div key={icon.key}>
         <input
           aria-label={inputId}
           name={elementClassName}
@@ -246,77 +241,10 @@ const Rater = ({
           checked={indexFrom1 === ratingValue}
           onChange={handleRatingChange}
           id={inputId}
-          // css={[
-          //   {
-          //     // These are to hide the radio inputs.
-          //     // https://www.w3schools.com/cssref/pr_pos_clip.asp
-          //     clip: 'rect(0 0 0 0)',
-          //     overflow: 'hidden',
-          //     position: 'absolute',
-          //     // the following values are just to make the hidden input not interfere
-          //     height: '1px',
-          //     margin: '0px',
-          //     width: '1px',
-          //   },
-          //   {
-          //     // & css nesting operator.
-          //     // + css adyacent sibling selector.
-          //     // [] are needed here to use template literals.
-          //     [`.${elementClassName} &:checked + label`]: {
-          //       color: iconColors[i],
-
-          //       '.rating-icon': {
-          //         '@keyframes bump': {
-          //           '0%': {
-          //             transform: 'scale(1)',
-          //           },
-          //           '30%': {
-          //             transform: 'scale(1.7)',
-          //           },
-          //           '70%': {
-          //             transform: 'scale(1.35)',
-          //           },
-          //           '100%': {
-          //             transform: 'scale(1.5)',
-          //           },
-          //         },
-          //         '@keyframes up': {
-          //           '0%': {
-          //             transform: 'translate(0, 0)',
-          //           },
-          //           '30%': {
-          //             transform: `translate(0, -5px)`,
-          //           },
-          //           '100%': {
-          //             transform: 'translate(0, 0), scale(1.4)',
-          //           },
-          //         },
-          //         '@keyframes down': {
-          //           '0%': {
-          //             transform: 'translate(0, 0)',
-          //           },
-          //           '30%': {
-          //             transform: `translate(0, 5px)`,
-          //           },
-          //           '100%': {
-          //             transform: 'translate(0, 0), scale(1.4)',
-          //           },
-          //         },
-          //         animation: `.3s linear ${
-          //           i > 1 ? 'bump' : i > 0 ? 'up' : 'down'
-          //         }`,
-          //         transform: 'scale(1.5)',
-          //         strokeWidth: '25',
-          //         stroke: 'whitesmoke',
-          //       },
-          //     },
-          //   },
-          // ]}
-
-          css={styles.input(i, elementClassName, iconColors)}
+          css={styles.radioInput(i, elementClassName, iconColors)}
         />
         <label htmlFor={inputId} css={styles.label}>
-          {iconLevels[i]}
+          {icon}
         </label>
       </div>
     );
@@ -324,10 +252,7 @@ const Rater = ({
 
   return (
     <div className={elementClassName} css={styles.mainContainer}>
-      <span css={styles.iconsContainer}>
-        {/* {userLoading ? <Spinner /> : icons} */}
-        {icons}
-      </span>
+      <span css={styles.iconsContainer}>{radioInputs}</span>
       {
         /* getUserError  ||*/ (updateRatingError || addGameError) && (
           <ErrorNotification variant='stacked'>
