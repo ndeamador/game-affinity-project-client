@@ -44,6 +44,13 @@ const GenreFiltersBox = ({
           {genre}
         </Button>
       ))}
+       <Button
+        onClick={() => setGenreFilter('Other')}
+        variant={'filter'}
+        className={genreFilter == 'Other' ? 'selected' : ''}
+      >
+        Other
+      </Button>
     </div>
   );
 };
