@@ -2,7 +2,7 @@
 
 import { useQuery } from '@apollo/client';
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GenreFiltersBox from '../components/GenreFiltersBox';
 import FullPageSpinner from '../components/FullPageSpinner';
 import GameList from '../components/GameList';
@@ -19,6 +19,13 @@ const containerStyle = css({
 const Ranking = () => {
   const { data, loading: loadingGames, error } = useQuery(GET_RANKING);
   const [genreFilter, setGenreFilter] = useState('All');
+  const [displayOtherFilter, setDisplayOtherFilter] = useState(false);
+
+  useEffect(() => {
+    if (data?.getRankedGames?.find((game: Game) => game.genres == null))
+      setDisplayOtherFilter(true);
+  }, [data]);
+
   if (error)
     return (
       <ErrorNotification variant='inline'>
@@ -65,6 +72,7 @@ const Ranking = () => {
         genreFilter={genreFilter}
         setGenreFilter={setGenreFilter}
         genres={genres}
+        displayOtherFilter={displayOtherFilter}
       />
       <GameList games={gamesToDisplay} ranked />
     </GenericContainer>

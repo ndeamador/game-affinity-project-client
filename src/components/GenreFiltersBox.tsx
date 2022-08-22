@@ -20,10 +20,12 @@ const GenreFiltersBox = ({
   genreFilter,
   setGenreFilter,
   genres,
+  displayOtherFilter,
 }: {
   genreFilter: string;
   setGenreFilter: React.Dispatch<React.SetStateAction<string>>;
   genres: string[];
+  displayOtherFilter: boolean;
 }) => {
   return (
     <div css={style}>
@@ -44,13 +46,15 @@ const GenreFiltersBox = ({
           {genre}
         </Button>
       ))}
-       <Button
-        onClick={() => setGenreFilter('Other')}
-        variant={'filter'}
-        className={genreFilter == 'Other' ? 'selected' : ''}
-      >
-        Other
-      </Button>
+      {displayOtherFilter && (
+        <Button
+          onClick={() => setGenreFilter('Other')}
+          variant={'filter'}
+          className={genreFilter == 'Other' ? 'selected' : ''}
+        >
+          Other
+        </Button>
+      )}
     </div>
   );
 };
