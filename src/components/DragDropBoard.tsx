@@ -5,7 +5,7 @@ import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import DragDropColumn from './DragDropColumn';
 import GenericContainer from './GenericContainer';
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import { RATINGS } from '../constants';
 import useUpdateRating from '../hooks/useUpdateRating';
 import useBoardState from '../hooks/useBoardState';
@@ -31,9 +31,10 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   // https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318
 
   console.log('DragDropBoard ----------------------------------');
-  console.log(user.gamesInLibrary);
   const [updateRating] = useUpdateRating();
-  const [orderedColumns, setOrderedColums, reorderState] = useBoardState(user);
+  // const [orderedColumns, setOrderedColums, reorderState] = useBoardState(user);
+  const { orderedColumns, setOrderedColums, reorderState, updateFromRater } =
+    useBoardState(user);
 
   // const getIdsInColumn = (
   //   rating: Rating,
@@ -51,7 +52,6 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   //   getIdsInColumn(RATINGS.great.value, user.gamesInLibrary),
   //   getIdsInColumn(RATINGS.legendary.value, user.gamesInLibrary),
   // ]);
-  console.log(orderedColumns);
 
   const [columnNames, _setColumnNames] = useState(
     Object.values(RATINGS).map((rating) => rating.title)
@@ -82,9 +82,6 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
     }
 
     // If the location has changed, reorder the source data:
-
-
-
 
     // const determineNewRank = (destinationId: string): Rating => {
     //   switch (destinationId) {
@@ -169,30 +166,43 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   };
 
   return games.length > 0 ? (
-    <GenericContainer additionalStyle={styles.container}>
-      <div css={styles.textDiv}>
-        <p>
-          You can drag and drop games with your mouse or using TAB to navigate
-          games, SPACE to select them and the ARROW KEYS to move them.
-        </p>
-      </div>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <div css={styles.dndColumnsDiv}>
-          {orderedColumns.map((column, i) => {
-            return (
-              <DragDropColumn
-                games={populate(column, games)}
-                title={columnNames[i]}
-                key={columnNames[i]}
-              />
-            );
-          })}
+    <BoardStateContext.Provider value={{ updateFromRater }}>
+      <GenericContainer additionalStyle={styles.container}>
+        <div css={styles.textDiv}>
+          <p>
+            You can drag and drop games with your mouse or using TAB to navigate
+            games, SPACE to select them and the ARROW KEYS to move them.
+          </p>
         </div>
-      </DragDropContext>
-    </GenericContainer>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <div css={styles.dndColumnsDiv}>
+            {orderedColumns.map((column, i) => {
+              return (
+                <DragDropColumn
+                  games={populate(column, games)}
+                  title={columnNames[i]}
+                  key={columnNames[i]}
+                />
+              );
+            })}
+          </div>
+        </DragDropContext>
+      </GenericContainer>
+    </BoardStateContext.Provider>
   ) : (
     <div>No games found</div>
   );
 };
 
 export default DragoDropBoard;
+
+export interface BoardStateContext {
+  updateFromRater: (
+    igdb_game_id: number,
+    newRating: Rating,
+    currentUser: User
+  ) => boolean;
+}
+export const BoardStateContext = createContext<BoardStateContext | undefined>(
+  undefined
+);

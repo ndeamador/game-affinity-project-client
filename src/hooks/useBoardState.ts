@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DraggableLocation } from 'react-beautiful-dnd';
 import { RATINGS } from '../constants';
 import { GameInUserLibrary, Rating, User } from '../types';
@@ -79,11 +79,55 @@ const useBoardState = (user: User) => {
         )
       );
     }
-
     return newRating;
   }
 
-  return [orderedColumns, setOrderedColums, reorderState] as const;
+  const updateFromRater = (igdb_game_id: number, newRating: Rating, currentUser: User) => {
+    console.log(igdb_game_id, newRating);
+    console.log(orderedColumns);
+    // console.log(currentUser.gamesInLibrary);
+    const currentRating = currentUser.gamesInLibrary.find(game => game.igdb_game_id == igdb_game_id)?.rating as Rating;
+    console.log('old and new ratins', currentRating, newRating);
+    // console.log('current column', orderedColumns[currentRating]);
+
+    const initialColumn = [...orderedColumns[currentRating]];
+    const positionInColumn = initialColumn.findIndex(gameId => gameId == igdb_game_id);
+    console.log('original column & position', initialColumn, positionInColumn);
+    initialColumn.splice(positionInColumn, 1);
+    console.log('original after trim:', initialColumn);
+    // const trimmedInitialColumn = [...initialColumn.splice(positionInColumn, 1)];
+    // const trimmedInitialColumn = [...initialColumn.splice(positionInColumn, 1)];
+
+    const updatedNewColumn = [...orderedColumns[newRating], igdb_game_id]
+    console.log('or target vs updated target: ', orderedColumns[newRating], updatedNewColumn);
+
+    console.log('before: ', orderedColumns, currentRating, newRating);
+    console.log(initialColumn, );
+    setOrderedColums((state) =>
+      // state.map((column, i) =>
+      //   i == currentRating
+      //     ? trimmedInitialColumn
+      //     : i == newRating
+      //       ? updatedNewColumn
+      //       : column
+      // )
+      state.map((column, i) =>
+      {
+        console.log(i, column, i == currentRating, i == newRating);
+        return i == currentRating
+        ? initialColumn
+        : i == newRating
+          ? updatedNewColumn
+          : column}
+    )
+    );
+    console.log('after: ', orderedColumns);
+
+    // console.log(orderedColumns.find(igdb_game_id));
+    return true;
+  }
+
+  return { orderedColumns, setOrderedColums, reorderState, updateFromRater } /* as const */;
 }
 
 export default useBoardState;

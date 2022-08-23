@@ -9,7 +9,7 @@ const useUpdateRating = () => {
   return useMutation(UPDATE_RATING, {
 
     update: (store, response) => {
-      console.log('useupdate response: ', response.data);
+      // console.log('useupdate response: ', response.data);
       try {
         if (response.data?.updateRating) {
 
@@ -18,12 +18,12 @@ const useUpdateRating = () => {
             query: CURRENT_USER,
           });
 
-          console.log('databefore: ', dataInStore?.me.gamesInLibrary);
-          console.log('test:', dataInStore?.me.gamesInLibrary.map((game) =>
-            game.igdb_game_id !== response.data.updateRating.igdb_game_id
-              ? game
-              : response.data.updateRating
-          ));
+          // console.log('databefore: ', dataInStore?.me.gamesInLibrary);
+          // console.log('test:', dataInStore?.me.gamesInLibrary.map((game) =>
+          //   game.igdb_game_id !== response.data.updateRating.igdb_game_id
+          //     ? game
+          //     : response.data.updateRating
+          // ));
 
           store.writeQuery({
             query: CURRENT_USER,
@@ -47,11 +47,10 @@ const useUpdateRating = () => {
 
         }
 
-        const after: MeResponse | null = store.readQuery({
-          query: CURRENT_USER,
-        });
-
-        console.log('store after update: ', after?.me.gamesInLibrary);
+        // const after: MeResponse | null = store.readQuery({
+        //   query: CURRENT_USER,
+        // });
+        // console.log('store after update: ', after?.me.gamesInLibrary);
 
       } catch (err) {
         console.log(
