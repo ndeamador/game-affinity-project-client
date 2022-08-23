@@ -1,15 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
-import { Game, GameInUserLibrary, MeResponse, Rating, User } from '../types';
+import { Game, GameInUserLibrary, Rating, User } from '../types';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import DragDropColumn from './DragDropColumn';
-import { UPDATE_RATING } from '../graphql/mutations';
-import { CURRENT_USER } from '../graphql/queries';
-import { useMutation } from '@apollo/client';
 import GenericContainer from './GenericContainer';
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import { RATINGS } from '../constants';
+import useUpdateRating from '../hooks/useUpdateRating';
 
 const styles = {
   container: css({
@@ -32,7 +30,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   // https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318
 
   console.log('DragDropBoard ----------------------------------');
-  const [updateRating] = useMutation(UPDATE_RATING);
+  const [updateRating] = useUpdateRating();
 
   const getIdsInColumn = (
     rating: Rating,
@@ -104,6 +102,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
       const initialRating = determineNewRank(source.droppableId);
       const newRating = determineNewRank(destination.droppableId);
 
+      // Update local state columns.
       if (initialRating == newRating) {
         const reorderedColumn = [...orderedColumns[initialRating]];
         reorderedColumn.splice(source.index, 1);
@@ -147,36 +146,6 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
             // subrating: destination.index,
             isOptimistic: true,
           },
-        },
-        update: (store, response) => {
-          // console.log('Updating rating...');
-          // console.log('updaterating response: ', response);
-          // console.log('draggable id:', draggableId, typeof draggableId);
-          const dataInStore: MeResponse | null = store.readQuery({
-            query: CURRENT_USER,
-          });
-
-          if (response.data?.updateRating) {
-            store.writeQuery({
-              query: CURRENT_USER,
-              data: {
-                ...dataInStore,
-                me: {
-                  ...dataInStore?.me,
-
-                  // // If using the server response that does not return the updated object, the client's cache must be updated manually:
-                  // gamesInLibrary: dataInStore?.me.gamesInLibrary.map(game => game.igdb_game_id !== parseInt(draggableId) ? game : { ...game, rating: determineNewRank(destination.droppableId)})
-
-                  // If the server returns the updated object:
-                  gamesInLibrary: dataInStore?.me.gamesInLibrary.map((game) =>
-                    game.igdb_game_id !== parseInt(draggableId)
-                      ? game
-                      : response.data.updateRating
-                  ),
-                },
-              },
-            });
-          }
         },
       });
     } catch (err) {
