@@ -8,6 +8,7 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 import { RATINGS } from '../constants';
 import useUpdateRating from '../hooks/useUpdateRating';
+import useBoardState from '../hooks/useBoardState';
 
 const styles = {
   container: css({
@@ -30,31 +31,32 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   // https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318
 
   console.log('DragDropBoard ----------------------------------');
+  console.log(user.gamesInLibrary);
   const [updateRating] = useUpdateRating();
+  const [orderedColumns, setOrderedColums, reorderState] = useBoardState(user);
 
-  const getIdsInColumn = (
-    rating: Rating,
-    gamesInUserLibrary: GameInUserLibrary[]
-  ) => {
-    return gamesInUserLibrary
-      .filter((game) => game.rating == rating)
-      .map((game) => game.igdb_game_id);
-  };
+  // const getIdsInColumn = (
+  //   rating: Rating,
+  //   gamesInUserLibrary: GameInUserLibrary[]
+  // ) => {
+  //   return gamesInUserLibrary
+  //     .filter((game) => game.rating == rating)
+  //     .map((game) => game.igdb_game_id);
+  // };
 
-  const [orderedColumns, setOrderedColums] = useState<number[][]>([
-    getIdsInColumn(RATINGS.unranked.value, user.gamesInLibrary),
-    getIdsInColumn(RATINGS.thumbsDown.value, user.gamesInLibrary),
-    getIdsInColumn(RATINGS.thumbsUp.value, user.gamesInLibrary),
-    getIdsInColumn(RATINGS.great.value, user.gamesInLibrary),
-    getIdsInColumn(RATINGS.legendary.value, user.gamesInLibrary),
-  ]);
+  // const [orderedColumns, setOrderedColums] = useState<number[][]>([
+  //   getIdsInColumn(RATINGS.unranked.value, user.gamesInLibrary),
+  //   getIdsInColumn(RATINGS.thumbsDown.value, user.gamesInLibrary),
+  //   getIdsInColumn(RATINGS.thumbsUp.value, user.gamesInLibrary),
+  //   getIdsInColumn(RATINGS.great.value, user.gamesInLibrary),
+  //   getIdsInColumn(RATINGS.legendary.value, user.gamesInLibrary),
+  // ]);
+  console.log(orderedColumns);
 
   const [columnNames, _setColumnNames] = useState(
     Object.values(RATINGS).map((rating) => rating.title)
   );
-  // const columnNames = Object.values(RATINGS).map((rating) => rating.title);
 
-  // const handleDragEnd = (result: DropResult) => {
   const handleDragEnd: OnDragEndResponder = ({
     destination,
     source,
@@ -80,54 +82,60 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
     }
 
     // If the location has changed, reorder the source data:
-    const determineNewRank = (destinationId: string): Rating => {
-      switch (destinationId) {
-        case RATINGS.unranked.title:
-          return RATINGS.unranked.value;
-        case RATINGS.thumbsDown.title:
-          return RATINGS.thumbsDown.value;
-        case RATINGS.thumbsUp.title:
-          return RATINGS.thumbsUp.value;
-        case RATINGS.great.title:
-          return RATINGS.great.value;
-        case RATINGS.legendary.title:
-          return RATINGS.legendary.value;
 
-        default:
-          throw new Error('Invalid d&d destinationId');
-      }
-    };
+
+
+
+    // const determineNewRank = (destinationId: string): Rating => {
+    //   switch (destinationId) {
+    //     case RATINGS.unranked.title:
+    //       return RATINGS.unranked.value;
+    //     case RATINGS.thumbsDown.title:
+    //       return RATINGS.thumbsDown.value;
+    //     case RATINGS.thumbsUp.title:
+    //       return RATINGS.thumbsUp.value;
+    //     case RATINGS.great.title:
+    //       return RATINGS.great.value;
+    //     case RATINGS.legendary.title:
+    //       return RATINGS.legendary.value;
+
+    //     default:
+    //       throw new Error('Invalid d&d destinationId');
+    //   }
+    // };
 
     try {
-      const initialRating = determineNewRank(source.droppableId);
-      const newRating = determineNewRank(destination.droppableId);
+      // const initialRating = determineNewRank(source.droppableId);
+      // const newRating = determineNewRank(destination.droppableId);
+      console.log('dest sour:', source, destination);
 
-      // Update local state columns.
-      if (initialRating == newRating) {
-        const reorderedColumn = [...orderedColumns[initialRating]];
-        reorderedColumn.splice(source.index, 1);
-        reorderedColumn.splice(destination.index, 0, parseInt(draggableId));
+      // // Update local state columns.
+      // if (initialRating == newRating) {
+      //   const reorderedColumn = [...orderedColumns[initialRating]];
+      //   reorderedColumn.splice(source.index, 1);
+      //   reorderedColumn.splice(destination.index, 0, parseInt(draggableId));
 
-        setOrderedColums((state) =>
-          state.map((column, i) => (i == newRating ? reorderedColumn : column))
-        );
-      } else {
-        const startColumn = [...orderedColumns[initialRating]];
-        const endColumn = [...orderedColumns[newRating]];
+      //   setOrderedColums((state) =>
+      //     state.map((column, i) => (i == newRating ? reorderedColumn : column))
+      //   );
+      // } else {
+      //   const startColumn = [...orderedColumns[initialRating]];
+      //   const endColumn = [...orderedColumns[newRating]];
 
-        startColumn.splice(source.index, 1);
-        endColumn.splice(destination.index, 0, parseInt(draggableId));
+      //   startColumn.splice(source.index, 1);
+      //   endColumn.splice(destination.index, 0, parseInt(draggableId));
 
-        setOrderedColums((state) =>
-          state.map((column, i) =>
-            i == initialRating
-              ? startColumn
-              : i == newRating
-              ? endColumn
-              : column
-          )
-        );
-      }
+      //   setOrderedColums((state) =>
+      //     state.map((column, i) =>
+      //       i == initialRating
+      //         ? startColumn
+      //         : i == newRating
+      //         ? endColumn
+      //         : column
+      //     )
+      //   );
+      // }
+      const newRating = reorderState(destination, source, draggableId);
 
       const gameToUpdate = user.gamesInLibrary.find(
         (game) => game.igdb_game_id === parseInt(draggableId)
