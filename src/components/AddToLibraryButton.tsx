@@ -57,7 +57,7 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
           label='Remove from library'
           onClick={() => {
             // if (boardState)
-            //   boardState.updateFromRater(parsedGameId, null, currentUser);
+            //   boardState.updateBoardStateWithId(parsedGameId, null, currentUser);
             removeGameFromLibrary({
               variables: { igdb_game_id: parsedGameId },
               optimisticResponse: {

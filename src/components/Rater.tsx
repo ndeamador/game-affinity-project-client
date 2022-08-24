@@ -153,7 +153,7 @@ const Rater = ({
     { data: addToLibraryResult, loading: addingToLibrary, error: addGameError },
   ] = useAddToLibrary();
 
-  // const { updateFromRater } = useBoardState(currentUser);
+  // const { updateBoardStateWithId } = useBoardState(currentUser);
   const boardState = useContext(BoardStateContext);
 
   // console.log(
@@ -200,7 +200,7 @@ const Rater = ({
       // );
     } else {
       if (boardState)
-        boardState.updateFromRater(gameId, newRating, currentUser);
+        boardState.updateBoardStateWithId(gameId, newRating, currentUser);
 
       updateRating({
         variables: {

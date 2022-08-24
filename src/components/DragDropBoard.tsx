@@ -32,8 +32,8 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
 
   console.log('DragDropBoard ----------------------------------');
   const [updateRating] = useUpdateRating();
-  // const [orderedColumns, setOrderedColums, reorderState] = useBoardState(user);
-  const { orderedColumns, setOrderedColums, reorderState, updateFromRater } =
+  // const [orderedColumns, setOrderedColums, reorderBoardStateWithDnDData] = useBoardState(user);
+  const { orderedColumns, setOrderedColums, reorderBoardStateWithDnDData, updateBoardStateWithId } =
     useBoardState(user);
 
   // const getIdsInColumn = (
@@ -132,7 +132,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
       //     )
       //   );
       // }
-      const newRating = reorderState(destination, source, draggableId);
+      const newRating = reorderBoardStateWithDnDData(destination, source, draggableId);
 
       const gameToUpdate = user.gamesInLibrary.find(
         (game) => game.igdb_game_id === parseInt(draggableId)
@@ -166,7 +166,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   };
 
   return games.length > 0 ? (
-    <BoardStateContext.Provider value={{ updateFromRater }}>
+    <BoardStateContext.Provider value={{ updateBoardStateWithId }}>
       <GenericContainer additionalStyle={styles.container}>
         <div css={styles.textDiv}>
           <p>
@@ -197,7 +197,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
 export default DragoDropBoard;
 
 export interface BoardStateContext {
-  updateFromRater: (
+  updateBoardStateWithId: (
     igdb_game_id: number,
     newRating: Rating | null,
     currentUser: User

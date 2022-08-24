@@ -48,7 +48,7 @@ const useBoardState = (user: User) => {
     }
   };
 
-  const reorderState = (destination: DraggableLocation,
+  const reorderBoardStateWithDnDData = (destination: DraggableLocation,
     source: DraggableLocation,
     draggableId: string) => {
     const initialRating = determineNewRank(source.droppableId);
@@ -82,7 +82,7 @@ const useBoardState = (user: User) => {
     return newRating;
   }
 
-  const updateFromRater = (igdb_game_id: number, newRating: Rating | null, currentUser: User) => {
+  const updateBoardStateWithId = (igdb_game_id: number, newRating: Rating | null, currentUser: User) => {
     const currentRating = currentUser.gamesInLibrary.find(game => game.igdb_game_id == igdb_game_id)?.rating as Rating;
     const initialColumn = [...orderedColumns[currentRating]];
     const positionInColumn = initialColumn.findIndex(gameId => gameId == igdb_game_id);
@@ -117,7 +117,7 @@ const useBoardState = (user: User) => {
     return true;
   }
 
-  return { orderedColumns, setOrderedColums, reorderState, updateFromRater } /* as const */;
+  return { orderedColumns, setOrderedColums, reorderBoardStateWithDnDData, updateBoardStateWithId } /* as const */;
 }
 
 export default useBoardState;
