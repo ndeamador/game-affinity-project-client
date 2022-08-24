@@ -199,7 +199,7 @@ export default DragoDropBoard;
 export interface BoardStateContext {
   updateFromRater: (
     igdb_game_id: number,
-    newRating: Rating,
+    newRating: Rating | null,
     currentUser: User
   ) => boolean;
 }

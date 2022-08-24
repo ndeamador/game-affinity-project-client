@@ -5,8 +5,9 @@ import { FaPlusCircle, FaRegTrashAlt } from 'react-icons/fa';
 import useAddToLibrary from '../hooks/useAddToLibrary';
 import useRemoveFromLibrary from '../hooks/useRemoveFromLibrary';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import findGameInLibrary from '../utils/findGameInLibrary';
+import { BoardStateContext } from './DragDropBoard';
 
 const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
   const parsedGameId = typeof gameId === 'string' ? parseInt(gameId) : gameId;
@@ -47,20 +48,24 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
   const [removeGameFromLibrary, { loading: deletingGame }] =
     useRemoveFromLibrary();
 
+  // const boardState = useContext(BoardStateContext);
+
   return (
     <div>
       {gameInLibrary ? (
         <TooltipButton
           label='Remove from library'
-          onClick={() =>
+          onClick={() => {
+            // if (boardState)
+            //   boardState.updateFromRater(parsedGameId, null, currentUser);
             removeGameFromLibrary({
               variables: { igdb_game_id: parsedGameId },
               optimisticResponse: {
                 removeGameFromLibrary: gameInLibrary.id,
                 isOptimistic: true,
               },
-            })
-          }
+            });
+          }}
           icon={<FaRegTrashAlt />}
           isLoading={deletingGame}
           altColor

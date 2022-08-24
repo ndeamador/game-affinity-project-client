@@ -82,48 +82,38 @@ const useBoardState = (user: User) => {
     return newRating;
   }
 
-  const updateFromRater = (igdb_game_id: number, newRating: Rating, currentUser: User) => {
-    console.log(igdb_game_id, newRating);
-    console.log(orderedColumns);
-    // console.log(currentUser.gamesInLibrary);
+  const updateFromRater = (igdb_game_id: number, newRating: Rating | null, currentUser: User) => {
     const currentRating = currentUser.gamesInLibrary.find(game => game.igdb_game_id == igdb_game_id)?.rating as Rating;
-    console.log('old and new ratins', currentRating, newRating);
-    // console.log('current column', orderedColumns[currentRating]);
-
     const initialColumn = [...orderedColumns[currentRating]];
     const positionInColumn = initialColumn.findIndex(gameId => gameId == igdb_game_id);
-    console.log('original column & position', initialColumn, positionInColumn);
     initialColumn.splice(positionInColumn, 1);
-    console.log('original after trim:', initialColumn);
-    // const trimmedInitialColumn = [...initialColumn.splice(positionInColumn, 1)];
-    // const trimmedInitialColumn = [...initialColumn.splice(positionInColumn, 1)];
 
-    const updatedNewColumn = [...orderedColumns[newRating], igdb_game_id]
-    console.log('or target vs updated target: ', orderedColumns[newRating], updatedNewColumn);
+    // if a new rating is provided, update it
+    if (newRating) {
+      const updatedNewColumn = [...orderedColumns[newRating], igdb_game_id]
+      setOrderedColums((state) =>
 
-    console.log('before: ', orderedColumns, currentRating, newRating);
-    console.log(initialColumn, );
-    setOrderedColums((state) =>
-      // state.map((column, i) =>
-      //   i == currentRating
-      //     ? trimmedInitialColumn
-      //     : i == newRating
-      //       ? updatedNewColumn
-      //       : column
-      // )
-      state.map((column, i) =>
-      {
-        console.log(i, column, i == currentRating, i == newRating);
-        return i == currentRating
-        ? initialColumn
-        : i == newRating
-          ? updatedNewColumn
-          : column}
-    )
-    );
-    console.log('after: ', orderedColumns);
-
-    // console.log(orderedColumns.find(igdb_game_id));
+        state.map((column, i) => {
+          console.log(i, column, i == currentRating, i == newRating);
+          return i == currentRating
+            ? initialColumn
+            : i == newRating
+              ? updatedNewColumn
+              : column
+        }
+        ));
+    }
+    else {
+      // if null is provided as new rating, delete the game from the Board.
+      setOrderedColums((state) =>
+        state.map((column, i) => {
+          console.log(i, column, i == currentRating, i == newRating);
+          return i == currentRating
+            ? initialColumn
+            : column
+        }
+        ));
+    }
     return true;
   }
 
