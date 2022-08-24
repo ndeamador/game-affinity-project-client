@@ -137,6 +137,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
       const gameToUpdate = user.gamesInLibrary.find(
         (game) => game.igdb_game_id === parseInt(draggableId)
       );
+        console.log('test');
 
       updateRating({
         variables: {
@@ -153,6 +154,8 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
           },
         },
       });
+
+
     } catch (err) {
       console.log(`Error updating the cache after updateRating query: ${err}`);
     }
@@ -201,7 +204,7 @@ export interface BoardStateContext {
     igdb_game_id: number,
     newRating: Rating | null,
     currentUser: User
-  ) => boolean;
+  ) => void;
 }
 export const BoardStateContext = createContext<BoardStateContext | undefined>(
   undefined

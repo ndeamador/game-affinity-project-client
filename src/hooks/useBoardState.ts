@@ -53,21 +53,23 @@ const useBoardState = (user: User) => {
     draggableId: string) => {
     const initialRating = determineNewRank(source.droppableId);
     const newRating = determineNewRank(destination.droppableId);
+    const parsedId = parseInt(draggableId);
 
     if (initialRating == newRating) {
       const reorderedColumn = [...orderedColumns[initialRating]];
       reorderedColumn.splice(source.index, 1);
-      reorderedColumn.splice(destination.index, 0, parseInt(draggableId));
+      reorderedColumn.splice(destination.index, 0, parsedId);
 
       setOrderedColums((state) =>
         state.map((column, i) => (i == newRating ? reorderedColumn : column))
       );
+
     } else {
       const startColumn = [...orderedColumns[initialRating]];
       const endColumn = [...orderedColumns[newRating]];
 
       startColumn.splice(source.index, 1);
-      endColumn.splice(destination.index, 0, parseInt(draggableId));
+      endColumn.splice(destination.index, 0, parsedId);
 
       setOrderedColums((state) =>
         state.map((column, i) =>
@@ -79,42 +81,58 @@ const useBoardState = (user: User) => {
         )
       );
     }
+
     return newRating;
   }
 
+  // This method is meant to be used with the rater radio selector and is not useable to swap items within the same column.
   const updateBoardStateWithId = (igdb_game_id: number, newRating: Rating | null, currentUser: User) => {
     const currentRating = currentUser.gamesInLibrary.find(game => game.igdb_game_id == igdb_game_id)?.rating as Rating;
-    const initialColumn = [...orderedColumns[currentRating]];
-    const positionInColumn = initialColumn.findIndex(gameId => gameId == igdb_game_id);
-    initialColumn.splice(positionInColumn, 1);
 
-    // if a new rating is provided, update it
     if (newRating) {
-      const updatedNewColumn = [...orderedColumns[newRating], igdb_game_id]
-      setOrderedColums((state) =>
+      if (newRating != currentRating) {
+        console.log('distintos', orderedColumns);
+        setOrderedColums((state) =>
+          state.map((column, i) => {
+            return i == currentRating
+              ? column.filter(gameId => gameId != igdb_game_id)
+              : i == newRating
+                ? column.concat(igdb_game_id)
+                : column
+          }
+          ));
+      }
+      else {
+        // Temp: if for some reason the current rating and the new rating are the same, do nothing. Should not be triggered.
+        console.log('same!!');
+        return;
+      }
 
-        state.map((column, i) => {
-          console.log(i, column, i == currentRating, i == newRating);
-          return i == currentRating
-            ? initialColumn
-            : i == newRating
-              ? updatedNewColumn
-              : column
-        }
-        ));
+
     }
     else {
       // if null is provided as new rating, delete the game from the Board.
-      setOrderedColums((state) =>
-        state.map((column, i) => {
-          console.log(i, column, i == currentRating, i == newRating);
+      setOrderedColums((state) => {
+        // const initialColumn = [...orderedColumns[currentRating]];
+        // const positionInColumn = initialColumn.findIndex(gameId => gameId == igdb_game_id);
+        // initialColumn.splice(positionInColumn, 1);
+        // const filteredColumn = initialColumn.filter(gameId => gameId != igdb_game_id)
+
+        return state.map((column, i) => {
+
           return i == currentRating
-            ? initialColumn
+            // ? filteredColumn
+            ? column.filter(gameId => gameId != igdb_game_id)
+            // ? initialColumn.splice(positionInColumn, 1)
+            // ? initialColumn.filter(gameId => gameId != igdb_game_id)
             : column
         }
-        ));
+        )
+      });
     }
-    return true;
+
+    return
+
   }
 
   return { orderedColumns, setOrderedColums, reorderBoardStateWithDnDData, updateBoardStateWithId } /* as const */;
