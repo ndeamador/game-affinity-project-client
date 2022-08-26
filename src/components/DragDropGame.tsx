@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Game } from '../types';
 import CoverDiv from './CoverDiv';
+import { BoardStateContext } from './DragDropBoard';
 import DraggablePortalHandler from './DraggablePortalHandler';
 import GameProfileModal from './GameProfileModal';
 
@@ -51,7 +52,9 @@ const DragDropGame = ({ game, index }: { game: Game; index: number }) => {
   // We can style the element during a drag using the snapshot argument
   // Don't change dimensions of draggable and droppable during a drag
 
-  const [openModal, setOpenModal] = useState<string>('none');
+  // const [openModal, setOpenModal] = useState<string>('none');
+  // console.log('modal:', openModal);
+  const boardContext = useContext(BoardStateContext);
 
   return (
     <Draggable draggableId={game.id} index={index}>
@@ -61,17 +64,22 @@ const DragDropGame = ({ game, index }: { game: Game; index: number }) => {
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            onClick={() => setOpenModal(game.id)}
-            css={[draggableStyle, snapshot.isDragging && !snapshot.isDropAnimating && isDraggingStyle]}
+            onClick={() => boardContext?.setOpenModal(game.id)}
+            css={[
+              draggableStyle,
+              snapshot.isDragging &&
+                !snapshot.isDropAnimating &&
+                isDraggingStyle,
+            ]}
           >
             <CoverDiv game={game} showSpinner={false} />
             <div css={textDivStyle}>
               <p css={textStyle}>{game.name}</p>
             </div>
-            <GameProfileModal
+            {/* <GameProfileModal
               openModal={openModal}
               setOpenModal={setOpenModal}
-            />
+            /> */}
           </div>
         </DraggablePortalHandler>
       )}

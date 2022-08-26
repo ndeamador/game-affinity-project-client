@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
-import { Game, GameInUserLibrary, MeResponse, Rating, User } from '../types';
+import { Game, GameInUserLibrary, Rating, User } from '../types';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import DragDropColumn from './DragDropColumn';
-import { UPDATE_RATING } from '../graphql/mutations';
-import { CURRENT_USER } from '../graphql/queries';
-import { useMutation } from '@apollo/client';
 import GenericContainer from './GenericContainer';
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import { RATINGS } from '../constants';
+import useUpdateRating from '../hooks/useUpdateRating';
+import useBoardState from '../hooks/useBoardState';
+import GameProfileModal from './GameProfileModal';
 
 const styles = {
   container: css({
@@ -27,36 +27,34 @@ const styles = {
   }),
 };
 
-const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
+const DragoDropBoard = ({
+  games,
+  user,
+/*   setOpenModal,
+ */}: {
+  games: Game[];
+  user: User;
+/*   setOpenModal: React.Dispatch<React.SetStateAction<string>>;
+ */}) => {
   // Remember that using the mapped object's indexes for the key property is an anti-pattern, use unique id instead
   // https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318
 
   console.log('DragDropBoard ----------------------------------');
-  const [updateRating] = useMutation(UPDATE_RATING);
+  const [updateRating] = useUpdateRating();
+  // const [orderedColumns, setOrderedColums, reorderBoardStateWithDnDData] = useBoardState(user);
+  const {
+    orderedColumns,
+    setOrderedColums,
+    reorderBoardStateWithDnDData,
+    updateBoardStateWithId,
+  } = useBoardState(user);
 
-  const getIdsInColumn = (
-    rating: Rating,
-    gamesInUserLibrary: GameInUserLibrary[]
-  ) => {
-    return gamesInUserLibrary
-      .filter((game) => game.rating == rating)
-      .map((game) => game.igdb_game_id);
-  };
-
-  const [orderedColumns, setOrderedColums] = useState<number[][]>([
-    getIdsInColumn(RATINGS.unranked.value, user.gamesInLibrary),
-    getIdsInColumn(RATINGS.thumbsDown.value, user.gamesInLibrary),
-    getIdsInColumn(RATINGS.thumbsUp.value, user.gamesInLibrary),
-    getIdsInColumn(RATINGS.great.value, user.gamesInLibrary),
-    getIdsInColumn(RATINGS.legendary.value, user.gamesInLibrary),
-  ]);
+  const [openModal, setOpenModal] = useState<string>('none');
 
   const [columnNames, _setColumnNames] = useState(
     Object.values(RATINGS).map((rating) => rating.title)
   );
-  // const columnNames = Object.values(RATINGS).map((rating) => rating.title);
 
-  // const handleDragEnd = (result: DropResult) => {
   const handleDragEnd: OnDragEndResponder = ({
     destination,
     source,
@@ -82,53 +80,16 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
     }
 
     // If the location has changed, reorder the source data:
-    const determineNewRank = (destinationId: string): Rating => {
-      switch (destinationId) {
-        case RATINGS.unranked.title:
-          return RATINGS.unranked.value;
-        case RATINGS.thumbsDown.title:
-          return RATINGS.thumbsDown.value;
-        case RATINGS.thumbsUp.title:
-          return RATINGS.thumbsUp.value;
-        case RATINGS.great.title:
-          return RATINGS.great.value;
-        case RATINGS.legendary.title:
-          return RATINGS.legendary.value;
-
-        default:
-          throw new Error('Invalid d&d destinationId');
-      }
-    };
 
     try {
-      const initialRating = determineNewRank(source.droppableId);
-      const newRating = determineNewRank(destination.droppableId);
+      // const initialRating = determineNewRank(source.droppableId);
+      // const newRating = determineNewRank(destination.droppableId);
 
-      if (initialRating == newRating) {
-        const reorderedColumn = [...orderedColumns[initialRating]];
-        reorderedColumn.splice(source.index, 1);
-        reorderedColumn.splice(destination.index, 0, parseInt(draggableId));
-
-        setOrderedColums((state) =>
-          state.map((column, i) => (i == newRating ? reorderedColumn : column))
-        );
-      } else {
-        const startColumn = [...orderedColumns[initialRating]];
-        const endColumn = [...orderedColumns[newRating]];
-
-        startColumn.splice(source.index, 1);
-        endColumn.splice(destination.index, 0, parseInt(draggableId));
-
-        setOrderedColums((state) =>
-          state.map((column, i) =>
-            i == initialRating
-              ? startColumn
-              : i == newRating
-              ? endColumn
-              : column
-          )
-        );
-      }
+      const newRating = reorderBoardStateWithDnDData(
+        destination,
+        source,
+        draggableId
+      );
 
       const gameToUpdate = user.gamesInLibrary.find(
         (game) => game.igdb_game_id === parseInt(draggableId)
@@ -148,36 +109,6 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
             isOptimistic: true,
           },
         },
-        update: (store, response) => {
-          // console.log('Updating rating...');
-          // console.log('updaterating response: ', response);
-          // console.log('draggable id:', draggableId, typeof draggableId);
-          const dataInStore: MeResponse | null = store.readQuery({
-            query: CURRENT_USER,
-          });
-
-          if (response.data?.updateRating) {
-            store.writeQuery({
-              query: CURRENT_USER,
-              data: {
-                ...dataInStore,
-                me: {
-                  ...dataInStore?.me,
-
-                  // // If using the server response that does not return the updated object, the client's cache must be updated manually:
-                  // gamesInLibrary: dataInStore?.me.gamesInLibrary.map(game => game.igdb_game_id !== parseInt(draggableId) ? game : { ...game, rating: determineNewRank(destination.droppableId)})
-
-                  // If the server returns the updated object:
-                  gamesInLibrary: dataInStore?.me.gamesInLibrary.map((game) =>
-                    game.igdb_game_id !== parseInt(draggableId)
-                      ? game
-                      : response.data.updateRating
-                  ),
-                },
-              },
-            });
-          }
-        },
       });
     } catch (err) {
       console.log(`Error updating the cache after updateRating query: ${err}`);
@@ -192,30 +123,50 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   };
 
   return games.length > 0 ? (
-    <GenericContainer additionalStyle={styles.container}>
-      <div css={styles.textDiv}>
-        <p>
-          You can drag and drop games with your mouse or using TAB to navigate
-          games, SPACE to select them and the ARROW KEYS to move them.
-        </p>
-      </div>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <div css={styles.dndColumnsDiv}>
-          {orderedColumns.map((column, i) => {
-            return (
-              <DragDropColumn
-                games={populate(column, games)}
-                title={columnNames[i]}
-                key={columnNames[i]}
-              />
-            );
-          })}
-        </div>
-      </DragDropContext>
-    </GenericContainer>
+    <BoardStateContext.Provider
+      value={{ updateBoardStateWithId, setOpenModal }}
+    >
+      <>
+        <GenericContainer additionalStyle={styles.container}>
+          <div css={styles.textDiv}>
+            <p>
+              You can drag and drop games with your mouse or using TAB to
+              navigate games, SPACE to select them and the ARROW KEYS to move
+              them.
+            </p>
+          </div>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <div css={styles.dndColumnsDiv}>
+              {orderedColumns.map((column, i) => {
+                return (
+                  <DragDropColumn
+                    games={populate(column, games)}
+                    title={columnNames[i]}
+                    key={columnNames[i]}
+                  />
+                );
+              })}
+            </div>
+          </DragDropContext>
+        </GenericContainer>
+        <GameProfileModal openModal={openModal} setOpenModal={setOpenModal} currentUser={user}/>
+      </>
+    </BoardStateContext.Provider>
   ) : (
     <div>No games found</div>
   );
 };
 
 export default DragoDropBoard;
+
+export interface BoardStateContext {
+  updateBoardStateWithId: (
+    igdb_game_id: number,
+    newRating: Rating | null,
+    currentUser: User
+  ) => void;
+  setOpenModal: React.Dispatch<React.SetStateAction<string>>;
+}
+export const BoardStateContext = createContext<BoardStateContext | undefined>(
+  undefined
+);

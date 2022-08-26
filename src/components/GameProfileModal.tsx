@@ -3,6 +3,7 @@
 import { DialogContent, DialogOverlay } from '@reach/dialog';
 import GameProfile from '../views/GameProfile';
 import { css } from '@emotion/react';
+import { User } from '../types';
 
 const styles = {
   dialogOverlay: css({
@@ -10,6 +11,7 @@ const styles = {
     background: 'rgba(0, 0, 0, 0.4)',
   }),
   dialog: css({
+    // opacity: '0.5',
     display: 'flex',
     maxHeight: '90vh',
     backgroundColor: 'transparent',
@@ -29,23 +31,25 @@ const styles = {
 };
 
 const GameProfileModal = ({
+  currentUser,
   setOpenModal,
   openModal,
 }: {
+  currentUser: User;
   setOpenModal: React.Dispatch<React.SetStateAction<string>>;
   openModal: string;
 }) => {
   const ariaLabel = `Game Profile`;
+  console.log('modal inner: ', openModal);
 
   return (
     <DialogOverlay
-      aria-label={ariaLabel}
       isOpen={openModal !== 'none'}
       onDismiss={() => setOpenModal('none')}
       css={styles.dialogOverlay}
     >
-      <DialogContent css={styles.dialog}>
-        <GameProfile modalGame={openModal} />
+      <DialogContent css={styles.dialog} aria-label={ariaLabel}>
+        <GameProfile modalGame={openModal} currentUser={currentUser} />
       </DialogContent>
     </DialogOverlay>
   );

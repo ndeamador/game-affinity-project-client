@@ -10,18 +10,23 @@ import { css } from '@emotion/react';
 import SearchBar from '../components/SearchBar';
 import GenericContainer from '../components/GenericContainer';
 import useClickedOutOfElement from '../hooks/useClickedOutOfElement';
+import { ErrorMessage } from '../components/styledComponentsLibrary';
 
-const style = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'stretch',
-  maxWidth: 'var(--searchbar-max-width)',
-  marginTop: 'var(--searchbar-margin-top)',
-});
-
-const containerStyle = css({
-  flexDirection: 'column',
-});
+const styles = {
+  mainDiv: css({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    maxWidth: 'var(--searchbar-max-width)',
+    marginTop: 'var(--searchbar-margin-top)',
+  }),
+  containerStyle: css({
+    flexDirection: 'column',
+  }),
+  error: css({
+    padding: '15px 20px 20px 20px',
+  }),
+};
 
 const Home = () => {
   const [games, setGames] = useState([]);
@@ -58,11 +63,13 @@ const Home = () => {
   }, [debouncedQuery]);
 
   return (
-    <div id='Home page div' css={style} ref={ref}>
-      <GenericContainer additionalStyle={containerStyle}>
+    <div id='Home page div' css={styles.mainDiv} ref={ref}>
+      <GenericContainer additionalStyle={styles.containerStyle}>
         <SearchBar setQuery={setQuery} loading={loading} />
         {error ? (
-          <div>Something went wrong.</div>
+          <ErrorMessage variant='stacked' css={styles.error}>
+            Something went wrong. Failed to fetch games.
+          </ErrorMessage>
         ) : debouncedQuery && !loading ? (
           <GameList games={games} />
         ) : null}

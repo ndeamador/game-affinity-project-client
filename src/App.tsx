@@ -52,7 +52,7 @@ const contentStyle = css({
 
 function App() {
   const { currentUser, loading: loadingUser } = useCurrentUser();
-  const {bounceBoxes, storeBounceBox} = useBounceBoxes();
+  const { bounceBoxes, storeBounceBox } = useBounceBoxes();
 
   return (
     <BounceBoxesContext.Provider value={{ bounceBoxes, storeBounceBox }}>
@@ -64,7 +64,7 @@ function App() {
           <div className='AppContentContainer' css={contentStyle}>
             <Switch>
               <Route path={'/games/:gameId'}>
-                <GameProfile />
+                <GameProfile currentUser={currentUser} />
               </Route>
 
               <Route path={'/ranking'}>
@@ -75,7 +75,7 @@ function App() {
                 {!loadingUser && !currentUser ? (
                   <Redirect to='/' />
                 ) : (
-                  <Library />
+                  <Library currentUser={currentUser} />
                 )}
               </Route>
 

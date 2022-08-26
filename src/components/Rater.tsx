@@ -6,13 +6,15 @@ import findGameInLibrary from '../utils/findGameInLibrary';
 import { useMutation } from '@apollo/client';
 import { ADD_TO_LIBRARY, UPDATE_RATING } from '../graphql/mutations';
 import { CURRENT_USER } from '../graphql/queries';
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useContext, useEffect } from 'react';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
-import { ErrorNotification, Spinner } from './styledComponentsLibrary';
+import { ErrorMessage, Spinner } from './styledComponentsLibrary';
 import { MeResponse, GameInUserLibrary, Rating, User } from '../types';
 import useAddToLibrary from '../hooks/useAddToLibrary';
 import useUpdateRating from '../hooks/useUpdateRating';
 import { css } from '@emotion/react';
+import useBoardState from '../hooks/useBoardState';
+import { BoardStateContext } from './DragDropBoard';
 
 const styles = {
   mainContainer: css({
@@ -136,8 +138,6 @@ const iconLevels = [
   />,
 ];
 
-
-
 const Rater = ({
   gameId,
   currentUser,
@@ -153,6 +153,9 @@ const Rater = ({
     { data: addToLibraryResult, loading: addingToLibrary, error: addGameError },
   ] = useAddToLibrary();
 
+  // const { updateBoardStateWithId } = useBoardState(currentUser);
+  const boardContext = useContext(BoardStateContext);
+
   // console.log(
   //   '::In rater:: user: ',
   //   currentUser?.email,
@@ -167,7 +170,7 @@ const Rater = ({
       user: currentUser,
     });
 
-    const newRating = parseInt(event.target.value);
+    const newRating = parseInt(event.target.value) as Rating;
 
     if (!gameInUserLibrary) {
       /* const newGame = */
@@ -196,6 +199,9 @@ const Rater = ({
       //   '============================================================='
       // );
     } else {
+      if (boardContext)
+      boardContext.updateBoardStateWithId(gameId, newRating, currentUser);
+
       updateRating({
         variables: {
           igdb_game_id: gameId,
@@ -255,14 +261,14 @@ const Rater = ({
       <span css={styles.iconsContainer}>{radioInputs}</span>
       {
         /* getUserError  ||*/ (updateRatingError || addGameError) && (
-          <ErrorNotification variant='stacked'>
+          <ErrorMessage variant='stacked'>
             {
               /* getUserError?.message || */
               updateRatingError?.message ||
                 addGameError?.message ||
                 'Something went wrong.'
             }
-          </ErrorNotification>
+          </ErrorMessage>
         )
       }
     </div>

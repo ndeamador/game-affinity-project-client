@@ -5,34 +5,42 @@ import { FaPlusCircle, FaRegTrashAlt } from 'react-icons/fa';
 import useAddToLibrary from '../hooks/useAddToLibrary';
 import useRemoveFromLibrary from '../hooks/useRemoveFromLibrary';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import findGameInLibrary from '../utils/findGameInLibrary';
+import { BoardStateContext } from './DragDropBoard';
+import { User } from '../types';
 
-const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
+const AddToLibraryButton = ({
+  currentUser,
+  gameId,
+}: {
+  currentUser: User;
+  gameId: string | number;
+}) => {
   const parsedGameId = typeof gameId === 'string' ? parseInt(gameId) : gameId;
 
-  const {
-    getCurrentUser,
-    currentUser,
-    loading,
-    error: getUserError,
-  } = useLazyCurrentUser();
+  // const {
+  //   getCurrentUser,
+  //   currentUser,
+  //   loading,
+  //   error: getUserError,
+  // } = useLazyCurrentUser();
 
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
+  // useEffect(() => {
+  //   getCurrentUser();
+  // }, []);
 
-  if (loading) {
-    return (
-      <TooltipButton
-        isLoading={true}
-        label='Loading...'
-        onClick={() => {
-          return false;
-        }}
-      />
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <TooltipButton
+  //       isLoading={true}
+  //       label='Loading...'
+  //       onClick={() => {
+  //         return false;
+  //       }}
+  //     />
+  //   );
+  // }
 
   const gameInLibrary = currentUser
     ? findGameInLibrary({
@@ -47,20 +55,24 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
   const [removeGameFromLibrary, { loading: deletingGame }] =
     useRemoveFromLibrary();
 
+  // const boardState = useContext(BoardStateContext);
+
   return (
     <div>
       {gameInLibrary ? (
         <TooltipButton
           label='Remove from library'
-          onClick={() =>
+          onClick={() => {
+            // if (boardState)
+            //   boardState.updateBoardStateWithId(parsedGameId, null, currentUser);
             removeGameFromLibrary({
               variables: { igdb_game_id: parsedGameId },
               optimisticResponse: {
                 removeGameFromLibrary: gameInLibrary.id,
                 isOptimistic: true,
               },
-            })
-          }
+            });
+          }}
           icon={<FaRegTrashAlt />}
           isLoading={deletingGame}
           altColor
@@ -86,10 +98,10 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
           }
           icon={<FaPlusCircle />}
           isLoading={addingToLibrary}
-          isError={getUserError || libraryError ? true : false}
-          errorMessage={
-            getUserError ? getUserError.message : libraryError?.message
-          }
+          // isError={getUserError || libraryError ? true : false}
+          // errorMessage={
+          //   getUserError ? getUserError.message : libraryError?.message
+          // }
         />
       )}
     </div>

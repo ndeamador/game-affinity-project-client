@@ -10,7 +10,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { ErrorNotification } from './styledComponentsLibrary';
+import { ErrorMessage } from './styledComponentsLibrary';
 import { css } from '@emotion/react';
 
 // Styles
@@ -184,9 +184,9 @@ const LoginForm = ({
           {...register('email', { required: true })}
           css={styles.input}
         />
-        <ErrorNotification variant='stacked'>
+        <ErrorMessage variant='stacked'>
           {errors?.email?.message}
-        </ErrorNotification>
+        </ErrorMessage>
       </div>
       <div className='inputErrorDiv'>
         <Input
@@ -203,18 +203,18 @@ const LoginForm = ({
           })}
           css={styles.input}
         />
-        <ErrorNotification variant='stacked'>
+        <ErrorMessage variant='stacked'>
           {errors?.password?.message}
-        </ErrorNotification>
+        </ErrorMessage>
       </div>
       <div css={styles.submitButtonAndServerErrorDiv}>
         <Button type='submit' variant='primary' css={styles.submitButton}>
           {loading ? <Spinner /> : capitalizeFirstLetter(loginOrRegister)}
         </Button>
         {serverError && (
-          <ErrorNotification variant='inline' css={styles.notification}>
+          <ErrorMessage variant='inline' css={styles.notification}>
             {serverError}
-          </ErrorNotification>
+          </ErrorMessage>
         )}
       </div>
     </form>

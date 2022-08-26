@@ -7,9 +7,9 @@ import GenreFiltersBox from '../components/GenreFiltersBox';
 import FullPageSpinner from '../components/FullPageSpinner';
 import GameList from '../components/GameList';
 import GenericContainer from '../components/GenericContainer';
-import { ErrorNotification } from '../components/styledComponentsLibrary';
 import { GET_RANKING } from '../graphql/queries';
 import { Game } from '../types';
+import Notification from '../components/Notification';
 
 const containerStyle = css({
   display: 'flex',
@@ -27,19 +27,11 @@ const Ranking = () => {
   }, [data]);
 
   if (error)
-    return (
-      <ErrorNotification variant='inline'>
-        Something went wrong: {error.message}
-      </ErrorNotification>
-    );
+    return <Notification>Something went wrong: {error?.message}</Notification>;
 
   if (loadingGames) return <FullPageSpinner />;
   if (!data || !data.getRankedGames)
-    return (
-      <ErrorNotification variant='inline'>
-        No games are rated yet.
-      </ErrorNotification>
-    );
+    return <Notification>No games are rated yet.</Notification>;
 
   const genres: string[] = [
     ...new Set<string>( // Set is just to isolate unique values.
