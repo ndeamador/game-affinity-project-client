@@ -68,7 +68,7 @@ const Home = () => {
         <SearchBar setQuery={setQuery} loading={loading} />
         {error ? (
           <ErrorMessage variant='stacked' css={styles.error}>
-            Something went wrong.
+            Something went wrong. Failed to fetch games.
           </ErrorMessage>
         ) : debouncedQuery && !loading ? (
           <GameList games={games} />
