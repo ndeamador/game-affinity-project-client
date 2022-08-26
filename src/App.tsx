@@ -75,7 +75,7 @@ function App() {
                 {!loadingUser && !currentUser ? (
                   <Redirect to='/' />
                 ) : (
-                  <Library />
+                  <Library currentUser={currentUser}/>
                 )}
               </Route>
 

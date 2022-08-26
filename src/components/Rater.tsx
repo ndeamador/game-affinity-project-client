@@ -154,7 +154,7 @@ const Rater = ({
   ] = useAddToLibrary();
 
   // const { updateBoardStateWithId } = useBoardState(currentUser);
-  const boardState = useContext(BoardStateContext);
+  const boardContext = useContext(BoardStateContext);
 
   // console.log(
   //   '::In rater:: user: ',
@@ -199,8 +199,8 @@ const Rater = ({
       //   '============================================================='
       // );
     } else {
-      if (boardState)
-        boardState.updateBoardStateWithId(gameId, newRating, currentUser);
+      if (boardContext)
+      boardContext.updateBoardStateWithId(gameId, newRating, currentUser);
 
       updateRating({
         variables: {
