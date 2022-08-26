@@ -153,7 +153,7 @@ export const FullPageError = ({
 };
 
 // ERROR MESSAGE
-export const ErrorNotification = styled.div(
+export const ErrorMessage = styled.div(
   {
     color: 'var(--color-danger-dark)',
     margin: 0,

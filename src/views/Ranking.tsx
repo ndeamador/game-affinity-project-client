@@ -7,7 +7,7 @@ import GenreFiltersBox from '../components/GenreFiltersBox';
 import FullPageSpinner from '../components/FullPageSpinner';
 import GameList from '../components/GameList';
 import GenericContainer from '../components/GenericContainer';
-import { ErrorNotification } from '../components/styledComponentsLibrary';
+import { ErrorMessage } from '../components/styledComponentsLibrary';
 import { GET_RANKING } from '../graphql/queries';
 import { Game } from '../types';
 
@@ -28,17 +28,15 @@ const Ranking = () => {
 
   if (error)
     return (
-      <ErrorNotification variant='inline'>
+      <ErrorMessage variant='inline'>
         Something went wrong: {error.message}
-      </ErrorNotification>
+      </ErrorMessage>
     );
 
   if (loadingGames) return <FullPageSpinner />;
   if (!data || !data.getRankedGames)
     return (
-      <ErrorNotification variant='inline'>
-        No games are rated yet.
-      </ErrorNotification>
+      <ErrorMessage variant='inline'>No games are rated yet.</ErrorMessage>
     );
 
   const genres: string[] = [

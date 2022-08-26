@@ -8,7 +8,7 @@ import { ADD_TO_LIBRARY, UPDATE_RATING } from '../graphql/mutations';
 import { CURRENT_USER } from '../graphql/queries';
 import { ChangeEvent, useContext, useEffect } from 'react';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
-import { ErrorNotification, Spinner } from './styledComponentsLibrary';
+import { ErrorMessage, Spinner } from './styledComponentsLibrary';
 import { MeResponse, GameInUserLibrary, Rating, User } from '../types';
 import useAddToLibrary from '../hooks/useAddToLibrary';
 import useUpdateRating from '../hooks/useUpdateRating';
@@ -261,14 +261,14 @@ const Rater = ({
       <span css={styles.iconsContainer}>{radioInputs}</span>
       {
         /* getUserError  ||*/ (updateRatingError || addGameError) && (
-          <ErrorNotification variant='stacked'>
+          <ErrorMessage variant='stacked'>
             {
               /* getUserError?.message || */
               updateRatingError?.message ||
                 addGameError?.message ||
                 'Something went wrong.'
             }
-          </ErrorNotification>
+          </ErrorMessage>
         )
       }
     </div>

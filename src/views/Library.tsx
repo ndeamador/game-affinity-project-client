@@ -42,6 +42,7 @@ const Library = ({ currentUser }: { currentUser: User }) => {
       <div>{`Failed to find user's games: ${findGamesError.message}`}</div>
     );
   else if (loadingGames || (gameIdsInLibrary?.length != 0 && !gamesResponse)) {
+    console.log('loading:', loadingGames, '(gameIdsInLibrary?.length != 0 && !gamesResponse)', (gameIdsInLibrary?.length != 0 && !gamesResponse));
     return <FullPageSpinner />;
   }
 
