@@ -48,7 +48,7 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
   const [removeGameFromLibrary, { loading: deletingGame }] =
     useRemoveFromLibrary();
 
-  const boardState = useContext(BoardStateContext);
+  // const boardState = useContext(BoardStateContext);
 
   return (
     <div>
@@ -56,8 +56,8 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
         <TooltipButton
           label='Remove from library'
           onClick={() => {
-            if (boardState)
-              boardState.updateBoardStateWithId(parsedGameId, null, currentUser);
+            // if (boardState)
+            //   boardState.updateBoardStateWithId(parsedGameId, null, currentUser);
             removeGameFromLibrary({
               variables: { igdb_game_id: parsedGameId },
               optimisticResponse: {

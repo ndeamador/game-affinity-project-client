@@ -3,6 +3,7 @@
 import { DialogContent, DialogOverlay } from '@reach/dialog';
 import GameProfile from '../views/GameProfile';
 import { css } from '@emotion/react';
+import { User } from '../types';
 
 const styles = {
   dialogOverlay: css({
@@ -30,9 +31,11 @@ const styles = {
 };
 
 const GameProfileModal = ({
+  currentUser,
   setOpenModal,
   openModal,
 }: {
+  currentUser: User;
   setOpenModal: React.Dispatch<React.SetStateAction<string>>;
   openModal: string;
 }) => {
@@ -46,7 +49,7 @@ const GameProfileModal = ({
       css={styles.dialogOverlay}
     >
       <DialogContent css={styles.dialog} aria-label={ariaLabel}>
-        <GameProfile modalGame={openModal} />
+        <GameProfile modalGame={openModal} currentUser={currentUser} />
       </DialogContent>
     </DialogOverlay>
   );

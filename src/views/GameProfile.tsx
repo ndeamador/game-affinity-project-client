@@ -12,6 +12,8 @@ import { useEffect } from 'react';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 import GenericContainer from '../components/GenericContainer';
 import { css } from '@emotion/react';
+import { User } from '../types';
+import Notification from '../components/Notification';
 
 const styles = {
   container: css({
@@ -51,20 +53,26 @@ const styles = {
   }),
 };
 
-const GameProfile = ({ modalGame }: { modalGame?: string }) => {
-  const {
-    getCurrentUser,
-    currentUser,
-    loading: userLoading,
-    error: getUserError,
-  } = useLazyCurrentUser();
+const GameProfile = ({
+  currentUser,
+  modalGame,
+}: {
+  currentUser: User;
+  modalGame?: string;
+}) => {
+  // const {
+  //   getCurrentUser,
+  //   currentUser,
+  //   loading: userLoading,
+  //   error: getUserError,
+  // } = useLazyCurrentUser();
 
-  useEffect(() => {
-    (async () => await getCurrentUser())(); // Worked fine without async but gave an unmounted update error when used as modal in Library.
-  }, [getCurrentUser]);
-  if (getUserError) {
-    return <div>Test error: {getUserError.message}</div>;
-  }
+  // useEffect(() => {
+  //   (async () => await getCurrentUser())(); // Worked fine without async but gave an unmounted update error when used as modal in Library.
+  // }, [getCurrentUser]);
+  // if (getUserError) {
+  //   return <div>Test error: {getUserError.message}</div>;
+  // }
 
   const { gameId } = useParams<{ gameId: string }>();
   let parsedGameId = parseInt(gameId);
@@ -75,14 +83,23 @@ const GameProfile = ({ modalGame }: { modalGame?: string }) => {
     variables: { id: parsedGameId },
   });
 
-  useEffect(() => {
-    findGames();
-  }, [findGames]);
+  useEffect(
+    () => {
+      findGames();
+    },
+    [
+      /* findGames */
+    ]
+  );
 
   if (loading) return <FullPageSpinner />;
-  if (!data || data.findGames.length === 0) return <div>Game not found.</div>;
+  if (!data || data.findGames.length === 0)
+    return <Notification>Game not found.</Notification>;
   if (error) {
-    throw new Error(error.message);
+    return (
+      <Notification>Something went wrong. Failed to load game.</Notification>
+    );
+    // throw new Error(error.message);
     // return <Redirect to='/' />;
   }
 

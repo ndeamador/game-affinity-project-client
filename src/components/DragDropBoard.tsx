@@ -149,7 +149,7 @@ const DragoDropBoard = ({
             </div>
           </DragDropContext>
         </GenericContainer>
-        <GameProfileModal openModal={openModal} setOpenModal={setOpenModal} />
+        <GameProfileModal openModal={openModal} setOpenModal={setOpenModal} currentUser={user}/>
       </>
     </BoardStateContext.Provider>
   ) : (
