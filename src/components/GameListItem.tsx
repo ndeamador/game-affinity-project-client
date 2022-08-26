@@ -80,7 +80,7 @@ const GameListItem = ({ game, ranked }: { game: Game; ranked?: boolean }) => {
           <PlatformIcons platforms={game.platforms} />
         </div>
 
-        {currentUser && <AddGameToLibraryButton gameId={game.id} />}
+        {currentUser && <AddGameToLibraryButton gameId={game.id} currentUser={currentUser}/>}
       </div>
     </Link>
   );

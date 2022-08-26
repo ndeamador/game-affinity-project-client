@@ -8,32 +8,39 @@ import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 import { useContext, useEffect } from 'react';
 import findGameInLibrary from '../utils/findGameInLibrary';
 import { BoardStateContext } from './DragDropBoard';
+import { User } from '../types';
 
-const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
+const AddToLibraryButton = ({
+  currentUser,
+  gameId,
+}: {
+  currentUser: User;
+  gameId: string | number;
+}) => {
   const parsedGameId = typeof gameId === 'string' ? parseInt(gameId) : gameId;
 
-  const {
-    getCurrentUser,
-    currentUser,
-    loading,
-    error: getUserError,
-  } = useLazyCurrentUser();
+  // const {
+  //   getCurrentUser,
+  //   currentUser,
+  //   loading,
+  //   error: getUserError,
+  // } = useLazyCurrentUser();
 
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
+  // useEffect(() => {
+  //   getCurrentUser();
+  // }, []);
 
-  if (loading) {
-    return (
-      <TooltipButton
-        isLoading={true}
-        label='Loading...'
-        onClick={() => {
-          return false;
-        }}
-      />
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <TooltipButton
+  //       isLoading={true}
+  //       label='Loading...'
+  //       onClick={() => {
+  //         return false;
+  //       }}
+  //     />
+  //   );
+  // }
 
   const gameInLibrary = currentUser
     ? findGameInLibrary({
@@ -91,10 +98,10 @@ const AddToLibraryButton = ({ gameId }: { gameId: string | number }) => {
           }
           icon={<FaPlusCircle />}
           isLoading={addingToLibrary}
-          isError={getUserError || libraryError ? true : false}
-          errorMessage={
-            getUserError ? getUserError.message : libraryError?.message
-          }
+          // isError={getUserError || libraryError ? true : false}
+          // errorMessage={
+          //   getUserError ? getUserError.message : libraryError?.message
+          // }
         />
       )}
     </div>

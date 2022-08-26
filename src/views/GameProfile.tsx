@@ -124,7 +124,7 @@ const GameProfile = ({
             <ReleaseDeveoperRow game={game} />
             <PlatformIcons platforms={game.platforms} />
           </div>
-          {currentUser && <AddToLibraryButton gameId={parsedGameId} />}
+          {currentUser && <AddToLibraryButton gameId={parsedGameId} currentUser={currentUser}/>}
         </div>
 
         {currentUser && (
