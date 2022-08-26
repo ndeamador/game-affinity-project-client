@@ -8,6 +8,7 @@ import { FIND_GAMES } from '../graphql/queries';
 import DragoDropBoard from '../components/DragDropBoard';
 import { GameInUserLibrary, User } from '../types';
 import { css } from '@emotion/react';
+import Notification from '../components/Notification';
 
 const style = css({
   display: 'flex',
@@ -39,10 +40,11 @@ const Library = ({ currentUser }: { currentUser: User }) => {
 
   if (findGamesError)
     return (
-      <div>{`Failed to find user's games: ${findGamesError.message}`}</div>
+      <Notification>
+        {`Failed to find user's games: ${findGamesError.message}`}
+      </Notification>
     );
   else if (loadingGames || (gameIdsInLibrary?.length != 0 && !gamesResponse)) {
-    console.log('loading:', loadingGames, '(gameIdsInLibrary?.length != 0 && !gamesResponse)', (gameIdsInLibrary?.length != 0 && !gamesResponse));
     return <FullPageSpinner />;
   }
 
@@ -50,7 +52,7 @@ const Library = ({ currentUser }: { currentUser: User }) => {
     <div css={style}>
       {gameIdsInLibrary.length === 0 ? (
         <div>
-          <div>Your library is empty.</div>
+          <Notification>Your library is empty.</Notification>
           <Link to={'/home'}>Click here to find games!</Link>
         </div>
       ) : (
