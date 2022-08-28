@@ -47,17 +47,17 @@ const navLinkStyle = css({
   padding: '5px 10px',
   minWidth: 'var(--min-nav-item-width)',
   height: '100%',
-  color: 'var(--color-text)',
+  color: 'var(--navbar-link-text-color)',
   borderRadius: 'var(--border-radius)',
   textDecoration: 'none',
   '&:hover': {
-    color: 'var(--color-indigo)',
+    color: 'var(--navbar-link-text-color-hover)',
     background: 'var(--color-gray10)',
   },
 });
 
 const navLinkActiveStyle: React.CSSProperties = {
-  color: 'var(--color-green)',
+  color: 'var(--navbar-link-text-color-active)',
 };
 
 const userStripStyle = css({

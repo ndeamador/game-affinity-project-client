@@ -10,7 +10,7 @@ const animations = {
   40% { border-radius: 36% 64% 64% 36% / 64% 48% 52% 36%; }
   60% { border-radius: 37% 63% 51% 49% / 30% 30% 70% 70%; }
   80% { border-radius: 40% 60% 42% 58% / 41% 51% 49% 59%; }
-  50% { opacity: .5}
+  50% { opacity: var(--blob-half-animation-opacity)}
 `,
 
   rotate: keyframes`
@@ -32,7 +32,7 @@ const styles = {
     // backdropFilter: 'blur(10px)',
     // overflow: 'clip',
     overflow: 'hidden',
-    zIndex: -2,
+    zIndex: -3,
   }),
   overlay: css({
     position: 'absolute',
@@ -40,9 +40,8 @@ const styles = {
     left: 0,
     width: '100vw',
     height: '100vh',
-    backgroundColor: 'white',
+    backgroundColor: 'var(--background-overlay)',
     zIndex: 1,
-    opacity: 0.5,
   }),
   centerBlob: css({
     width: '60vw',
@@ -52,20 +51,36 @@ const styles = {
     margin: 'auto',
     backgroundImage:
       'linear-gradient(120deg, var(--blob-center-1) 0%, var(--blob-center-2) 100%)',
-    animation: `${animations.blob} 25s linear infinite`,
+    animation: `${animations.blob} 20s linear infinite`,
     marginTop: 'var(--searchbar-margin-top)',
+    filter: 'blur(var(--blob-center-blur))',
+    opacity: 'var(--blob-center-opacity)',
   }),
   bigBlob: css({
     position: 'absolute',
     left: '-50vw',
     top: '10vh',
-    width: '110vw',
-    height: '110vw',
+    width: '90vw', /* 110vw */
+    height: '90vw', /* 110vw */
     backgroundImage:
       'linear-gradient(120deg, var(--blob-big-1) 0%, var(--blob-big-2) 100%)',
-    opacity: 0.8,
-    animation: `${animations.blob} 30s linear infinite, ${animations.rotate} 50s linear infinite`,
-    filter: 'blur(50px)',
+    opacity: 'var(--blob-big-opacity)',
+    animation: `${animations.blob} 30s linear infinite, ${animations.rotate} 30s linear infinite`,
+    filter: 'blur(var(--blob-big-blur))',
+    zIndex: -1,
+  }),
+  bottomRightCornerBlob: css({
+    position: 'absolute',
+    left: '65vw',
+    top: '55vh',
+    width: '50vw', /* 110vw */
+    height: '50vw', /* 110vw */
+    backgroundImage:
+      'linear-gradient(120deg, var(--blob-bottom-right-corner) 0%, var(--blob-big-2) 100%)',
+    opacity: 'var(--blob-bottom-right-corner-opacity)',
+    animation: `${animations.blob} 30s linear infinite, ${animations.rotate} 30s linear infinite`,
+    filter: 'blur(var(--blob-big-blur))',
+    zIndex: -1,
   }),
   backgroundBlob: css({
     position: 'absolute',
@@ -76,7 +91,8 @@ const styles = {
       'linear-gradient(120deg, var(--blob-background-1) 0%, var(--blob-background-2) 100%)',
     overflow: 'overlay',
     animation: `${animations.rotate} 10s linear infinite`,
-    opacity: 1,
+    opacity: 'var(--blob-background-opacity)',
+    zIndex: -2,
   }),
 };
 
@@ -84,9 +100,10 @@ const CssBlobs = () => {
   return (
     <div css={styles.container}>
       <div id='blobsOverlay' css={styles.overlay} />
-      <div id='backgroundBlob' css={styles.backgroundBlob} />
       <div id='centerBlob' css={styles.centerBlob} />
       <div id='bigBlog' css={styles.bigBlob} />
+      <div id='bottomRightCornerBlob' css={styles.bottomRightCornerBlob} />
+      <div id='backgroundBlob' css={styles.backgroundBlob} />
     </div>
   );
 };
