@@ -1,15 +1,17 @@
 import { AnimatedParticleBaseProps, WindowSize } from '../types';
+import { getRandomNumber } from './misc';
 
 const getRandomParticles = (
   windowSize: WindowSize
 ): AnimatedParticleBaseProps[] => {
   const particlesArray: AnimatedParticleBaseProps[] = [];
-  const particleMultiplier = 7;
+  const particleMultiplier = 4;
   const numberOfParticles = particleMultiplier * (windowSize.height * windowSize.width) / 100000
   // const numberOfParticles = 50;
-  const speedMultiplier = 5; //3 0.3
-  const sizeMultiplier = 0.3; // used as radius for canvas.arc(). Unit not pixels.
-  const sizeVariation = 3 // 5
+  const minSpeed = 0.1;
+  const maxSpeed = 0.5;
+  const sizeMultiplier = 0.9; // used as radius for canvas.arc(). Unit not pixels.
+  const sizeVariation = 5 // 5
 
 
   for (let i = 0; i < numberOfParticles; i++) {
@@ -17,9 +19,9 @@ const getRandomParticles = (
     // particle position set random number between 0 and canvas width/height with particle size defining a buffer around the canvas to avoid particles getting stuck in the edge.
     const x = Math.random() * (innerWidth - size * 2 - size * 2) + size * 2;
     const y = Math.random() * (innerHeight - size * 2 - size * 2) - size * 2;
-    // particle movement speed and direction (how many pixels particle moves each frame). Random number between speedMultiplier/2 & - speedMultiplier/2
-    const directionX = Math.random() * speedMultiplier - speedMultiplier/2;
-    const directionY = Math.random() * speedMultiplier - speedMultiplier/2;
+    // particle movement speed and direction (how many pixels particle moves each frame).
+    const directionX = getRandomNumber(minSpeed, maxSpeed);
+    const directionY = getRandomNumber(minSpeed, maxSpeed);
     const color = '#8C5524';
 
     particlesArray.push({ x, y, directionX, directionY, size, color });
