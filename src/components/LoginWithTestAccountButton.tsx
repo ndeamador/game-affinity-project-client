@@ -7,7 +7,7 @@ import { CURRENT_USER } from '../graphql/queries';
 import { Button } from './styledComponentsLibrary';
 
 const animations = {
-  shine: keyframes`
+  borderGlow: keyframes`
   to {
     background-position: 200% center;
   }
@@ -19,15 +19,9 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 'var(--border-radius)',
-    background: `linear-gradient(40deg,
-        var(--button-gradient-border-color-1) 20%,
-        var(--button-gradient-border-color-1) 40%,
-        var(--button-gradient-border-color-2) 50%,
-        var(--button-gradient-border-color-2) 55%,
-        var(--button-gradient-border-color-1) 70%,
-        var(--button-gradient-border-color-1) 100%)`,
+    background: 'var(--animated-border-gradient)',
     backgroundSize: '200% auto', // https://codersblock.com/blog/gradient-animation-trick/
-    animation: `${animations.shine} 2s linear infinite`,
+    animation: `${animations.borderGlow} 2s linear infinite`,
   }),
   button: css({
     backgroundColor: 'var(--button-gradient-border-color-1)',
