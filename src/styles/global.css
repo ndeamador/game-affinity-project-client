@@ -39,7 +39,7 @@ html {
   /* Temp background theme 3 */
   --overlay-blur: 3px;
   --blob-big-blur: 270px;
-  --blob-center-blur: 85px;
+  --blob-center-blur: 80px;
 
   --blob-half-animation-opacity: 0.5;
   --blob-center-opacity: 0.8;
@@ -54,17 +54,20 @@ html {
   --navbar-link-text-color: rgb(6, 255, 223, 0.5);
   --navbar-link-text-color-hover: var(--color-text);
   --navbar-link-text-color-active: rgb(218, 255, 250);
-  --navbar-background: rgba(0, 0, 0, 0.7);
+  --navbar-background: rgba(165, 165, 165, 0.7);
   --blob-big-1: #06ffdf; /* 18b2de */
   --blob-big-2: #070418;
   --blob-bottom-right-corner: #7b80ff;
   --blob-center-1: #fb37ff; /* fb37ff */
   --blob-center-2: #06ffdf; /* 18b2de */ /* #06ffdf */
 
-  --item-list-background: rgba(255, 255, 255, 0.6);
-  --regular-button-background-color: rgba(255, 255, 255, 0.4);
-  --regular-button-background-color-hover: rgba(255, 255, 255, 0.7);
+  --regular-button-background-color: rgb(195, 195, 195);
+  --regular-button-background-color-hover: rgba(255, 255, 255);
   --filter-button-hover-active: var(--color-indigoLighten80);
+  --button-gradient-border-color-1: var(--regular-button-background-color);
+  --button-gradient-border-color-2: #fb37ff;
+
+  --item-list-background: rgba(255, 255, 255, 0.6);
   --inner-content-background-color: ghostwhite;
   --inner-content-background-color-hover: rgba(255, 255, 255, 0.4);
   --inner-border-color: var(--color-gray80);
