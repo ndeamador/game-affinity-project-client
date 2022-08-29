@@ -10,7 +10,7 @@ const style = css({
   fontWeight: 'bold',
   color: 'white',
   // backgroundColor: backgroundColor(rating100Scale),
-  width: 'calc(var(--cover-width) - 25px)',
+  width: 'calc(var(--cover-width-thumb) - 25px)',
   borderRadius: 'var(--border-radius)',
   marginRight: '10px',
 });

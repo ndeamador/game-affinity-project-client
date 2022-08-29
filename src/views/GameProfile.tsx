@@ -14,17 +14,18 @@ import GenericContainer from '../components/GenericContainer';
 import { css } from '@emotion/react';
 import { User } from '../types';
 import Notification from '../components/Notification';
+import CoverDiv from '../components/CoverDiv';
 
 const styles = {
   container: css({
     padding: '15px',
   }),
-  coverDiv: css({
-    borderRadius: 'var(--border-radius)',
-    width: '264px',
-    maxWidth: '264px',
-    flexShrink: 0,
-  }),
+  // coverDiv: css({
+  //   borderRadius: 'var(--border-radius)',
+  //   width: '264px',
+  //   maxWidth: '264px',
+  //   flexShrink: 0,
+  // }),
   coverImage: css({
     borderRadius: 'var(--border-radius)',
     width: '100%',
@@ -80,6 +81,7 @@ const GameProfile = ({
   if (modalGame) parsedGameId = parseInt(modalGame);
 
   const [findGames, { data, loading, error }] = useLazyQuery(FIND_GAMES, {
+    fetchPolicy: 'cache-first',
     variables: { id: parsedGameId },
   });
 
@@ -106,16 +108,17 @@ const GameProfile = ({
   const game = data?.findGames[0];
 
   // Setting image resolution from url: https://api-docs.igdb.com/#images
-  const imageSize = 'cover_big';
-  const imageLink = game.cover?.id
-    ? `//images.igdb.com/igdb/image/upload/t_${imageSize}/${game.cover?.image_id}.jpg`
-    : loadingTravolta;
+  // const imageSize = 'cover_big';
+  // const imageLink = game.cover?.id
+  //   ? `//images.igdb.com/igdb/image/upload/t_${imageSize}/${game.cover?.image_id}.jpg`
+  //   : loadingTravolta;
 
   return (
     <GenericContainer additionalStyle={styles.container}>
-      <div css={styles.coverDiv}>
+      {/* <div css={styles.coverDiv}>
         <img src={imageLink} css={styles.coverImage}></img>
-      </div>
+      </div> */}
+      <CoverDiv game={game} showSpinner big/>
 
       <div css={styles.gameInfoDiv}>
         <div css={styles.gameHeader}>
