@@ -79,14 +79,12 @@ html {
   );
   --animated-text-gradient: linear-gradient(
     40deg,
-    /* var(--navbar-link-text-color) 60%, */
-    var(--navbar-link-text-color) 70%,
+    /* var(--navbar-link-text-color) 60%, */ var(--navbar-link-text-color) 70%,
     var(--button-gradient-border-color-2) 80%,
     /* var(--button-gradient-border-color-2) 85%, */
-    var(--navbar-link-text-color) 90%,
+      var(--navbar-link-text-color) 90%,
     var(--navbar-link-text-color) 100%
   );
-
 
   --item-list-background: rgba(255, 255, 255, 0.6);
   --inner-content-background-color: ghostwhite;
@@ -111,7 +109,9 @@ html {
   --border-radius: 8px;
   --searchbar-max-width: 800px;
   --min-nav-item-width: 7rem;
-  --cover-width: 90px;
+  --cover-width-thumb: 90px;
+  --cover-width-big: 264px;
+  --cover-height-big: 374px;
   --searchbar-margin-top: 10vh;
 }
 
