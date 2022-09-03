@@ -34,7 +34,7 @@ const backgroundColor: { [key: string]: SerializedStyles } = {
 };
 
 const AverageRatingDiv = ({ rating }: { rating: number }) => {
-  const rating100Scale = Math.round((rating * 100) / 4);
+  const rating100Scale = Math.round(((rating - 1) * 100) / (4 - 1)); // both -1 are to adapt the average to the new 1-4 scale;
   const getBackgroundColor = (rating: number): string => {
     if (rating >= 85) return 'green';
     else if (rating >= 70) return 'yellowgreen';
