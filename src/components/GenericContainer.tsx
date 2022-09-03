@@ -16,7 +16,7 @@ const GenericContainer = ({
   additionalStyle,
 }: {
   children: React.ReactNode;
-  additionalStyle?: SerializedStyles;
+  additionalStyle?: SerializedStyles | SerializedStyles[];
 }) => {
   return <div css={[style, additionalStyle]}>{children}</div>;
 };

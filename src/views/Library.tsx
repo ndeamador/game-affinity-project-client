@@ -10,11 +10,16 @@ import { GameInUserLibrary, User } from '../types';
 import { css } from '@emotion/react';
 import Notification from '../components/Notification';
 
-const style = css({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-});
+const styles = {
+  mainContainer: css({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  }),
+  notification: css({
+    flexDirection: 'column',
+  }),
+};
 
 const Library = ({ currentUser }: { currentUser: User }) => {
   console.log('================= Library: ');
@@ -49,12 +54,12 @@ const Library = ({ currentUser }: { currentUser: User }) => {
   }
 
   return (
-    <div css={style}>
+    <div css={styles.mainContainer}>
       {gameIdsInLibrary.length === 0 ? (
-        <div>
-          <Notification>Your library is empty.</Notification>
+        <Notification additionalStyle={styles.notification}>
+          <p>Your library is empty.</p>
           <Link to={'/home'}>Click here to find games!</Link>
-        </div>
+        </Notification>
       ) : (
         <DragoDropBoard games={gamesResponse.findGames} user={currentUser} />
       )}
