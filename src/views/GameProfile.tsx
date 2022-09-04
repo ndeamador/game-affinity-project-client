@@ -19,6 +19,7 @@ import CoverDiv from '../components/CoverDiv';
 const styles = {
   container: css({
     padding: '15px',
+    alignItems:'flex-start',
   }),
   // coverDiv: css({
   //   borderRadius: 'var(--border-radius)',
@@ -28,7 +29,7 @@ const styles = {
   // }),
   coverImage: css({
     borderRadius: 'var(--border-radius)',
-    width: '100%',
+    width: '10%',
   }),
   gameInfoDiv: css({
     display: 'flex',
