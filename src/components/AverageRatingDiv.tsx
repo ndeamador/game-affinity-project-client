@@ -11,8 +11,10 @@ const style = css({
   color: 'white',
   // backgroundColor: backgroundColor(rating100Scale),
   width: 'calc(var(--cover-width-thumb) - 25px)',
+  height: 'var(--cover-width-thumb)',
   borderRadius: 'var(--border-radius)',
   marginRight: '10px',
+  alignContent: 'stretch',
 });
 
 const backgroundColor: { [key: string]: SerializedStyles } = {
