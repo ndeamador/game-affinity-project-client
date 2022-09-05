@@ -21,11 +21,12 @@ export const LOGIN = gql`
   mutation login(
   $email: String!
   $password: String!
+  $guest: Boolean
 ) {
 login(
   email: $email
   password: $password
-
+  guest: $guest
 ) {
   ...UserDetails
 }

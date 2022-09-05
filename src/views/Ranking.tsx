@@ -10,11 +10,17 @@ import GenericContainer from '../components/GenericContainer';
 import { GET_RANKING } from '../graphql/queries';
 import { Game } from '../types';
 import Notification from '../components/Notification';
+import { Link } from 'react-router-dom';
 
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-});
+const styles = {
+  containerStyle: css({
+    display: 'flex',
+    flexDirection: 'column',
+  }),
+  noRatingsNotification: css({
+    flexDirection: 'column',
+  }),
+};
 
 const Ranking = () => {
   const { data, loading: loadingGames, error } = useQuery(GET_RANKING);
@@ -30,8 +36,13 @@ const Ranking = () => {
     return <Notification>Something went wrong: {error?.message}</Notification>;
 
   if (loadingGames) return <FullPageSpinner />;
-  if (!data || !data.getRankedGames)
-    return <Notification>No games are rated yet.</Notification>;
+  if (!data || !data.getRankedGames || data.getRankedGames.length == 0)
+    return (
+      <Notification additionalStyle={styles.noRatingsNotification}>
+        <p>No one has rated any games yet!</p>
+        <Link to={'/home'}>Click here to find games and start rating!</Link>
+      </Notification>
+    );
 
   const genres: string[] = [
     ...new Set<string>( // Set is just to isolate unique values.
@@ -59,7 +70,7 @@ const Ranking = () => {
         );
 
   return (
-    <GenericContainer additionalStyle={containerStyle}>
+    <GenericContainer additionalStyle={styles.containerStyle}>
       <GenreFiltersBox
         genreFilter={genreFilter}
         setGenreFilter={setGenreFilter}

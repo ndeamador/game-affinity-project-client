@@ -12,6 +12,7 @@ const styles = {
     // maxHeight: 'var(--cover-width-thumb)',
     aspectRatio: '1/1',
     flexGrow: 1,
+    flexShrink: 0,
   }),
   image: css({
     height: '100%',
@@ -19,12 +20,13 @@ const styles = {
   }),
   genericBox: css({
     display: 'flex',
+    // width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    // width: '100%',
     border: 'solid 2px var(--inner-border-color)',
     borderRadius: 'var(--border-radius)',
     padding: '8px',
+    width: 'var(--cover-width-thumb)',
     aspectRatio: '1/1',
   }),
   genericIcon: css({
@@ -32,7 +34,12 @@ const styles = {
     // height: 'auto',
     height: '100%',
   }),
-  spinner: css({ width: '50%', height: '50%' }),
+  spinner: css({
+    width: '50%',
+    height: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }),
 };
 
 const CoverDiv = ({
@@ -57,10 +64,11 @@ const CoverDiv = ({
     }),
     bigSize: css({
       // height: 'var(--cover-height-big)',
-      width: 'var(--cover-width-big)',
+      // width: 'var(--cover-width-big)',
       maxWidth: 'var(--cover-width-big)',
       borderRadius: 'var(--border-radius)',
       flexShrink: 0,
+      aspectRatio: 'unset',
     }),
     genericBoxBig: css({
       aspectRatio: 'unset',
@@ -94,7 +102,7 @@ const CoverDiv = ({
           <img src={imageLink} css={styles.image} />
         )
       ) : (
-        <div css={styles.genericBox}>
+        <div css={[styles.mainContainer, styles.genericBox]}>
           <CgGames css={styles.genericIcon} />
         </div>
       )}

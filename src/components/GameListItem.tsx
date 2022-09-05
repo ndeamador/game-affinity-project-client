@@ -21,6 +21,7 @@ const styles = {
     transitionDuration: '0.2s',
     transitionProperty: 'background-color, box-shadow',
     border: '1px solid transparent', // here just so that the hover border does not move the element
+    alignItems: 'start', // not necessary, but forces flexbox to respect CoverDiv 1/1 aspect ratio
     ':hover': {
       // boxShadow: '0 0 0 1px lightgrey',
       // backgroundColor: 'ghostwhite',

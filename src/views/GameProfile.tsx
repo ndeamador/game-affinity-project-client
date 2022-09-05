@@ -19,6 +19,9 @@ import CoverDiv from '../components/CoverDiv';
 const styles = {
   container: css({
     padding: '15px',
+    // alignItems:'flex-start',
+    minWidth: '500px',
+    minHeight: '200px',
   }),
   // coverDiv: css({
   //   borderRadius: 'var(--border-radius)',
@@ -118,7 +121,7 @@ const GameProfile = ({
       {/* <div css={styles.coverDiv}>
         <img src={imageLink} css={styles.coverImage}></img>
       </div> */}
-      <CoverDiv game={game} showSpinner big/>
+      <CoverDiv game={game} showSpinner big />
 
       <div css={styles.gameInfoDiv}>
         <div css={styles.gameHeader}>
@@ -127,7 +130,12 @@ const GameProfile = ({
             <ReleaseDeveoperRow game={game} />
             <PlatformIcons platforms={game.platforms} />
           </div>
-          {currentUser && <AddToLibraryButton gameId={parsedGameId} currentUser={currentUser}/>}
+          {currentUser && (
+            <AddToLibraryButton
+              gameId={parsedGameId}
+              currentUser={currentUser}
+            />
+          )}
         </div>
 
         {currentUser && (

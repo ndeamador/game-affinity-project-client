@@ -47,8 +47,9 @@ const LonginWithTestAccountButton = () => {
   const submitLogin = async () => {
     await login({
       variables: {
-        email: 'test-account@gap.com',
-        password: 'TestAccountPassword',
+        email: 'guest-account@gap.com',
+        password: 'GuestAccountPassword',
+        guest: true,
       },
     });
   };

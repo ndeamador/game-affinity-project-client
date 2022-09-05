@@ -21,3 +21,13 @@ export const getRandomNumber = (min: number, max: number) => {
 export const getRandomInt = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+export const getRandomDirectionCoeficient = (min: number, max: number) => {
+  const randomizator = (Math.random() - 0.5) * 2; // between -1 and 1;
+  if (randomizator >= 0) {
+    return randomizator * (max - min + 1) + min;
+  }
+  else {
+    return -(-randomizator * (max - min + 1) + min);
+  }
+}

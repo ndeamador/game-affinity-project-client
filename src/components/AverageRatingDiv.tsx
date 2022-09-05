@@ -11,8 +11,10 @@ const style = css({
   color: 'white',
   // backgroundColor: backgroundColor(rating100Scale),
   width: 'calc(var(--cover-width-thumb) - 25px)',
+  height: 'var(--cover-width-thumb)',
   borderRadius: 'var(--border-radius)',
   marginRight: '10px',
+  alignContent: 'stretch',
 });
 
 const backgroundColor: { [key: string]: SerializedStyles } = {
@@ -34,7 +36,7 @@ const backgroundColor: { [key: string]: SerializedStyles } = {
 };
 
 const AverageRatingDiv = ({ rating }: { rating: number }) => {
-  const rating100Scale = Math.round((rating * 100) / 4);
+  const rating100Scale = Math.round(((rating - 1) * 100) / (4 - 1)); // both -1 are to adapt the average to the new 1-4 scale;
   const getBackgroundColor = (rating: number): string => {
     if (rating >= 85) return 'green';
     else if (rating >= 70) return 'yellowgreen';
