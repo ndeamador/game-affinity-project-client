@@ -64,10 +64,11 @@ const CoverDiv = ({
     }),
     bigSize: css({
       // height: 'var(--cover-height-big)',
-      width: 'var(--cover-width-big)',
-      // maxWidth: 'var(--cover-width-big)',
+      // width: 'var(--cover-width-big)',
+      maxWidth: 'var(--cover-width-big)',
       borderRadius: 'var(--border-radius)',
       flexShrink: 0,
+      aspectRatio: 'unset',
     }),
     genericBoxBig: css({
       aspectRatio: 'unset',

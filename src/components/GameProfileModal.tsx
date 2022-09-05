@@ -10,12 +10,13 @@ const styles = {
     backdropFilter: 'blur(10px)',
     background: 'rgba(0, 0, 0, 0.4)',
   }),
-  dialog: css({
+  dialogContent: css({
     // opacity: '0.5',
     display: 'flex',
     maxHeight: '90vh',
     backgroundColor: 'transparent',
     justifyContent: 'center',
+    minWidth:'400px',
     ':click': {
       transition: 'transform 0.3s',
       transitionDuration: '0.3s',
@@ -48,7 +49,7 @@ const GameProfileModal = ({
       onDismiss={() => setOpenModal('none')}
       css={styles.dialogOverlay}
     >
-      <DialogContent css={styles.dialog} aria-label={ariaLabel}>
+      <DialogContent css={styles.dialogContent} aria-label={ariaLabel}>
         <GameProfile modalGame={openModal} currentUser={currentUser} />
       </DialogContent>
     </DialogOverlay>
