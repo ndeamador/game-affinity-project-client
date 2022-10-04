@@ -1,10 +1,11 @@
 import { FC, useContext } from 'react';
 import { AnimatedParticleProps, RectWithBoundingPoints } from '../../types';
-import { Canvas2dContext, FrameContext } from './AnimatedCanvas';
+// import { Canvas2dContext, FrameContext } from './AnimatedCanvas';
 
 const AnimatedParticle: FC<AnimatedParticleProps> = (props) => {
-  const canvas = useContext(Canvas2dContext);
-  useContext(FrameContext); // only present to force that the particle re-renders after each frame clears the canvas.
+  // const canvas = useContext(Canvas2dContext);
+  // useContext(FrameContext); // only present to force that the particle re-renders after each frame clears the canvas.
+  const canvas = props.renderingContext;
 
   let defaultColor = '#ffffff'; /* '#8C5523' */
   // defaultColor = '#8C5523';
