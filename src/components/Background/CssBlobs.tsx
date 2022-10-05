@@ -28,8 +28,8 @@ const styles = {
     justifyContent: 'center',
     width: '100%',
     height: '100%',
-    // filter: 'blur(10px)',
-    // backdropFilter: 'blur(10px)',
+    // filter: 'blur(10px)', // bit too much impact on performance
+    // backdropFilter: 'blur(10px)', // bit too much impact on performance
     // overflow: 'clip',
     overflow: 'hidden',
     zIndex: -3,
@@ -53,33 +53,33 @@ const styles = {
       'linear-gradient(120deg, var(--blob-center-1) 0%, var(--blob-center-2) 100%)',
     animation: `${animations.blob} 20s linear infinite`,
     marginTop: 'var(--searchbar-margin-top)',
-    filter: 'blur(var(--blob-center-blur))',
+    // filter: 'blur(var(--blob-center-blur))', // bit too much impact on performance
     opacity: 'var(--blob-center-opacity)',
   }),
   bigBlob: css({
     position: 'absolute',
     left: '-50vw',
     top: '10vh',
-    width: '90vw', /* 110vw */
-    height: '90vw', /* 110vw */
+    width: '90vw' /* 110vw */,
+    height: '90vw' /* 110vw */,
     backgroundImage:
       'linear-gradient(120deg, var(--blob-big-1) 0%, var(--blob-big-2) 100%)',
     opacity: 'var(--blob-big-opacity)',
     animation: `${animations.blob} 30s linear infinite, ${animations.rotate} 30s linear infinite`,
-    filter: 'blur(var(--blob-big-blur))',
+    // filter: 'blur(var(--blob-big-blur))', // bit too much impact on performance
     zIndex: -1,
   }),
   bottomRightCornerBlob: css({
     position: 'absolute',
     left: '65vw',
     top: '55vh',
-    width: '50vw', /* 110vw */
-    height: '50vw', /* 110vw */
+    width: '50vw' /* 110vw */,
+    height: '50vw' /* 110vw */,
     backgroundImage:
       'linear-gradient(120deg, var(--blob-bottom-right-corner) 0%, var(--blob-big-2) 100%)',
     opacity: 'var(--blob-bottom-right-corner-opacity)',
     animation: `${animations.blob} 30s linear infinite, ${animations.rotate} 30s linear infinite`,
-    filter: 'blur(var(--blob-big-blur))',
+    // filter: 'blur(var(--blob-big-blur))', // bit too much impact on performance
     zIndex: -1,
   }),
   backgroundBlob: css({
