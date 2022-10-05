@@ -53,32 +53,45 @@ export const Button = styled.button(
 );
 
 // CIRCLE BUTTON
-export const CircleButton = styled.button({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minWidth: '40px',
-  minHeight: '40px',
-  // margin: '0px 5px',
-  height: '40px',
-  outlineStyle: 'none',
-  fontSize: '15px',
-  cursor: 'pointer',
-  boxSizing: 'border-box', // padding and border are included in the element's total width and height
-  borderRadius: '9999px',
-  borderStyle: 'none',
-  color: 'var(--color-text)',
-  backgroundColor: 'var(--regular-button-background-color)',
-  transition: 'background-color 0.04s ease-in',
+const transparentVariant = {
+  backgroundColor: 'transparent',
   '&:hover': {
-    backgroundColor: 'var(--regular-button-background-color-hover)',
-    transition: 'background-color 0.02s ease-in',
+    backgroundColor: 'transparent',
+  },
+};
+
+export const CircleButton = styled.button(
+  {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: '40px',
+    minHeight: '40px',
+    // margin: '0px 5px',
+    height: '40px',
+    outlineStyle: 'none',
+    fontSize: '15px',
+    cursor: 'pointer',
+    boxSizing: 'border-box', // padding and border are included in the element's total width and height
+    borderRadius: '9999px',
+    borderStyle: 'none',
+    color: 'var(--color-text)',
+    backgroundColor: 'var(--regular-button-background-color)',
+    transition: 'background-color 0.04s ease-in',
     '&:first-of-type div > *': {
-      transform: 'scale(1.1)',
       transition: 'transform 0.025s ease-in',
     },
+    '&:hover': {
+      backgroundColor: 'var(--regular-button-background-color-hover)',
+      transition: 'background-color 0.02s ease-in',
+      '&:first-of-type div > *': {
+        transform: 'scale(1.15)',
+        transition: 'transform 0.025s ease-in',
+      },
+    },
   },
-});
+  ({ transparent=false }: { transparent?: boolean }) => transparent && transparentVariant // variant comes from props.variant, the props passed to the button, defaulted to regular.
+);
 
 // INPUT
 

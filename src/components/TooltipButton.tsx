@@ -6,7 +6,6 @@ import { IconBaseProps } from 'react-icons';
 import { css } from '@emotion/react';
 
 const style = css({
-  backgroundColor: 'var(--regular-button-background-color)',
   '&:hover, :focus': {
     color: 'var(--color-indigo)',
   },
@@ -80,6 +79,7 @@ function TooltipButton({
         disabled={isLoading}
         onClick={handleClick}
         aria-label={isError ? error.message : label}
+        transparent
         {...rest}
       >
         <div css={iconDivStyle}>
