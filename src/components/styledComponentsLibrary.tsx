@@ -22,7 +22,9 @@ const buttonVariants = {
   },
   filter: {
     padding: '8px 8px',
-    backgroundColor: 'var(--regular-button-background-color)',
+    // backgroundColor: 'var(--regular-button-background-color)',
+    backgroundColor: 'transparent',
+    border: '1px solid var(--filter-button-border-color)',
     fontSize: '15px',
     transition: 'background-color 0.6s ease-out',
     '&:hover': {

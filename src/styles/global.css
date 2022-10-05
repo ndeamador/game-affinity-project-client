@@ -64,9 +64,10 @@ html {
   --navbar-link-text-color-hover: var(--color-accent);
   --navbar-link-text-color-active: rgb(236, 255, 252);
   --navbar-user-text-color: var(--color-text);
-  --regular-button-background-color: rgb(233, 233, 233);
+  --regular-button-background-color: rgb(235, 232, 232);
   --regular-button-background-color-hover: rgb(244, 244, 244);
   --filter-button-hover-active: var(--color-indigoLighten80);
+  --filter-button-border-color: white;
   --button-gradient-border-color-1: var(--regular-button-background-color);
   --button-gradient-border-color-2: var(--color-accent);
   --animated-border-gradient: linear-gradient(
