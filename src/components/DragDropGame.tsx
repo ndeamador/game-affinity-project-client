@@ -16,7 +16,7 @@ const draggableStyle = css({
   padding: '5px',
   border: 'solid 1px var(--color-gray20)',
   borderRadius: 'var(--border-radius)',
-  // backgroundColor: 'var(--color-base)',
+  backgroundColor: 'var(--dd-game-background-color)',
   marginBottom: '5px',
   transition: 'background-color 0.18s',
   '&:hover': {
