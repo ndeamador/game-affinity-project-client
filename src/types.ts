@@ -102,17 +102,17 @@ export interface AnimatedParticleBaseProps {
   color: string | 'black';
 }
 
-export interface AnimatedParticleProps extends AnimatedParticleBaseProps {
-  mouseRadius?: number;
-  windowSize: WindowSize;
-  bounceElements?: BounceBoxState;
-  index: number;
-  onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
-  mouse: MousePositionProps;
-  renderingContext: CanvasRenderingContext2D | null;
-  // particlesArray: AnimatedParticleBaseProps[] | undefined;
-  // particlesArray: any;
-}
+// export interface AnimatedParticleProps extends AnimatedParticleBaseProps {
+//   mouseRadius?: number;
+//   windowSize: WindowSize;
+//   bounceElements?: BounceBoxState;
+//   index: number;
+//   onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
+//   mouse: MousePositionProps;
+//   renderingContext: CanvasRenderingContext2D | null;
+//   // particlesArray: AnimatedParticleBaseProps[] | undefined;
+//   // particlesArray: any;
+// }
 
 export interface AnimatedParticlesProps {
   mouseRadius?: number;

@@ -42,41 +42,21 @@ const Background = ({ bounceBoxes }: { bounceBoxes: any }) => {
     <div css={style}>
       <CssBlobs />
       {/* <Profiler id='test' onRender={logTimes}> */}
-      <AnimatedCanvas
-        dimensions={{
-          width: windowSize.scrollWidth,
-          height: windowSize.scrollHeight,
-        }}
-      >
-        <Composition
-          windowSize={windowSize}
-          mousePosition={mousePosition}
-          bounceBoxes={bounceBoxes}
-        />
-      </AnimatedCanvas>
+        <AnimatedCanvas
+          dimensions={{
+            width: windowSize.scrollWidth,
+            height: windowSize.scrollHeight,
+          }}
+        >
+          <Composition
+            windowSize={windowSize}
+            mousePosition={mousePosition}
+            bounceBoxes={bounceBoxes}
+          />
+        </AnimatedCanvas>
       {/* </Profiler> */}
     </div>
   );
-
-  // return (
-  //   <div css={style}>
-  //     <CssBlobs />
-  //     {/* <AnimatedCanvas
-  //       dimensions={{
-  //         width: windowSize.scrollWidth,
-  //         height: windowSize.scrollHeight,
-  //       }}
-  //     > */}
-  //     <Profiler id='test' onRender={logTimes}>
-  //       <Composition
-  //         windowSize={windowSize}
-  //         mousePosition={mousePosition}
-  //         bounceBoxes={bounceBoxes}
-  //       />
-  //     </Profiler>
-  //     {/* </AnimatedCanvas> */}
-  //   </div>
-  // );
 };
 
 export default Background;

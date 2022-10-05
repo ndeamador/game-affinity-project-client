@@ -1,12 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React, {
-  cloneElement,
-  createContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const AnimatedCanvas = ({
   children,
@@ -49,22 +43,6 @@ const AnimatedCanvas = ({
     renderingContext.clearRect(0, 0, dimensions.width, dimensions.height);
   }
 
-  // return (
-  //   <Canvas2dContext.Provider value={renderingContext}>
-  //     <FrameContext.Provider value={frameCount}>
-  //       <canvas ref={canvasRef}>{children}</canvas>
-  //     </FrameContext.Provider>
-  //   </Canvas2dContext.Provider>
-  // );
-
-  // return (
-  //   <Canvas2dContext.Provider value={renderingContext}>
-  //     <FrameContext.Provider value={frameCount}>
-  //       <canvas ref={canvasRef}>{children}</canvas>
-  //     </FrameContext.Provider>
-  //   </Canvas2dContext.Provider>
-  // );
-
   return (
     <canvas ref={canvasRef}>
       {/* Cloning element to pass props to children without having to use Context */}
@@ -77,21 +55,3 @@ const AnimatedCanvas = ({
 };
 
 export default AnimatedCanvas;
-
-// export const FrameContext = createContext<number>(0);
-// export const Canvas2dContext = createContext<CanvasRenderingContext2D | null>(
-//   null
-// );
-
-// // Only useable for animated elements that don't depend on others.
-// export const useAnimation = <T,>({
-//   initialValue,
-//   updaterFunction,
-// }: {
-//   initialValue: T;
-//   updaterFunction: (initialValue: T) => T;
-// }) => {
-//   const animationRef = useRef(initialValue);
-//   animationRef.current = updaterFunction(animationRef.current);
-//   return animationRef.current;
-// };
