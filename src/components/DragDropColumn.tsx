@@ -4,6 +4,8 @@ import { css } from '@emotion/react';
 import { Droppable } from 'react-beautiful-dnd';
 import { Game } from '../types';
 import DragDropInnerGameList from './DragDropInnerGameList';
+import { RATINGS } from '../constants';
+
 // import GameListItem from './GameListItem';
 
 const styles = {
@@ -48,14 +50,12 @@ const DragDropColumn = ({
   // });
 
   const DynamicContainerStyle = css({
-    backgroundColor: 'var(--regular-button-background-color)',
-    // border: '1px solid lightgrey',
-    // color: 'grey',
-    // transition: 'color 1s'
+    backgroundColor: 'transparent',
+    border: '2px solid var(--filter-button-border-color)',
   });
 
   return (
-    <div css={[styles.container, title == 'Unranked' && DynamicContainerStyle]}>
+    <div css={[styles.container, title == RATINGS.unranked.title && DynamicContainerStyle]}>
       <h3>{title}</h3>
       <Droppable droppableId={title} direction={'vertical'}>
         {(provided) => (
