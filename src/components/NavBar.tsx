@@ -97,6 +97,7 @@ const styles = {
   }),
   userStrip: css({
     padding: '5px 10px',
+    color: 'var(--navbar-user-text-color)'
   }),
   /* const navLinkActiveStyle: React.CSSProperties = {}  */
   navLinkActive: {

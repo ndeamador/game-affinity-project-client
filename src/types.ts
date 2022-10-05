@@ -62,7 +62,7 @@ export interface GameInUserLibrary {
   subrating?: number;
 }
 
-export type Rating = 0 | 1 | 2 | 3 | 4 ;
+export type Rating = 0 | 1 | 2 | 3 | 4;
 
 export interface libraryIdsResponse { // review
   getLibraryIds: GameInUserLibrary[];
@@ -102,13 +102,29 @@ export interface AnimatedParticleBaseProps {
   color: string | 'black';
 }
 
-export interface AnimatedParticleProps extends AnimatedParticleBaseProps {
+// export interface AnimatedParticleProps extends AnimatedParticleBaseProps {
+//   mouseRadius?: number;
+//   windowSize: WindowSize;
+//   bounceElements?: BounceBoxState;
+//   index: number;
+//   onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
+//   mouse: MousePositionProps;
+//   renderingContext: CanvasRenderingContext2D | null;
+//   // particlesArray: AnimatedParticleBaseProps[] | undefined;
+//   // particlesArray: any;
+// }
+
+export interface AnimatedParticlesProps {
   mouseRadius?: number;
   windowSize: WindowSize;
   bounceElements?: BounceBoxState;
-  index: number;
-  onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
+  // index: number;
+  updateParticle: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
   mouse: MousePositionProps;
+  renderingContext: CanvasRenderingContext2D | null;
+  particlesArray: AnimatedParticleBaseProps[] | undefined;
+  // particlesArray: React.MutableRefObject<AnimatedParticleBaseProps[] | undefined>.current;
+
 }
 
 export interface MousePositionProps {
@@ -124,6 +140,7 @@ export interface Point {
 export interface ConnectingLinesProps {
   particlesArray: AnimatedParticleBaseProps[] | undefined;
   stickyElements?: BounceBoxState;
+  renderingContext: CanvasRenderingContext2D | null;
 }
 
 export interface DeconstructedDOMRect {

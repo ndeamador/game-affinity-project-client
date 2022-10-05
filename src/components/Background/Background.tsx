@@ -6,8 +6,9 @@ import { css } from '@emotion/react';
 import useWindowSize from '../../hooks/useWindowSize';
 import useMousePosition from '../../hooks/useMousePosition';
 import CssBlobs from './CssBlobs';
+import { Profiler } from 'react';
 
-const Background = () => {
+const Background = ({ bounceBoxes }: { bounceBoxes: any }) => {
   const windowSize = useWindowSize();
 
   const style = css({
@@ -40,16 +41,37 @@ const Background = () => {
   return (
     <div css={style}>
       <CssBlobs />
-      <AnimatedCanvas
-        dimensions={{
-          width: windowSize.scrollWidth,
-          height: windowSize.scrollHeight,
-        }}
-      >
-        <Composition windowSize={windowSize} mousePosition={mousePosition} />
-      </AnimatedCanvas>
+      {/* <Profiler id='test' onRender={logTimes}> */}
+        <AnimatedCanvas
+          dimensions={{
+            width: windowSize.scrollWidth,
+            height: windowSize.scrollHeight,
+          }}
+        >
+          <Composition
+            windowSize={windowSize}
+            mousePosition={mousePosition}
+            bounceBoxes={bounceBoxes}
+          />
+        </AnimatedCanvas>
+      {/* </Profiler> */}
     </div>
   );
 };
 
 export default Background;
+
+const logTimes = (
+  id: any,
+  phase: any,
+  actualTime: any,
+  baseTime: any,
+  startTime: any,
+  commitTime: any
+) => {
+  // console.log(`${id}'s ${phase} phase:`);
+  // console.log(`Actual time: ${Math.floor(actualTime)}`);
+  console.log(`Base time: ${Math.floor(baseTime)}`);
+  // console.log(`Start time: ${startTime}`);
+  // console.log(`Commit time: ${commitTime}`);
+};

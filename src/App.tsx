@@ -57,7 +57,7 @@ function App() {
   return (
     <BounceBoxesContext.Provider value={{ bounceBoxes, storeBounceBox }}>
       <div className='App' css={bodyStyle}>
-        <Background />
+        <Background bounceBoxes={bounceBoxes} />
 
         <Router>
           <NavBar />

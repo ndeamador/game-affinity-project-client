@@ -1,32 +1,16 @@
-import { nanoid } from 'nanoid';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { BounceBoxesContext } from '../../App';
-import {
-  AnimatedParticleBaseProps,
-  MousePositionProps,
-  WindowSize,
-} from '../../types';
+import { useEffect, useRef } from 'react';
+import { AnimatedParticleBaseProps } from '../../types';
 import getRandomParticles from '../../utils/getRandomParticles';
-import { FrameContext } from './AnimatedCanvas';
-import AnimatedParticle from './AnimatedParticle';
+import AnimatedParticles from './AnimatedParticles';
 import ConnectingLines from './ConnectingLines';
 
-const Composition = ({
-  windowSize,
-  mousePosition,
-}: {
-  windowSize: WindowSize;
-  mousePosition: MousePositionProps;
-}) => {
-  const [mouseRadius, setMouseRadius] = useState(0);
-  const bounceContext = useContext(BounceBoxesContext);
+const Composition = (props: any) => {
   const particlesArrayRef = useRef<AnimatedParticleBaseProps[]>();
-  useContext(FrameContext); // only present to force re-render after each frame clears the canvas.
 
   useEffect(() => {
-    setMouseRadius((windowSize.height / 120) * (windowSize.width / 120));
-    particlesArrayRef.current = getRandomParticles(windowSize);
-  }, [windowSize]);
+    // setMouseRadius((windowSize.height / 120) * (windowSize.width / 120));
+    particlesArrayRef.current = getRandomParticles(props.windowSize);
+  }, [props.windowSize]);
 
   const updateParticle = (
     index: number,
@@ -39,23 +23,20 @@ const Composition = ({
 
   return (
     <>
+      <AnimatedParticles
+        windowSize={props.windowSize}
+        // mouseRadius={mouseRadius}
+        bounceElements={props.bounceBoxes}
+        updateParticle={updateParticle}
+        mouse={props.mousePosition}
+        renderingContext={props.renderingContext}
+        particlesArray={particlesArrayRef.current}
+      />
       <ConnectingLines
         particlesArray={particlesArrayRef.current}
-        stickyElements={bounceContext.bounceBoxes}
+        stickyElements={props.bounceBoxes}
+        renderingContext={props.renderingContext}
       />
-      {particlesArrayRef.current &&
-        particlesArrayRef.current?.map((particle, i) => (
-          <AnimatedParticle
-            key={nanoid()}
-            windowSize={windowSize}
-            mouseRadius={mouseRadius}
-            bounceElements={bounceContext.bounceBoxes}
-            index={i}
-            onNewFrame={updateParticle}
-            mouse={mousePosition}
-            {...particle}
-          />
-        ))}
     </>
   );
 };
