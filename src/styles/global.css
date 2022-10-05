@@ -60,11 +60,12 @@ html {
   --blob-center-2: #06ffdf; /* 18b2de */ /* #06ffdf */
 
   --navbar-background: rgba(165, 165, 165, 0.7);
-  --navbar-link-text-color: rgb(197, 232, 227);
+  --navbar-link-text-color: rgb(229, 240, 238);
   --navbar-link-text-color-hover: var(--color-accent);
   --navbar-link-text-color-active: rgb(236, 255, 252);
-  --regular-button-background-color: rgb(195, 195, 195);
-  --regular-button-background-color-hover: rgba(255, 255, 255);
+  --navbar-user-text-color: var(--color-text);
+  --regular-button-background-color: rgb(233, 233, 233);
+  --regular-button-background-color-hover: rgb(244, 244, 244);
   --filter-button-hover-active: var(--color-indigoLighten80);
   --button-gradient-border-color-1: var(--regular-button-background-color);
   --button-gradient-border-color-2: var(--color-accent);
@@ -76,6 +77,15 @@ html {
     var(--button-gradient-border-color-2) 55%,
     var(--button-gradient-border-color-1) 70%,
     var(--button-gradient-border-color-1) 100%
+  );
+  --animated-border-gradient-hover: linear-gradient(
+    40deg,
+    var(--regular-button-background-color-hover) 20%,
+    var(--regular-button-background-color-hover) 40%,
+    var(--button-gradient-border-color-2) 50%,
+    var(--button-gradient-border-color-2) 55%,
+    var(--regular-button-background-color-hover) 70%,
+    var(--regular-button-background-color-hover) 100%
   );
   --animated-text-gradient: linear-gradient(
     40deg,
@@ -91,8 +101,8 @@ html {
   --inner-content-background-color-hover: rgba(255, 255, 255, 0.4);
   --inner-border-color: var(--color-gray80);
 
-  /* Temp background theme fruity */
-  /* --background: #000000;
+  /* Temp background theme fruity (override above dark mode colors) */
+  --background: #000000;
   --navbar-background: rgba(0, 0, 0, 0.1);
   --background-overlay: rgba(255, 255, 255, 0.473);
   --blob-background-1: #ffd23e;
@@ -100,7 +110,22 @@ html {
   --blob-big-1: #443eff;
   --blob-big-2: #3eff4e;
   --blob-center-1: #3eefff;
-  --blob-center-2: #b300ff; */
+  --blob-center-2: #b300ff;
+  --color-accent: #fff6b4;
+  --color-accent: #8affc5;
+  --color-accent: #ffc5fb;
+  --color-accent: #d8cbe4;
+  --color-accent: #42ffc9;
+  --color-accent: #3bffde;
+  --color-accent: #fffda1;
+  --color-accent: #fffd83;
+
+
+
+
+
+
+
 
   /* Other */
   --font-family: ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;
