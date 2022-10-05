@@ -11,7 +11,6 @@ const styles = {
     background: 'rgba(0, 0, 0, 0.4)',
   }),
   dialogContent: css({
-    // opacity: '0.5',
     display: 'flex',
     maxHeight: '90vh',
     backgroundColor: 'transparent',
@@ -41,7 +40,6 @@ const GameProfileModal = ({
   openModal: string;
 }) => {
   const ariaLabel = `Game Profile`;
-  console.log('modal inner: ', openModal);
 
   return (
     <DialogOverlay
