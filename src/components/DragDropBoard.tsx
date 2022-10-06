@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { Game, GameInUserLibrary, Rating, User } from '../types';
+import { Game, Rating, User } from '../types';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import DragDropColumn from './DragDropColumn';
 import GenericContainer from './GenericContainer';
@@ -27,19 +27,10 @@ const styles = {
   }),
 };
 
-const DragoDropBoard = ({
-  games,
-  user,
-/*   setOpenModal,
- */}: {
-  games: Game[];
-  user: User;
-/*   setOpenModal: React.Dispatch<React.SetStateAction<string>>;
- */}) => {
+const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   // Remember that using the mapped object's indexes for the key property is an anti-pattern, use unique id instead
   // https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318
 
-  console.log('DragDropBoard ----------------------------------');
   const [updateRating] = useUpdateRating();
   // const [orderedColumns, setOrderedColums, reorderBoardStateWithDnDData] = useBoardState(user);
   const {
@@ -49,9 +40,11 @@ const DragoDropBoard = ({
     updateBoardStateWithId,
   } = useBoardState(user);
 
+  // console.log('DDBoard games:', games);
+
   const [openModal, setOpenModal] = useState<string>('none');
 
-  const [columnNames, _setColumnNames] = useState(
+  const [columnNames, setColumnNames] = useState(
     Object.values(RATINGS).map((rating) => rating.title)
   );
 
@@ -116,10 +109,22 @@ const DragoDropBoard = ({
   };
 
   const populate = (gameIds: number[], games: Game[]) => {
-    return gameIds.map(
-      (gameId) => games.find((game) => parseInt(game.id) == gameId) as Game
-    );
-    // return games.filter((game) => gameIds.includes(parseInt(game.id))); // filter does not preserve id order, which causes issues when reordering.
+    // Populating with reduce instead of map is a workaround to filter out gameIds in library for which a fetched IGDB game cannot be found
+    // This can happen if the number of games fetched from IGDB is manually limitted/
+    return gameIds.reduce((acc, currentGameId) => {
+      const foundGame = games.find(
+        (game) => parseInt(game.id) == currentGameId
+      );
+      return foundGame ? acc.concat(foundGame) : acc;
+    }, [] as Game[]);
+
+    // Mapping gameIds causes errors if no match is found in the array 'games' as it includes "undefined" when there is no matching game
+    // (for instance, if there are more gameIds than games returned by IGDB -max request-)
+    // return gameIds.map(
+    //   (gameId) => games.find((game) => parseInt(game.id) == gameId) as Game
+    // );
+
+    // return games.filter((game) => gameIds.includes(parseInt(game.id))); // causes issues when reordering as the order of "games" and not "gameIds" is taken into account.
   };
 
   return games.length > 0 ? (
@@ -149,7 +154,11 @@ const DragoDropBoard = ({
             </div>
           </DragDropContext>
         </GenericContainer>
-        <GameProfileModal openModal={openModal} setOpenModal={setOpenModal} currentUser={user}/>
+        <GameProfileModal
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          currentUser={user}
+        />
       </>
     </BoardStateContext.Provider>
   ) : (

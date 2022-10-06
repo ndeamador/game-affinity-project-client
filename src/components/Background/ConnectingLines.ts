@@ -43,9 +43,9 @@ const getSlope = (pointA: Point, pointB: Point): number => {
   return (pointB.y - pointA.y) / (pointB.x - pointA.x);
 }
 
-const connectWithLine = (pointA: Point, pointB: Point, style: string, canvas: CanvasRenderingContext2D) => {
+const connectWithLine = (pointA: Point, pointB: Point, style: string, lineWidth: number, canvas: CanvasRenderingContext2D) => {
   canvas.strokeStyle = style;
-  canvas.lineWidth = 4;
+  canvas.lineWidth = lineWidth;
   canvas.beginPath();
   canvas.moveTo(pointA.x, pointA.y);
   canvas.lineTo(pointB.x, pointB.y);
@@ -62,7 +62,7 @@ const linkWithEachOther = (pointA: AnimatedParticleBaseProps, pointB: AnimatedPa
   if (distance < maxDistance) {
     const opacity = 1 - distance / maxDistance;
     const style = getColorString(greyShadow, greyShadow, greyShadow, opacity);
-    connectWithLine(pointA, pointB, style, canvas)
+    connectWithLine(pointA, pointB, style, 4, canvas)
   }
 }
 
@@ -78,7 +78,7 @@ const linkWithDOMComponent = (box: RectWithBoundingPoints, particle: AnimatedPar
     // ) {
     //   const opacity = 1 - (distanceToCenter * 100) / boxField / boxField;
     //   const style = getColorString(140, 85, 31, opacity);
-    //   connectWithLine(particle, box.boundingPoints.center, style);
+    //   connectWithLine(particle, box.boundingPoints.center, 4, style);
     // }
 
     // limit the area to calculate particle distances to improve performance
@@ -144,7 +144,7 @@ const linkWithDOMComponent = (box: RectWithBoundingPoints, particle: AnimatedPar
       ) {
         const opacity = 1 - (calculateDistance(particle, box.boundingPoints.bottom) * 100) / boxField / boxField;
         const style = getColorString(greyShadow, greyShadow, greyShadow, opacity);
-        connectWithLine(particle, getPointFromCoordinate('y', box.top, particle, getSlope(particle, box.boundingPoints.bottom)), style, canvas);
+        connectWithLine(particle, getPointFromCoordinate('y', box.top, particle, getSlope(particle, box.boundingPoints.bottom)), style, 6, canvas);
       }
       // if the particle is below the two diagonals
       else if (particle.y > box.bottom &&
@@ -153,7 +153,7 @@ const linkWithDOMComponent = (box: RectWithBoundingPoints, particle: AnimatedPar
       ) {
         const opacity = 1 - (calculateDistance(particle, box.boundingPoints.top) * 100) / boxField / boxField;
         const style = getColorString(greyShadow, greyShadow, greyShadow, opacity);
-        connectWithLine(particle, getPointFromCoordinate('y', box.bottom, particle, getSlope(particle, box.boundingPoints.top)), style, canvas);
+        connectWithLine(particle, getPointFromCoordinate('y', box.bottom, particle, getSlope(particle, box.boundingPoints.top)), style, 6, canvas);
 
       }
       // if the particle is to the left of the two diagonals
@@ -163,7 +163,7 @@ const linkWithDOMComponent = (box: RectWithBoundingPoints, particle: AnimatedPar
       ) {
         const opacity = 1 - (calculateDistance(particle, box.boundingPoints.right) * 100) / boxField / boxField;
         const style = getColorString(greyShadow, greyShadow, greyShadow, opacity);
-        connectWithLine(particle, getPointFromCoordinate('x', box.left, particle, getSlope(particle, box.boundingPoints.right)), style, canvas);
+        connectWithLine(particle, getPointFromCoordinate('x', box.left, particle, getSlope(particle, box.boundingPoints.right)), style, 6, canvas);
       }
       // if the particle is to the right of the two diagonals
       else if (particle.x > box.right &&
@@ -172,11 +172,11 @@ const linkWithDOMComponent = (box: RectWithBoundingPoints, particle: AnimatedPar
       ) {
         const opacity = 1 - (calculateDistance(particle, box.boundingPoints.left) * 100) / boxField / boxField;
         const style = getColorString(greyShadow, greyShadow, greyShadow, opacity);
-        connectWithLine(particle, getPointFromCoordinate('x', box.right, particle, getSlope(particle, box.boundingPoints.left)), style, canvas);
+        connectWithLine(particle, getPointFromCoordinate('x', box.right, particle, getSlope(particle, box.boundingPoints.left)), style, 6, canvas);
       }
       // else {
       //   const style = getColorString(0, 0, 0, 1);
-      //   connectWithLine(particle, box.boundingPoints.center, style);
+      //   connectWithLine(particle, box.boundingPoints.center, 4, style);
       // }
     }
   }

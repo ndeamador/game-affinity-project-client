@@ -25,17 +25,6 @@ html {
   --rays: #b6b6b6;
   --rays-contact: #e2e2e2;
 
-  /* Temp background theme 2 */
-  /*
-    --background: #000000;
-  --navbar-background: rgba(0, 0, 0, 0.1);
-  --background-overlay: rgba(255, 255, 255, 0.5);
-  --blob-background-1: #ffd23e;
-  --blob-background-2: #ff3e98;
-  --blob-big-1: #443eff;
-  --blob-big-2: #3eff4e;
-  --blob-center-1: #ff713e;
-  --blob-center-2: #3eefff; */
 
   /* Temp background theme 3 */
   --overlay-blur: 3px;
@@ -64,10 +53,12 @@ html {
   --navbar-link-text-color-hover: var(--color-accent);
   --navbar-link-text-color-active: rgb(236, 255, 252);
   --navbar-user-text-color: var(--color-text);
-  --regular-button-background-color: rgb(233, 233, 233);
+  --regular-button-background-color: rgba(235, 232, 232, 0.5);
   --regular-button-background-color-hover: rgb(244, 244, 244);
   --filter-button-hover-active: var(--color-indigoLighten80);
+  --filter-button-border-color: white;
   --button-gradient-border-color-1: var(--regular-button-background-color);
+  --button-gradient-border-color-1: rgb(234, 234, 234);
   --button-gradient-border-color-2: var(--color-accent);
   --animated-border-gradient: linear-gradient(
     40deg,
@@ -97,9 +88,11 @@ html {
   );
 
   --item-list-background: rgba(255, 255, 255, 0.6);
-  --inner-content-background-color: ghostwhite;
+  --inner-content-background-color: rgb(248, 248, 255, 0.7);
   --inner-content-background-color-hover: rgba(255, 255, 255, 0.4);
   --inner-border-color: var(--color-gray80);
+  --dd-game-background-color: rgba(255, 255, 255, 0.9);
+
 
   /* Temp background theme fruity (override above dark mode colors) */
   --background: #000000;
@@ -119,13 +112,6 @@ html {
   --color-accent: #3bffde;
   --color-accent: #fffda1;
   --color-accent: #fffd83;
-
-
-
-
-
-
-
 
   /* Other */
   --font-family: ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;

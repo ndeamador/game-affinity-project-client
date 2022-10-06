@@ -1,13 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react';
-import React, { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Game } from '../types';
 import CoverDiv from './CoverDiv';
 import { BoardStateContext } from './DragDropBoard';
 import DraggablePortalHandler from './DraggablePortalHandler';
-import GameProfileModal from './GameProfileModal';
 
 const draggableStyle = css({
   display: 'flex',
@@ -17,7 +16,7 @@ const draggableStyle = css({
   padding: '5px',
   border: 'solid 1px var(--color-gray20)',
   borderRadius: 'var(--border-radius)',
-  backgroundColor: 'var(--color-base)',
+  backgroundColor: 'var(--dd-game-background-color)',
   marginBottom: '5px',
   transition: 'background-color 0.18s',
   '&:hover': {
@@ -52,8 +51,6 @@ const DragDropGame = ({ game, index }: { game: Game; index: number }) => {
   // We can style the element during a drag using the snapshot argument
   // Don't change dimensions of draggable and droppable during a drag
 
-  // const [openModal, setOpenModal] = useState<string>('none');
-  // console.log('modal:', openModal);
   const boardContext = useContext(BoardStateContext);
 
   return (
@@ -76,10 +73,6 @@ const DragDropGame = ({ game, index }: { game: Game; index: number }) => {
             <div css={textDivStyle}>
               <p css={textStyle}>{game.name}</p>
             </div>
-            {/* <GameProfileModal
-              openModal={openModal}
-              setOpenModal={setOpenModal}
-            /> */}
           </div>
         </DraggablePortalHandler>
       )}
@@ -87,5 +80,4 @@ const DragDropGame = ({ game, index }: { game: Game; index: number }) => {
   );
 };
 
-// export default React.memo(DragDropGame);
 export default DragDropGame;

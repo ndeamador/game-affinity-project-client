@@ -22,8 +22,6 @@ const styles = {
 };
 
 const Library = ({ currentUser }: { currentUser: User }) => {
-  console.log('================= Library: ');
-
   const gameIdsInLibrary = currentUser?.gamesInLibrary.map(
     (game: GameInUserLibrary) => game.igdb_game_id
   );
@@ -34,7 +32,7 @@ const Library = ({ currentUser }: { currentUser: User }) => {
   ] = useLazyQuery(FIND_GAMES, {
     variables: {
       id: gameIdsInLibrary,
-      maxResults: 30,
+      maxResults: 100,
     },
     fetchPolicy: 'cache-first', // with cache-and-network we get a loading spinner every time an item is rearranged.
   });
