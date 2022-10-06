@@ -70,7 +70,7 @@ const styles = {
     gap: '10px',
   }),
   navLink: css({
-    fontSize: '1.1em',
+    fontSize: '1.15em',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
