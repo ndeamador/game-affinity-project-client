@@ -23,7 +23,11 @@ const styles = {
 };
 
 const Ranking = () => {
-  const { data, loading: loadingGames, error } = useQuery(GET_RANKING);
+  const {
+    data,
+    loading: loadingGames,
+    error,
+  } = useQuery(GET_RANKING, { fetchPolicy: 'cache-first' });
   const [genreFilter, setGenreFilter] = useState('All');
   const [displayOtherFilter, setDisplayOtherFilter] = useState(false);
 
@@ -43,6 +47,8 @@ const Ranking = () => {
         <Link to={'/home'}>Click here to find games and start rating!</Link>
       </Notification>
     );
+
+  console.log('data:', data);
 
   const genres: string[] = [
     ...new Set<string>( // Set is just to isolate unique values.
