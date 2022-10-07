@@ -9,6 +9,7 @@ export interface Game {
   total_rating_count: number;
   involved_companies: InvolvedCompany[];
   average_rating?: number;
+  number_of_ratings?: number;
 }
 
 export interface InvolvedCompany {
