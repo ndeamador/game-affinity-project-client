@@ -75,6 +75,15 @@ const Ranking = () => {
             game.genres.findIndex((genre) => genre.name === genreFilter) !== -1
         );
 
+  // The ranking already comes sorted from the backend, but this is useful in case the client's cache is manually updated optimistically.
+  const sortedGamesToDisplay = [...gamesToDisplay].sort((a: Game, b: Game) =>
+    a.average_rating && b.average_rating
+      ? a.average_rating > b.average_rating
+        ? -1
+        : 1
+      : 0
+  );
+
   return (
     <GenericContainer additionalStyle={styles.containerStyle}>
       <GenreFiltersBox
@@ -83,7 +92,7 @@ const Ranking = () => {
         genres={genres}
         displayOtherFilter={displayOtherFilter}
       />
-      <GameList games={gamesToDisplay} ranked />
+      <GameList games={sortedGamesToDisplay} ranked />
     </GenericContainer>
   );
 };
