@@ -23,6 +23,8 @@ import Background from './components/Background/Background';
 import { createContext, useState } from 'react';
 import { BounceBoxUseStateContext } from './types';
 import useBounceBoxes from './hooks/useBounceBoxes';
+import { useQuery } from '@apollo/client';
+import { GET_RANKING } from './graphql/queries';
 
 const bodyStyle = css({
   display: 'flex',
@@ -44,7 +46,6 @@ const contentStyle = css({
   width: '80vw',
   maxWidth: '1200px',
   paddingTop: 'calc(5vh + var(--navbar-height))',
-  // paddingTop: 'var(--navbar-height)',
   '& > *': {
     width: '100%',
   },
@@ -53,6 +54,7 @@ const contentStyle = css({
 function App() {
   const { currentUser, loading: loadingUser } = useCurrentUser();
   const { bounceBoxes, storeBounceBox } = useBounceBoxes();
+  useQuery(GET_RANKING, { fetchPolicy: 'cache-first' });
 
   return (
     <BounceBoxesContext.Provider value={{ bounceBoxes, storeBounceBox }}>
@@ -84,23 +86,6 @@ function App() {
               </Route>
             </Switch>
           </div>
-          {/* <Switch>
-          <Route path={'/games/:gameId'}>
-            <GameProfile />
-          </Route>
-
-          <Route path={'/ranking'}>
-            <Ranking />
-          </Route>
-
-          <Route path={'/library'}>
-            {!loadingUser && !currentUser ? <Redirect to='/' /> : <Library />}
-          </Route>
-
-          <Route path='/'>
-            <Home />
-          </Route>
-        </Switch> */}
         </Router>
       </div>
     </BounceBoxesContext.Provider>
