@@ -8,6 +8,7 @@ import { Spinner } from './styledComponentsLibrary';
 const styles = {
   mainContainer: css({
     display: 'flex',
+    flexBasis: '3.3rem',
     maxWidth: 'var(--cover-width-thumb)',
     // maxHeight: 'var(--cover-width-thumb)',
     aspectRatio: '1/1',

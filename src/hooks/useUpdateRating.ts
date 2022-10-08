@@ -1,15 +1,13 @@
 import { useMutation } from '@apollo/client';
 import { UPDATE_RATING } from '../graphql/mutations';
-import { CURRENT_USER, GET_RANKING } from '../graphql/queries';
+import { CURRENT_USER } from '../graphql/queries';
 import { MeResponse } from '../types';
 
 
 const useUpdateRating = () => {
 
   return useMutation(UPDATE_RATING, {
-
     update: (store, response) => {
-      // console.log('useupdate response: ', response.data);
       try {
         if (response.data?.updateRating) {
 
@@ -17,19 +15,6 @@ const useUpdateRating = () => {
           const dataInStore: MeResponse | null = store.readQuery({
             query: CURRENT_USER,
           });
-
-          const rankingDataInStore = store.readQuery({
-            query: GET_RANKING,
-          });
-
-          console.log('getranking:', rankingDataInStore);
-
-          // console.log('databefore: ', dataInStore?.me.gamesInLibrary);
-          // console.log('test:', dataInStore?.me.gamesInLibrary.map((game) =>
-          //   game.igdb_game_id !== response.data.updateRating.igdb_game_id
-          //     ? game
-          //     : response.data.updateRating
-          // ));
 
           store.writeQuery({
             query: CURRENT_USER,
