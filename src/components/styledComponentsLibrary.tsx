@@ -36,6 +36,9 @@ const buttonVariants = {
 
 export const Button = styled.button(
   {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: '13px 18px',
     border: '0',
     lineHeight: '1',
