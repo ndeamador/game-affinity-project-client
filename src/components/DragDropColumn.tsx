@@ -6,8 +6,6 @@ import { Game } from '../types';
 import DragDropInnerGameList from './DragDropInnerGameList';
 import { RATINGS } from '../constants';
 
-// import GameListItem from './GameListItem';
-
 const styles = {
   container: css({
     display: 'flex',
@@ -29,45 +27,36 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
   }),
+  title: css({
+    padding: '0 0 5px 5px',
+  }),
 };
 
 // 'provided.innerRef' is used to supply the DOM node of the component to beautiful-dnd
 // 'provided.placeholder' is a React element used to increase the available space during a drag. Needs to be a child of the component designated as droppable.
 
-const DragDropColumn = ({
-  games,
-  title,
-}: // droppableDirection,
-{
-  games: Game[];
-  title: string;
-  // droppableDirection: 'vertical' | 'horizontal';
-}) => {
-  // const dynamicStyle = css({
-  //   flexDirection: droppableDirection === 'vertical' ? 'column' : 'row',
-  //   justifyContent:
-  //     droppableDirection === 'vertical' ? 'flex-start' : 'space-evenly',
-  // });
-
+const DragDropColumn = ({ games, title }: { games: Game[]; title: string }) => {
   const DynamicContainerStyle = css({
     backgroundColor: 'transparent',
     border: '2px solid var(--filter-button-border-color)',
   });
 
   return (
-    <div css={[styles.container, title == RATINGS.unranked.title && DynamicContainerStyle]}>
-      <h3>{title}</h3>
+    <div
+      css={[
+        styles.container,
+        title == RATINGS.unranked.title && DynamicContainerStyle,
+      ]}
+    >
+      <h3 css={styles.title}>{title}</h3>
       <Droppable droppableId={title} direction={'vertical'}>
         {(provided) => (
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            css={[styles.droppableGameColumnContainer /* dynamicStyle */]}
+            css={[styles.droppableGameColumnContainer]}
           >
             <DragDropInnerGameList games={games} />
-            {/* {games.map((game, index) => (
-              <DragDropGame key={game.id} game={game} index={index} />
-            ))} */}
             {provided.placeholder}
           </div>
         )}

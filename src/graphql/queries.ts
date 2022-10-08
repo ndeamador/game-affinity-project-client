@@ -63,6 +63,7 @@ export const GET_RANKING = gql`
   query getRankedGames {
     getRankedGames {
       average_rating,
+      number_of_ratings,
       ...GameDetails
     }
   }

@@ -25,7 +25,7 @@ const styles = {
   }),
   iconsContainer: css({
     display: 'inline-flex',
-    backgroundColor: 'var(--regular-button-background-color)',
+    backgroundColor: 'var(--inner-content-background-color)',
     padding: '10px 10px 10px 8px',
     borderRadius: 'var(--border-radius)',
     width: '25%',
