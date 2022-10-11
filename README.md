@@ -13,8 +13,9 @@
 
 
 <!-- Some icons from: https://github.com/marwin1991/profile-technology-icons#-javascript  -->
+<!-- GraphQL Landscape svg icons: https://landscape.graphql.org/ -->
 <!-- Handy generator: https://marwin1991.github.io/profile-technology-icons/ -->
-<div align="center" style="background-color: white; padding: 15px; column-gap: 10px; row-gap: 15px; display: flex; flex-direction: column; flex-wrap: wrap; justify-content: center;">
+<div align="center" bgcolor="lightblue" style=" background-color: white; padding: 15px; column-gap: 10px; row-gap: 15px; display: flex; flex-direction: column; flex-wrap: wrap; justify-content: center;" >
   <div style="display: flex; justify-content: space-around; padding: 0 0.8em">
     <img height="50" src="zz_readme_files/javascript.png" alt="JavaScript" title="JavaScript" />
     <img height="50" src="zz_readme_files/typescript.png" alt="TypeScript" title="TypeScript" />
@@ -52,7 +53,7 @@
 ## Features
 
 - Written in modern React with hooks using only functional components.
-- Local state management with React and Apollo Graphql.
+- Simple local state management with React and Apollo Graphql.
 - Project fully written in TypeScript.
 - Full user authentication system.
 - Persistent drag-and-drop ranking system.
@@ -66,6 +67,13 @@
 ## Pending
 
 - Mobile friendly design: due to the structure of the drag-and-drop system, a custom, mobile-specific, responsive rating module for "My Library" needs to be built from scratch.
-- Better production automation for PostgreSQL migrations.
 - Lexorank implementation for efficient Drag and Drop persistence.
+- Better production automation for PostgreSQL migrations.
 - Updated tests for most recent features.
+
+<br>
+
+<h3 align="center">
+  <a href="https://gap.nicodeamador.com/">Visit the live app</a> |
+  <a href="https://github.com/ndeamador/game-affinity-project-server">View server repository</a>
+</h3>
