@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import { css, keyframes } from '@emotion/react';
 import { LOGIN } from '../graphql/mutations';
 import { CURRENT_USER } from '../graphql/queries';
-import { Button } from './styledComponentsLibrary';
+import { Button, Spinner } from './styledComponentsLibrary';
 
 const animations = {
   borderGlow: keyframes`
@@ -36,17 +36,14 @@ const styles = {
 };
 
 const LonginWithTestAccountButton = () => {
-  const [login, { loading: loginLoading, error: loginError }] = useMutation(
-    LOGIN,
-    {
-      // onCompleted: () => {
-      // },
-      onError: (err) => {
-        console.log('login error:', err.message);
-      },
-      refetchQueries: [{ query: CURRENT_USER }],
-    }
-  );
+  const [login, { loading, error }] = useMutation(LOGIN, {
+    // onCompleted: () => {
+    // },
+    onError: (err) => {
+      console.log('login error:', err.message);
+    },
+    refetchQueries: [{ query: CURRENT_USER }],
+  });
 
   // important: currently requires test account to be set in the server manually.
   const submitLogin = async () => {
@@ -62,7 +59,13 @@ const LonginWithTestAccountButton = () => {
   return (
     <div css={styles.animatedBorder}>
       <Button css={styles.button} onClick={() => submitLogin()}>
-        Login with test account
+        {loading ? (
+          <Spinner />
+        ) : error ? (
+          'Something went wrong'
+        ) : (
+          'Login with test account'
+        )}
       </Button>
     </div>
   );

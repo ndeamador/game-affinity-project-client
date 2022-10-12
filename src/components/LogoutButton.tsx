@@ -1,9 +1,18 @@
+/** @jsxImportSource @emotion/react */
+
 import { useApolloClient, useMutation } from '@apollo/client';
+import { css } from '@emotion/react';
 import { LOGOUT } from '../graphql/mutations';
-import { Button } from './styledComponentsLibrary';
+import { Button, Spinner } from './styledComponentsLibrary';
+
+const styles = {
+  button: css({
+    width: '5em',
+  }),
+};
 
 const LogoutButton = () => {
-  const [logout] = useMutation(LOGOUT, {
+  const [logout, { loading }] = useMutation(LOGOUT, {
     onError: (err) => {
       console.log('Logout mutation error: ', err);
     },
@@ -19,7 +28,9 @@ const LogoutButton = () => {
     }
   };
 
-  return <Button onClick={handleClick}>Logout</Button>;
+  return (
+    <Button css={styles.button} onClick={handleClick}>{loading ? <Spinner /> : 'Logout'}</Button>
+  );
 };
 
 export default LogoutButton;
