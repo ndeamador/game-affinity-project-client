@@ -11,13 +11,13 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-import GameProfile from './views/GameProfile';
-import NavBar from './components/NavBar';
-import Home from './views/Home';
-import Library from './views/Library';
+import GameProfile from './components/views/GameProfile/GameProfile';
+import NavBar from './components/NavBar/NavBar';
+import Home from './components/views/Home/Home';
+import Library from './components/views/Library/Library';
 
 import useCurrentUser from './hooks/useCurrentUser';
-import Ranking from './views/Ranking';
+import Ranking from './components/views/Ranking/Ranking';
 import { css } from '@emotion/react';
 import Background from './components/Background/Background';
 import { createContext, useState } from 'react';
