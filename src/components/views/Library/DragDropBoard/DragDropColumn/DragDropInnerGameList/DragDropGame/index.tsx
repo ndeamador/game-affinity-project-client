@@ -1,47 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
-import { css } from '@emotion/react';
 import { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Game } from '../../../../../../../types';
 import CoverDiv from '../../../../../../shared/CoverDiv';
 import { BoardStateContext } from '../../..';
 import DraggablePortalHandler from './DraggablePortalHandler';
-
-const draggableStyle = css({
-  display: 'flex',
-  flexDirection: 'row',
-  width: '100%',
-  height: '4rem',
-  padding: '5px',
-  border: 'solid 1px var(--color-gray20)',
-  borderRadius: 'var(--border-radius)',
-  backgroundColor: 'var(--dd-game-background-color)',
-  marginBottom: '5px',
-  transition: 'background-color 0.18s',
-  '&:hover': {
-    transition: 'none',
-    backgroundColor: 'var(--color-gray10)',
-  },
-});
-
-const isDraggingStyle = css({
-  boxShadow: '4px 4px 15px 1px rgba(0, 0, 0, 0.2)', // h-offset, v-offset, blur, spread, color
-});
-
-const textDivStyle = css({
-  display: 'flex',
-  alignItems: 'flex-start',
-  wordWrap: 'break-word',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  width: '100%',
-});
-
-const textStyle = css({
-  margin: '0 5px',
-  textOverflow: 'ellipsis',
-});
+import styles from './styles';
 
 // <Draggable/> Requires at least draggableId and index
 // 'provided.draggableProps' need to be applied to the comopnent that we want to move around.
@@ -63,15 +28,15 @@ const DragDropGame = ({ game, index }: { game: Game; index: number }) => {
             {...provided.dragHandleProps}
             onClick={() => boardContext?.setOpenModal(game.id)}
             css={[
-              draggableStyle,
+              styles.draggable,
               snapshot.isDragging &&
                 !snapshot.isDropAnimating &&
-                isDraggingStyle,
+                styles.isDragging,
             ]}
           >
             <CoverDiv game={game} showSpinner={false} />
-            <div css={textDivStyle}>
-              <p css={textStyle}>{game.name}</p>
+            <div css={styles.textDiv}>
+              <p css={styles.text}>{game.name}</p>
             </div>
           </div>
         </DraggablePortalHandler>

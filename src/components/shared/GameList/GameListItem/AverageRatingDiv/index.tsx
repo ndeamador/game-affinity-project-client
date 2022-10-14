@@ -1,21 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css, SerializedStyles } from '@emotion/react';
-
-const style = css({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  fontSize: '1.4rem',
-  fontWeight: 'bold',
-  color: 'white',
-  // backgroundColor: backgroundColor(rating100Scale),
-  width: 'calc(var(--cover-width-thumb) - 25px)',
-  height: 'var(--cover-width-thumb)',
-  borderRadius: 'var(--border-radius)',
-  marginRight: '10px',
-  alignContent: 'stretch',
-});
+import styles from './styles';
 
 const backgroundColor: { [key: string]: SerializedStyles } = {
   green: css({
@@ -48,7 +34,10 @@ const AverageRatingDiv = ({ rating }: { rating: number }) => {
   return (
     <div
       className='AvgRatingDiv'
-      css={[style, backgroundColor[getBackgroundColor(rating100Scale)]]}
+      css={[
+        styles.container,
+        backgroundColor[getBackgroundColor(rating100Scale)],
+      ]}
     >
       {rating100Scale}
     </div>

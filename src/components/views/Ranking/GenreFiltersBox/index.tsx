@@ -1,20 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
-import { css } from '@emotion/react';
 import { Button } from '../../../shared/styledComponentsLibrary';
-
-const style = css({
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-  padding: 'var(--border-radius)',
-  // marginBottom: 'var(--border-radius)',
-  // rowGap: '15px',
-  gap: 'var(--border-radius)',
-  '> .selected': {
-    backgroundColor: 'var(--filter-button-hover-active)',
-  },
-});
+import styles from './styles';
 
 const GenreFiltersBox = ({
   genreFilter,
@@ -28,7 +15,7 @@ const GenreFiltersBox = ({
   displayOtherFilter: boolean;
 }) => {
   return (
-    <div css={style}>
+    <div css={styles.container}>
       <Button
         onClick={() => setGenreFilter('All')}
         variant={'filter'}

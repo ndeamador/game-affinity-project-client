@@ -1,21 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+
 import { Game } from '../../../types';
 import { convertMilisecondsToDate } from '../../../utils/misc';
-
-const styles = {
-  container: css({
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    lineHeight: 1.2,
-    marginBottom: '6px',
-    '> *': {
-      margin: '0',
-    },
-  }),
-  separator: css({ padding: '0 5px' }),
-};
+import styles from './styles';
 
 const ReleaseDeveloperRow = ({ game }: { game: Game }) => {
   return (

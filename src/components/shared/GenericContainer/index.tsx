@@ -1,15 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
-import { css, SerializedStyles } from '@emotion/react';
-
-const style = css({
-  display: 'flex',
-  // padding: '10px',
-  backgroundColor: 'var(--item-list-background)',
-  borderRadius: 'var(--border-radius)',
-  // filter: 'blur(200px)',
-  backdropFilter: 'blur(12px)',
-});
+import { SerializedStyles } from '@emotion/react';
+import styles from './styles';
 
 const GenericContainer = ({
   children,
@@ -18,7 +10,7 @@ const GenericContainer = ({
   children: React.ReactNode;
   additionalStyle?: SerializedStyles | SerializedStyles[];
 }) => {
-  return <div css={[style, additionalStyle]}>{children}</div>;
+  return <div css={[styles.container, additionalStyle]}>{children}</div>;
 };
 
 export default GenericContainer;

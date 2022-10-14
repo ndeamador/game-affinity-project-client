@@ -7,19 +7,8 @@ import FullPageSpinner from '../../shared/FullPageSpinner';
 import { FIND_GAMES } from '../../../graphql/queries';
 import DragoDropBoard from './DragDropBoard';
 import { GameInUserLibrary, User } from '../../../types';
-import { css } from '@emotion/react';
 import Notification from '../../shared/Notification';
-
-const styles = {
-  mainContainer: css({
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  }),
-  notification: css({
-    flexDirection: 'column',
-  }),
-};
+import styles from './styles';
 
 const Library = ({ currentUser }: { currentUser: User }) => {
   const gameIdsInLibrary = currentUser?.gamesInLibrary.map(

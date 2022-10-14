@@ -1,15 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
 import { useApolloClient, useMutation } from '@apollo/client';
-import { css } from '@emotion/react';
 import { LOGOUT } from '../../../graphql/mutations';
 import { Button, Spinner } from '../../shared/styledComponentsLibrary';
-
-const styles = {
-  button: css({
-    width: '5em',
-  }),
-};
+import styles from './styles';
 
 const LogoutButton = () => {
   const [logout, { loading }] = useMutation(LOGOUT, {
@@ -29,7 +23,9 @@ const LogoutButton = () => {
   };
 
   return (
-    <Button css={styles.button} onClick={handleClick}>{loading ? <Spinner /> : 'Logout'}</Button>
+    <Button css={styles.button} onClick={handleClick}>
+      {loading ? <Spinner /> : 'Logout'}
+    </Button>
   );
 };
 

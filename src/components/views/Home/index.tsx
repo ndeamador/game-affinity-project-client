@@ -6,27 +6,11 @@ import { FIND_GAMES } from '../../../graphql/queries';
 import GameList from '../../shared/GameList';
 import { useDebounce } from 'use-debounce';
 
-import { css } from '@emotion/react';
 import SearchBar from './SearchBar';
 import GenericContainer from '../../shared/GenericContainer';
 import useClickedOutOfElement from '../../../hooks/useClickedOutOfElement';
 import { ErrorMessage } from '../../shared/styledComponentsLibrary';
-
-const styles = {
-  mainDiv: css({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    maxWidth: 'var(--searchbar-max-width)',
-    marginTop: 'var(--searchbar-margin-top)',
-  }),
-  containerStyle: css({
-    flexDirection: 'column',
-  }),
-  error: css({
-    padding: '15px 20px 20px 20px',
-  }),
-};
+import styles from './styles';
 
 const Home = () => {
   const [games, setGames] = useState([]);

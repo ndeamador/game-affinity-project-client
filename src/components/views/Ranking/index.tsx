@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
 import { useQuery } from '@apollo/client';
-import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import GenreFiltersBox from './GenreFiltersBox';
 import FullPageSpinner from '../../shared/FullPageSpinner';
@@ -11,16 +10,7 @@ import { GET_RANKING } from '../../../graphql/queries';
 import { Game } from '../../../types';
 import Notification from '../../shared/Notification';
 import { Link } from 'react-router-dom';
-
-const styles = {
-  containerStyle: css({
-    display: 'flex',
-    flexDirection: 'column',
-  }),
-  noRatingsNotification: css({
-    flexDirection: 'column',
-  }),
-};
+import styles from './styles';
 
 const Ranking = () => {
   const {

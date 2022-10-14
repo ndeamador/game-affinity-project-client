@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 
-import { css } from '@emotion/react';
 import Tooltip from '@reach/tooltip';
 import {
   ChangeEventHandler,
@@ -15,36 +14,7 @@ import { FaSearch } from 'react-icons/fa';
 import { BounceBoxesContext } from '../../../../App';
 import useWindowSize from '../../../../hooks/useWindowSize';
 import { Input, Spinner } from '../../../shared/styledComponentsLibrary';
-
-const formStyle = css({
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-  // marginTop: 'var(--searchbar-margin-top)',
-});
-
-const inputStyle = css({
-  width: '100%',
-  maxWidth: '800px',
-  minwidth: '600px',
-  backgroundColor: 'transparent',
-  '&:focus': {
-    outline: 'none',
-  },
-  // '&:active': {
-  //   outline: 'none',
-  //   backgroundColor: 'white',
-  // },
-});
-
-const buttonStyle = css({
-  border: '0',
-  // position: 'relative',
-  marginLeft: '-42px',
-  background: 'transparent',
-});
+import styles from './styles';
 
 const SearchBar = ({
   setQuery,
@@ -96,7 +66,7 @@ const SearchBar = ({
 
       <form
         onSubmit={(event) => event.preventDefault()}
-        css={formStyle}
+        css={styles.form}
         ref={searchBarRef}
       >
         <Input
@@ -111,11 +81,11 @@ const SearchBar = ({
           // onKeyDown={(e) => handleChange(e.target)}
           onChange={handleInputChange}
           onKeyDown={handleEnter}
-          css={inputStyle}
+          css={styles.input}
         />
         <Tooltip label='Search Games'>
           <label htmlFor='search'>
-            <button type='submit' css={buttonStyle}>
+            <button type='submit' css={styles.button}>
               {loading ? <Spinner /> : <FaSearch aria-label='search' />}
             </button>
           </label>

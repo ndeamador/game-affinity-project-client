@@ -1,12 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
-import { css, SerializedStyles } from '@emotion/react';
+import { SerializedStyles } from '@emotion/react';
 import GenericContainer from '../GenericContainer';
-
-const style = css({
-  padding: '20px',
-  marginTop: 'var(--searchbar-margin-top)',
-});
+import styles from './styles';
 
 const Notification = ({
   children,
@@ -17,7 +13,9 @@ const Notification = ({
 }) => {
   return (
     <GenericContainer
-      additionalStyle={additionalStyle ? [style, additionalStyle] : style}
+      additionalStyle={
+        additionalStyle ? [styles.container, additionalStyle] : styles.container
+      }
     >
       {children}
     </GenericContainer>

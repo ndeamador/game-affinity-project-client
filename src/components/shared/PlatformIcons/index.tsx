@@ -16,6 +16,7 @@ import { SiNintendo } from 'react-icons/si';
 import Tooltip from '@reach/tooltip';
 
 import { cloneElement } from 'react';
+import styles from './styles';
 
 // https://api-docs.igdb.com/#platform-family
 enum Family {
@@ -181,14 +182,7 @@ const PlatformIcons = ({ platforms }: { platforms: Platform[] }) => {
   });
 
   return (
-    <div
-      css={{
-        display: 'flex',
-        '> *': {
-          padding: '0 4px',
-        },
-      }}
-    >
+    <div css={styles.mainContainer}>
       {Object.keys(availablePlatforms).map((platform) => {
         return (
           availablePlatforms[platform].found && (

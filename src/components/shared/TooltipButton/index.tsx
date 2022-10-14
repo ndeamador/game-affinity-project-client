@@ -3,36 +3,7 @@ import { CircleButton, Spinner } from '../styledComponentsLibrary';
 import Tooltip from '@reach/tooltip';
 import { FaTimesCircle } from 'react-icons/fa';
 import { IconBaseProps } from 'react-icons';
-import { css } from '@emotion/react';
-
-const style = css({
-  '&:hover, :focus': {
-    color: 'var(--color-indigo)',
-  },
-});
-
-const errorStyle = css({
-  color: 'var(--color-danger)',
-});
-
-const altHighlightStyle = css({
-  '&:hover,:focus': {
-    color: 'var(--color-danger)',
-  },
-});
-
-const loadingStyle = css({
-  color: 'var(--color-gray80)',
-  '&:hover, :focus': {
-    color: 'var(--color-gray80)',
-  },
-});
-
-const iconDivStyle = css({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-});
+import styles from './styles';
 
 interface TooltipButtonProps {
   label: string;
@@ -71,10 +42,10 @@ function TooltipButton({
     <Tooltip label={isError ? error.message : label}>
       <CircleButton
         css={[
-          style,
-          altColor && altHighlightStyle,
-          isError && errorStyle,
-          isLoading && loadingStyle,
+          styles.button,
+          altColor && styles.altHighlightStyle,
+          isError && styles.errorStyle,
+          isLoading && styles.loadingStyle,
         ]}
         disabled={isLoading}
         onClick={handleClick}
@@ -82,7 +53,7 @@ function TooltipButton({
         transparent
         {...rest}
       >
-        <div css={iconDivStyle}>
+        <div css={styles.iconDivStyle}>
           {isLoading ? <Spinner /> : isError ? <FaTimesCircle /> : icon}
         </div>
       </CircleButton>

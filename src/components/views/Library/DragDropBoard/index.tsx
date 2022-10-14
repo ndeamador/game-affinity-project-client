@@ -4,28 +4,12 @@ import { Game, Rating, User } from '../../../../types';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import DragDropColumn from './DragDropColumn';
 import GenericContainer from '../../../shared/GenericContainer';
-import { css } from '@emotion/react';
 import { createContext, useState } from 'react';
 import { RATINGS } from '../../../../constants';
 import useUpdateRating from '../../../../hooks/useUpdateRating';
 import useBoardState from '../../../../hooks/useBoardState';
 import GameProfileModal from '../../../shared/GameProfileModal';
-
-const styles = {
-  container: css({
-    flexDirection: 'column',
-    padding: '15px',
-  }),
-  dndColumnsDiv: css({
-    display: 'flex',
-    flexDirection: 'row',
-    columnGap: '15px',
-    justifyContent: 'center',
-  }),
-  textDiv: css({
-    marginBottom: '15px',
-  }),
-};
+import styles from './styles';
 
 const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   // Remember that using the mapped object's indexes for the key property is an anti-pattern, use unique id instead
