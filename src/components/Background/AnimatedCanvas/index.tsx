@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { useEffect, useRef, useState } from 'react';
 
 const AnimatedCanvas = ({
@@ -46,7 +44,7 @@ const AnimatedCanvas = ({
   return (
     <canvas ref={canvasRef}>
       {/* Cloning element to pass props to children without having to use Context */}
-      {React.cloneElement(children as React.ReactElement<any>, {
+      {React.cloneElement(children as React.ReactElement, {
         renderingContext: renderingContext,
         frameCount: frameCount,
       })}
