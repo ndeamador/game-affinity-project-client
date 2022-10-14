@@ -28,7 +28,6 @@ const styles = {
     height: '100%',
     // filter: 'blur(10px)', // bit too much impact on performance
     // backdropFilter: 'blur(10px)', // bit too much impact on performance
-    // overflow: 'clip',
     overflow: 'hidden',
     zIndex: -3,
   }),
@@ -58,8 +57,8 @@ const styles = {
     position: 'absolute',
     left: '-50vw',
     top: '10vh',
-    width: '90vw' /* 110vw */,
-    height: '90vw' /* 110vw */,
+    width: '90vw',
+    height: '90vw',
     backgroundImage:
       'linear-gradient(120deg, var(--blob-big-1) 0%, var(--blob-big-2) 100%)',
     opacity: 'var(--blob-big-opacity)',
@@ -71,8 +70,8 @@ const styles = {
     position: 'absolute',
     left: '65vw',
     top: '55vh',
-    width: '50vw' /* 110vw */,
-    height: '50vw' /* 110vw */,
+    width: '50vw',
+    height: '50vw',
     backgroundImage:
       'linear-gradient(120deg, var(--blob-bottom-right-corner) 0%, var(--blob-big-2) 100%)',
     opacity: 'var(--blob-bottom-right-corner-opacity)',
