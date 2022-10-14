@@ -3,18 +3,18 @@ import { useParams } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import { FIND_GAMES } from '../../../graphql/queries';
 import loadingTravolta from '../assets/notFound-264x374.gif';
-import FullPageSpinner from '../../shared/FullPageSpinner/FullPageSpinner';
-import AddToLibraryButton from '../../shared/AddToLibraryButton/AddToLibraryButton';
-import PlatformIcons from '../../shared/PlatformIcons/PlatformIcons';
-import ReleaseDeveoperRow from '../../shared/ReleaseDeveloperRow/ReleaseDeveloperRow';
-import Rater from './Rater/Rater';
+import FullPageSpinner from '../../shared/FullPageSpinner';
+import AddToLibraryButton from '../../shared/AddToLibraryButton';
+import PlatformIcons from '../../shared/PlatformIcons';
+import ReleaseDeveoperRow from '../../shared/ReleaseDeveloperRow';
+import Rater from './Rater';
 import { useEffect } from 'react';
 import useLazyCurrentUser from '../../../hooks/useLazyCurrentUser';
-import GenericContainer from '../../shared/GenericContainer/GenericContainer';
+import GenericContainer from '../../shared/GenericContainer';
 import { css } from '@emotion/react';
 import { User } from '../../../types';
-import Notification from '../../shared/Notification/Notification';
-import CoverDiv from '../../shared/CoverDiv/CoverDiv';
+import Notification from '../../shared/Notification';
+import CoverDiv from '../../shared/CoverDiv';
 
 const styles = {
   container: css({

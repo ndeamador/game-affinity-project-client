@@ -3,12 +3,12 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useLazyQuery } from '@apollo/client';
 import { FIND_GAMES } from '../../../graphql/queries';
-import GameList from '../../shared/GameList/GameList';
+import GameList from '../../shared/GameList';
 import { useDebounce } from 'use-debounce';
 
 import { css } from '@emotion/react';
-import SearchBar from './SearchBar/SearchBar';
-import GenericContainer from '../../shared/GenericContainer/GenericContainer';
+import SearchBar from './SearchBar';
+import GenericContainer from '../../shared/GenericContainer';
 import useClickedOutOfElement from '../../../hooks/useClickedOutOfElement';
 import { ErrorMessage } from '../../shared/styledComponentsLibrary';
 

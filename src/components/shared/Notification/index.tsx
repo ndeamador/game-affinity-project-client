@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css, SerializedStyles } from '@emotion/react';
-import GenericContainer from '../GenericContainer/GenericContainer';
+import GenericContainer from '../GenericContainer';
 
 const style = css({
   padding: '20px',

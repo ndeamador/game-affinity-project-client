@@ -3,7 +3,7 @@
 import { LoginOrRegisterButtonProps } from '../../../types';
 import { capitalizeFirstLetter } from '../../../utils/misc';
 import { Button } from '../../shared/styledComponentsLibrary';
-import LoginRegisterModal from './LoginRegisterModal/LoginRegisterModal';
+import LoginRegisterModal from './LoginRegisterModal';
 
 const LoginRegisterButton = ({
   loginOrRegister,

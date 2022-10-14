@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { Game } from '../../../../types';
 import { Link } from 'react-router-dom';
-import AddGameToLibraryButton from '../../AddToLibraryButton/AddToLibraryButton';
-import PlatformIcons from '../../PlatformIcons/PlatformIcons';
-import ReleaseDeveloperRow from '../../ReleaseDeveloperRow/ReleaseDeveloperRow';
-import CoverDiv from '../../CoverDiv/CoverDiv';
+import AddGameToLibraryButton from '../../AddToLibraryButton';
+import PlatformIcons from '../../PlatformIcons';
+import ReleaseDeveloperRow from '../../ReleaseDeveloperRow';
+import CoverDiv from '../../CoverDiv';
 
 import { useEffect } from 'react';
 import useLazyCurrentUser from '../../../../hooks/useLazyCurrentUser';
-import AverageRatingDiv from './AverageRatingDiv/AverageRatingDiv';
+import AverageRatingDiv from './AverageRatingDiv';
 import { css } from '@emotion/react';
 
 const styles = {

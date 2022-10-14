@@ -2,7 +2,7 @@
 
 import { css, keyframes } from '@emotion/react';
 import { Game } from '../../../types';
-import GameListItem from './GameListItem/GameListItem';
+import GameListItem from './GameListItem';
 
 const animations = {
   dropDown: keyframes`

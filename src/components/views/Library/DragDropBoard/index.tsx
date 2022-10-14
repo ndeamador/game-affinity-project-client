@@ -2,14 +2,14 @@
 
 import { Game, Rating, User } from '../../../../types';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
-import DragDropColumn from './DragDropColumn/DragDropColumn';
-import GenericContainer from '../../../shared/GenericContainer/GenericContainer';
+import DragDropColumn from './DragDropColumn';
+import GenericContainer from '../../../shared/GenericContainer';
 import { css } from '@emotion/react';
 import { createContext, useState } from 'react';
 import { RATINGS } from '../../../../constants';
 import useUpdateRating from '../../../../hooks/useUpdateRating';
 import useBoardState from '../../../../hooks/useBoardState';
-import GameProfileModal from '../../../shared/GameProfileModal/GameProfileModal';
+import GameProfileModal from '../../../shared/GameProfileModal';
 
 const styles = {
   container: css({

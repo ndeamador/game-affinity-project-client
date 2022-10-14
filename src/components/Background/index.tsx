@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import AnimatedCanvas from './AnimatedCanvas/AnimatedCanvas';
-import Composition from './Composition/Composition';
+import AnimatedCanvas from './AnimatedCanvas';
+import Composition from './Composition';
 import { css } from '@emotion/react';
 import useWindowSize from '../../hooks/useWindowSize';
 import useMousePosition from '../../hooks/useMousePosition';
-import CssBlobs from './CssBlobs/CssBlobs';
+import CssBlobs from './CssBlobs';
 import { Profiler } from 'react';
 
 const Background = ({ bounceBoxes }: { bounceBoxes: any }) => {

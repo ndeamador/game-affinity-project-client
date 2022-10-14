@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { DialogContent, DialogOverlay } from '@reach/dialog';
-import GameProfile from '../../views/GameProfile/GameProfile';
+import GameProfile from '../../views/GameProfile';
 import { css } from '@emotion/react';
 import { User } from '../../../types';
 

@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
-import TooltipButton from '../TooltipButton/TooltipButton';
+import TooltipButton from '../TooltipButton';
 import { FaPlusCircle, FaRegTrashAlt } from 'react-icons/fa';
 import useAddToLibrary from '../../../hooks/useAddToLibrary';
 import useRemoveFromLibrary from '../../../hooks/useRemoveFromLibrary';
 import useLazyCurrentUser from '../../../hooks/useLazyCurrentUser';
 import { useContext, useEffect } from 'react';
 import findGameInLibrary from '../../../utils/findGameInLibrary';
-import { BoardStateContext } from '../../views/Library/DragDropBoard/DragDropBoard';
+import { BoardStateContext } from '../../views/Library/DragDropBoard';
 import { User } from '../../../types';
 
 const AddToLibraryButton = ({

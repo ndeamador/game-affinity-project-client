@@ -4,9 +4,9 @@ import { css } from '@emotion/react';
 import { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Game } from '../../../../../../../types';
-import CoverDiv from '../../../../../../shared/CoverDiv/CoverDiv';
-import { BoardStateContext } from '../../../DragDropBoard';
-import DraggablePortalHandler from './DraggablePortalHandler/DraggablePortalHandler';
+import CoverDiv from '../../../../../../shared/CoverDiv';
+import { BoardStateContext } from '../../..';
+import DraggablePortalHandler from './DraggablePortalHandler';
 
 const draggableStyle = css({
   display: 'flex',

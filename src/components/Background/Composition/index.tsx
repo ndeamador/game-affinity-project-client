@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { AnimatedParticleBaseProps } from '../../../types';
 import getRandomParticles from '../../../utils/getRandomParticles';
-import AnimatedParticles from './AnimatedParticles/AnimatedParticles';
-import ConnectingLines from './ConnectingLines/ConnectingLines';
+import AnimatedParticles from './AnimatedParticles';
+import ConnectingLines from './ConnectingLines';
 
 const Composition = (props: any) => {
   const particlesArrayRef = useRef<AnimatedParticleBaseProps[]>();

@@ -5,10 +5,10 @@ import { LoginOrRegisterModalProps } from '../../../../types';
 import { FaTimes } from 'react-icons/fa';
 
 import { CircleButton } from '../../../shared/styledComponentsLibrary';
-import LoginForm from './LoginForm/LoginForm';
+import LoginForm from './LoginForm';
 import { DialogContent, DialogOverlay } from '@reach/dialog';
 import { css } from '@emotion/react';
-import GenericContainer from '../../../shared/GenericContainer/GenericContainer';
+import GenericContainer from '../../../shared/GenericContainer';
 
 const styles = {
   dialogOverlay: css({

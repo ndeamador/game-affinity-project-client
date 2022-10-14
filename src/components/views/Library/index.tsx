@@ -3,12 +3,12 @@
 import { useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import FullPageSpinner from '../../shared/FullPageSpinner/FullPageSpinner';
+import FullPageSpinner from '../../shared/FullPageSpinner';
 import { FIND_GAMES } from '../../../graphql/queries';
-import DragoDropBoard from './DragDropBoard/DragDropBoard';
+import DragoDropBoard from './DragDropBoard';
 import { GameInUserLibrary, User } from '../../../types';
 import { css } from '@emotion/react';
-import Notification from '../../shared/Notification/Notification';
+import Notification from '../../shared/Notification';
 
 const styles = {
   mainContainer: css({

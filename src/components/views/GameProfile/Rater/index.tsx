@@ -14,7 +14,7 @@ import useAddToLibrary from '../../../../hooks/useAddToLibrary';
 import useUpdateRating from '../../../../hooks/useUpdateRating';
 import { css } from '@emotion/react';
 import useBoardState from '../../../../hooks/useBoardState';
-import { BoardStateContext } from '../../Library/DragDropBoard/DragDropBoard';
+import { BoardStateContext } from '../../Library/DragDropBoard';
 
 const styles = {
   mainContainer: css({

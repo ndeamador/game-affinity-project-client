@@ -3,13 +3,13 @@
 import { useQuery } from '@apollo/client';
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import GenreFiltersBox from './GenreFiltersBox/GenreFiltersBox';
-import FullPageSpinner from '../../shared/FullPageSpinner/FullPageSpinner';
-import GameList from '../../shared/GameList/GameList';
-import GenericContainer from '../../shared/GenericContainer/GenericContainer';
+import GenreFiltersBox from './GenreFiltersBox';
+import FullPageSpinner from '../../shared/FullPageSpinner';
+import GameList from '../../shared/GameList';
+import GenericContainer from '../../shared/GenericContainer';
 import { GET_RANKING } from '../../../graphql/queries';
 import { Game } from '../../../types';
-import Notification from '../../shared/Notification/Notification';
+import Notification from '../../shared/Notification';
 import { Link } from 'react-router-dom';
 
 const styles = {
