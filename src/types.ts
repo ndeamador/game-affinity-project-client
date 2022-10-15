@@ -183,5 +183,5 @@ export interface CompositionProps {
   windowSize: WindowSize;
   mousePosition: MousePositionProps;
   bounceBoxes: BounceBoxState;
-  renderingContext?: AnimatedCanvasRenderingContext;
+  renderingContext: AnimatedCanvasRenderingContext;
 }

@@ -28,6 +28,7 @@ const Background = ({ bounceBoxes }: { bounceBoxes: BounceBoxState }) => {
           windowSize={windowSize}
           mousePosition={mousePosition}
           bounceBoxes={bounceBoxes}
+          renderingContext={null}
         />
       </AnimatedCanvas>
       {/* </Profiler> */}
