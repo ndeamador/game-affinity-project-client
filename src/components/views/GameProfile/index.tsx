@@ -33,7 +33,7 @@ const GameProfile = ({
 
   useEffect(() => {
     findGames();
-  });
+  }, []);
 
   if (loading) return <FullPageSpinner />;
   if (!data || data.findGames.length === 0)
