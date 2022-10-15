@@ -25,7 +25,6 @@ const styles = {
   button: css({
     backgroundColor: 'var(--button-gradient-border-color-1)',
     margin: '2px',
-    // opacity: 0,
   }),
 };
 
