@@ -4,7 +4,6 @@ const styles = {
   form: css({
     display: 'flex',
     flexDirection: 'column',
-    // alignItems: 'stretch',
     alignItems: 'center',
     justifyContent: 'center',
     '> .inputErrorDiv': {
