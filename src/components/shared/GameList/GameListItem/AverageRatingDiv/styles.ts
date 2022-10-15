@@ -8,7 +8,6 @@ const styles = {
     fontSize: '1.4rem',
     fontWeight: 'bold',
     color: 'white',
-    // backgroundColor: backgroundColor(rating100Scale),
     width: 'calc(var(--cover-width-thumb) - 25px)',
     height: 'var(--cover-width-thumb)',
     borderRadius: 'var(--border-radius)',
