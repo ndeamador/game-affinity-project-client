@@ -45,9 +45,6 @@ const LoginForm = ({ setOpenModal, loginOrRegister }: LoginFormProps) => {
       onCompleted: () => {
         setOpenModal('none');
       },
-      onError: (err) => {
-        console.log('register error:', err.message);
-      },
       refetchQueries: [{ query: CURRENT_USER }],
     });
 
@@ -56,9 +53,6 @@ const LoginForm = ({ setOpenModal, loginOrRegister }: LoginFormProps) => {
     {
       onCompleted: () => {
         setOpenModal('none');
-      },
-      onError: (err) => {
-        console.log('login error:', err.message);
       },
       refetchQueries: [{ query: CURRENT_USER }],
     }
