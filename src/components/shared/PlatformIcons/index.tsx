@@ -50,22 +50,11 @@ interface AvailablePlatform {
   [key: string]: {
     displayName: string;
     found: boolean;
-    // icon: IconType,
     icon: JSX.Element;
   };
 }
 
 const PlatformIcons = ({ platforms }: { platforms: Platform[] }) => {
-  // I don't use useState because I want to avoid rerenders during the icon calculations and because the component is static
-  // let playStation = false; // FaPlaystation
-  // let xbox = false; // FaXbox
-  // let linux = false; // FaLinux
-  // let nintendo = false; // SiNintendo
-  // let windows = false; // FaWindows
-  // let mac = false; // FaApple
-  // let android = false; // FaAndroid
-  // let iOS = false; // FaAppStoreIos
-  // let otherPlatforms = false; // MdDevicesOther
 
   const availablePlatforms: AvailablePlatform = {
     windows: {
@@ -205,13 +194,3 @@ const PlatformIcons = ({ platforms }: { platforms: Platform[] }) => {
 };
 
 export default PlatformIcons;
-
-// {windows && <FaWindows aria-label='windows' />}
-// {playStation && <FaPlaystation aria-label='playStation' />}
-// {xbox && <FaXbox aria-label='xbox' />}
-// {nintendo && <SiNintendo aria-label='nintendo' />}
-// {linux && <FaLinux aria-label='linux' />}
-// {mac && <FaApple aria-label='mac' />}
-// {android && <FaAndroid aria-label='android' />}
-// {iOS && <FaAppStoreIos aria-label='iOS' />}
-// {otherPlatforms && <FaGamepad aria-label='otherPlatforms' />}

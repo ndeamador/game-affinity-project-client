@@ -3,8 +3,6 @@
 import Tooltip from '@reach/tooltip';
 import {
   ChangeEventHandler,
-  EventHandler,
-  KeyboardEvent,
   KeyboardEventHandler,
   useContext,
   useEffect,
@@ -30,11 +28,7 @@ const SearchBar = ({
   // Refresh component size stored in context on windows resize (to align component with background animation)
   useEffect(() => {
     bounceContext.storeBounceBox('searchBar', searchBarRef);
-    // bounceContext.storeBounceBox('testBox', test);
   }, [windowSize]);
-
-  // DELETE
-  // const test = useRef<HTMLDivElement | null>(null);
 
   const handleEnter: KeyboardEventHandler<HTMLInputElement> = (event) => {
     const eventTarget = event.target as HTMLInputElement;
@@ -49,21 +43,6 @@ const SearchBar = ({
 
   return (
     <>
-      {/* <div
-        ref={test}
-        style={{
-          // position: 'absolute',
-          top: 500,
-          left: 300,
-          color: 'black',
-          width: 300,
-          height: 400,
-          backgroundColor: 'rgba(140, 85, 31, 0.1)',
-          // margin: 100,
-          // paddingBottom: 50,
-        }}
-      ></div> */}
-
       <form
         onSubmit={(event) => event.preventDefault()}
         css={styles.form}
@@ -75,10 +54,6 @@ const SearchBar = ({
           placeholder='Find a video game...'
           type='text'
           spellCheck='false'
-          // onChange={handleChange}
-          // onKeyDown={handleEnter}
-          // onChange={(e) => handleChange(e.target)}
-          // onKeyDown={(e) => handleChange(e.target)}
           onChange={handleInputChange}
           onKeyDown={handleEnter}
           css={styles.input}

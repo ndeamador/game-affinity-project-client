@@ -18,20 +18,3 @@ const DragDropInnerGameList = ({ games }: { games: Game[] }) => {
 };
 
 export default React.memo(DragDropInnerGameList);
-// export default DragDropInnerGameList;
-
-
-// class DragDropInnerGameList extends React.PureComponent<{ games: Game[] }> {
-//   render() {
-//     const { games }: { games: Game[] } = this.props;
-//     return (
-//       <>
-//         {games.map((game, index) => (
-//           <DragDropGame key={game.id} game={game} index={index} />
-//         ))}
-//       </>
-//     );
-//   }
-// }
-
-// export default DragDropInnerGameList;

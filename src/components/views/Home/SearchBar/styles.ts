@@ -7,7 +7,6 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    // marginTop: 'var(--searchbar-margin-top)',
   }),
   input: css({
     width: '100%',
@@ -17,14 +16,9 @@ const styles = {
     '&:focus': {
       outline: 'none',
     },
-    // '&:active': {
-    //   outline: 'none',
-    //   backgroundColor: 'white',
-    // },
   }),
   button: css({
     border: '0',
-    // position: 'relative',
     marginLeft: '-42px',
     background: 'transparent',
   }),

@@ -3,16 +3,9 @@ import { css } from '@emotion/react';
 const styles = {
   container: css({
     padding: '15px',
-    // alignItems:'flex-start',
     minWidth: '500px',
     minHeight: '200px',
   }),
-  // coverDiv: css({
-  //   borderRadius: 'var(--border-radius)',
-  //   width: '264px',
-  //   maxWidth: '264px',
-  //   flexShrink: 0,
-  // }),
   coverImage: css({
     borderRadius: 'var(--border-radius)',
     width: '100%',

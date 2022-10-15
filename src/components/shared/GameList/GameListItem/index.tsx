@@ -12,12 +12,7 @@ import AverageRatingDiv from './AverageRatingDiv';
 import styles from './styles';
 
 const GameListItem = ({ game, ranked }: { game: Game; ranked?: boolean }) => {
-  const {
-    getCurrentUser,
-    currentUser,
-    loading,
-    error: getUserError,
-  } = useLazyCurrentUser();
+  const { getCurrentUser, currentUser } = useLazyCurrentUser();
   useEffect(() => {
     getCurrentUser();
   }, [getCurrentUser]);

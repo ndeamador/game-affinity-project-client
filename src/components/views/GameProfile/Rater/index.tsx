@@ -42,24 +42,9 @@ const Rater = ({
   gameId: number;
   currentUser: User;
 }) => {
-  const [updateRating, { data: updateRatingResult, error: updateRatingError }] =
-    useUpdateRating();
-
-  const [
-    addGameToLibrary,
-    { data: addToLibraryResult, loading: addingToLibrary, error: addGameError },
-  ] = useAddToLibrary();
-
-  // const { updateBoardStateWithId } = useBoardState(currentUser);
+  const [updateRating, { error: updateRatingError }] = useUpdateRating();
+  const [addGameToLibrary, { error: addGameError }] = useAddToLibrary();
   const boardContext = useContext(BoardStateContext);
-
-  // console.log(
-  //   '::In rater:: user: ',
-  //   currentUser?.email,
-  //   currentUser ? Object.keys(currentUser?.gamesInLibrary).length : undefined
-  // );
-
-  // console.log('currentuser:', addingToLibrary, currentUser);
 
   const handleRatingChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const gameInUserLibrary = findGameInLibrary({
@@ -70,7 +55,6 @@ const Rater = ({
     const newRating = parseInt(event.target.value) as Rating;
 
     if (!gameInUserLibrary) {
-      /* const newGame = */
       await addGameToLibrary({
         variables: { gameId: gameId, rating: newRating },
         optimisticResponse: {
@@ -86,15 +70,6 @@ const Rater = ({
       });
 
       ratingValue = newRating as Rating;
-      // console.log(
-      //   '============================================================='
-      // );
-      // console.log('addedtolibrary: ', newGame);
-      // console.log('updated gameInUserLibrary', gameInUserLibrary);
-      // console.log(' user after:', currentUser);
-      // console.log(
-      //   '============================================================='
-      // );
     } else {
       if (boardContext)
         boardContext.updateBoardStateWithId(gameId, newRating, currentUser);
@@ -156,18 +131,13 @@ const Rater = ({
   return (
     <div className={elementClassName} css={styles.mainContainer}>
       <span css={styles.iconsContainer}>{radioInputs}</span>
-      {
-        /* getUserError  ||*/ (updateRatingError || addGameError) && (
-          <ErrorMessage variant='stacked'>
-            {
-              /* getUserError?.message || */
-              updateRatingError?.message ||
-                addGameError?.message ||
-                'Something went wrong.'
-            }
-          </ErrorMessage>
-        )
-      }
+      {(updateRatingError || addGameError) && (
+        <ErrorMessage variant='stacked'>
+          {updateRatingError?.message ||
+            addGameError?.message ||
+            'Something went wrong.'}
+        </ErrorMessage>
+      )}
     </div>
   );
 };

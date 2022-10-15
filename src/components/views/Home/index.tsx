@@ -19,7 +19,6 @@ const Home = () => {
   const [findGames, { loading, error }] = useLazyQuery(FIND_GAMES, {
     fetchPolicy: 'cache-first',
     onCompleted: (result) => {
-      console.log('Home found games: ', result);
       setGames(result.findGames);
     },
     onError: (err) => {
@@ -37,10 +36,6 @@ const Home = () => {
   }, [clickedOutside]);
 
   useEffect(() => {
-    // if (query === '') {
-    //   setGames([]); // Prevents the results from the last query to appear in a new one.
-    //   return;
-    // }
     if (debouncedQuery) {
       findGames({ variables: { name: debouncedQuery } });
     }
@@ -57,7 +52,6 @@ const Home = () => {
         ) : debouncedQuery && !loading ? (
           <GameList games={games} />
         ) : null}
-        {/* {query && !loading ? <GameList games={games} /> : null} */}
       </GenericContainer>
     </div>
   );

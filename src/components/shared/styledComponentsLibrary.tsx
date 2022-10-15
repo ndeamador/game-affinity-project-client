@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import styled from '@emotion/styled/macro'; // /macro so that elements appear named in the dom
+
+import styled from '@emotion/styled/macro'; // macro so that elements appear named in the dom
 import { keyframes } from '@emotion/react';
-// import * as mediaQueries from '../styles/media-queries';
-// import { Dialog } from '@reach/dialog';
 import { ImSpinner2 } from 'react-icons/im'; // svg library
 import { ApolloError } from '@apollo/client';
 
@@ -22,7 +21,6 @@ const buttonVariants = {
   },
   filter: {
     padding: '8px 8px',
-    // backgroundColor: 'var(--regular-button-background-color)',
     backgroundColor: 'transparent',
     border: '1px solid var(--filter-button-border-color)',
     fontSize: '15px',
@@ -70,7 +68,6 @@ export const CircleButton = styled.button(
     alignItems: 'center',
     minWidth: '40px',
     minHeight: '40px',
-    // margin: '0px 5px',
     height: '40px',
     outlineStyle: 'none',
     fontSize: '15px',
@@ -93,46 +90,18 @@ export const CircleButton = styled.button(
       },
     },
   },
-  ({ transparent=false }: { transparent?: boolean }) => transparent && transparentVariant // variant comes from props.variant, the props passed to the button, defaulted to regular.
+  ({ transparent = false }: { transparent?: boolean }) =>
+    transparent && transparentVariant // variant comes from props.variant, the props passed to the button, defaulted to regular.
 );
 
 // INPUT
-
 export const Input = styled.input({
   borderRadius: 'var(--border-radius)',
   border: '0px',
-  // background: 'ghostwhite',
   padding: '15px 20px',
   width: '100%',
   boxSizing: 'border-box',
 });
-
-// FORM CONTAINER
-
-// export const FormContainer = styled.div({
-//   display: 'flex',
-//   flexDirection: 'column',
-// })
-
-// REACH MODAL
-// type Props = {
-//   className?: string;
-//   as?: React.ElementType | keyof JSX.IntrinsicElements;
-// };
-
-// <Dialog/>
-
-// export const Modal = styled(Dialog)({
-//   maxWidth: '450px',
-//   borderRadius: '3px',
-//   paddingBottom: '3.5em',
-//   boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.2)',
-//   margin: '20vh auto',
-//   '@media (max-width: 991px)': {
-//     width: '100%',
-//     margin: '10vh auto',
-//   },
-// });
 
 // SPINNER
 const spin = keyframes({
@@ -176,7 +145,6 @@ export const ErrorMessage = styled.div(
     color: 'var(--color-danger-dark)',
     margin: 0,
     paddingTop: '2px',
-    // position: 'absolute',
     fontSize: '85%',
     fontWeight: 'bold',
     textAlign: 'left',

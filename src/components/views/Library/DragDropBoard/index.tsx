@@ -16,19 +16,15 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   // https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318
 
   const [updateRating] = useUpdateRating();
-  // const [orderedColumns, setOrderedColums, reorderBoardStateWithDnDData] = useBoardState(user);
   const {
     orderedColumns,
-    setOrderedColums,
     reorderBoardStateWithDnDData,
     updateBoardStateWithId,
   } = useBoardState(user);
 
-  // console.log('DDBoard games:', games);
-
   const [openModal, setOpenModal] = useState<string>('none');
 
-  const [columnNames, setColumnNames] = useState(
+  const [columnNames] = useState(
     Object.values(RATINGS).map((rating) => rating.title)
   );
 
@@ -57,11 +53,7 @@ const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
     }
 
     // If the location has changed, reorder the source data:
-
     try {
-      // const initialRating = determineNewRank(source.droppableId);
-      // const newRating = determineNewRank(destination.droppableId);
-
       const newRating = reorderBoardStateWithDnDData(
         destination,
         source,
