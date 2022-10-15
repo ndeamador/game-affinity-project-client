@@ -110,7 +110,7 @@ export interface AnimatedParticleBaseProps {
 //   index: number;
 //   onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
 //   mouse: MousePositionProps;
-//   renderingContext: CanvasRenderingContext2D | null;
+//   renderingContext: CanvasRenderingContext2D | undefined;
 //   // particlesArray: AnimatedParticleBaseProps[] | undefined;
 //   // particlesArray: any;
 // }
@@ -122,7 +122,7 @@ export interface AnimatedParticlesProps {
   // index: number;
   updateParticle: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
   mouse: MousePositionProps;
-  renderingContext: CanvasRenderingContext2D | null;
+  renderingContext: CanvasRenderingContext2D | undefined;
   particlesArray: AnimatedParticleBaseProps[] | undefined;
   // particlesArray: React.MutableRefObject<AnimatedParticleBaseProps[] | undefined>.current;
 
@@ -141,7 +141,7 @@ export interface Point {
 export interface ConnectingLinesProps {
   particlesArray: AnimatedParticleBaseProps[] | undefined;
   stickyElements?: BounceBoxState;
-  renderingContext: CanvasRenderingContext2D | null;
+  renderingContext: CanvasRenderingContext2D | undefined;
 }
 
 export interface DeconstructedDOMRect {
@@ -177,3 +177,9 @@ export interface BounceBoxUseStateContext {
   storeBounceBox: (propName: BounceBoxKey, ref: React.MutableRefObject<HTMLElement | null>) => void;
 }
 
+export interface CompositionProps {
+  windowSize: WindowSize;
+  mousePosition: MousePositionProps;
+  bounceBoxes: BounceBoxState;
+  renderingContext?: CanvasRenderingContext2D | undefined;
+}
