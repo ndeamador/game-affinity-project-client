@@ -8,11 +8,6 @@ import styles from './styles';
 
 const LonginWithTestAccountButton = () => {
   const [login, { loading, error }] = useMutation(LOGIN, {
-    // onCompleted: () => {
-    // },
-    onError: (err) => {
-      console.log('login error:', err.message);
-    },
     refetchQueries: [{ query: CURRENT_USER }],
   });
 
