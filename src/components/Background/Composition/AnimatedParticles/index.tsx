@@ -15,7 +15,7 @@ const AnimatedParticles: FC<AnimatedParticlesProps> = (props) => {
   const defaultColor = '#ffffff'; /* '#8C5523' */
 
   // using for...of instead of forEach to avoid an unnecessary typecheck before updateParticle()
-  if (canvas !== null && props.particlesArray) {
+  if (canvas && canvas !== null && props.particlesArray) {
     for (const [i, currentFrameParticle] of props.particlesArray.entries()) {
       const nextFrameParticle = getNextFrameParticle(
         currentFrameParticle,

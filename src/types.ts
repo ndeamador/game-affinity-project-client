@@ -103,6 +103,8 @@ export interface AnimatedParticleBaseProps {
   color: string | 'black';
 }
 
+export type AnimatedCanvasRenderingContext = CanvasRenderingContext2D | null;
+
 // export interface AnimatedParticleProps extends AnimatedParticleBaseProps {
 //   mouseRadius?: number;
 //   windowSize: WindowSize;
@@ -110,7 +112,7 @@ export interface AnimatedParticleBaseProps {
 //   index: number;
 //   onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
 //   mouse: MousePositionProps;
-//   renderingContext: CanvasRenderingContext2D | undefined;
+//   renderingContext: CanvasRenderingContext2D | null;
 //   // particlesArray: AnimatedParticleBaseProps[] | undefined;
 //   // particlesArray: any;
 // }
@@ -122,7 +124,7 @@ export interface AnimatedParticlesProps {
   // index: number;
   updateParticle: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
   mouse: MousePositionProps;
-  renderingContext: CanvasRenderingContext2D | undefined;
+  renderingContext: AnimatedCanvasRenderingContext;
   particlesArray: AnimatedParticleBaseProps[] | undefined;
   // particlesArray: React.MutableRefObject<AnimatedParticleBaseProps[] | undefined>.current;
 
@@ -141,7 +143,7 @@ export interface Point {
 export interface ConnectingLinesProps {
   particlesArray: AnimatedParticleBaseProps[] | undefined;
   stickyElements?: BounceBoxState;
-  renderingContext: CanvasRenderingContext2D | undefined;
+  renderingContext: AnimatedCanvasRenderingContext;
 }
 
 export interface DeconstructedDOMRect {
@@ -181,5 +183,5 @@ export interface CompositionProps {
   windowSize: WindowSize;
   mousePosition: MousePositionProps;
   bounceBoxes: BounceBoxState;
-  renderingContext?: CanvasRenderingContext2D | undefined;
+  renderingContext?: AnimatedCanvasRenderingContext;
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { AnimatedCanvasRenderingContext } from '../../../types';
 
 const AnimatedCanvas = ({
   children,
@@ -9,7 +10,7 @@ const AnimatedCanvas = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [renderingContext, setRenderingContext] =
-    useState<CanvasRenderingContext2D | null>(null);
+    useState<AnimatedCanvasRenderingContext>(null);
   const [frameCount, setFrameCount] = useState(0);
 
   // Initialize Canvas
