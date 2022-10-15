@@ -26,7 +26,6 @@ const styles = {
     animation: `${animations.rotateDownWithBounce} 330ms ease-out forwards, ${animations.borderGlow} 3.5s linear infinite`,
     backgroundClip: 'text',
     backgroundSize: '400% auto', // https://codersblock.com/blog/gradient-animation-trick/
-    // textFillColor: 'transparent',
     color: 'transparent',
     '&:hover': {
       background: 'none',
@@ -68,27 +67,22 @@ const styles = {
     height: '100%',
     borderRadius: 'var(--border-radius)',
     textDecoration: 'none',
-    // color: 'var(--navbar-link-text-color)',
 
     // The following three properties replace color above, they are only neede so that all buttons appear with the same font weight.
     // The 'backgrond-clip: text' needed for myLibraryButton's text background animation makes text look thinner.
     color: 'transparent',
     backgroundClip: 'text',
     backgroundColor: 'var(--navbar-link-text-color)',
-
     '&:hover': {
       textFillColor: 'initial',
       color: 'var(--navbar-link-text-color-hover)',
       background: 'none',
     },
-    // '&.active: hover': {
-    // }
   }),
   userStrip: css({
     padding: '5px 10px',
     color: 'var(--navbar-user-text-color)'
   }),
-  /* const navLinkActiveStyle: React.CSSProperties = {}  */
   navLinkActive: {
     color: 'var(--navbar-link-text-color-active)',
     background: 'none',
