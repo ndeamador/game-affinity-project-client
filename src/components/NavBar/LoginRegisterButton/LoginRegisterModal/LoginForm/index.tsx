@@ -3,30 +3,20 @@ import { useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { LOGIN, REGISTER_NEW_USER } from '../../../../../graphql/mutations';
 import { CURRENT_USER } from '../../../../../graphql/queries';
-import { LoginDetails, OpenLoginRegisterModalOptions } from '../../../../../types';
+import { LoginDetails } from '../../../../../types';
 import { capitalizeFirstLetter } from '../../../../../utils/misc';
-import { Button, Input, Spinner } from '../../../../shared/styledComponentsLibrary';
+import {
+  Button,
+  Input,
+  Spinner,
+} from '../../../../shared/styledComponentsLibrary';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { ErrorMessage } from '../../../../shared/styledComponentsLibrary';
 import styles from './styles';
-
-
-// TypeScript definitions
-// ===========================================================
-interface LoginFormProps {
-  setOpenModal: React.Dispatch<
-    React.SetStateAction<OpenLoginRegisterModalOptions>
-  >;
-  loginOrRegister: 'login' | 'register';
-}
-
-type FormInputs = {
-  email: string;
-  password: string;
-};
+import { FormInputs, LoginFormProps } from './types';
 
 // Yup validation schema
 // ===========================================================
@@ -46,16 +36,10 @@ const schema = yup.object().shape({
 // FORM COMPONENT
 // ===========================================================
 
-const LoginForm = ({
-  // onSubmit,
-  // buttonLabel,
-  // loading,
-  setOpenModal,
-  loginOrRegister,
-}: LoginFormProps) => {
-  // ===========================================================
+const LoginForm = ({ setOpenModal, loginOrRegister }: LoginFormProps) => {
+
   // GraphQL Mutations
-  // ===========================================================
+  // ---------------------------------------------------------
   const [registerNewUser, { loading: registerLoading, error: registerError }] =
     useMutation(REGISTER_NEW_USER, {
       onCompleted: () => {
@@ -80,9 +64,8 @@ const LoginForm = ({
     }
   );
 
-  // ===========================================================
   // Form Hook
-  // ===========================================================
+  // ---------------------------------------------------------
   const {
     register,
     handleSubmit,
@@ -90,9 +73,8 @@ const LoginForm = ({
     formState: { errors /* isSubmitting */ }, // There seem to be some complications rendering the loading spinner using the isSubmitting property, so I pass instead Apollo's query loading states.
   } = useForm<FormInputs>({ resolver: yupResolver(schema) }); // React-hook-form with Yup validation schema
 
-  // ===========================================================
   // Server error state
-  // ===========================================================
+  // ---------------------------------------------------------
   const [serverError, setServerError] = useState<string | undefined>(undefined);
   const [serverErrorTimer, setServerErrorTimer] = useState<
     NodeJS.Timeout | undefined
@@ -121,9 +103,8 @@ const LoginForm = ({
     if (serverErrorTimer) clearTimeout(serverErrorTimer);
   }, [setOpenModal]);
 
-  // ===========================================================
   // Submit handlers
-  // ===========================================================
+  // ---------------------------------------------------------
   const submitLogin = async (data: LoginDetails) => {
     login({ variables: { email: data.email, password: data.password } });
   };
@@ -138,9 +119,8 @@ const LoginForm = ({
     loginOrRegister === 'login' ? submitLogin : submitRegistration;
   const loading = loginOrRegister === 'login' ? loginLoading : registerLoading;
 
-  // ===========================================================
   // RETURN
-  // ===========================================================
+  // ---------------------------------------------------------
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate css={styles.form}>
       <div className='inputErrorDiv'>
@@ -155,9 +135,7 @@ const LoginForm = ({
           {...register('email', { required: true })}
           css={styles.input}
         />
-        <ErrorMessage variant='stacked'>
-          {errors?.email?.message}
-        </ErrorMessage>
+        <ErrorMessage variant='stacked'>{errors?.email?.message}</ErrorMessage>
       </div>
       <div className='inputErrorDiv'>
         <Input
