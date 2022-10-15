@@ -5,7 +5,6 @@ const styles = {
     display: 'flex',
     flexBasis: '3.3rem',
     maxWidth: 'var(--cover-width-thumb)',
-    // maxHeight: 'var(--cover-width-thumb)',
     aspectRatio: '1/1',
     flexGrow: 1,
     flexShrink: 0,
@@ -16,7 +15,6 @@ const styles = {
   }),
   genericBox: css({
     display: 'flex',
-    // width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     border: 'solid 2px var(--inner-border-color)',
@@ -27,7 +25,6 @@ const styles = {
   }),
   genericIcon: css({
     width: '100%',
-    // height: 'auto',
     height: '100%',
   }),
   spinner: css({
