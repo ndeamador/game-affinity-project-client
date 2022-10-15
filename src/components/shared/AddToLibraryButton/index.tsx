@@ -4,10 +4,7 @@ import TooltipButton from '../TooltipButton';
 import { FaPlusCircle, FaRegTrashAlt } from 'react-icons/fa';
 import useAddToLibrary from '../../../hooks/useAddToLibrary';
 import useRemoveFromLibrary from '../../../hooks/useRemoveFromLibrary';
-import useLazyCurrentUser from '../../../hooks/useLazyCurrentUser';
-import { useContext, useEffect } from 'react';
 import findGameInLibrary from '../../../utils/findGameInLibrary';
-import { BoardStateContext } from '../../views/Library/DragDropBoard';
 import { User } from '../../../types';
 
 const AddToLibraryButton = ({
@@ -19,29 +16,6 @@ const AddToLibraryButton = ({
 }) => {
   const parsedGameId = typeof gameId === 'string' ? parseInt(gameId) : gameId;
 
-  // const {
-  //   getCurrentUser,
-  //   currentUser,
-  //   loading,
-  //   error: getUserError,
-  // } = useLazyCurrentUser();
-
-  // useEffect(() => {
-  //   getCurrentUser();
-  // }, []);
-
-  // if (loading) {
-  //   return (
-  //     <TooltipButton
-  //       isLoading={true}
-  //       label='Loading...'
-  //       onClick={() => {
-  //         return false;
-  //       }}
-  //     />
-  //   );
-  // }
-
   const gameInLibrary = currentUser
     ? findGameInLibrary({
         gameId: parsedGameId,
@@ -49,13 +23,10 @@ const AddToLibraryButton = ({
       })
     : undefined;
 
-  const [addGameToLibrary, { loading: addingToLibrary, error: libraryError }] =
-    useAddToLibrary();
+  const [addGameToLibrary, { loading: addingToLibrary }] = useAddToLibrary();
 
   const [removeGameFromLibrary, { loading: deletingGame }] =
     useRemoveFromLibrary();
-
-  // const boardState = useContext(BoardStateContext);
 
   return (
     <div>
@@ -63,8 +34,6 @@ const AddToLibraryButton = ({
         <TooltipButton
           label='Remove from library'
           onClick={() => {
-            // if (boardState)
-            //   boardState.updateBoardStateWithId(parsedGameId, null, currentUser);
             removeGameFromLibrary({
               variables: { igdb_game_id: parsedGameId },
               optimisticResponse: {
@@ -98,10 +67,6 @@ const AddToLibraryButton = ({
           }
           icon={<FaPlusCircle />}
           isLoading={addingToLibrary}
-          // isError={getUserError || libraryError ? true : false}
-          // errorMessage={
-          //   getUserError ? getUserError.message : libraryError?.message
-          // }
         />
       )}
     </div>
