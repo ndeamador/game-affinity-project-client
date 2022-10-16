@@ -47,6 +47,11 @@
 
 <br>
 
+<img src="zz_readme_files/game-profile-modal.png" alt="Game Profile Modal" title="Game Profile Modal" />
+
+<br>
+
+
 <h3 align="center">
   <a href="https://gap.nicodeamador.com/">Visit the live app</a> |
   <a href="https://github.com/ndeamador/game-affinity-project-server">View server repository</a>
