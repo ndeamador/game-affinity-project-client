@@ -31,6 +31,7 @@ const styles = {
   }),
   gameSummary: css({
     overflowY: 'auto',
+    paddingRight: '8px',
   }),
 };
 
