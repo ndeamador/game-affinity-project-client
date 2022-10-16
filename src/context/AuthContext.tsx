@@ -1,7 +1,7 @@
 import React, { ProviderProps, useEffect } from 'react';
 import { User } from '../types';
-import FullPageSpinner from '../components/FullPageSpinner';
-import { FullPageError } from '../components/styledComponentsLibrary';
+import FullPageSpinner from '../components/shared/FullPageSpinner';
+import { FullPageError } from '../components/shared/styledComponentsLibrary';
 import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
 
 
