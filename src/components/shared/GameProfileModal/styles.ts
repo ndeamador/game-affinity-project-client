@@ -18,11 +18,6 @@ const styles = {
       transitionProperty: 'all',
     },
   }),
-  container: css({
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }),
 };
 
 export default styles;

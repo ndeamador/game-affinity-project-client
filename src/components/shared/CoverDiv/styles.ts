@@ -12,6 +12,7 @@ const styles = {
   image: css({
     height: '100%',
     borderRadius: 'var(--border-radius)',
+    objectFit: 'contain',
   }),
   genericBox: css({
     display: 'flex',
@@ -32,6 +33,20 @@ const styles = {
     height: '50%',
     alignItems: 'center',
     justifyContent: 'center',
+  }),
+
+
+  mainContainerBig: css({
+    maxWidth: 'var(--cover-width-big)',
+    borderRadius: 'var(--border-radius)',
+    flexShrink: 0,
+    aspectRatio: 'unset',
+    alignSelf: 'flex-start',
+  }),
+  genericBoxBig: css({
+    aspectRatio: 'unset',
+    height: 'var(--cover-height-big)',
+    width: 'var(--cover-width-big)',
   }),
 };
 

@@ -26,31 +26,16 @@ const CoverDiv = ({
     displayOnLoad: css({
       display: loaded ? 'block' : 'none',
     }),
-    bigSize: css({
-      // height: 'var(--cover-height-big)',
-      // width: 'var(--cover-width-big)',
-      maxWidth: 'var(--cover-width-big)',
-      borderRadius: 'var(--border-radius)',
-      flexShrink: 0,
-      aspectRatio: 'unset',
-    }),
-    genericBoxBig: css({
-      aspectRatio: 'unset',
-      height: 'var(--cover-height-big)',
-      width: 'var(--cover-width-big)',
-    }),
   };
 
   return (
     // Workaround to prevent image flickering when dragging in My Library.
-    <div css={[!big ? styles.mainContainer : dynamicStyles.bigSize]}>
+    <div css={!big ? styles.mainContainer : styles.mainContainerBig}>
       {game.cover ? (
         showSpinner ? (
           <>
             {!loaded && (
-              <div
-                css={[styles.genericBox, big && dynamicStyles.genericBoxBig]}
-              >
+              <div css={[styles.genericBox, big && styles.genericBoxBig]}>
                 <Spinner css={styles.spinner} />
               </div>
             )}
@@ -71,41 +56,6 @@ const CoverDiv = ({
         </div>
       )}
     </div>
-
-    // <div css={styles.mainContainer}>
-    //   {game.cover ? (
-    //     <img src={imageLink} css={styles.image} onLoad={(event: any) => {console.log('load: ', event); setLoaded(true)}} />
-    //   ) : (
-    //     <CgGames css={styles.genericIcon} />
-    //   )}
-    // </div>
-
-    // <div css={[styles.mainContainer]}>
-    //   {game.cover ? (
-    //     <>
-    //       {!loaded && (
-    //         <div css={[styles.genericBox]}>
-    //           <Spinner css={styles.spinner} />
-    //         </div>
-    //       )}
-    //       <img
-    //         src={imageLink}
-    //         css={[styles.image, dynamicStyles.displayOnLoad]}
-    //         onLoad={() => {
-    //           if (!loaded) setLoaded(true);
-    //         }}
-    //       />
-    //     </>
-    //   ) : (
-    //     <div css={styles.genericBox}>
-    //       <CgGames css={styles.genericIcon} />
-    //     </div>
-    //   )}
-    // </div>
-
-    // <div css={[styles.mainContainer]}>
-    //   <img src={imageLink} css={styles.image} />
-    // </div>
   );
 };
 
