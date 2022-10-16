@@ -49,7 +49,7 @@ function TooltipButton({
         disabled={isLoading}
         onClick={handleClick}
         aria-label={isError ? error.message : label}
-        transparent
+        transparentTopRight
         {...rest}
       >
         <div css={styles.iconDivStyle}>

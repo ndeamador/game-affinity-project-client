@@ -9,6 +9,8 @@ const styles = {
   }),
   buttonStyle: css({
     display: 'flex',
+    minHeight: '40px',
+    minWidth: '40px',
     justifyContent: 'center',
     alignItems: 'center',
     '&:hover': {
@@ -23,9 +25,8 @@ const styles = {
     height: '100%',
   }),
   iconStyle: css({
-    width: 'auto',
-    height: '65%',
-
+    width: '68%',
+    height: 'auto',
   }),
 };
 

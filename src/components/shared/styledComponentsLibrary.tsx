@@ -54,8 +54,11 @@ export const Button = styled.button(
 );
 
 // CIRCLE BUTTON
-const transparentVariant = {
+const transparentTopRightVariant = {
   backgroundColor: 'transparent',
+  // Leave empty space bottom and left to increase clicking area when button is on the top right corner.
+  justifyContent: 'flex-end',
+  alignItems: 'flex-start',
   '&:hover': {
     backgroundColor: 'transparent',
   },
@@ -66,9 +69,9 @@ export const CircleButton = styled.button(
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    minWidth: '40px',
-    minHeight: '40px',
-    height: '40px',
+    padding: '2px',
+    minWidth: '30px',
+    minHeight: '30px',
     outlineStyle: 'none',
     fontSize: '15px',
     cursor: 'pointer',
@@ -90,8 +93,8 @@ export const CircleButton = styled.button(
       },
     },
   },
-  ({ transparent = false }: { transparent?: boolean }) =>
-    transparent && transparentVariant // variant comes from props.variant, the props passed to the button, defaulted to regular.
+  ({ transparentTopRight = false }: { transparentTopRight?: boolean }) =>
+    transparentTopRight && transparentTopRightVariant // variant comes from props.variant, the props passed to the button, defaulted to regular.
 );
 
 // INPUT
