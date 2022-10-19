@@ -23,7 +23,7 @@
 ## Features
 
 - Written in modern React with hooks using only functional components.
-- Simple local state management with React and Apollo Graphql.
+- Simple local state management with React and Apollo Graphql (no Redux or similar).
 - Project fully written in TypeScript.
 - Full user authentication system.
 - Persistent drag-and-drop ranking system.
