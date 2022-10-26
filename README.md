@@ -42,7 +42,7 @@
 
 - Mobile friendly design: due to the structure of the drag-and-drop system, a custom, mobile-specific, responsive rating module for "My Library" needs to be built from scratch.
 - Lexorank implementation for efficient Drag and Drop persistence.
-- Better production automation for PostgreSQL migrations.
+- Streamline production automation for PostgreSQL migrations.
 - Updated tests for the most recent features.
 
 <br>
