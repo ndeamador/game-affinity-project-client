@@ -19,7 +19,7 @@ html {
   --color-danger-dark: #bb0300;
   --color-orange: orange;
   --color-gold: gold;
-  --color-accent: #fd98ff;
+  --color-accent: #fffd83;
 
   --rays: #b6b6b6;
   --rays-contact: #e2e2e2;
@@ -34,14 +34,6 @@ html {
   --blob-center-1: #3eefff;
   --blob-center-2: #b300ff;
   --blob-bottom-right-corner: #7b80ff;
-  --color-accent: #fff6b4;
-  --color-accent: #8affc5;
-  --color-accent: #ffc5fb;
-  --color-accent: #d8cbe4;
-  --color-accent: #42ffc9;
-  --color-accent: #3bffde;
-  --color-accent: #fffda1;
-  --color-accent: #fffd83;
 
   --overlay-blur: 3px;
   --blob-big-blur: 270px;
@@ -53,7 +45,6 @@ html {
   --blob-big-opacity: 0.3;
   --blob-background-opacity: 1;
 
-  --navbar-background: rgba(165, 165, 165, 0.7);
   --navbar-link-text-color: rgb(229, 240, 238);
   --navbar-link-text-color-hover: var(--color-accent);
   --navbar-link-text-color-active: rgb(236, 255, 252);
