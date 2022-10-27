@@ -1,18 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import { useParams } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
-import { FIND_GAMES } from '../../../graphql/queries';
-import FullPageSpinner from '../../shared/FullPageSpinner';
-import AddToLibraryButton from '../../shared/AddToLibraryButton';
-import PlatformIcons from '../../shared/PlatformIcons';
-import ReleaseDeveoperRow from '../../shared/ReleaseDeveloperRow';
-import Rater from './Rater';
 import { useEffect } from 'react';
-import GenericContainer from '../../shared/GenericContainer';
-import { User } from '../../../types';
-import Notification from '../../shared/Notification';
-import CoverDiv from '../../shared/CoverDiv';
+import { FIND_GAMES } from 'graphql/queries';
+import FullPageSpinner from 'components/shared/FullPageSpinner';
+import AddToLibraryButton from 'components/shared/AddToLibraryButton';
+import PlatformIcons from 'components/shared/PlatformIcons';
+import ReleaseDeveoperRow from 'components/shared/ReleaseDeveloperRow';
+import GenericContainer from 'components/shared/GenericContainer';
+import Notification from 'components/shared/Notification';
+import CoverDiv from 'components/shared/CoverDiv';
+import Rater from './Rater';
 import styles from './index.styles';
+import { User } from 'types';
 
 const GameProfile = ({
   currentUser,

@@ -1,8 +1,8 @@
 import React, { ProviderProps, useEffect } from 'react';
-import { User } from '../types';
-import FullPageSpinner from '../components/shared/FullPageSpinner';
-import { FullPageError } from '../components/shared/styledComponentsLibrary';
-import useLazyCurrentUser from '../hooks/useLazyCurrentUser';
+import { User } from 'types';
+import FullPageSpinner from 'components/shared/FullPageSpinner';
+import { FullPageError } from 'components/shared/styledComponentsLibrary';
+import useLazyCurrentUser from 'hooks/useLazyCurrentUser';
 
 
 // THIS FILE IS DEPRECATED

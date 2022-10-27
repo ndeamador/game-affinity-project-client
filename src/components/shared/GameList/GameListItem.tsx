@@ -3,13 +3,13 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import styles from './GameListItem.styles';
-import { Game } from '../../../types';
-import useLazyCurrentUser from '../../../hooks/useLazyCurrentUser';
+import { Game } from 'types';
+import useLazyCurrentUser from 'hooks/useLazyCurrentUser';
 import AverageRatingDiv from './AverageRatingDiv';
-import CoverDiv from '../CoverDiv';
-import ReleaseDeveloperRow from '../ReleaseDeveloperRow';
-import PlatformIcons from '../PlatformIcons';
-import AddGameToLibraryButton from '../AddToLibraryButton';
+import CoverDiv from 'components/shared/CoverDiv';
+import ReleaseDeveloperRow from 'components/shared/ReleaseDeveloperRow';
+import PlatformIcons from 'components/shared/PlatformIcons';
+import AddGameToLibraryButton from 'components/shared/AddToLibraryButton';
 
 const GameListItem = ({ game, ranked }: { game: Game; ranked?: boolean }) => {
   const { getCurrentUser, currentUser } = useLazyCurrentUser();

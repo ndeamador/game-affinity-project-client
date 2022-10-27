@@ -1,7 +1,7 @@
+import { RATINGS } from '../constants';
 import { useState } from 'react';
 import { DraggableLocation } from 'react-beautiful-dnd';
-import { RATINGS } from '../constants';
-import { GameInUserLibrary, Rating, User } from '../types';
+import { GameInUserLibrary, Rating, User } from 'types';
 import useLazyCurrentUser from './useLazyCurrentUser';
 
 

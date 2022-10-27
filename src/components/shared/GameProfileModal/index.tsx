@@ -2,7 +2,7 @@
 
 import { DialogContent, DialogOverlay } from '@reach/dialog';
 import GameProfile from '../../views/GameProfile';
-import { User } from '../../../types';
+import { User } from 'types';
 import styles from './styles';
 
 const GameProfileModal = ({

@@ -1,4 +1,4 @@
-import { AnimatedParticleBaseProps, WindowSize } from '../types';
+import { AnimatedParticleBaseProps, WindowSize } from 'types';
 import { getRandomDirectionCoeficient } from './misc';
 
 const getRandomParticles = (

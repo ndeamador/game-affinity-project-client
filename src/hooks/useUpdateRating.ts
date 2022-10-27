@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
-import { UPDATE_RATING } from '../graphql/mutations';
-import { CURRENT_USER } from '../graphql/queries';
-import { MeResponse } from '../types';
+import { UPDATE_RATING } from 'graphql/mutations';
+import { CURRENT_USER } from 'graphql/queries';
+import { MeResponse } from 'types';
 
 
 const useUpdateRating = () => {

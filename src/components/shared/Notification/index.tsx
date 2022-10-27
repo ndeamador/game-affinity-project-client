@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { SerializedStyles } from '@emotion/react';
-import GenericContainer from '../GenericContainer';
+import GenericContainer from 'components/shared/GenericContainer';
 import styles from './styles';
 
 const Notification = ({

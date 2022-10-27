@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { MousePositionProps } from '../types';
+import { MousePositionProps } from 'types';
 
 const useMousePosition = () => {
   // Done with useRef instead of useState (useState was causing additional re-renders on mouse move that accelerated the animations and choked performance).

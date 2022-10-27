@@ -1,20 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import { useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
-import { LOGIN, REGISTER_NEW_USER } from '../../graphql/mutations';
-import { CURRENT_USER } from '../../graphql/queries';
-import { LoginDetails } from '../../types';
-import { capitalizeFirstLetter } from '../../utils/misc';
+import { LOGIN, REGISTER_NEW_USER } from 'graphql/mutations';
+import { CURRENT_USER } from 'graphql/queries';
+import { LoginDetails } from 'types';
+import { capitalizeFirstLetter } from 'utils/misc';
 import {
   Button,
   Input,
   Spinner,
-} from '../shared/styledComponentsLibrary';
+} from 'components/shared/styledComponentsLibrary';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { ErrorMessage } from '../shared/styledComponentsLibrary';
+import { ErrorMessage } from 'components/shared/styledComponentsLibrary';
 import styles from './LoginForm.styles';
 import { FormInputs, LoginFormProps } from './LoginForm.types';
 

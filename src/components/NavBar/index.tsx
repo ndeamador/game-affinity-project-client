@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
 import { useState } from 'react';
-import { OpenLoginRegisterModalOptions } from '../../types';
+import { OpenLoginRegisterModalOptions } from 'types';
 
 import LogoutButton from './LogoutButton';
 import { NavLink } from 'react-router-dom';
-import useCurrentUser from '../../hooks/useCurrentUser';
+import useCurrentUser from 'hooks/useCurrentUser';
 import LonginWithTestAccountButton from './LoginWithTestAccountButton';
 import GitHubButton from './GitHubButton';
 import styles from './index.styles';

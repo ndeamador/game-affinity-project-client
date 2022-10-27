@@ -3,10 +3,10 @@
 import { useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import FullPageSpinner from '../../shared/FullPageSpinner';
-import { FIND_GAMES } from '../../../graphql/queries';
-import { GameInUserLibrary, User } from '../../../types';
-import Notification from '../../shared/Notification';
+import FullPageSpinner from 'components/shared/FullPageSpinner';
+import { FIND_GAMES } from 'graphql/queries';
+import { GameInUserLibrary, User } from 'types';
+import Notification from 'components/shared/Notification';
 import styles from './index.styles';
 import DragoDropBoard from './DragDropBoard';
 

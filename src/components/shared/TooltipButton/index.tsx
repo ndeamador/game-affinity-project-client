@@ -1,5 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { CircleButton, Spinner } from '../styledComponentsLibrary';
+import {
+  CircleButton,
+  Spinner,
+} from 'components/shared/styledComponentsLibrary';
 import Tooltip from '@reach/tooltip';
 import { FaTimesCircle } from 'react-icons/fa';
 import { IconBaseProps } from 'react-icons';

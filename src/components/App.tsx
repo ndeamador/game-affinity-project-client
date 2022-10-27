@@ -2,7 +2,7 @@
 import 'normalize.css';
 import '@reach/dialog/styles.css';
 import '@reach/tooltip/styles.css';
-import '../styles/global.css';
+import 'styles/global.css';
 
 import {
   BrowserRouter as Router,
@@ -16,14 +16,14 @@ import NavBar from './NavBar';
 import Home from './views/Home';
 import Library from './views/Library';
 
-import useCurrentUser from '../hooks/useCurrentUser';
+import useCurrentUser from 'hooks/useCurrentUser';
 import Ranking from './views/Ranking';
 import Background from './Background';
 import { createContext } from 'react';
-import { BounceBoxUseStateContext } from '../types';
-import useBounceBoxes from '../hooks/useBounceBoxes';
+import { BounceBoxUseStateContext } from 'types';
+import useBounceBoxes from 'hooks/useBounceBoxes';
 import { useQuery } from '@apollo/client';
-import { GET_RANKING } from '../graphql/queries';
+import { GET_RANKING } from 'graphql/queries';
 import styles from './App.styles';
 
 function App() {

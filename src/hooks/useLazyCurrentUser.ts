@@ -1,5 +1,5 @@
 import { ApolloError, useLazyQuery } from '@apollo/client';
-import { CURRENT_USER } from '../graphql/queries';
+import { CURRENT_USER } from 'graphql/queries';
 
 
 const useLazyCurrentUser = () => {

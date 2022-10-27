@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
 import { useMutation } from '@apollo/client';
-import { LOGIN } from '../../graphql/mutations';
-import { CURRENT_USER } from '../../graphql/queries';
-import { Button, Spinner } from '../shared/styledComponentsLibrary';
+import { LOGIN } from 'graphql/mutations';
+import { CURRENT_USER } from 'graphql/queries';
+import { Button, Spinner } from 'components/shared/styledComponentsLibrary';
 import styles from './LoginWithTestAccountButton.styles';
 
 const LonginWithTestAccountButton = () => {

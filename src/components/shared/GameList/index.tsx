@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react';
-import { Game } from '../../../types';
+import { Game } from 'types';
 import GameListItem from './GameListItem';
 import styles, { animations } from './index.styles';
 

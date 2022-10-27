@@ -4,12 +4,12 @@ import { FaStar, FaHeart } from 'react-icons/fa';
 import { IoIosThumbsDown, IoIosThumbsUp } from 'react-icons/io';
 import { ChangeEvent, useContext } from 'react';
 import styles from './Rater.styles';
-import { Rating, User } from '../../../types';
-import useUpdateRating from '../../../hooks/useUpdateRating';
-import useAddToLibrary from '../../../hooks/useAddToLibrary';
+import { Rating, User } from 'types';
+import useUpdateRating from 'hooks/useUpdateRating';
+import useAddToLibrary from 'hooks/useAddToLibrary';
 import { BoardStateContext } from '../Library/DragDropBoard';
-import findGameInLibrary from '../../../utils/findGameInLibrary';
-import { ErrorMessage } from '../../shared/styledComponentsLibrary';
+import findGameInLibrary from 'utils/findGameInLibrary';
+import { ErrorMessage } from 'components/shared/styledComponentsLibrary';
 
 const iconColors = ['DarkSlateBlue', 'green', 'gold', 'red'];
 const iconLevels = [

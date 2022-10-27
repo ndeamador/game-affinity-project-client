@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import { useApolloClient, useMutation } from '@apollo/client';
-import { LOGOUT } from '../../graphql/mutations';
-import { Button, Spinner } from '../shared/styledComponentsLibrary';
+import { LOGOUT } from 'graphql/mutations';
+import { Button, Spinner } from 'components/shared/styledComponentsLibrary';
 import styles from './LogoutButton.styles';
 
 const LogoutButton = () => {

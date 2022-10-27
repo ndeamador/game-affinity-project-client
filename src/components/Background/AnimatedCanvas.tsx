@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AnimatedCanvasRenderingContext } from '../../types';
+import { AnimatedCanvasRenderingContext } from 'types';
 
 const AnimatedCanvas = ({
   children,

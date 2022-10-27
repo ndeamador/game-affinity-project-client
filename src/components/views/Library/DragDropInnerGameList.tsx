@@ -1,5 +1,5 @@
 import React from 'react';
-import { Game } from '../../../types';
+import { Game } from 'types';
 import DragDropGame from './DragDropGame';
 
 // This component is meant to improve drag/drop performance by avoiding unnecessary renders.

@@ -1,4 +1,4 @@
-import { GameInUserLibrary, User } from '../types';
+import { GameInUserLibrary, User } from 'types';
 
 const findGameInLibrary = ({ gameId, user }: { gameId: number, user: User }):GameInUserLibrary | undefined => {
 

@@ -4,8 +4,8 @@ import { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import DraggablePortalHandler from './DraggablePortalHandler';
 import { BoardStateContext } from './DragDropBoard';
-import CoverDiv from '../../shared/CoverDiv';
-import { Game } from '../../../types';
+import CoverDiv from 'components/shared/CoverDiv';
+import { Game } from 'types';
 import styles from './DragDropGame.styles';
 
 // <Draggable/> Requires at least draggableId and index

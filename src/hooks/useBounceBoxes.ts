@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BounceBoxKey, BounceBoxState, DeconstructedDOMRect, RectWithBoundingPoints } from '../types';
+import { BounceBoxKey, BounceBoxState, DeconstructedDOMRect, RectWithBoundingPoints } from 'types';
 
 const useBounceBoxes = () => {
   const [bounceBoxes, setBounceBoxes] = useState<BounceBoxState>({

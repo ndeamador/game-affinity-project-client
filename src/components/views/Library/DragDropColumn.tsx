@@ -3,7 +3,7 @@
 import { css } from '@emotion/react';
 import { Droppable } from 'react-beautiful-dnd';
 import { RATINGS } from '../../../constants';
-import { Game } from '../../../types';
+import { Game } from 'types';
 import styles from './DragDropColumn.styles';
 import DragDropInnerGameList from './DragDropInnerGameList';
 

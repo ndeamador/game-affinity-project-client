@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useRef, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
-import { FIND_GAMES } from '../../../graphql/queries';
-import GameList from '../../shared/GameList';
+import { FIND_GAMES } from 'graphql/queries';
+import GameList from 'components/shared/GameList';
 import { useDebounce } from 'use-debounce';
-import GenericContainer from '../../shared/GenericContainer';
-import useClickedOutOfElement from '../../../hooks/useClickedOutOfElement';
-import { ErrorMessage } from '../../shared/styledComponentsLibrary';
+import GenericContainer from 'components/shared/GenericContainer';
+import useClickedOutOfElement from 'hooks/useClickedOutOfElement';
+import { ErrorMessage } from 'components/shared/styledComponentsLibrary';
 import SearchBar from './SearchBar';
 import styles from './index.styles';
 

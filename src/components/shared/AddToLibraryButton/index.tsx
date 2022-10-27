@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import TooltipButton from '../TooltipButton';
+import TooltipButton from 'components/shared/TooltipButton';
 import { FaPlusCircle, FaRegTrashAlt } from 'react-icons/fa';
-import useAddToLibrary from '../../../hooks/useAddToLibrary';
-import useRemoveFromLibrary from '../../../hooks/useRemoveFromLibrary';
-import findGameInLibrary from '../../../utils/findGameInLibrary';
-import { User } from '../../../types';
+import useAddToLibrary from 'hooks/useAddToLibrary';
+import useRemoveFromLibrary from 'hooks/useRemoveFromLibrary';
+import findGameInLibrary from 'utils/findGameInLibrary';
+import { User } from 'types';
 
 const AddToLibraryButton = ({
   currentUser,

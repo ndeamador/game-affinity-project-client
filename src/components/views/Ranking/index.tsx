@@ -2,12 +2,12 @@
 
 import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
-import FullPageSpinner from '../../shared/FullPageSpinner';
-import GameList from '../../shared/GameList';
-import GenericContainer from '../../shared/GenericContainer';
-import { GET_RANKING } from '../../../graphql/queries';
-import { Game } from '../../../types';
-import Notification from '../../shared/Notification';
+import FullPageSpinner from 'components/shared/FullPageSpinner';
+import GameList from 'components/shared/GameList';
+import GenericContainer from 'components/shared/GenericContainer';
+import { GET_RANKING } from 'graphql/queries';
+import { Game } from 'types';
+import Notification from 'components/shared/Notification';
 import { Link } from 'react-router-dom';
 import GenreFiltersBox from './GenreFiltersBox';
 import styles from './index.styles';

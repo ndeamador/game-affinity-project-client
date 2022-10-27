@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { REMOVE_FROM_LIBRARY } from '../graphql/mutations';
+import { REMOVE_FROM_LIBRARY } from 'graphql/mutations';
 
 
 const useRemoveFromLibrary = () => {

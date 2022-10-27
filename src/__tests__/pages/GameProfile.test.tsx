@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 // } from '@testing-library/react';
 // import { MockedProvider } from '@apollo/client/testing';
 // import GameProfile from '../../pages/GameProfile';
-// import { FIND_GAMES } from '../../graphql/queries';
+// import { FIND_GAMES } from 'graphql/queries';
 // import { MemoryRouter, Route } from 'react-router-dom';
 // import { resultKeyNameFromField } from '@apollo/client/utilities';
 // import { createContext } from 'react';

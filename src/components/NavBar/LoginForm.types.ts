@@ -1,4 +1,4 @@
-import { OpenLoginRegisterModalOptions } from '../../types';
+import { OpenLoginRegisterModalOptions } from 'types';
 
 export interface LoginFormProps {
   setOpenModal: React.Dispatch<
