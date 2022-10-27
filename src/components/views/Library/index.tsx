@@ -5,10 +5,10 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FullPageSpinner from '../../shared/FullPageSpinner';
 import { FIND_GAMES } from '../../../graphql/queries';
-import DragoDropBoard from './DragDropBoard';
 import { GameInUserLibrary, User } from '../../../types';
 import Notification from '../../shared/Notification';
-import styles from './styles';
+import styles from './index.styles';
+import DragoDropBoard from './DragDropBoard';
 
 const Library = ({ currentUser }: { currentUser: User }) => {
   const gameIdsInLibrary = currentUser?.gamesInLibrary.map(

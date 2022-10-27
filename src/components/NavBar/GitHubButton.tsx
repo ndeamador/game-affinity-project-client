@@ -2,8 +2,8 @@
 
 import Tooltip from '@reach/tooltip';
 import { FaGithub } from 'react-icons/fa';
-import { CircleButton } from '../../shared/styledComponentsLibrary';
-import styles from './styles';
+import { CircleButton } from '../shared/styledComponentsLibrary';
+import styles from './GitHubButton.styles';
 
 const GitHubButton = () => {
   return (

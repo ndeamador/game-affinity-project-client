@@ -6,7 +6,7 @@ import useWindowSize from '../../hooks/useWindowSize';
 import useMousePosition from '../../hooks/useMousePosition';
 import CssBlobs from './CssBlobs';
 import { Profiler } from 'react';
-import styles from './styles';
+import styles from './index.styles';
 import { BounceBoxState } from '../../types';
 
 const Background = ({ bounceBoxes }: { bounceBoxes: BounceBoxState }) => {

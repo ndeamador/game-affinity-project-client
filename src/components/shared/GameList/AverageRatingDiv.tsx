@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css, SerializedStyles } from '@emotion/react';
-import styles from './styles';
+import styles from './AverageRatingDiv.styles';
 
 const backgroundColor: { [key: string]: SerializedStyles } = {
   green: css({

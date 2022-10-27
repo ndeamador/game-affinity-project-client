@@ -1,16 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useRef, useState } from 'react';
-
 import { useLazyQuery } from '@apollo/client';
 import { FIND_GAMES } from '../../../graphql/queries';
 import GameList from '../../shared/GameList';
 import { useDebounce } from 'use-debounce';
-
-import SearchBar from './SearchBar';
 import GenericContainer from '../../shared/GenericContainer';
 import useClickedOutOfElement from '../../../hooks/useClickedOutOfElement';
 import { ErrorMessage } from '../../shared/styledComponentsLibrary';
-import styles from './styles';
+import SearchBar from './SearchBar';
+import styles from './index.styles';
 
 const Home = () => {
   const [games, setGames] = useState([]);

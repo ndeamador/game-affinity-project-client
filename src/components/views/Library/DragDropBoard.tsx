@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
-import { Game, Rating, User } from '../../../../types';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
-import DragDropColumn from './DragDropColumn';
-import GenericContainer from '../../../shared/GenericContainer';
 import { createContext, useState } from 'react';
-import { RATINGS } from '../../../../constants';
-import useUpdateRating from '../../../../hooks/useUpdateRating';
-import useBoardState from '../../../../hooks/useBoardState';
-import GameProfileModal from '../../../shared/GameProfileModal';
-import styles from './styles';
+import useUpdateRating from '../../../hooks/useUpdateRating';
+import useBoardState from '../../../hooks/useBoardState';
+import { RATINGS } from '../../../constants';
+import GenericContainer from '../../shared/GenericContainer';
+import DragDropColumn from './DragDropColumn';
+import GameProfileModal from '../../shared/GameProfileModal';
+import { Game, Rating, User } from '../../../types';
+import styles from './DragDropBoard.styles';
 
 const DragoDropBoard = ({ games, user }: { games: Game[]; user: User }) => {
   // Remember that using the mapped object's indexes for the key property is an anti-pattern, use unique id instead

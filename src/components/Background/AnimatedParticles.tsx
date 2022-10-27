@@ -5,7 +5,7 @@ import {
   BounceBoxState,
   RectWithBoundingPoints,
   WindowSize,
-} from '../../../../types';
+} from '../../types';
 
 const AnimatedParticles: FC<AnimatedParticlesProps> = (props) => {
   // const canvas = useContext(Canvas2dContext);

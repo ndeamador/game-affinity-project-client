@@ -1,4 +1,4 @@
-import { AnimatedParticleBaseProps, ConnectingLinesProps, Point, RectWithBoundingPoints } from '../../../../types';
+import { AnimatedParticleBaseProps, ConnectingLinesProps, Point, RectWithBoundingPoints } from '../../types';
 
 const ConnectingLines = ({
   particlesArray,

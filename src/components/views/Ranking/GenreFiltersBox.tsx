@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
-import { Button } from '../../../shared/styledComponentsLibrary';
-import styles from './styles';
+import { Button } from '../../shared/styledComponentsLibrary';
+import styles from './GenreFiltersBox.styles';
 
 const GenreFiltersBox = ({
   genreFilter,

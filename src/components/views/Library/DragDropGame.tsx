@@ -2,11 +2,11 @@
 
 import { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { Game } from '../../../../../../../types';
-import CoverDiv from '../../../../../../shared/CoverDiv';
-import { BoardStateContext } from '../../..';
 import DraggablePortalHandler from './DraggablePortalHandler';
-import styles from './styles';
+import { BoardStateContext } from './DragDropBoard';
+import CoverDiv from '../../shared/CoverDiv';
+import { Game } from '../../../types';
+import styles from './DragDropGame.styles';
 
 // <Draggable/> Requires at least draggableId and index
 // 'provided.draggableProps' need to be applied to the comopnent that we want to move around.

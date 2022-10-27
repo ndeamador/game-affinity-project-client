@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import styles from './styles';
+import styles from './CssBlobs.styles';
 
 const CssBlobs = () => {
   return (

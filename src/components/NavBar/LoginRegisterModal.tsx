@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
-import { capitalizeFirstLetter } from '../../../../utils/misc';
-import { LoginOrRegisterModalProps } from '../../../../types';
+import { capitalizeFirstLetter } from '../../utils/misc';
+import { LoginOrRegisterModalProps } from '../../types';
 import { FaTimes } from 'react-icons/fa';
 
-import { CircleButton } from '../../../shared/styledComponentsLibrary';
+import { CircleButton } from '../shared/styledComponentsLibrary';
 import LoginForm from './LoginForm';
 import { DialogContent, DialogOverlay } from '@reach/dialog';
-import GenericContainer from '../../../shared/GenericContainer';
-import styles from './styles';
+import GenericContainer from '../shared/GenericContainer';
+import styles from './LoginRegisterModal.styles';
 
 const LoginRegisterModal = ({
   loginOrRegister,

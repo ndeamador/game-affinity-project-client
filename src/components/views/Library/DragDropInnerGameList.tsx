@@ -1,6 +1,6 @@
-import { Game } from '../../../../../../types';
-import DragDropGame from './DragDropGame';
 import React from 'react';
+import { Game } from '../../../types';
+import DragDropGame from './DragDropGame';
 
 // This component is meant to improve drag/drop performance by avoiding unnecessary renders.
 // https://egghead.io/lessons/react-optimize-performance-in-react-beautiful-dnd-with-shouldcomponentupdate-and-purecomponent

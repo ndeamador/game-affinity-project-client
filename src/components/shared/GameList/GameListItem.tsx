@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
-import { Game } from '../../../../types';
 import { Link } from 'react-router-dom';
-import AddGameToLibraryButton from '../../AddToLibraryButton';
-import PlatformIcons from '../../PlatformIcons';
-import ReleaseDeveloperRow from '../../ReleaseDeveloperRow';
-import CoverDiv from '../../CoverDiv';
 import { useEffect } from 'react';
-import useLazyCurrentUser from '../../../../hooks/useLazyCurrentUser';
+import styles from './GameListItem.styles';
+import { Game } from '../../../types';
+import useLazyCurrentUser from '../../../hooks/useLazyCurrentUser';
 import AverageRatingDiv from './AverageRatingDiv';
-import styles from './styles';
+import CoverDiv from '../CoverDiv';
+import ReleaseDeveloperRow from '../ReleaseDeveloperRow';
+import PlatformIcons from '../PlatformIcons';
+import AddGameToLibraryButton from '../AddToLibraryButton';
 
 const GameListItem = ({ game, ranked }: { game: Game; ranked?: boolean }) => {
   const { getCurrentUser, currentUser } = useLazyCurrentUser();

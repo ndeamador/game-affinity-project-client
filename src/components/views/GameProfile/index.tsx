@@ -12,7 +12,7 @@ import GenericContainer from '../../shared/GenericContainer';
 import { User } from '../../../types';
 import Notification from '../../shared/Notification';
 import CoverDiv from '../../shared/CoverDiv';
-import styles from './styles';
+import styles from './index.styles';
 
 const GameProfile = ({
   currentUser,

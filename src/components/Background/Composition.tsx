@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { AnimatedParticleBaseProps, CompositionProps } from '../../../types';
-import getRandomParticles from '../../../utils/getRandomParticles';
+import { AnimatedParticleBaseProps, CompositionProps } from '../../types';
+import getRandomParticles from '../../utils/getRandomParticles';
 import AnimatedParticles from './AnimatedParticles';
 import ConnectingLines from './ConnectingLines';
 

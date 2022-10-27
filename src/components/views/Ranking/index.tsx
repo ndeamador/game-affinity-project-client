@@ -2,7 +2,6 @@
 
 import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
-import GenreFiltersBox from './GenreFiltersBox';
 import FullPageSpinner from '../../shared/FullPageSpinner';
 import GameList from '../../shared/GameList';
 import GenericContainer from '../../shared/GenericContainer';
@@ -10,7 +9,8 @@ import { GET_RANKING } from '../../../graphql/queries';
 import { Game } from '../../../types';
 import Notification from '../../shared/Notification';
 import { Link } from 'react-router-dom';
-import styles from './styles';
+import GenreFiltersBox from './GenreFiltersBox';
+import styles from './index.styles';
 
 const Ranking = () => {
   const {
