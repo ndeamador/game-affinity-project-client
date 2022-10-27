@@ -21,32 +21,37 @@ html {
   --color-gold: gold;
   --color-accent: #fd98ff;
 
-  /* Theming */
   --rays: #b6b6b6;
   --rays-contact: #e2e2e2;
 
+  --background: #000000;
+  --navbar-background: rgba(0, 0, 0, 0.1);
+  --background-overlay: rgba(255, 255, 255, 0.473);
+  --blob-background-1: #ffd23e;
+  --blob-background-2: #ff3e98;
+  --blob-big-1: #443eff;
+  --blob-big-2: #3eff4e;
+  --blob-center-1: #3eefff;
+  --blob-center-2: #b300ff;
+  --blob-bottom-right-corner: #7b80ff;
+  --color-accent: #fff6b4;
+  --color-accent: #8affc5;
+  --color-accent: #ffc5fb;
+  --color-accent: #d8cbe4;
+  --color-accent: #42ffc9;
+  --color-accent: #3bffde;
+  --color-accent: #fffda1;
+  --color-accent: #fffd83;
 
-  /* Temp background theme 3 */
   --overlay-blur: 3px;
   --blob-big-blur: 270px;
   --blob-center-blur: 80px;
+  --blob-bottom-right-corner-opacity: 0.6;
 
   --blob-half-animation-opacity: 0.5;
   --blob-center-opacity: 0.8;
   --blob-big-opacity: 0.3;
   --blob-background-opacity: 1;
-  --blob-bottom-right-corner-opacity: 0.6;
-
-  --background: #06011c;
-  --background-overlay: rgba(255, 255, 255, 0);
-
-  --blob-background-1: #06011c; /* 443eff */
-  --blob-background-2: #06011c;
-  --blob-big-1: #06ffdf; /* 18b2de */
-  --blob-big-2: #070418;
-  --blob-bottom-right-corner: #7b80ff;
-  --blob-center-1: #fb37ff; /* fb37ff */
-  --blob-center-2: #06ffdf; /* 18b2de */ /* #06ffdf */
 
   --navbar-background: rgba(165, 165, 165, 0.7);
   --navbar-link-text-color: rgb(229, 240, 238);
@@ -80,10 +85,9 @@ html {
   );
   --animated-text-gradient: linear-gradient(
     40deg,
-    /* var(--navbar-link-text-color) 60%, */ var(--navbar-link-text-color) 70%,
+    var(--navbar-link-text-color) 70%,
     var(--button-gradient-border-color-2) 80%,
-    /* var(--button-gradient-border-color-2) 85%, */
-      var(--navbar-link-text-color) 90%,
+    var(--navbar-link-text-color) 90%,
     var(--navbar-link-text-color) 100%
   );
 
@@ -92,26 +96,6 @@ html {
   --inner-content-background-color-hover: rgba(255, 255, 255, 0.4);
   --inner-border-color: var(--color-gray80);
   --dd-game-background-color: rgba(255, 255, 255, 0.9);
-
-
-  /* Temp background theme fruity (override above dark mode colors) */
-  --background: #000000;
-  --navbar-background: rgba(0, 0, 0, 0.1);
-  --background-overlay: rgba(255, 255, 255, 0.473);
-  --blob-background-1: #ffd23e;
-  --blob-background-2: #ff3e98;
-  --blob-big-1: #443eff;
-  --blob-big-2: #3eff4e;
-  --blob-center-1: #3eefff;
-  --blob-center-2: #b300ff;
-  --color-accent: #fff6b4;
-  --color-accent: #8affc5;
-  --color-accent: #ffc5fb;
-  --color-accent: #d8cbe4;
-  --color-accent: #42ffc9;
-  --color-accent: #3bffde;
-  --color-accent: #fffda1;
-  --color-accent: #fffd83;
 
   /* Other */
   --font-family: ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;
@@ -214,6 +198,5 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   font-family: var(--font-family);
   -webkit-text-fill-color: 'var(--color-text)';
-  /* -webkit-box-shadow: 0 0 0px 1000px #000 inset; */
   transition: background-color 5000s ease-in-out 0s; /* removes default autocomplete background color */
 }
