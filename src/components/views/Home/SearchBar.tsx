@@ -9,7 +9,7 @@ import {
   useRef,
 } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { BounceBoxesContext } from '../../../App';
+import { BounceBoxesContext } from '../../App';
 import useWindowSize from '../../../hooks/useWindowSize';
 import { Input, Spinner } from '../../shared/styledComponentsLibrary';
 import styles from './SearchBar.styles';
