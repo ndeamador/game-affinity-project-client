@@ -168,7 +168,6 @@ describe('Isolated functionality tests', function () {
 
     describe('server validation', function () {
       beforeEach(function () {
-        console.log('heya');
         cy.request('POST', 'http://localhost:4000/api/testing/reset')
         cy.visit('/')
         cy.graphqlRegister(loginRegisterUsers.valid.email, loginRegisterUsers.valid.password)
