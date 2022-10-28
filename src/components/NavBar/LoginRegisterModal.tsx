@@ -4,11 +4,11 @@ import { capitalizeFirstLetter } from 'utils/misc';
 import { LoginOrRegisterModalProps } from 'types';
 import { FaTimes } from 'react-icons/fa';
 
-import { CircleButton } from 'components/shared/styledComponentsLibrary';
 import LoginForm from './LoginForm';
 import { DialogContent, DialogOverlay } from '@reach/dialog';
 import GenericContainer from 'components/shared/GenericContainer';
 import styles from './LoginRegisterModal.styles';
+import { CircleButton } from 'components/shared/CircleButton';
 
 const LoginRegisterModal = ({
   loginOrRegister,

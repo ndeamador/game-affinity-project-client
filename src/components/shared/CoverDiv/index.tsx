@@ -3,8 +3,8 @@ import { Game } from 'types';
 import { CgGames } from 'react-icons/cg';
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { Spinner } from 'components/shared/styledComponentsLibrary';
 import styles from './styles';
+import { Spinner } from 'components/shared/Spinner';
 
 const CoverDiv = ({
   game,

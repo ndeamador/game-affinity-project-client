@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import { Spinner } from 'components/shared/styledComponentsLibrary';
+import { Spinner } from 'components/shared/Spinner';
 import styles from './styles';
 
 const FullPageSpinner = () => {
   return (
-    <div id='here' css={styles.container}>
+    <div css={styles.container}>
       <Spinner css={styles.spinner} />
     </div>
   );

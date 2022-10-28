@@ -6,9 +6,9 @@ import GameList from 'components/shared/GameList';
 import { useDebounce } from 'use-debounce';
 import GenericContainer from 'components/shared/GenericContainer';
 import useClickedOutOfElement from 'hooks/useClickedOutOfElement';
-import { ErrorMessage } from 'components/shared/styledComponentsLibrary';
 import SearchBar from './SearchBar';
 import styles from './index.styles';
+import { ErrorMessage } from 'components/shared/ErrorMessage';
 
 const Home = () => {
   const [games, setGames] = useState([]);

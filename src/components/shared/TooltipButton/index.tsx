@@ -1,12 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import {
-  CircleButton,
-  Spinner,
-} from 'components/shared/styledComponentsLibrary';
 import Tooltip from '@reach/tooltip';
 import { FaTimesCircle } from 'react-icons/fa';
 import { IconBaseProps } from 'react-icons';
 import styles from './styles';
+import { CircleButton } from 'components/shared/CircleButton';
+import { Spinner } from 'components/shared/Spinner';
 
 interface TooltipButtonProps {
   label: string;
