@@ -23,7 +23,7 @@
 ## Features
 
 - Written in modern React with hooks using only functional components.
-- Simple local state management with React and Apollo Graphql.
+- Simple local state management with React and Apollo Graphql (no Redux or similar).
 - Project fully written in TypeScript.
 - Full user authentication system.
 - Persistent drag-and-drop ranking system.
@@ -42,10 +42,15 @@
 
 - Mobile friendly design: due to the structure of the drag-and-drop system, a custom, mobile-specific, responsive rating module for "My Library" needs to be built from scratch.
 - Lexorank implementation for efficient Drag and Drop persistence.
-- Better production automation for PostgreSQL migrations.
+- Streamline production automation for PostgreSQL migrations.
 - Updated tests for the most recent features.
 
 <br>
+
+<img src="zz_readme_files/game-profile-modal.png" alt="Game Profile Modal" title="Game Profile Modal" />
+
+<br>
+
 
 <h3 align="center">
   <a href="https://gap.nicodeamador.com/">Visit the live app</a> |

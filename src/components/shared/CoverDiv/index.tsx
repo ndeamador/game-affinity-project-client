@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { Game } from '../../../types';
+import { Game } from 'types';
 import { CgGames } from 'react-icons/cg';
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { Spinner } from '../styledComponentsLibrary';
+import { Spinner } from 'components/shared/styledComponentsLibrary';
 import styles from './styles';
 
 const CoverDiv = ({

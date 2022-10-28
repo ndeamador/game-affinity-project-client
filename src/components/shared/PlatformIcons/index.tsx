@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { Platform } from '../../../types';
+import { Platform } from 'types';
 import {
   FaPlaystation,
   FaXbox,

@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
-import { UPDATE_RATING } from '../graphql/mutations';
-import { CURRENT_USER } from '../graphql/queries';
-import { MeResponse } from '../types';
+import { UPDATE_RATING } from 'graphql/mutations';
+import { CURRENT_USER } from 'graphql/queries';
+import { MeResponse } from 'types';
 
 
 const useUpdateRating = () => {
@@ -37,12 +37,6 @@ const useUpdateRating = () => {
           });
 
         }
-
-        // const after: MeResponse | null = store.readQuery({
-        //   query: CURRENT_USER,
-        // });
-        // console.log('store after update: ', after?.me.gamesInLibrary);
-
       } catch (err) {
         console.log(
           `Error updating the cache after updateRating mutation: ${err}`

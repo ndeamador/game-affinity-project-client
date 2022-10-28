@@ -2,15 +2,15 @@
 
 import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
-import GenreFiltersBox from './GenreFiltersBox';
-import FullPageSpinner from '../../shared/FullPageSpinner';
-import GameList from '../../shared/GameList';
-import GenericContainer from '../../shared/GenericContainer';
-import { GET_RANKING } from '../../../graphql/queries';
-import { Game } from '../../../types';
-import Notification from '../../shared/Notification';
+import FullPageSpinner from 'components/shared/FullPageSpinner';
+import GameList from 'components/shared/GameList';
+import GenericContainer from 'components/shared/GenericContainer';
+import { GET_RANKING } from 'graphql/queries';
+import { Game } from 'types';
+import Notification from 'components/shared/Notification';
 import { Link } from 'react-router-dom';
-import styles from './styles';
+import GenreFiltersBox from './GenreFiltersBox';
+import styles from './index.styles';
 
 const Ranking = () => {
   const {
@@ -37,8 +37,6 @@ const Ranking = () => {
         <Link to={'/home'}>Click here to find games and start rating!</Link>
       </Notification>
     );
-
-  console.log('data:', data);
 
   const genres: string[] = [
     ...new Set<string>( // Set is just to isolate unique values.

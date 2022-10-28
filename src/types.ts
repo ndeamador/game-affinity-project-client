@@ -51,7 +51,6 @@ export interface LoginDetails {
 
 export interface User {
   id: string;
-  // username: String!
   email: string;
   gamesInLibrary: [GameInUserLibrary];
 }
@@ -65,7 +64,7 @@ export interface GameInUserLibrary {
 
 export type Rating = 0 | 1 | 2 | 3 | 4;
 
-export interface libraryIdsResponse { // review
+export interface libraryIdsResponse {
   getLibraryIds: GameInUserLibrary[];
 }
 
@@ -105,29 +104,14 @@ export interface AnimatedParticleBaseProps {
 
 export type AnimatedCanvasRenderingContext = CanvasRenderingContext2D | null;
 
-// export interface AnimatedParticleProps extends AnimatedParticleBaseProps {
-//   mouseRadius?: number;
-//   windowSize: WindowSize;
-//   bounceElements?: BounceBoxState;
-//   index: number;
-//   onNewFrame: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
-//   mouse: MousePositionProps;
-//   renderingContext: CanvasRenderingContext2D | null;
-//   // particlesArray: AnimatedParticleBaseProps[] | undefined;
-//   // particlesArray: any;
-// }
-
 export interface AnimatedParticlesProps {
   mouseRadius?: number;
   windowSize: WindowSize;
   bounceElements?: BounceBoxState;
-  // index: number;
   updateParticle: (index: number, initialParticle: AnimatedParticleBaseProps) => void;
   mouse: MousePositionProps;
   renderingContext: AnimatedCanvasRenderingContext;
   particlesArray: AnimatedParticleBaseProps[] | undefined;
-  // particlesArray: React.MutableRefObject<AnimatedParticleBaseProps[] | undefined>.current;
-
 }
 
 export interface MousePositionProps {
@@ -165,9 +149,7 @@ export interface RectWithBoundingPoints extends DeconstructedDOMRect {
   }
 }
 
-// export type BounceBoxKey = 'searchBar' | 'testBox';
 export type BounceBoxKey = 'searchBar';
-
 
 // https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
 export type BounceBoxState = {

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
-import { Game } from '../../../types';
-import { convertMilisecondsToDate } from '../../../utils/misc';
+import { Game } from 'types';
+import { convertMilisecondsToDate } from 'utils/misc';
 import styles from './styles';
 
 const ReleaseDeveloperRow = ({ game }: { game: Game }) => {

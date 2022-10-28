@@ -1,5 +1,5 @@
 import { ApolloError, useLazyQuery } from '@apollo/client';
-import { CURRENT_USER } from '../graphql/queries';
+import { CURRENT_USER } from 'graphql/queries';
 
 
 const useLazyCurrentUser = () => {
@@ -12,8 +12,7 @@ const useLazyCurrentUser = () => {
   });
 
   const currentUser = data?.me;
-  // console.log('uselazycurrentuser response: ', data);
-  // console.log('useLazyCurrentUser data:', currentUser?.email);
+
   return { getCurrentUser, currentUser, ...result };
 };
 

@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect'
-import { capitalizeFirstLetter, convertMilisecondsToDate } from '../../utils/misc';
+import { capitalizeFirstLetter, convertMilisecondsToDate } from 'utils/misc';
 
 describe(`Utils > misc`, () => {
   test(`capitalizeFirstLetter() capitalizes first letter`, () => {

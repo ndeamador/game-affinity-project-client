@@ -1,13 +1,4 @@
-import { Rating } from './types';
-
-// export const RATINGS: { [id: string]: Rating } = {
-//   unranked: 0,
-//   thumbsDown: 1,
-//   thumbsUp: 2,
-//   great: 3,
-//   legendary: 4
-// }
-
+import { Rating } from 'types';
 
 export const RATINGS: { [id: string]: { value: Rating, title: string } } = {
   unranked: {
