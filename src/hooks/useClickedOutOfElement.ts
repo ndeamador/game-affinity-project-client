@@ -3,9 +3,8 @@ import { useEffect, useState } from 'react';
 const useClickedOutOfElement = (ref: React.RefObject<HTMLElement>) => {
   const [clickedOutOfElement, setClickedOutOfElement] = useState(false);
 
-  const handleClickOutside = (e: any) => {
-    // e.target returns the html element that has been clicked.
-    if (ref.current && !ref.current.contains(e.target)) {
+  const handleClickOutside = ({ target }: MouseEvent) => {
+    if (ref.current && target instanceof HTMLElement && !ref.current.contains(target)) {
       setClickedOutOfElement(true);
     }
     else {
