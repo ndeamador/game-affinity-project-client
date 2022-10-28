@@ -29,7 +29,7 @@
 - Persistent drag-and-drop ranking system.
 - [Custom server](https://github.com/ndeamador/game-affinity-project-server) interfacing a PostgreSQL database for accounts and ratings persistence, a Redis sessions cache, and connections to a [third party API](https://api-docs.igdb.com/).
 - Deployment pipeline using GitHub Actions with automated testing, linting and Docker image building and publishing.
-- Optimized Docker images (e.g.: reduced backend image size from 1.23 GB to 189 MB with a multi-stage build).
+- Docker images optimization (e.g.: reduced backend image size from 1.23 GB to 189 MB with a multi-stage build).
 - Project deployed to production using Vercel and a self-managed Digital Ocean Ubuntu droplet running Docker virtual machines.
 
 <br>
