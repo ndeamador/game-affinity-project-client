@@ -4,7 +4,7 @@ import { CgGames } from 'react-icons/cg';
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import styles from './styles';
-import { Spinner } from 'components/shared/Spinner';
+import Spinner from 'components/shared/Spinner';
 
 const CoverDiv = ({
   game,

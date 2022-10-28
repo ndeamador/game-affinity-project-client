@@ -2,7 +2,7 @@ import React, { ProviderProps, useEffect } from 'react';
 import { User } from 'types';
 import FullPageSpinner from 'components/shared/FullPageSpinner';
 import useLazyCurrentUser from 'hooks/useLazyCurrentUser';
-import { ErrorMessage } from 'components/shared/ErrorMessage';
+import ErrorMessage from 'components/shared/ErrorMessage';
 
 // THIS FILE IS DEPRECATED
 // Access to authentication info has been refactored to use exclusively Apollo's caching instead of React Context.

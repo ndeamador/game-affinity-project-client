@@ -28,7 +28,7 @@ const buttonVariants = {
   },
 };
 
-export const Button = styled.button(
+const Button = styled.button(
   {
     display: 'flex',
     justifyContent: 'center',
@@ -48,3 +48,5 @@ export const Button = styled.button(
   // we can add as many other properties, and they will append to the ones before. Functions can be used
   ({ variant = 'regular' }: ButtonProps) => buttonVariants[variant] // variant comes from props.variant, the props passed to the button, defaulted to regular.
 );
+
+export default Button;

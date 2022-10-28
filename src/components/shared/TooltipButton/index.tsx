@@ -4,7 +4,7 @@ import { FaTimesCircle } from 'react-icons/fa';
 import { IconBaseProps } from 'react-icons';
 import styles from './styles';
 import { CircleButton } from 'components/shared/CircleButton';
-import { Spinner } from 'components/shared/Spinner';
+import Spinner from 'components/shared/Spinner';
 
 interface TooltipButtonProps {
   label: string;

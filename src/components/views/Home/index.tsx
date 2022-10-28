@@ -8,7 +8,7 @@ import GenericContainer from 'components/shared/GenericContainer';
 import useClickedOutOfElement from 'hooks/useClickedOutOfElement';
 import SearchBar from './SearchBar';
 import styles from './index.styles';
-import { ErrorMessage } from 'components/shared/ErrorMessage';
+import ErrorMessage from 'components/shared/ErrorMessage';
 
 const Home = () => {
   const [games, setGames] = useState([]);

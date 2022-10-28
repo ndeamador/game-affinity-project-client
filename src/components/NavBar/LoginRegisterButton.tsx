@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { Button } from 'components/shared/Button';
+import Button from 'components/shared/Button';
 import { LoginOrRegisterButtonProps } from 'types';
 import { capitalizeFirstLetter } from 'utils/misc';
 import LoginRegisterModal from './LoginRegisterModal';

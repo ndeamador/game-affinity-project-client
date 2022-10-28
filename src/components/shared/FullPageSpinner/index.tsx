@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { Spinner } from 'components/shared/Spinner';
+import Spinner from 'components/shared/Spinner';
 import styles from './styles';
 
 const FullPageSpinner = () => {

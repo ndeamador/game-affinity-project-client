@@ -11,10 +11,10 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import styles from './LoginForm.styles';
 import { FormInputs, LoginFormProps } from './LoginForm.types';
-import { Button } from 'components/shared/Button';
-import { Input } from 'components/shared/Input';
-import { Spinner } from 'components/shared/Spinner';
-import { ErrorMessage } from 'components/shared/ErrorMessage';
+import Button from 'components/shared/Button';
+import Input from 'components/shared/Input';
+import Spinner from 'components/shared/Spinner';
+import ErrorMessage from 'components/shared/ErrorMessage';
 
 // Yup validation schema
 // ===========================================================

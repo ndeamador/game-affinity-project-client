@@ -9,9 +9,12 @@ const spin = keyframes({
   '0%': { transform: 'rotate(0deg)' },
   '100%': { transform: 'rotate(360deg)' },
 });
-export const Spinner = styled(ImSpinner2)({
+
+const Spinner = styled(ImSpinner2)({
   animation: `${spin} 1s linear infinite`,
 });
 Spinner.defaultProps = {
   'aria-label': 'loading',
 };
+
+export default Spinner;
