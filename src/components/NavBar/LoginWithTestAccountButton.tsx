@@ -3,8 +3,9 @@
 import { useMutation } from '@apollo/client';
 import { LOGIN } from 'graphql/mutations';
 import { CURRENT_USER } from 'graphql/queries';
-import { Button, Spinner } from 'components/shared/styledComponentsLibrary';
 import styles from './LoginWithTestAccountButton.styles';
+import Button from 'components/shared/Button';
+import Spinner from 'components/shared/Spinner';
 
 const LonginWithTestAccountButton = () => {
   const [login, { loading, error }] = useMutation(LOGIN, {

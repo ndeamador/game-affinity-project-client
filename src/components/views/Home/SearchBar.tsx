@@ -11,8 +11,9 @@ import {
 import { FaSearch } from 'react-icons/fa';
 import { BounceBoxesContext } from 'components/App';
 import useWindowSize from 'hooks/useWindowSize';
-import { Input, Spinner } from 'components/shared/styledComponentsLibrary';
 import styles from './SearchBar.styles';
+import Input from 'components/shared/Input';
+import Spinner from 'components/shared/Spinner';
 
 const SearchBar = ({
   setQuery,

@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import Tooltip from '@reach/tooltip';
+import { CircleButton } from 'components/shared/CircleButton';
 import { FaGithub } from 'react-icons/fa';
-import { CircleButton } from 'components/shared/styledComponentsLibrary';
 import styles from './GitHubButton.styles';
 
 const GitHubButton = () => {

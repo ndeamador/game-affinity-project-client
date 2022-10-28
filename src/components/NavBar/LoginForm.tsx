@@ -5,18 +5,16 @@ import { LOGIN, REGISTER_NEW_USER } from 'graphql/mutations';
 import { CURRENT_USER } from 'graphql/queries';
 import { LoginDetails } from 'types';
 import { capitalizeFirstLetter } from 'utils/misc';
-import {
-  Button,
-  Input,
-  Spinner,
-} from 'components/shared/styledComponentsLibrary';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { ErrorMessage } from 'components/shared/styledComponentsLibrary';
 import styles from './LoginForm.styles';
 import { FormInputs, LoginFormProps } from './LoginForm.types';
+import Button from 'components/shared/Button';
+import Input from 'components/shared/Input';
+import Spinner from 'components/shared/Spinner';
+import ErrorMessage from 'components/shared/ErrorMessage';
 
 // Yup validation schema
 // ===========================================================
@@ -37,7 +35,6 @@ const schema = yup.object().shape({
 // ===========================================================
 
 const LoginForm = ({ setOpenModal, loginOrRegister }: LoginFormProps) => {
-
   // GraphQL Mutations
   // ---------------------------------------------------------
   const [registerNewUser, { loading: registerLoading, error: registerError }] =

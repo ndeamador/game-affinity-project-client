@@ -9,7 +9,7 @@ import useUpdateRating from 'hooks/useUpdateRating';
 import useAddToLibrary from 'hooks/useAddToLibrary';
 import { BoardStateContext } from '../Library/DragDropBoard';
 import findGameInLibrary from 'utils/findGameInLibrary';
-import { ErrorMessage } from 'components/shared/styledComponentsLibrary';
+import ErrorMessage from 'components/shared/ErrorMessage';
 
 const iconColors = ['DarkSlateBlue', 'green', 'gold', 'red'];
 const iconLevels = [
