@@ -2,16 +2,8 @@ import { RATINGS } from '../constants';
 import { useState } from 'react';
 import { DraggableLocation } from 'react-beautiful-dnd';
 import { GameInUserLibrary, Rating, User } from 'types';
-import useLazyCurrentUser from './useLazyCurrentUser';
-
 
 const useBoardState = (user: User) => {
-  // const {
-  //   getCurrentUser,
-  //   currentUser,
-  //   loading: loadingUser,
-  //   error: getUserError,
-  // } = useLazyCurrentUser();
 
   const getIdsInColumn = (
     rating: Rating,
@@ -91,7 +83,6 @@ const useBoardState = (user: User) => {
 
     if (newRating) {
       if (newRating != currentRating) {
-        console.log('distintos', orderedColumns);
         setOrderedColums((state) =>
           state.map((column, i) => {
             return i == currentRating
@@ -104,7 +95,6 @@ const useBoardState = (user: User) => {
       }
       else {
         // Temp: if for some reason the current rating and the new rating are the same, do nothing. Should not be triggered.
-        console.log('same!!');
         return;
       }
 
@@ -113,28 +103,15 @@ const useBoardState = (user: User) => {
     else {
       // if null is provided as new rating, delete the game from the Board.
       setOrderedColums((state) => {
-        // const initialColumn = [...orderedColumns[currentRating]];
-        // const positionInColumn = initialColumn.findIndex(gameId => gameId == igdb_game_id);
-        // initialColumn.splice(positionInColumn, 1);
-        // const filteredColumn = initialColumn.filter(gameId => gameId != igdb_game_id)
-
         return state.map((column, i) => {
-
           return i == currentRating
-            // ? filteredColumn
             ? column.filter(gameId => gameId != igdb_game_id)
-            // ? initialColumn.splice(positionInColumn, 1)
-            // ? initialColumn.filter(gameId => gameId != igdb_game_id)
             : column
-        }
-        )
+        })
       });
     }
-
-    return
-
+    return;
   }
-
   return { orderedColumns, setOrderedColums, reorderBoardStateWithDnDData, updateBoardStateWithId } /* as const */;
 }
 

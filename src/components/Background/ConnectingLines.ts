@@ -69,23 +69,11 @@ const linkWithEachOther = (pointA: AnimatedParticleBaseProps, pointB: AnimatedPa
 const linkWithDOMComponent = (box: RectWithBoundingPoints, particle: AnimatedParticleBaseProps, canvas: CanvasRenderingContext2D) => {
   if (box.boundingPoints && box.width && box.height) {
     const boxField = 250;
-    // const distanceToCenter = calculateDistance(particle, box.boundingPoints.center);
-    // const opacity = 1 - (distanceToCenter * 100) / boxField / boxField;
-
-    // if (
-    //   distanceToCenter <
-    //   (Math.max(box.width, box.height) * 1.4142135) / 2 + boxField // A cheaper way estimating the maximum diagonal avoiding an expensive sqrt()
-    // ) {
-    //   const opacity = 1 - (distanceToCenter * 100) / boxField / boxField;
-    //   const style = getColorString(140, 85, 31, opacity);
-    //   connectWithLine(particle, box.boundingPoints.center, 4, style);
-    // }
 
     // limit the area to calculate particle distances to improve performance
     if (particle.x > box.left - boxField && particle.x < box.right + boxField && particle.y > box.top - boxField && particle.y < box.bottom + boxField) {
 
       const getPointFromCoordinate = (xOrY: 'x' | 'y', providedCoord: number, referencePoint: Point, slope: number) => {
-        // y = slope * x + b
         const b = referencePoint.y - slope * referencePoint.x;
         let pointInLine = { x: 0, y: 0 };
         if (xOrY == 'x') {
@@ -96,22 +84,6 @@ const linkWithDOMComponent = (box: RectWithBoundingPoints, particle: AnimatedPar
         }
         return pointInLine;
       }
-
-      // const getIntersection = (point1, slope1, point2, slope2) => {
-      //   // y = x * slope1 + b
-      //   // y = x * slope2 + c
-      //   // x * slope1 + b =  x * slope2 + c
-      //   // x * slope1 - x * slope2 = c - b
-      //   // x * (slope1 - slope2) = c - b
-      //   // x = (c - b) / (slope1 - slope2)
-
-      //   const b = point1.y / (point1.x * slope1);
-      //   const c = point2.y / (point2.x * slope2);
-      //   const x = (c - b) / (slope1 - slope2);
-      //   const y = x * slope1 + b;
-
-      //   return { x: x, y: y };
-      // }
 
       // Lines between bounding points and opposite box corners
       const slopeVertical = getSlope(box.boundingPoints.bottom, { x: box.right, y: box.top });
@@ -174,10 +146,6 @@ const linkWithDOMComponent = (box: RectWithBoundingPoints, particle: AnimatedPar
         const style = getColorString(greyShadow, greyShadow, greyShadow, opacity);
         connectWithLine(particle, getPointFromCoordinate('x', box.right, particle, getSlope(particle, box.boundingPoints.left)), style, 6, canvas);
       }
-      // else {
-      //   const style = getColorString(0, 0, 0, 1);
-      //   connectWithLine(particle, box.boundingPoints.center, 4, style);
-      // }
     }
   }
 }

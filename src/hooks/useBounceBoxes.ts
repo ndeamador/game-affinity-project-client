@@ -11,14 +11,6 @@ const useBounceBoxes = () => {
       width: 0,
       height: 0
     }
-    // , testBox: {
-    //   top: 0,
-    //   left: 0,
-    //   bottom: 0,
-    //   right: 0,
-    //   width: 0,
-    //   height: 0
-    // }
   });
 
   const storeBounceBox = (propName: BounceBoxKey, ref: React.MutableRefObject<HTMLElement | null>) => {
@@ -32,16 +24,7 @@ const useBounceBoxes = () => {
         ...getBoundingPoints(ref)
       }
     }))
-
-    // setBounceBoxes({
-    //   ...bounceBoxes,
-    //   [propName]: {
-    //     ...getBoundingPoints(ref)
-    //   }
-    // })
   }
-
-  // console.log('state: ', bounceBoxes);
 
   return { bounceBoxes, storeBounceBox };
 }
@@ -74,22 +57,18 @@ export const getBoundingPoints = (ref: React.MutableRefObject<HTMLElement | null
     center: center,
     top: {
       x: center.x,
-      // y: center.y - height / 2
       y: center.y - longestSide / 2
 
     },
     bottom: {
       x: center.x,
-      // y: center.y + height / 2
       y: center.y + longestSide / 2
     },
     left: {
-      // x: center.x - width / 2,
       x: center.x - longestSide / 2,
       y: center.y
     },
     right: {
-      // x: rect.right + width / 2,
       x: center.x + longestSide / 2,
       y: center.y
     }
@@ -122,7 +101,6 @@ export const getDOMRect = (ref: React.MutableRefObject<HTMLElement | null>): Dec
   let processedDOMRect: DeconstructedDOMRect = { top: 0, left: 0, bottom: 0, right: 0 };
   if (ref.current) {
     const { top, left, bottom, right }: DeconstructedDOMRect = ref.current.getBoundingClientRect();
-
     processedDOMRect = {
       top,
       left,
@@ -130,6 +108,5 @@ export const getDOMRect = (ref: React.MutableRefObject<HTMLElement | null>): Dec
       right
     }
   }
-
   return processedDOMRect;
 }

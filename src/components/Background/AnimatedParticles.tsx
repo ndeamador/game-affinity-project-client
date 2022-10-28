@@ -8,11 +8,8 @@ import {
 } from 'types';
 
 const AnimatedParticles: FC<AnimatedParticlesProps> = (props) => {
-  // const canvas = useContext(Canvas2dContext);
-  // useContext(FrameContext); // only present to force that the particle re-renders after each frame clears the canvas.
   const canvas = props.renderingContext;
-
-  const defaultColor = '#ffffff'; /* '#8C5523' */
+  const defaultColor = '#ffffff';
 
   // using for...of instead of forEach to avoid an unnecessary typecheck before updateParticle()
   if (canvas !== null && props.particlesArray) {
@@ -31,8 +28,6 @@ const AnimatedParticles: FC<AnimatedParticlesProps> = (props) => {
       canvas.arc(
         currentFrameParticle.x,
         currentFrameParticle.y,
-        // Math.floor(currentFrameParticle.x),
-        // Math.floor(currentFrameParticle.y),
         currentFrameParticle.size,
         0,
         Math.PI * 2,
@@ -42,7 +37,6 @@ const AnimatedParticles: FC<AnimatedParticlesProps> = (props) => {
       canvas.fill();
     }
   }
-
   // return null to prevent 'Component cannot be used as a JSX component' TypeScript error.
   return null;
 };
@@ -84,10 +78,6 @@ const bounceFromBox = (
     ) {
       particle.directionY = -particle.directionY;
     }
-    // else {
-    //   particle.directionX = -particle.directionX;
-    //   particle.directionY = -particle.directionY;
-    // }
   }
 
   return [particle, color] as const;
@@ -104,10 +94,10 @@ const getNextFrameParticle = (
   };
 
   // check if particle is still within canvas and reverse direction if at the limit
-  if (particle.x > windowSize.scrollWidth /* width */ || particle.x < 0) {
+  if (particle.x > windowSize.scrollWidth || particle.x < 0) {
     particle.directionX = -particle.directionX;
   }
-  if (particle.y > windowSize.scrollHeight /* height */ || particle.y < 0) {
+  if (particle.y > windowSize.scrollHeight || particle.y < 0) {
     particle.directionY = -particle.directionY;
   }
 
@@ -178,7 +168,6 @@ const getNextFrameParticle = (
     // }
 
     Object.values(bounceElements).forEach((box) => {
-      // bounceFromBox(box);
       [particle, color] = bounceFromBox(box, particle, color);
     });
   }

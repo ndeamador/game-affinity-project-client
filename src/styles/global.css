@@ -88,7 +88,6 @@ html {
   --inner-border-color: var(--color-gray80);
   --dd-game-background-color: rgba(255, 255, 255, 0.9);
 
-  /* Other */
   --font-family: ui-sans-serif, system-ui, Helvetica, Arial, sans-serif;
   --searchbar-margin-top: 10vh;
   --navbar-height: 80px;

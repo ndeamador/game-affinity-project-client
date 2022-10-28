@@ -40,15 +40,6 @@ export const LOGOUT = gql`
   }
 `
 
-// export const ADD_TO_LIBRARY = gql`
-// mutation addGameToLibrary($gameId: Int!) {
-//   addGameToLibrary(gameId: $gameId) {
-//     id
-//     igdb_game_id
-//   }
-// }
-// `
-
 export const ADD_TO_LIBRARY = gql`
 mutation addGameToLibrary($gameId: Int!, $rating: Int) {
   addGameToLibrary(gameId: $gameId, rating: $rating) {
@@ -66,8 +57,6 @@ mutation removeGameFromLibrary($igdb_game_id: Int!) {
 }
 `
 
-
-
 // Two versions in server, one returns a boolean, another (current, with added fragment) the updated object.
 // removed non-null from $rating: Int! to accomodate unranked games.
 export const UPDATE_RATING = gql`
@@ -78,15 +67,3 @@ mutation updateRating($igdb_game_id: Int!, $rating: Int, $subrating: Int) {
 }
 ${GAME_IN_LIBRARY_DETAILS}
 `
-
-
-
-// CLIENT SIDE MUTATIONS
-// ----------------------------------------
-
-// // @client tells Apollo Client to fetch the field data locally (cache or local resolver), instead of sending it to our GraphQL server.
-// export const OPEN_MODAL = gql`
-// mutation openModal {
-//   openModal @client
-// }
-// `

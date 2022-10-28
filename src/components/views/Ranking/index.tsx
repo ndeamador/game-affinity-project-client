@@ -38,8 +38,6 @@ const Ranking = () => {
       </Notification>
     );
 
-  console.log('data:', data);
-
   const genres: string[] = [
     ...new Set<string>( // Set is just to isolate unique values.
       data.getRankedGames

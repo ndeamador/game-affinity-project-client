@@ -10,7 +10,7 @@ const getRandomParticles = (
   const minSpeed = 0.1;
   const maxSpeed = 0.4;
   const sizeMultiplier = 0.9; // used as radius for canvas.arc(). Unit not pixels.
-  const sizeVariation = 5 // 5
+  const sizeVariation = 5
 
   for (let i = 0; i < numberOfParticles; i++) {
     const size = sizeMultiplier * (Math.random() * sizeVariation + 1); // random number between 1 and sizeVariation.

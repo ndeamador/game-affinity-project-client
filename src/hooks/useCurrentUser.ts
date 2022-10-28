@@ -12,13 +12,6 @@ const useCurrentUser = (): useCurrentUserReturn => {
 
   const { data, loading, error } = useQuery(CURRENT_USER, {
     fetchPolicy: 'cache-first',
-    // onCompleted: (data) => {
-    //   if (data.me === null) {
-    //     console.log('User not logged in');
-    //   } else {
-    //     console.log('User logged in: ', data);
-    //   }
-    // },
     onError: (err) => {
       console.log('CURRENT_USER Query error: ', err.message);
     },

@@ -18,7 +18,6 @@ export const FIND_GAMES = gql`
   ${GAME_DETAILS}
 `
 
-
 export const CURRENT_USER = gql`
   query getCurrentUser{
     me {
@@ -31,7 +30,6 @@ export const CURRENT_USER = gql`
   ${USER_DETAILS},
   ${GAME_IN_LIBRARY_DETAILS}
 `
-
 
 export const GET_LIBRARY_IDS = gql`
   query getLibraryIds{
@@ -49,15 +47,6 @@ export const GET_LIBRARY = gql`
   }
   ${GAME_DETAILS}
 `
-
-// export const GET_AVERAGE_RATINGS = gql`
-//   query getAverageRatings {
-//     getAverageRatings {
-//       igdb_game_id
-//       average_rating
-//     }
-//   }
-// `
 
 export const GET_RANKING = gql`
   query getRankedGames {

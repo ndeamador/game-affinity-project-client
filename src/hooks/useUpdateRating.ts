@@ -37,12 +37,6 @@ const useUpdateRating = () => {
           });
 
         }
-
-        // const after: MeResponse | null = store.readQuery({
-        //   query: CURRENT_USER,
-        // });
-        // console.log('store after update: ', after?.me.gamesInLibrary);
-
       } catch (err) {
         console.log(
           `Error updating the cache after updateRating mutation: ${err}`
