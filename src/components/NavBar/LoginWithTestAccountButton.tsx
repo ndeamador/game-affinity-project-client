@@ -7,7 +7,7 @@ import styles from './LoginWithTestAccountButton.styles';
 import Button from 'components/shared/Button';
 import Spinner from 'components/shared/Spinner';
 
-const LonginWithTestAccountButton = () => {
+const LoginWithTestAccountButton = () => {
   const [login, { loading, error }] = useMutation(LOGIN, {
     refetchQueries: [{ query: CURRENT_USER }],
   });
@@ -38,4 +38,4 @@ const LonginWithTestAccountButton = () => {
   );
 };
 
-export default LonginWithTestAccountButton;
+export default LoginWithTestAccountButton;
