@@ -6,7 +6,7 @@ import { OpenLoginRegisterModalOptions } from 'types';
 import LogoutButton from './LogoutButton';
 import { NavLink } from 'react-router-dom';
 import useCurrentUser from 'hooks/useCurrentUser';
-import LonginWithTestAccountButton from './LoginWithTestAccountButton';
+import LoginWithTestAccountButton from './LoginWithTestAccountButton';
 import GitHubButton from './GitHubButton';
 import styles from './index.styles';
 import LoginRegisterButton from './LoginRegisterButton';
@@ -50,7 +50,7 @@ const NavBar = () => {
           )}
         </div>
 
-        {!currentUser && <LonginWithTestAccountButton />}
+        {!currentUser && <LoginWithTestAccountButton />}
 
         <div css={styles.navLinkGroup}>
           {currentUser ? (
